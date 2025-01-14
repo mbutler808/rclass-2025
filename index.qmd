@@ -1,5 +1,5 @@
 ---
-title: "Welcome to Introduction to Data Science in R for Biologists!"
+title: "Introduction to Data Science in R for Biologists 2025"
 image: images/coolPCA.png
 about:
   template: jolla

@@ -54,9 +54,9 @@ categories: [module 1, week 1, introduction]
 
 :::
 
-## Data Science Workflow Requirements:
+## Classwork to Professional Science
 
-The difference between analyzing data for an assignment (Undergraduate work) vs. professional science (publication)
+There is a difference between one-time "getting it to work" vs. professional science (publication)
 
 ::: {.incremental}
 
@@ -66,18 +66,6 @@ The difference between analyzing data for an assignment (Undergraduate work) vs.
 - Data and code shared on a public repository with a DOI 
   + e.g., [GitHub](https://github.com) and [Zotero](https://www.zotero.org) (free options!) 
   + or [Dryad](https://datadryad.org/stash) ($150 per dataset)
-:::
-
-## Open Source Tools you will learn in this course
-::: {.incremental}
-- R \[[watch short podcast, up to 4:00](https://youtu.be/wzPRpyoNaa8?si=TxENkAoxZ_D8kHcJ)\]
-- Command Line (UNIX/ Windows/ File Commands in your operating system)
-  + Understand your computer's organization and filepaths
-  + More precisely control your files and information
-  + Install some command-line software
-- Git/GitHub
-- Quarto/Rmarkdown
-- and many more...
 :::
 
 ## How the Tools Fit Together 
@@ -92,6 +80,31 @@ The difference between analyzing data for an assignment (Undergraduate work) vs.
 | Organize Project -> Version Control -> Share | *Git/GitHub* |
 | Communicate |  *Quarto/Rmarkdown* |
 
+:::
+
+## Open Source Tools you will learn in this course
+::: {.incremental}
+- R \[[watch short podcast, up to 4:00](https://youtu.be/wzPRpyoNaa8?si=TxENkAoxZ_D8kHcJ)\]
+- Command Line (UNIX/ Windows/ File Commands in your operating system)
+  + Understand your computer's organization and filepaths
+  + More precisely control your files and information
+  + Install some command-line software
+- Git/GitHub \[[course repo](https://github.com/mbutler808/rclass-2025)\]
+- Quarto/Rmarkdown \[[scientific and technical publishing system](https://quarto.org)\]
+- and many more...
+:::
+
+## How to Succeed 
+
+::: {.nonincremental}
+- Practice 
+- Make errors -- figure out how to fix them
+- Fearlessly ask questions
+- Trial and Error is critical to learning
+- Validate -- check that the answer is right
+- When you are developing a script, go back and clean it up! 
+- Save the correct, good code, throw out the mistakes
+- Document so that you can understand it 1 year from now
 :::
 
 ## Software
