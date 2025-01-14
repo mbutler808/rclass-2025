@@ -1,0 +1,206 @@
+---
+title: "Zool710: Data Science in R for Biologists Syllabus"
+---
+
+## Course Information
+
+-   Delivery: In person
+-   Course time: Tuesdays and Thursdays from 9-10:15am
+-   Course location: KELLER 204
+-   Assignments: Weekly small quizzes, four projects
+
+### How to register and participate
+
+-   **To add the course: Let me know so I can give you an override**
+-   Register for ZOOL710 CRN 89354 3 credits.
+-   Attendance is highly recommended for personal help, Q&A, and group work. Repetition is key. 
+-   Please contact course instructor if interested in auditing.
+-   Undergraduates are welcome to join with approval.
+
+### Instructor
+
+-   Marguerite A. Butler (<https://butlerlab.org>)
+    -   Office Location: Edmondson 318
+    -   Email: mbutler808 at gmail.com
+    -   Office Hours: After class and by appointment
+
+### Getting help
+
+In order of preference, here is a preferred list of ways to get help:
+
+1.  I **strongly encourage** you to use the course [DISCORD server](https://discord.gg/fagxUbq5Rd), before joining office hours. You can get your answers faster, and other students in the class (who likely have similar questions) can also benefit from the questions and answers given. Everyone is encouraged to participate.
+2.  See me after class.
+3.  Make an appointment by email.
+
+## Important Links
+
+-   Course website: coming soon.
+-   GitHub repository with all course material: coming soon.
+-   Discord server: https://discord.gg/fagxUbq5Rd
+
+## Learning Objectives:
+
+Upon successfully completing this course, students will be able to:
+
+1.  Install and configure software necessary for a statistical programming environment
+2.  Discuss generic programming language concepts as they are implemented in a high-level statistical language
+3.  Write, debug, and comment your code in base R and the tidyverse
+4.  Build basic data visualizations using R and the tidyverse
+5.  Discuss best practices for coding and reproducible research, basics of data ethics and management, basics of working with special data types, and basics of storing data
+6.  Document and communicate your findings via reports produced in Quarto/Rmarkdown
+7.  Archive and share your data analysis pipeline and reports via GitHub, and understand the basics of a collaborative coding project 
+
+
+## Lectures
+
+Lectures will be in person in Keller 204 from 9-10:15 am on Tuesdays and Thursdays.
+
+## Textbook and Other Course Material
+
+There is no required textbook. We will make use of several freely available textbooks and other materials. All course materials will be provided. We will use the R software for data analysis, and git for version control and data sharing, all of which is freely available for download.
+
+## Software
+
+Please install R onto your laptop. You can obtain R from the [Comprehensive R Archive Network](https://cran.r-project.org). There are versions available for Mac, Windows, and Unix/Linux. This software is **required** for this course.
+
+It is important that you have the latest version of R installed. For this course we will be using **R version `r paste(version$major, version$minor, sep = ".")`** or higher. You can determine what version of R you have by starting up R and typing into the console `R.version.string` and hitting the `return`/`enter` key. If you do not have the proper version of R installed, go to [CRAN](https://cran.r-project.org) and download and install the latest version.
+
+Some students like to use the Rstudio interface, but this is optional, and in fact discouraged until you have a grasp of the R environment (I will let you know when we are at a good place in the course). The RStudio interactive development environment (IDE) requires that R be installed, and so is an "add-on" to R. You can obtain the RStudio Desktop for free from the [RStudio web site](https://www.rstudio.com/). You can determine the version of RStudio by looking at menu item `Help > About RStudio`. You should be using **RStudio version 1.4.1106 or higher**.
+
+## Quizzes
+
+There will be weekly (short) quizzes on Laulima in the beginning of the semester. These are intended to be low-stakes to assist you in checking your understanding of R syntax and get you more comfortable with trial-and-error learning.
+
+## Projects
+
+There will be one optional assignment and 4 graded assignments, due every 3--4 weeks. Projects will be submitted electronically via GitHub (more on this later).
+
+The projects are basically a scaffold to learn how to build a data analysis pipeline for your own research data.  If you donʻt have your own data yet, I encourage students to ask their advisor for a sample dataset, or a published dataset, or another grad studentʻs dataset to practice on.  You can also ask me for help to find data, this is not a problem. 
+
+Project 0 is actually optional, but you are encouraged to practice by putting up your own website.  Project 1 is data cleaning on a sample dataset, Project 2 produces analyses on the cleaned data from Project 1.  Project 3 is applying everything you learned to your own dataset and exploring.  You will also do a show-and-tell oral presentation on Project 3 at the end of the semester. Itʻs fun and students learn a lot. Itʻs exciting to see everyone elseʻs stuff and the diversity of projects people do. 
+
+The project assignments will be due on
+
+-   Project 0: February 4, 11:59pm (optional and not graded but hopefully useful and fun)
+-   Project 1: February 27, 11:59pm
+-   Project 2: March 25, 11:59pm
+-   Project 3: April 7-May 6 (multiple stages)
+
+### Collaboration
+
+Please feel free to study together and talk to one another about project assignments. The mutual instruction that students give each other is among the most valuable that can be achieved.
+
+However, it is expected that **project assignments will be implemented and written up independently unless otherwise specified**. Specifically, please do not share analytic code or output. Please do not collaborate on write-up and interpretation. Please do not access or use solutions from any source before your project assignment is submitted for grading.
+
+## Discussion Forum
+
+The course will make use of DISCORD to ask and answer questions and discuss any of the course materials. Please engage and provide answers as well as questions. The Instructor will monitor DISCORD and answer questions when appropriate.
+
+## Exams
+
+There are **no exams** in this course.
+
+## Grading
+
+Grades in the course will be based on weekly quizzes (10%), participation (20%) and projects (70%). Each of Projects 1--3 counts approximately equally in the final grade. Grades will be posted on Laulima.
+
+## Policy for submitted projects late
+
+The policy for late submissions is as follows:
+
+- Each student will be given two free "late days" for the rest of the course.
+- A late day extends the individual project deadline by 24 hours without penalty.
+- The late days can be applied to just one project (e.g. two late days for Project 2), or they can be split across the two projects (one late day for Project 2 and one late day for Project 3). This is entirely left up to the discretion of the student.
+- Late days are intended to give you flexibility: you can use them for any reason no questions asked.
+- You do not get any bonus points for not using your late days, and they are not transferrable.
+
+For students who exceed their free late days:
+
+- I will be deducting 5% for each extra late day. For example, if you have already used all of your late days for the term, we will deduct 5% for the assignment that is <24 hours late, 10% points for the assignment that is 24-48 hours late, and 15% points for the assignment that is 48-72 hours late, etc.
+- **I will not grade assignments that are more than 3 days past the original due date**.
+
+### Regrading Policy
+
+It is very important to me that all assignments are properly graded. If you believe there is an error in your assignment grading, please send an email within 7 days of receiving the grade explaining the issue. No re-grade requests will be accepted orally, and no regrade requests will be accepted more than 7 days after you receive the grade for the assignment.
+
+
+## Academic Ethics and Student Conduct Code
+
+The faculty, staff, and students participating in courses of the School of Life Sciences assume a responsibility to uphold the Universityʻs missions of academic excellence and social responsibility as appropriate for an institute of higher education. Violations of the UH Systemwide Student Conduct Code includes but is not limited to: cheating; plagiarism; providing copies of your work to other students which is submitted as their own; obtaining copies of said work by others; using copies of said work or representing any portion of another person’s work as your own (i.e., plagiarism); misconduct. While we encourage you to discuss strategies for problem solving,  and even collaborate by working through the problems/strategies together, giving someone all the answers is cheating. If you are unsure please ask.
+
+Plagiarism is when you use information or present ideas, whether by paraphrase or direct quote, from a source (be it published or a classmate) without giving proper credit to that source.
+Cheating in any way will be reported to the attention of UH Office of Judicial Affairs, and result in an F in this course.
+Students should be familiar with the policies and procedures specified under the Systemwide Student Conduct Code [portal](http://studentaffairs.manoa.hawaii.edu/policies/conduct_code/proscribed_conduct.php).
+
+
+## Disability Support Service
+
+Students requiring accommodations for disabilities should register with [the Kokua program at Student Disability Services](https://www.hawaii.edu/kokua/). It is the responsibility of the student to register for accommodations. The Kokua office will send me a notification once you are registered, however, they often do not share information regarding the specifics. If the accommodations are not sufficient to ensure your success, please contact me as soon as possible so that we may work together on providing for an effective learning environment.
+
+## Prerequisites
+
+This is an applied quantitative course. I will not discuss the mathematical details of specific data analysis approaches, however some statistical background and being comfortable with quantitative thinking is useful. Previous experience with writing computer programs in general and R in particular is also helpful, but not necessary. If you have no programming experience, expect to spend extra time getting yourself familiar with R, especially at the very beginning (but it will get better). As long as you are willing to invest the time to learn the programming and you do not mind thinking quantitatively, you should be able to do well, independent of your background. In fact you will have the most to gain.
+
+### Getting set up
+
+You must install [R](https://cran.r-project.org) and [RStudio, optional](https://rstudio.com) on your computer in order to complete this course. These are two **different** applications that must be installed separately before they can be used together:
+
+-   R is the core underlying programming language and computing engine that we will be learning in this course
+
+-   RStudio is an interface into R that makes many aspects of using and programming R simpler
+
+Both R and RStudio are available for Windows, macOS, and most flavors of Unix and Linux. Please download the version that is suitable for your computing setup.
+
+Throughout the course, we will make use of numerous R add-on packages that must be installed over the Internet. Packages can be installed using the `install.packages()` function in R. For example, to install the `tidyverse` package, you can run
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+```
+
+in the R console.
+
+#### How to Download R for Windows
+
+Go to [https://cran.r-project.org]() and
+
+1.  Click the link to "Download R for Windows"
+
+2.  Click on "base"
+
+3.  Click on "Download R 4.2.2 for Windows"
+
+::: callout-warning
+For all software, please download the latest version.
+:::
+
+
+#### How to Download R for the Mac
+
+Goto [https://cran.r-project.org]() and
+
+1.  Click the link to "Download R for (Mac) OS X".
+
+2.  Click on "R-4.2.2.pkg" (or the latest version)
+
+
+#### How to Download RStudio
+
+Goto [https://rstudio.com]() and
+
+1.  Click on "Products" in the top menu
+
+2.  Then click on "RStudio" in the drop down menu
+
+3.  Click on "RStudio Desktop"
+
+4.  Click the button that says "DOWNLOAD RSTUDIO DESKTOP"
+
+5.  Click the button under "RStudio Desktop" Free
+
+6.  Under the section "All Installers" choose the file that is appropriate for your operating system.
+
+
+## General Disclaimers
+
+-   This syllabus is a general plan, deviations announced to the class by the instructor may be necessary.

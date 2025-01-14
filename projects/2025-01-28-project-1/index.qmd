@@ -1,0 +1,78 @@
+---
+title: "Project 1 "
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Information for Project 1"
+date: 2023-01-30
+categories: [project 1, projects]
+---
+## Acknowledgements
+
+This exercise is modified from material developed by [Andreas Handel](https://www.andreashandel.com).
+
+# Overview
+
+**Due date: March 3 at 11:59pm**
+
+The aim of this project is to practice building a data analysis pipeline using the tools we have been learning thus far (R, Quarto, and GitHub). 
+
+We will use the *Palmer Penguins* dataset to practice on. The First project is to work on Data Cleaning and Exploratory Analysis (mainly to ensure the data are good and give you an intial sense of what the data contain). 
+
+# Project template
+
+I created [a public Github repository called Project-template](https://github.com/mbutler808/Project-template) which is intended to serve as a template for doing a reproducible data analysis project. 
+
+There is a folder structure to aid in organizing your project. Each folder contains a README file describing what each folder should contain. The template also contains several example files to demonstrate how the project workflow works. 
+
+For the first project, we will focus on the data cleaning and initial exploration phase. The report will consist of just these inital steps. In later projects you will more fully explore the data and provide more writeup. 
+
+Focus on the `Data` and `Code` folders which contain template files to get you started. This template is just a guide, you do not have to follow exactly that structure, as long as you provide all the requested parts/tasks for a fully automated and reproducible project, with all files in one GitHub repository, at the end.
+
+Use the provided template as starting point for your project. Clone the [Github repository](https://github.com/mbutler808/Project-template) and follow the instructions to turn it into a new repository for your class project, call it `YOURNAME-Rclass-project`. Once you made the new repository, follow the usual Github workflow to get it to your local computer. Then open the readme file and change the text so it states somewhere "This is YOURNAME class project repository".
+
+
+# Project 1
+
+This part of the project should get us from raw data to processed data. We also want to demonstrate that the data are free of error and ready to be analyzed. That is the purpose of the initial exploratory analyses. 
+
+The assignment is to provide: 
+
+* A somewhat detailed description containing text and code showing your cleaning/wrangling steps. I would like to see a document for the data cleaning (FYI - for a scientific manuscript, you might want to have a separate supplementary file which contains these details.) This should document all changes made to the raw data, and end with what was retained in the processed data. 
+* The processed data folder should contain a **data dictionary** which should be referred to in your data cleaning document.
+* I would like to see a report showing initial data exploration. This means showing plots or tables that explore the data, with a focus on demonstrating data quality and basic structure. You should demonstrate that all of the data are free of error and ready for analysis. You are encouraged to use histograms, bivariate plots, or other documentation to show the quality and general characteristics of the data. 
+* Removal or replacement of any left-over files and leftover text and code from the templates. Update all README files, delete any files and folders that are not part of your project. Remove any comments and bits of code that are not relevant. At this stage, only information, code and files relevant to your project should be present, with appropriate documentation.
+* It is up to you how you organize things. You can use a combination of R or qmd scripts. As long as things are well documented, reproducible and logical, the exact setup is your choice.
+* Everything needs to be fully reproducible and you need to provide somewhere (e.g. in the main text file or in the README file in your repository) instructions on the steps to run the data analysis pipeline (i.e., what one needs to do to completely reproduce everything).
+* Your two reports (data cleaning and data exploration) - should knit into a word or pdf or html document.
+* All code must run without error and produce the required output. 
+* (optional) If you start including references, you should use a reference manager and a bibtex file from which you cite references in your manuscript. Zotero has a free reference manager, but if you have another reference manager that can handle bibtex files, you can use that too. Your bib file should be part of the project repository (for instance in the same folder as the manuscript). Feel free to pick any citation style you like (you can get CSL files from e.g. [this style repository](https://www.zotero.org/styles)).
+
+Grading for this part will follow the following rubric: 
+
+| **Category** | **Description**  | **Score** |
+| --- | --- | --- |
+| Sufficient | Submission is (almost) complete | 3 |
+| Somewhat insufficient | Submission is somewhat incomplete, parts missing or not reproducible| 2 |
+| Insufficient | Submission is very incomplete, major parts missing or not reproducible| 1 |
+| Absent | (Almost) everything of submission is missing | 0 |
+
+
+# Logistics and formatting
+
+Each assignment needs to be submitted in a fully reproducible form, using the tools we cover in the class (R, Quarto, GitHub, etc.). You should create a public Github repository (using the template described below) which should contain all the files for your project. Name it `YOURNAME-Rclass-project`. 
+
+The main document should be a Quarto file, which can be turned into a suitable output format (html or word or pdf). For now it is just a short report, but the final project will follow the structure of a brief scientific paper. Follow the template, and adjust as needed. You can choose word, html, or pdf output. 
+
+Structure your project similar to the provided template, with data, scripts, results and manuscript in different folders, various R scripts to perform different bits of the analysis, and a final qmd file that pulls everything in and generates the report. 
+
+For all your submissions, you need to provide everything needed (data, code, etc.) to allow a full and automated reproduction of your analysis.
+
+
+# Feedback and Assessment
+
+You will receive feedback from me and/or your classmates after each project submission. 
+
+

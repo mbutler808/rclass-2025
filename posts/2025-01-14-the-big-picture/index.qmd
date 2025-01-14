@@ -1,0 +1,119 @@
+---
+title: "Introduction and The Big Idea"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "The big idea"
+date: 2025-01-14
+# image: "../../images/happygitwithr.png"
+format: revealjs
+categories: [module 1, week 1, introduction]
+---
+
+## The Modern Computationally-Literate Scientist
+
+::: {.incremental .scrollable}
+
+- Uses computational tools to test ideas
+- Has Computing Skills to:
+  + Handle any kind of data
+  + Implement any kind of test
+  + Produce graphics for exploration and communication
+  + Test and validate code (how do we know its right?)
+  + Interact with other computing systems and the Cloud
+  + Can archive and disseminate data and workflow
+  + Produce reproducible results!
+
+:::
+
+
+## Data Science Workflow
+#### From [R for Data Science 2e](https://r4ds.hadley.nz/) by Hadley Wickam, Garrett Grolemund, and Mine Çetinkaya-Rundel
+[![](../../images/whole-game.png){fig-alt="R for Data Science"}](https://r4ds.hadley.nz/whole-game.html)
+
+::: {.incremental}
+
+- Question Development 
+- Exploration and Testing 
+- Communication
+
+:::
+
+## Our Work is Interdisciplinary
+
+::: {.incremental}
+
+- Disciplinary Knowledge (Biology) -> Question Development 
+- Statistics -> Exploration and Testing 
+- Computer Science -> Repeatable, Scalable, Reusable 
+  + __Code MUST be FREE OF ERROR__
+  + Clean and Well documented (understandable)
+  + Modular - enhances _creativity_ and _scalability_
+
+:::
+
+## Data Science Workflow Requirements:
+
+The difference between analyzing data for an assignment (Undergraduate work) vs. professional science (publication)
+
+::: {.incremental}
+
+- The "answer" must be correct - code __validation__
+- Must be __repeatable__
+- Workflow must be complete, well organized, __documented__
+- Data and code shared on a public repository with a DOI 
+  + e.g., [GitHub](https://github.com) and [Zotero](https://www.zotero.org) (free options!) 
+  + or [Dryad](https://datadryad.org/stash) ($150 per dataset)
+:::
+
+## Open Source Tools you will learn in this course
+::: {.incremental}
+- R \[[watch short podcast, up to 4:00](https://youtu.be/wzPRpyoNaa8?si=TxENkAoxZ_D8kHcJ)\]
+- Command Line (UNIX/ Windows/ File Commands in your operating system)
+  + Understand your computer's organization and filepaths
+  + More precisely control your files and information
+  + Install some command-line software
+- Git/GitHub
+- Quarto/Rmarkdown
+- and many more...
+:::
+
+## How the Tools Fit Together 
+[![](../../images/whole-game.png){fig-alt="R for Data Science"}](https://r4ds.hadley.nz/whole-game.html)
+
+::: {.nonincremental}
+
+| Need | Tools |
+|------|-------|
+| Observe -> Record Data -> Data Table  | *Notebooks* |
+| Code -> Document -> Comment (annotate) | *R* |
+| Organize Project -> Version Control -> Share | *Git/GitHub* |
+| Communicate |  *Quarto/Rmarkdown* |
+
+:::
+
+## Software
+
+- Do you have R installed and working? (R studio is optional)
+- For a longer walk-through here is another resource: [Introduction to R/Rstudio](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-08-30-introduction-to-r-and-rstudio/)
+- Git/GitHub: Please Install for next time. Letʻs follow [Introduction to Git/GitHub](https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-08-30-introduction-to-gitgithub/)
+
+## Learning R - A first session
+
+::: {.incremental}
+- Think about how R works as you try out commands
+- "Mistakes" are opportunities to learn how R works!
+- Learning Language involves a lot of trial and error
+- Don't be afraid to try - poke it - it won't break!
+- <https://www.r-project.org>  Go to manuals, click on **An Introduction to R**
+- Follow Section 2.1
+- input -> R -> output
+- What came out? What does it tell you about the rules R follows?
+- Computers only do **Exactly** what you tell them to do
+- Jump to Appendix A - letʻs try to understand some rules of R together
+:::
+
+
+

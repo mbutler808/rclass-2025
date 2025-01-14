@@ -1,0 +1,27 @@
+---
+title: "Oral Presentation"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Information for Final Oral Presenatation"
+date: 2023-04-27
+categories: [project 3, projects]
+---
+# Oral Presentation
+
+On the last day of class, we will have oral presentations. 
+
+
+They will be informal talks on your final projects. I want you to cover the following in about 10 minutes:
+
+- Brief __introduction__ to the disciplinary (biological, etc.) problem + More __introduction__ to the data science (cleaning+analysis) problem.
+  - Briefly but _Clearly_ describe your __data__, and itʻs __structure__
+  - What are you starting with? What are you aiming to get to?
+- __Methods__ - how did you do what you needed to do? Be sure to mention any new packages or tricky code you had to figure out. These often identify data manipulation steps that turn out to be critical.
+- __Results__ - what do the data show? What else did you find out?
+- __Conclusions__ - what does it mean? What potential do you see here? If itʻs not finished, speculate on what you might be able to infer or what questions it might answer?
+- __What did you learn?__ What was most interesting, confusing, fun to figure out? Whatever you want to say
+
+_Slides are optional_, but can be helpful if you need a prompt to remember what to say. Or you can talk us through your writeup like I do in class, whatever is more comfortable for you. Do show us key elements like your repo, and how to access it, etc.

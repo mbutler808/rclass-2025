@@ -1,0 +1,44 @@
+---
+title: "Welcome to Introduction to Data Science in R for Biologists!"
+image: images/coolPCA.png
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/mbutler808
+    - icon: github
+      text: Github
+      href: https://github.com/mbutler808
+---
+
+Welcome to Data Science for Biologists at the University of Hawaiʻi!
+
+## What is this course?
+
+This course covers the basics of computational and programming skills required for research in biological sciences and related disciplines. We will cover practical issues in data organization and management as well as programming in R and the tidyverse. Some of the topics will include: data ethics, best practices for coding and reproducible research, introduction to data visualizations, best practices for working with special data types (dates/times, text data, etc), best practices for storing data, basics of debugging, organizing and commenting code, basics of interacting with other computational resources from R. Topics in statistical data analysis, morphometrics, phylogenetic tree visualization, and other practical examples provide working examples.
+
+
+## Getting started
+
+Please look over the [Syllabus](syllabus.qmd) and [Schedule](schedule.qmd) under **General Information**. Lectures are provided under the course materials tab.
+
+## Acknowledgements
+
+This course was developed and is maintained by [Marguerite Butler](https://butlerlab.org).
+
+A big thank you to [Stephanie Hicks](https://www.stephaniehicks.com) for generously sharing the beautifully designed quarto template for this course.
+
+Materials have been adapted from courses developed by the following individuals (more to come): [Stephanie Hicks](https://www.stephaniehicks.com).
+
+The course materials are licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/). Linked and embedded materials are governed by their own licenses. I assume that all external materials used or embedded here are covered under the educational fair use policy. If this is not the case and any material displayed here violates copyright, please let me know and I will remove it.
+
+## Useful (Free) R Resources
+
+Intro to R (by the R Core Group): <https://cran.r-project.org/doc/manuals/r-release/R-intro.html>
+R for Data Science: <http://r4ds.had.co.nz/>
+Intro to Data Science: <http://rafalab.dfci.harvard.edu/dsbook/>
+Various “Cheat Sheets”: <https://www.rstudio.com/resources/cheatsheets/>
+DataCamp: <http://www.datacamp.com>
+R reference card: <http://cran.r-project.org/doc/contrib/Short-refcard.pdfUCLA>
+R Data Import/Export (by the R Core Group): <https://cran.r-project.org/doc/manuals/r-release/R-data.html>

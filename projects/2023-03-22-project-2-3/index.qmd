@@ -1,0 +1,79 @@
+---
+title: "Projects 2,3 "
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Information for Projects 2 and 3"
+date: 2025-02-11
+categories: [project 2, project 3, projects]
+---
+## Acknowledgements
+
+This exercise is modified from material developed by [Andreas Handel](https://www.andreashandel.com).
+
+# Overview
+
+In project 1, you used tools learned in class to clean the raw *Palmer Penguins* dataset, document the cleaning process, and to produce a cleaned dataset.  
+
+In project 2, you will analyze the cleaned data.  
+
+In project 3, you will clean and analyze a dataset of your own choosing. 
+
+
+
+# Project template
+
+More materials have been added to the project template to illustrate how you might put together analysis scripts and finished products (manuscript, etc.).
+
+Either update or repository (`git pull`) or clone a new copy (give it a name like `YOURNAME-Rclass-project2`) if you donʻt want to merge your files of the same name [Github repository](https://github.com/mbutler808/Project-template). 
+
+
+Customize all of the files in your repository for your project (or delete them if not needed). Somewhere in the top level README.md, please add a link to your repo. 
+
+
+# Project 2
+
+**Project 2 Due date: March 25, 11:59pm**  
+
+This part of the project should take us from cleaned data to analysis (.r and .qmd) and skeleton manuscript (.qmd). 
+
+The assignment is to: 
+
+* (Optional) Go back and update unfinished business in Project 1. Indicate what you did on the history of the overall README.md if you want me to reassess. See project 1 description for expectations. 
+* Develop 3 questions that you can answer about the Palmer Penguin data. 
+* Answer the questions using figures, tables, statistical or other models. 
+* Produce your analysis by developing the code and quarto in the Analysis folder, and the Manuscript in the Products folder to document your analysis. 
+* Document your work by updating all of the relevant READMES. Be sure to remove or replacement of any left-over files and leftover text and code from the templates that are not relevant to your work. Remember you are creating a finished product for review by scientists. 
+* Everything needs to be fully reproducible and you need to provide somewhere (e.g. in the README file in your repository) instructions on the steps to run the data analysis pipeline (i.e., what one needs to do to completely reproduce everything).
+* All code must run without error and produce the required output. 
+* (optional) If you start including references, you should use a reference manager and a bibtex file from which you cite references in your manuscript. Zotero has a free reference manager, but if you have another reference manager that can handle bibtex files, you can use that too. Your bib file should be part of the project repository (for instance in the same folder as the manuscript). Feel free to pick any citation style you like (you can get CSL files from e.g. [this style repository](https://www.zotero.org/styles)).
+
+Grading for will follow [the rubric](https://github.com/mbutler808/Project-template/blob/main/ProjectRubric.md) included in the repository. 
+
+# Project 3
+
+**Project 3 Data Check due: April 8, 11:59pm**  
+**Project 3 Peer review: April 22, 11:59pm**  
+**Project 3 Presentation: May 1,6 in class**  
+**Project 3 Due date: May 7, 11:59pm**  
+
+On a dataset of your own choosing, perform data cleaning (as necessary) and exploration, and a final analysis. (Basically projects 1 and 2 on your own data).
+
+# Logistics and formatting
+
+Each assignment needs to be submitted in a fully reproducible form, using the tools we cover in the class (R, Quarto, GitHub, etc.). You should create a public Github repository (using the template described below) which should contain all the files for your project. Name it `YOURNAME-Rclass-project`. 
+
+The main document should be a Quarto file, which can be turned into a suitable output format (html or word or pdf). For now it is just a short report, but the final project will follow the structure of a brief scientific paper. Follow the template, and adjust as needed. You can choose word, html, or pdf output. 
+
+Structure your project similar to the provided template, with data, scripts, results and manuscript in different folders, various R scripts to perform different bits of the analysis, and a final qmd file that pulls everything in and generates the report. 
+
+For all your submissions, you need to provide everything needed (data, code, etc.) to allow a full and automated reproduction of your analysis.
+
+
+# Feedback and Assessment
+
+You will receive feedback from me and/or your classmates after each project submission. 
+
+

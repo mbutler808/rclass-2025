@@ -1,0 +1,134 @@
+---
+title: "Project 0 (optional)"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Information for Project 0 (entirely optional, but hopefully useful and fun!)"
+date: 2025-01-14
+categories: [project 0, projects]
+---
+## Acknowledgements
+
+This exercise is modified from material developed by [Stephanie Hicks](https://www.stephaniehicks.com).
+
+# Background
+
+**Due date: February 4 at 11:59pm**
+
+Using the tools we are learning (e.g. R and Github), let's apply them in a small (but also comprehensive) exercise. By completing it it will help you...
+
+-   **Please note this project is entirely optional** (i.e. it will not be graded), but hopefully it will be helpful for setting up and testing your computing environment for the rest of the course (and making sure that everything is working), provide you an example of how easy it can be to create a website, and give you an opportunity to introduce yourself to your classmates.
+
+-   **For those of you who are new to GitHub/R/Rmarkdown**: this project makes you do a lot of things that you might not be familiar with. I know that this might be time-consuming and also might feel a bit intimidating. It's partly unavoidable and partly on purpose. You need to learn how to quickly get up to speed with all kinds of new tools that come your way (there are more every year). However, there are commonalities to these tools, so learning and practicing being computationally adaptable is a good idea. You are welcome to draw on any sources for help that you want (online, classmates, instructor, etc.). I'm confident with a bit of trial and error you'll get it to work.
+
+# Part 1
+
+This part of the project is to ensure that you have successfully set up your computing environment. Please email (use the Subject line: `Zool 710 Setup`) the Course Instructor (Dr. Marguerite Butler) at mbutler\@hawaii.edu the following information:
+
+### Setting up your computing environment
+
+1.  Your name, UH email (if applicable).
+
+2.  The type of computer/operating system you are using (Windows, Mac, Unix/Linux, other)
+
+3.  The version of R that you have installed on your computer. To do this, start up R and run the following in the R console and include the output in your email.
+
+```{r}
+#| label: rv
+#| eval: false
+#| echo: true
+print(R.version.string)
+```
+
+4.  If you are using Rstudio, the version that you have installed on your computer. To do this start up RStudio and in the R console window, run the following and again include the output in your email:
+
+```{r rstudiov, eval = FALSE, echo = TRUE}
+print(RStudio.Version()$version)
+```
+
+5.  If you have a GitHub username, please include this in your email. If you do not have a GitHub username, read https://happygitwithr.com, sign up for GitHub, and include your new username in your email to me.
+
+6.  To make sure git is installed on your system, use the 'Terminal' (e.g. it's next to the R Console within RStudio) (or whatever you use), run the following and include the output in your email:
+
+For example, this is mine:
+
+```{.bash filename="Terminal"}
+git --version
+```
+
+```{bash gv, eval = TRUE, echo = FALSE}
+git --version
+```
+
+If you have any trouble with any of the steps above, try to first post on the discussion board on Slack. I will be checking it frequently, but other students may also be helpful in their replies. You can also use other resources to get help (Google, R4DS, colleagues/friends/relatives with R/Markdown experience, etc.). Still, try to do as much as possible yourself. We will use all the bits you are learning here repeatedly during this course.
+
+# Part 2
+
+This part of the project is to help you introduce yourself (and your interests!) to others in this course. You will create a new GitHub repository and build a small website about yourself.
+
+### 1. Create a GitHub repo for your website
+
+Create a new GitHub repository titled `zool710-intro-<firstname>-<lastname>` (where you replace `<firstname>` with your first name and `<lastname>` with your last name) in your own personal GitHub account (e.g. `https://github.com/<yourgithubusername>/biostat776-intro-<firstname>-<lastname>`).
+
+For example, you can find an example that I created for myself at
+
+-   github repo: <https://github.com/mbutler808/zool710-intro-marguerite-butler>
+
+### 2. Make a local folder for your websites
+
+I like to create my git repos inside of **marguerite/Documents/git/newrepo**. Make a folder for your website (same name as step 1) on your local computer in your git folder. The new folder for your website will go here.
+
+### 2. Build a website inside of your GitHub repo
+
+Using one of the many ways we discussed in class (e.g. [quarto](hhttps://quarto.org/docs/websites/), or a [simple R Markdown website](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html), or any number of other options including  [blogdown](https://bookdown.org/yihui/blogdown/), [distill](https://rstudio.github.io/distill/website.html), etc), create a new website project in RStudio with the appropriate files. Using quarto, you can also do it entirely from the command line. Just follow the instructions and choose **terminal** for your tool at the [quarto website](https://quarto.org/docs/websites/).
+
+If you are using **quarto**, from your parent folder (*git* in the example above), run (where you will replace mysite with "zool710-intro-..."):
+
+```{.bash filename="Terminal"}
+quarto create-project mysite --type website
+```
+Edit the **index.qmd** file to add your personalized content.
+For example, you might include the following information:
+
+-   Write a short summary introducing yourself. Structure the webpage with headings, subheadings, etc. Talk a bit about yourself, your background, training, research interests. Let me/us know what kind of statistics, programming, data analysis experience you already have. I am also curious to know what you most hope to learn in this course.
+
+-   Five fun facts about yourself
+
+-   A web page linking to something you think is really cool/interesting/inspiring/etc. You could also describe briefly what it is and why you like it.
+
+If you want, feel free to get creative and include other things. You can play with RMarkdown if you wish to, e.g., you can try to include some table or a video, etc.
+
+### 3. Include a `README.md` file
+
+Your project repository should include a `README.md` file (if it was not included already).
+
+Edit the repository `README.md` file. Typically it will only contain the name of your repository with a `#` sign in front. The `#` represents a level 1 heading in Markdown. Change the headline and call it "Introducing myself" (or something like that). Underneath write something like "This website contains a short introduction of *Your Name*."
+
+Make sure the 2 files (README.md and especially `index.Rmd` / `index.html`) look the way you want. Make changes until everything works.
+
+### 4. Deploy your website
+
+Depending on how you want to deploy your website, the following may or may not be relevant to you. In general, you want to make sure you have:
+- Initialized your project to use `git` (i.e. you can type `git init` to initialize the repository to use git.
+- Add and commit your changes.
+- Push your changes and deploy your website.
+
+### 5. Publish your website using GitHub pages
+
+There are many ways you can publish a simple website for free.  To use GitHub pages with quarto, follow the instructions here in the next link.
+
+Note! You really only need to follow the instructions in the one section called [*Render to docs*](https://quarto.org/docs/publishing/github-pages.html#render-to-docs).  Ignore the rest for now.
+
+
+Following steps 2-5, here is my example website:
+
+-   website: <https://mbutler808.github.io/zool710-intro-marguerite-butler/>
+
+### 6. Share your website
+
+-   Go to Slack and write a short post with a link (URL) to your website (and URL to the corresponding GitHub repository) that you created.
+-   As you read the introductions from other folks in the class, feel free to comment/reply using Discussion board.
+
+In class on Feb 7, I will show as many websites as I can `r emojifont::emoji('star')``r emojifont::emoji('heart_eyes')`

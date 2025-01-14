@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2023-01-23">
+<meta name="description" content="Information for Project 1">
+
+<title>ZOOL710 Data Science in R for Biologists - Project 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">    
+        <li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
+        <li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#project-template" id="toc-project-template" class="nav-link" data-scroll-target="#project-template">Project template</a></li>
+  <li><a href="#project-1" id="toc-project-1" class="nav-link" data-scroll-target="#project-1">Project 1</a></li>
+  <li><a href="#logistics-and-formatting" id="toc-logistics-and-formatting" class="nav-link" data-scroll-target="#logistics-and-formatting">Logistics and formatting</a></li>
+  <li><a href="#feedback-and-assessment" id="toc-feedback-and-assessment" class="nav-link" data-scroll-target="#feedback-and-assessment">Feedback and Assessment</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project 1</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">project 1</div>
+    <div class="quarto-category">projects</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Information for Project 1
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <a href="https://butlerlab.org">Marguerite Butler</a> 
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            School of Life Sciences, University of Hawaii
+          </p>
+      </div>
+    </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>This exercise is modified from material developed by <a href="https://www.andreashandel.com">Andreas Handel</a>.</p>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p><strong>Due date: March 3 at 11:59pm</strong></p>
+<p>The aim of this project is to practice building a data analysis pipeline using the tools we have been learning thus far (R, Quarto, and GitHub).</p>
+<p>We will use the <em>Palmer Penguins</em> dataset to practice on. The First project is to work on Data Cleaning and Exploratory Analysis (mainly to ensure the data are good and give you an intial sense of what the data contain).</p>
+</section>
+<section id="project-template" class="level1">
+<h1>Project template</h1>
+<p>I created <a href="https://github.com/mbutler808/Project-template">a public Github repository called Project-template</a> which is intended to serve as a template for doing a reproducible data analysis project.</p>
+<p>There is a folder structure to aid in organizing your project. Each folder contains a README file describing what each folder should contain. The template also contains several example files to demonstrate how the project workflow works.</p>
+<p>For the first project, we will focus on the data cleaning and initial exploration phase. The report will consist of just these inital steps. In later projects you will more fully explore the data and provide more writeup.</p>
+<p>Focus on the <code>Data</code> and <code>Code</code> folders which contain template files to get you started. This template is just a guide, you do not have to follow exactly that structure, as long as you provide all the requested parts/tasks for a fully automated and reproducible project, with all files in one GitHub repository, at the end.</p>
+<p>Use the provided template as starting point for your project. Clone the <a href="https://github.com/mbutler808/Project-template">Github repository</a> and follow the instructions to turn it into a new repository for your class project, call it <code>YOURNAME-Rclass-project</code>. Once you made the new repository, follow the usual Github workflow to get it to your local computer. Then open the readme file and change the text so it states somewhere “This is YOURNAME class project repository”.</p>
+</section>
+<section id="project-1" class="level1">
+<h1>Project 1</h1>
+<p>This part of the project should get us from raw data to processed data. We also want to demonstrate that the data are free of error and ready to be analyzed. That is the purpose of the initial exploratory analyses.</p>
+<p>The assignment is to provide:</p>
+<ul>
+<li>A somewhat detailed description containing text and code showing your cleaning/wrangling steps. I would like to see a document for the data cleaning (FYI - for a scientific manuscript, you might want to have a separate supplementary file which contains these details.) This should document all changes made to the raw data, and end with what was retained in the processed data.</li>
+<li>The processed data folder should contain a <strong>data dictionary</strong> which should be referred to in your data cleaning document.</li>
+<li>I would like to see a report showing initial data exploration. This means showing plots or tables that explore the data, with a focus on demonstrating data quality and basic structure. You should demonstrate that all of the data are free of error and ready for analysis. You are encouraged to use histograms, bivariate plots, or other documentation to show the quality and general characteristics of the data.</li>
+<li>Removal or replacement of any left-over files and leftover text and code from the templates. Update all README files, delete any files and folders that are not part of your project. Remove any comments and bits of code that are not relevant. At this stage, only information, code and files relevant to your project should be present, with appropriate documentation.</li>
+<li>It is up to you how you organize things. You can use a combination of R or qmd scripts. As long as things are well documented, reproducible and logical, the exact setup is your choice.</li>
+<li>Everything needs to be fully reproducible and you need to provide somewhere (e.g.&nbsp;in the main text file or in the README file in your repository) instructions on the steps to run the data analysis pipeline (i.e., what one needs to do to completely reproduce everything).</li>
+<li>Your two reports (data cleaning and data exploration) - should knit into a word or pdf or html document.</li>
+<li>All code must run without error and produce the required output.</li>
+<li>(optional) If you start including references, you should use a reference manager and a bibtex file from which you cite references in your manuscript. Zotero has a free reference manager, but if you have another reference manager that can handle bibtex files, you can use that too. Your bib file should be part of the project repository (for instance in the same folder as the manuscript). Feel free to pick any citation style you like (you can get CSL files from e.g.&nbsp;<a href="https://www.zotero.org/styles">this style repository</a>).</li>
+</ul>
+<p>Grading for this part will follow the following rubric:</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Category</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Score</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sufficient</td>
+<td>Submission is (almost) complete</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Somewhat insufficient</td>
+<td>Submission is somewhat incomplete, parts missing or not reproducible</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Insufficient</td>
+<td>Submission is very incomplete, major parts missing or not reproducible</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Absent</td>
+<td>(Almost) everything of submission is missing</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="logistics-and-formatting" class="level1">
+<h1>Logistics and formatting</h1>
+<p>Each assignment needs to be submitted in a fully reproducible form, using the tools we cover in the class (R, Quarto, GitHub, etc.). You should create a public Github repository (using the template described below) which should contain all the files for your project. Name it <code>YOURNAME-Rclass-project</code>.</p>
+<p>The main document should be a Quarto file, which can be turned into a suitable output format (html or word or pdf). For now it is just a short report, but the final project will follow the structure of a brief scientific paper. Follow the template, and adjust as needed. You can choose word, html, or pdf output.</p>
+<p>Structure your project similar to the provided template, with data, scripts, results and manuscript in different folders, various R scripts to perform different bits of the analysis, and a final qmd file that pulls everything in and generates the report.</p>
+<p>For all your submissions, you need to provide everything needed (data, code, etc.) to allow a full and automated reproduction of your analysis.</p>
+</section>
+<section id="feedback-and-assessment" class="level1">
+<h1>Feedback and Assessment</h1>
+<p>You will receive feedback from me and/or your classmates after each project submission.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

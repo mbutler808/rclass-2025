@@ -1,0 +1,100 @@
+---
+title: "Schedule"
+description: |
+ Schedule and course materials for Data Science in R for Biologists (Zool 710 Spring 2025).
+tbl-colwidths: [15,10, 55, 25]
+---
+```{r}
+#| echo: false
+```
+
+## Schedule and course materials
+
+For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring/markdown-basics.html) which are cross-language executable code), go to the [course GitHub repository](https://github.com/mbutler808/mbutler808.github.io/) and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.  
+
+
+::: column-page
+| Week         | Dates   | Topics | Projects |     |
+|---------------|---------------|---------------|---------------|---------------|
+| **Module 1** |         | **Computational Tools for Data Science** |||
+||||||
+| Week 1       | Jan 14  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2025-01-14-the-big-picture/)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-14-the-big-picture/index.qmd)\] |  ||
+|              | Jan 16  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2025-01-16-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-16-your-computer-filesystems/index.qmd)\] |||
+| Week 2       | Jan 21 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html]\] \[[Qmd]\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2025-01-14-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2025-01-14-project-0/index.qmd)\]  | |
+||||||
+| **Module 2** |         | **Reproducible Research** |||
+||||||
+|        | Jan 23 | `r emojifont::emoji('octopus')` Reproducible Research \[[html]\] \[[Qmd]\]  |||
+| Week 3 | Jan 28 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html]\] \[[Qmd]\]|||
+|       | Jan 30  | `r emojifont::emoji('microscope')` What is the Question? \[[html]\] \[[Qmd]\] | | |
+||||||
+| **Module 3** |         | **Data Analysis in R ** |||
+||||||
+|              | Feb 4 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html]\] \[[Qmd]\]| `r emojifont::emoji('fallen_leaf')` Project 0 due | |
+|              | Feb 6 | `r emojifont::emoji('eyeglasses')` Reference Management \[[html]\] \[[Qmd]\]  | ||
+| Week 4       | Feb 11  | `r emojifont::emoji('octopus')` Scripts \[[html]\] \[[Qmd]\] | | |
+|              | Feb 13 | `r emojifont::emoji('nut_and_bolt')` Data \[[html]\] \[[Qmd]\] | | |
+||||||
+| **Module 3** |         | **Data Visulization in R** | | |
+||||||
+|  Week 5        | Feb 18 | `r emojifont::emoji('hocho')` Tidying Data \[[html]\] \[[Qmd]\] | ||
+|              | Feb 20 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html]\] \[[Qmd]\] | `r emojifont::emoji('seedling')` Project 1 assigned |     |
+||||||
+| Week 6       | Feb 25 | `r emojifont::emoji('bar_chart')` Plotting with ggplot2 \[[html]\] \[[Qmd]\]| | |
+|              |  Feb 27 | `r emojifont::emoji('bar_chart')` ggplot2 continued | | |
+||||||
+| **Module 4** |         | **Tour of Stats in R and Data Wrangling** |||
+||||||
+|  Week 7       | Mar 4 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html]\] \[[Qmd]\] | |
+|              | Mar 6  | `r emojifont::emoji('racehorse')`  A tour of some multivariate methods in R \[[html]\] \[[Qmd]\]  | `r emojifont::emoji('seedling')` Project 1 due||
+||||||
+| Week 8       | Mar 6 | `r emojifont::emoji('calendar')` A tour of some univariate methods in R \[[html]\] \[[Qmd]\] | | |
+|              | Mar 11 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html]\] \[[Qmd]\] | | |
+|              | Mar 13 | `r emojifont::emoji('racehorse')` Reshaping data \[[html]\] \[[Qmd]\] |  | |
+||||||
+| **Module 5** |         | **Programming Elements** | | |
+||||||
+| Week 9       | Mar 18 | `r emojifont::emoji('handshake')` Spring Break |||
+|              | Mar 20 | `r emojifont::emoji('sunny')` Spring Break |||
+||||||
+| Week 10      | Mar 20 | `r emojifont::emoji('mushroom')` Functions \[[html]\] \[[Qmd]\] | | |
+||||||
+|              | Mar 25   | `r emojifont::emoji('cactus')` Lists and For Loops \[[html]\] \[[Qmd]\] |   | |
+||||||
+|              | Mar 27   | `r emojifont::emoji('cactus')` Apply Functions \[[html]\] \[[Qmd]\]|   | |
+||||||
+| Week 11      | Apr 1   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html]\] \[[Qmd]\]|||
+||||||
+| **Module 6** |         | **Intro to Morphometrics** | | |
+||||||
+|              | Apr 3   | `r emojifont::emoji('straight_ruler')` Intro to Morphometrics \[[html]\] \[[Qmd]\]|||
+||||||
+|  Week 12     | Apr 8  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |`r emojifont::emoji('fallen_leaf')` Project 2 due||
+||||||
+|              | Apr 10  | `r emojifont::emoji('skull')` 3D Morphometrics |`r emojifont::emoji('chestnut')` Project 3 data check due||
+||||||
+| **Module 7** |         | **Phylogenetic Trees** | | |
+||||||
+| Week 13      | Apr 15 | `r emojifont::emoji('seedling')` Trees as Data Objects |  | |
+|              | Apr 17  | `r emojifont::emoji('palm_tree')` Reading and writing trees, ape, ggtree, treeio |||
+||||||
+| Week 14      | Apr 22 | `r emojifont::emoji('deciduous_tree')` Reshaping Trees |||
+||||||
+|              | Apr 24 | `r emojifont::emoji('hibiscus')` Annotating Tree Plots |`r emojifont::emoji('memo')` Project 3 peer review due||
+||||||
+| **Module 8** |         | **Other Topics** | | |
+||||||
+| Week 15      | Apr 29  | `r emojifont::emoji('snake')` Parsing Data from any Format |||
+||||||
+|              | May 1  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
+||||||
+|  Week 16     | May 6  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
+||||||
+|              | May 7  |  | `r emojifont::emoji('confetti_ball')` Project 3 due | |
+||||||
+:::
+
+
+
+
+

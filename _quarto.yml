@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "ZOOL710 Data Science in R for Biologists"
+  site-url: https://mbutler808.github.io
+  description: "Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023"
+  navbar:
+    right:
+      - text: "Home"
+        file: index.qmd
+      - text: "General Information"
+        menu:
+        - text: "Syllabus"
+          href: syllabus.qmd
+        - text: "Schedule"
+          href: schedule.qmd
+      - text: "Course Materials"
+        menu:
+        - text: "Lectures"
+          href: lectures.qmd
+        - text: "Projects"
+          href: projects.qmd
+        - text: "Resources"
+          href: resources.qmd
+      - icon: github
+        href: https://github.com/mbutler808
+      - icon: twitter
+        href: https://twitter.com/mbutler808
+      - icon: rss
+        href: index.xml
+format:
+  html:
+    css: styles.css
+    theme: simplex
+    toc: true
+    code-link: true
+
+editor: visual
+
+execute:
+  freeze: auto

@@ -1,0 +1,114 @@
+---
+title: "Add title"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Add"
+date: 2023-01-31
+categories: [module #, week #, add]
+---
+
+<!-- Add interesting quote -->
+
+# Pre-lecture materials
+
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+`r emojifont::emoji('palm_tree')`
+
+### Read ahead
+
+::: callout-note
+## Read ahead
+
+**Before class, you can prepare by reading the following materials:**
+
+1.  Add here.
+2.  Add here.
+:::
+
+:::{.callout-note}
+Note that there are five types of callouts, including:
+`note`, `tip`, `warning`, `caution`, and `important`.
+:::
+
+::: {.callout-tip}
+## Tip With Caption
+
+This is an example of a callout with a caption.
+:::
+
+::: {.callout-caution collapse="true"}
+
+
+```{.bash filename=Terminal}
+
+```
+
+
+## Expand To Learn About Collapse
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   Add here.
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Add here.
+:::
+
+# Add lecture here
+
+
+::: {.panel-tabset}
+
+## Mac/UNIX
+
+```zsh
+```
+
+## PC
+
+```zsh
+```
+:::
+
+# Post-lecture materials
+
+### Final Questions
+
+Here are some post-lecture questions to help you think about the material discussed.
+
+::: callout-note
+### Questions
+
+1.  Add here.
+:::
+
+### Additional Resources
+
+::: callout-tip
+-   Add here.
+:::
+
+## rtistry
+
+```{r}
+#| label: flametree
+#| echo: false
+#| fig-cap-location: "top"
+
+```
+
+\[Add here.\]

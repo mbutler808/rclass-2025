@@ -1,0 +1,338 @@
+[
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "For Qmd files (markdown document with Quarto which are cross-language executable code), go to the course GitHub repository and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.\n\n\n\n\n\n\n\n\n\n\nWeek\nDates\nTopics\nProjects\n\n\n\n\nModule 1\n\nComputational Tools for Data Science\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\nJan 14\n👋 Installing R/RStudio, GitHub [html] [Qmd]\n\n\n\n\n\nJan 16\n👩‍💻 Shell scripts, File Organization [html] [Qmd]\n\n\n\n\nWeek 2\nJan 21\n🐙 Intro to Git and GitHub [[html]] [[Qmd]]\n🌴 Project 0 [html] [Qmd]\n\n\n\n\n\n\n\n\n\n\nModule 2\n\nReproducible Research\n\n\n\n\n\n\n\n\n\n\n\n\nJan 23\n🐙 Reproducible Research [[html]] [[Qmd]]\n\n\n\n\nWeek 3\nJan 28\n🐙 Literate Programming / Intro to Quarto [[html]] [[Qmd]]\n\n\n\n\n\nJan 30\n🔬 What is the Question? [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 3\n\nData Analysis in R \n\n\n\n\n\n\n\n\n\n\n\n\nFeb 4\n👓 Reading/Writing data [[html]] [[Qmd]]\n🍂 Project 0 due\n\n\n\n\nFeb 6\n👓 Reference Management [[html]] [[Qmd]]\n\n\n\n\nWeek 4\nFeb 11\n🐙 Scripts [[html]] [[Qmd]]\n\n\n\n\n\nFeb 13\n🔩 Data [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 3\n\nData Visulization in R\n\n\n\n\n\n\n\n\n\n\n\nWeek 5\nFeb 18\n🔪 Tidying Data [[html]] [[Qmd]]\n\n\n\n\n\nFeb 20\n📊 Plotting Systems (Base R) [[html]] [[Qmd]]\n🌱 Project 1 assigned\n\n\n\n\n\n\n\n\n\n\nWeek 6\nFeb 25\n📊 Plotting with ggplot2 [[html]] [[Qmd]]\n\n\n\n\n\nFeb 27\n📊 ggplot2 continued\n\n\n\n\n\n\n\n\n\n\n\nModule 4\n\nTour of Stats in R and Data Wrangling\n\n\n\n\n\n\n\n\n\n\n\nWeek 7\nMar 4\n🐒 Tidyverse and data wrangling [[html]] [[Qmd]]\n\n\n\n\n\nMar 6\n🐎 A tour of some multivariate methods in R [[html]] [[Qmd]]\n🌱 Project 1 due\n\n\n\n\n\n\n\n\n\n\nWeek 8\nMar 6\n📆 A tour of some univariate methods in R [[html]] [[Qmd]]\n\n\n\n\n\nMar 11\n🐎 Joining a.k.a. merging data [[html]] [[Qmd]]\n\n\n\n\n\nMar 13\n🐎 Reshaping data [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 5\n\nProgramming Elements\n\n\n\n\n\n\n\n\n\n\n\nWeek 9\nMar 18\n🤝 Spring Break\n\n\n\n\n\nMar 20\n☀️ Spring Break\n\n\n\n\n\n\n\n\n\n\n\nWeek 10\nMar 20\n🍄 Functions [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\n\nMar 25\n🌵 Lists and For Loops [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\n\nMar 27\n🌵 Apply Functions [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nWeek 11\nApr 1\n🎡 Program Flow [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 6\n\nIntro to Morphometrics\n\n\n\n\n\n\n\n\n\n\n\n\nApr 3\n📏 Intro to Morphometrics [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nWeek 12\nApr 8\n📐 Landmark-based Morphometrics\n🍂 Project 2 due\n\n\n\n\n\n\n\n\n\n\n\nApr 10\n💀 3D Morphometrics\n🌰 Project 3 data check due\n\n\n\n\n\n\n\n\n\n\nModule 7\n\nPhylogenetic Trees\n\n\n\n\n\n\n\n\n\n\n\nWeek 13\nApr 15\n🌱 Trees as Data Objects\n\n\n\n\n\nApr 17\n🌴 Reading and writing trees, ape, ggtree, treeio\n\n\n\n\n\n\n\n\n\n\n\nWeek 14\nApr 22\n🌳 Reshaping Trees\n\n\n\n\n\n\n\n\n\n\n\n\nApr 24\n🌺 Annotating Tree Plots\n📝 Project 3 peer review due\n\n\n\n\n\n\n\n\n\n\nModule 8\n\nOther Topics\n\n\n\n\n\n\n\n\n\n\n\nWeek 15\nApr 29\n🐍 Parsing Data from any Format\n\n\n\n\n\n\n\n\n\n\n\n\nMay 1\n🏆 Final Presentations\n💐 Project 3 presentation (in class)\n\n\n\n\n\n\n\n\n\n\nWeek 16\nMay 6\n🏆 Final Presentations\n💐 Project 3 presentation (in class)\n\n\n\n\n\n\n\n\n\n\n\nMay 7\n\n🎊 Project 3 due"
+  },
+  {
+    "objectID": "schedule.html#schedule-and-course-materials",
+    "href": "schedule.html#schedule-and-course-materials",
+    "title": "Schedule",
+    "section": "",
+    "text": "For Qmd files (markdown document with Quarto which are cross-language executable code), go to the course GitHub repository and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.\n\n\n\n\n\n\n\n\n\n\nWeek\nDates\nTopics\nProjects\n\n\n\n\nModule 1\n\nComputational Tools for Data Science\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\nJan 14\n👋 Installing R/RStudio, GitHub [html] [Qmd]\n\n\n\n\n\nJan 16\n👩‍💻 Shell scripts, File Organization [html] [Qmd]\n\n\n\n\nWeek 2\nJan 21\n🐙 Intro to Git and GitHub [[html]] [[Qmd]]\n🌴 Project 0 [html] [Qmd]\n\n\n\n\n\n\n\n\n\n\nModule 2\n\nReproducible Research\n\n\n\n\n\n\n\n\n\n\n\n\nJan 23\n🐙 Reproducible Research [[html]] [[Qmd]]\n\n\n\n\nWeek 3\nJan 28\n🐙 Literate Programming / Intro to Quarto [[html]] [[Qmd]]\n\n\n\n\n\nJan 30\n🔬 What is the Question? [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 3\n\nData Analysis in R \n\n\n\n\n\n\n\n\n\n\n\n\nFeb 4\n👓 Reading/Writing data [[html]] [[Qmd]]\n🍂 Project 0 due\n\n\n\n\nFeb 6\n👓 Reference Management [[html]] [[Qmd]]\n\n\n\n\nWeek 4\nFeb 11\n🐙 Scripts [[html]] [[Qmd]]\n\n\n\n\n\nFeb 13\n🔩 Data [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 3\n\nData Visulization in R\n\n\n\n\n\n\n\n\n\n\n\nWeek 5\nFeb 18\n🔪 Tidying Data [[html]] [[Qmd]]\n\n\n\n\n\nFeb 20\n📊 Plotting Systems (Base R) [[html]] [[Qmd]]\n🌱 Project 1 assigned\n\n\n\n\n\n\n\n\n\n\nWeek 6\nFeb 25\n📊 Plotting with ggplot2 [[html]] [[Qmd]]\n\n\n\n\n\nFeb 27\n📊 ggplot2 continued\n\n\n\n\n\n\n\n\n\n\n\nModule 4\n\nTour of Stats in R and Data Wrangling\n\n\n\n\n\n\n\n\n\n\n\nWeek 7\nMar 4\n🐒 Tidyverse and data wrangling [[html]] [[Qmd]]\n\n\n\n\n\nMar 6\n🐎 A tour of some multivariate methods in R [[html]] [[Qmd]]\n🌱 Project 1 due\n\n\n\n\n\n\n\n\n\n\nWeek 8\nMar 6\n📆 A tour of some univariate methods in R [[html]] [[Qmd]]\n\n\n\n\n\nMar 11\n🐎 Joining a.k.a. merging data [[html]] [[Qmd]]\n\n\n\n\n\nMar 13\n🐎 Reshaping data [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 5\n\nProgramming Elements\n\n\n\n\n\n\n\n\n\n\n\nWeek 9\nMar 18\n🤝 Spring Break\n\n\n\n\n\nMar 20\n☀️ Spring Break\n\n\n\n\n\n\n\n\n\n\n\nWeek 10\nMar 20\n🍄 Functions [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\n\nMar 25\n🌵 Lists and For Loops [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\n\nMar 27\n🌵 Apply Functions [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nWeek 11\nApr 1\n🎡 Program Flow [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nModule 6\n\nIntro to Morphometrics\n\n\n\n\n\n\n\n\n\n\n\n\nApr 3\n📏 Intro to Morphometrics [[html]] [[Qmd]]\n\n\n\n\n\n\n\n\n\n\n\nWeek 12\nApr 8\n📐 Landmark-based Morphometrics\n🍂 Project 2 due\n\n\n\n\n\n\n\n\n\n\n\nApr 10\n💀 3D Morphometrics\n🌰 Project 3 data check due\n\n\n\n\n\n\n\n\n\n\nModule 7\n\nPhylogenetic Trees\n\n\n\n\n\n\n\n\n\n\n\nWeek 13\nApr 15\n🌱 Trees as Data Objects\n\n\n\n\n\nApr 17\n🌴 Reading and writing trees, ape, ggtree, treeio\n\n\n\n\n\n\n\n\n\n\n\nWeek 14\nApr 22\n🌳 Reshaping Trees\n\n\n\n\n\n\n\n\n\n\n\n\nApr 24\n🌺 Annotating Tree Plots\n📝 Project 3 peer review due\n\n\n\n\n\n\n\n\n\n\nModule 8\n\nOther Topics\n\n\n\n\n\n\n\n\n\n\n\nWeek 15\nApr 29\n🐍 Parsing Data from any Format\n\n\n\n\n\n\n\n\n\n\n\n\nMay 1\n🏆 Final Presentations\n💐 Project 3 presentation (in class)\n\n\n\n\n\n\n\n\n\n\nWeek 16\nMay 6\n🏆 Final Presentations\n💐 Project 3 presentation (in class)\n\n\n\n\n\n\n\n\n\n\n\nMay 7\n\n🎊 Project 3 due"
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "",
+    "text": "Delivery: In person\nCourse time: Tuesdays and Thursdays from 9-10:15am\nCourse location: KELLER 204\nAssignments: Weekly small quizzes, four projects\n\n\n\nTo add the course: Let me know so I can give you an override\nRegister for ZOOL710 CRN 89354 3 credits.\nAttendance is highly recommended for personal help, Q&A, and group work. Repetition is key.\nPlease contact course instructor if interested in auditing.\nUndergraduates are welcome to join with approval.\n\n\nMarguerite A. Butler (https://butlerlab.org)\n\nOffice Location: Edmondson 318\nEmail: mbutler808 at gmail.com\nOffice Hours: After class and by appointment\n\n\n\nIn order of preference, here is a preferred list of ways to get help:\n\nI strongly encourage you to use the course DISCORD server, before joining office hours. You can get your answers faster, and other students in the class (who likely have similar questions) can also benefit from the questions and answers given. Everyone is encouraged to participate.\nSee me after class.\nMake an appointment by email."
+  },
+  {
+    "objectID": "syllabus.html#course-information",
+    "href": "syllabus.html#course-information",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "",
+    "text": "Delivery: In person\nCourse time: Tuesdays and Thursdays from 9-10:15am\nCourse location: KELLER 204\nAssignments: Weekly small quizzes, four projects\n\n\n\nTo add the course: Let me know so I can give you an override\nRegister for ZOOL710 CRN 89354 3 credits.\nAttendance is highly recommended for personal help, Q&A, and group work. Repetition is key.\nPlease contact course instructor if interested in auditing.\nUndergraduates are welcome to join with approval.\n\n\nMarguerite A. Butler (https://butlerlab.org)\n\nOffice Location: Edmondson 318\nEmail: mbutler808 at gmail.com\nOffice Hours: After class and by appointment\n\n\n\nIn order of preference, here is a preferred list of ways to get help:\n\nI strongly encourage you to use the course DISCORD server, before joining office hours. You can get your answers faster, and other students in the class (who likely have similar questions) can also benefit from the questions and answers given. Everyone is encouraged to participate.\nSee me after class.\nMake an appointment by email."
+  },
+  {
+    "objectID": "syllabus.html#important-links",
+    "href": "syllabus.html#important-links",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Important Links",
+    "text": "Important Links\n\nCourse website: coming soon.\nGitHub repository with all course material: coming soon.\nDiscord server: https://discord.gg/fagxUbq5Rd"
+  },
+  {
+    "objectID": "syllabus.html#learning-objectives",
+    "href": "syllabus.html#learning-objectives",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Learning Objectives:",
+    "text": "Learning Objectives:\nUpon successfully completing this course, students will be able to:\n\nInstall and configure software necessary for a statistical programming environment\nDiscuss generic programming language concepts as they are implemented in a high-level statistical language\nWrite, debug, and comment your code in base R and the tidyverse\nBuild basic data visualizations using R and the tidyverse\nDiscuss best practices for coding and reproducible research, basics of data ethics and management, basics of working with special data types, and basics of storing data\nDocument and communicate your findings via reports produced in Quarto/Rmarkdown\nArchive and share your data analysis pipeline and reports via GitHub, and understand the basics of a collaborative coding project"
+  },
+  {
+    "objectID": "syllabus.html#lectures",
+    "href": "syllabus.html#lectures",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Lectures",
+    "text": "Lectures\nLectures will be in person in Keller 204 from 9-10:15 am on Tuesdays and Thursdays."
+  },
+  {
+    "objectID": "syllabus.html#textbook-and-other-course-material",
+    "href": "syllabus.html#textbook-and-other-course-material",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Textbook and Other Course Material",
+    "text": "Textbook and Other Course Material\nThere is no required textbook. We will make use of several freely available textbooks and other materials. All course materials will be provided. We will use the R software for data analysis, and git for version control and data sharing, all of which is freely available for download."
+  },
+  {
+    "objectID": "syllabus.html#software",
+    "href": "syllabus.html#software",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Software",
+    "text": "Software\nPlease install R onto your laptop. You can obtain R from the Comprehensive R Archive Network. There are versions available for Mac, Windows, and Unix/Linux. This software is required for this course.\nIt is important that you have the latest version of R installed. For this course we will be using R version 4.4.2 or higher. You can determine what version of R you have by starting up R and typing into the console R.version.string and hitting the return/enter key. If you do not have the proper version of R installed, go to CRAN and download and install the latest version.\nSome students like to use the Rstudio interface, but this is optional, and in fact discouraged until you have a grasp of the R environment (I will let you know when we are at a good place in the course). The RStudio interactive development environment (IDE) requires that R be installed, and so is an “add-on” to R. You can obtain the RStudio Desktop for free from the RStudio web site. You can determine the version of RStudio by looking at menu item Help &gt; About RStudio. You should be using RStudio version 1.4.1106 or higher."
+  },
+  {
+    "objectID": "syllabus.html#quizzes",
+    "href": "syllabus.html#quizzes",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Quizzes",
+    "text": "Quizzes\nThere will be weekly (short) quizzes on Laulima in the beginning of the semester. These are intended to be low-stakes to assist you in checking your understanding of R syntax and get you more comfortable with trial-and-error learning."
+  },
+  {
+    "objectID": "syllabus.html#projects",
+    "href": "syllabus.html#projects",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Projects",
+    "text": "Projects\nThere will be one optional assignment and 4 graded assignments, due every 3–4 weeks. Projects will be submitted electronically via GitHub (more on this later).\nThe projects are basically a scaffold to learn how to build a data analysis pipeline for your own research data. If you donʻt have your own data yet, I encourage students to ask their advisor for a sample dataset, or a published dataset, or another grad studentʻs dataset to practice on. You can also ask me for help to find data, this is not a problem.\nProject 0 is actually optional, but you are encouraged to practice by putting up your own website. Project 1 is data cleaning on a sample dataset, Project 2 produces analyses on the cleaned data from Project 1. Project 3 is applying everything you learned to your own dataset and exploring. You will also do a show-and-tell oral presentation on Project 3 at the end of the semester. Itʻs fun and students learn a lot. Itʻs exciting to see everyone elseʻs stuff and the diversity of projects people do.\nThe project assignments will be due on\n\nProject 0: February 4, 11:59pm (optional and not graded but hopefully useful and fun)\nProject 1: February 27, 11:59pm\nProject 2: March 25, 11:59pm\nProject 3: April 7-May 6 (multiple stages)\n\nCollaboration\nPlease feel free to study together and talk to one another about project assignments. The mutual instruction that students give each other is among the most valuable that can be achieved.\nHowever, it is expected that project assignments will be implemented and written up independently unless otherwise specified. Specifically, please do not share analytic code or output. Please do not collaborate on write-up and interpretation. Please do not access or use solutions from any source before your project assignment is submitted for grading."
+  },
+  {
+    "objectID": "syllabus.html#discussion-forum",
+    "href": "syllabus.html#discussion-forum",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Discussion Forum",
+    "text": "Discussion Forum\nThe course will make use of DISCORD to ask and answer questions and discuss any of the course materials. Please engage and provide answers as well as questions. The Instructor will monitor DISCORD and answer questions when appropriate."
+  },
+  {
+    "objectID": "syllabus.html#exams",
+    "href": "syllabus.html#exams",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Exams",
+    "text": "Exams\nThere are no exams in this course."
+  },
+  {
+    "objectID": "syllabus.html#grading",
+    "href": "syllabus.html#grading",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Grading",
+    "text": "Grading\nGrades in the course will be based on weekly quizzes (10%), participation (20%) and projects (70%). Each of Projects 1–3 counts approximately equally in the final grade. Grades will be posted on Laulima."
+  },
+  {
+    "objectID": "syllabus.html#policy-for-submitted-projects-late",
+    "href": "syllabus.html#policy-for-submitted-projects-late",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Policy for submitted projects late",
+    "text": "Policy for submitted projects late\nThe policy for late submissions is as follows:\n\nEach student will be given two free “late days” for the rest of the course.\nA late day extends the individual project deadline by 24 hours without penalty.\nThe late days can be applied to just one project (e.g. two late days for Project 2), or they can be split across the two projects (one late day for Project 2 and one late day for Project 3). This is entirely left up to the discretion of the student.\nLate days are intended to give you flexibility: you can use them for any reason no questions asked.\nYou do not get any bonus points for not using your late days, and they are not transferrable.\n\nFor students who exceed their free late days:\n\nI will be deducting 5% for each extra late day. For example, if you have already used all of your late days for the term, we will deduct 5% for the assignment that is &lt;24 hours late, 10% points for the assignment that is 24-48 hours late, and 15% points for the assignment that is 48-72 hours late, etc.\n\nI will not grade assignments that are more than 3 days past the original due date.\n\nRegrading Policy\nIt is very important to me that all assignments are properly graded. If you believe there is an error in your assignment grading, please send an email within 7 days of receiving the grade explaining the issue. No re-grade requests will be accepted orally, and no regrade requests will be accepted more than 7 days after you receive the grade for the assignment."
+  },
+  {
+    "objectID": "syllabus.html#academic-ethics-and-student-conduct-code",
+    "href": "syllabus.html#academic-ethics-and-student-conduct-code",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Academic Ethics and Student Conduct Code",
+    "text": "Academic Ethics and Student Conduct Code\nThe faculty, staff, and students participating in courses of the School of Life Sciences assume a responsibility to uphold the Universityʻs missions of academic excellence and social responsibility as appropriate for an institute of higher education. Violations of the UH Systemwide Student Conduct Code includes but is not limited to: cheating; plagiarism; providing copies of your work to other students which is submitted as their own; obtaining copies of said work by others; using copies of said work or representing any portion of another person’s work as your own (i.e., plagiarism); misconduct. While we encourage you to discuss strategies for problem solving, and even collaborate by working through the problems/strategies together, giving someone all the answers is cheating. If you are unsure please ask.\nPlagiarism is when you use information or present ideas, whether by paraphrase or direct quote, from a source (be it published or a classmate) without giving proper credit to that source. Cheating in any way will be reported to the attention of UH Office of Judicial Affairs, and result in an F in this course. Students should be familiar with the policies and procedures specified under the Systemwide Student Conduct Code portal."
+  },
+  {
+    "objectID": "syllabus.html#disability-support-service",
+    "href": "syllabus.html#disability-support-service",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Disability Support Service",
+    "text": "Disability Support Service\nStudents requiring accommodations for disabilities should register with the Kokua program at Student Disability Services. It is the responsibility of the student to register for accommodations. The Kokua office will send me a notification once you are registered, however, they often do not share information regarding the specifics. If the accommodations are not sufficient to ensure your success, please contact me as soon as possible so that we may work together on providing for an effective learning environment."
+  },
+  {
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nThis is an applied quantitative course. I will not discuss the mathematical details of specific data analysis approaches, however some statistical background and being comfortable with quantitative thinking is useful. Previous experience with writing computer programs in general and R in particular is also helpful, but not necessary. If you have no programming experience, expect to spend extra time getting yourself familiar with R, especially at the very beginning (but it will get better). As long as you are willing to invest the time to learn the programming and you do not mind thinking quantitatively, you should be able to do well, independent of your background. In fact you will have the most to gain.\nGetting set up\nYou must install R and RStudio, optional on your computer in order to complete this course. These are two different applications that must be installed separately before they can be used together:\n\nR is the core underlying programming language and computing engine that we will be learning in this course\nRStudio is an interface into R that makes many aspects of using and programming R simpler\n\nBoth R and RStudio are available for Windows, macOS, and most flavors of Unix and Linux. Please download the version that is suitable for your computing setup.\nThroughout the course, we will make use of numerous R add-on packages that must be installed over the Internet. Packages can be installed using the install.packages() function in R. For example, to install the tidyverse package, you can run\n\ninstall.packages(\"tidyverse\")\n\nin the R console.\nHow to Download R for Windows\nGo to https://cran.r-project.org and\n\nClick the link to “Download R for Windows”\nClick on “base”\nClick on “Download R 4.2.2 for Windows”\n\n\n\n\n\n\n\nWarning\n\n\n\nFor all software, please download the latest version.\n\n\nHow to Download R for the Mac\nGoto https://cran.r-project.org and\n\nClick the link to “Download R for (Mac) OS X”.\nClick on “R-4.2.2.pkg” (or the latest version)\nHow to Download RStudio\nGoto https://rstudio.com and\n\nClick on “Products” in the top menu\nThen click on “RStudio” in the drop down menu\nClick on “RStudio Desktop”\nClick the button that says “DOWNLOAD RSTUDIO DESKTOP”\nClick the button under “RStudio Desktop” Free\nUnder the section “All Installers” choose the file that is appropriate for your operating system."
+  },
+  {
+    "objectID": "syllabus.html#general-disclaimers",
+    "href": "syllabus.html#general-disclaimers",
+    "title": "Zool710: Data Science in R for Biologists Syllabus",
+    "section": "General Disclaimers",
+    "text": "General Disclaimers\n\nThis syllabus is a general plan, deviations announced to the class by the instructor may be necessary."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Projects 2,3\n\n\n\n\n\n\nproject 2\n\n\nproject 3\n\n\nprojects\n\n\n\nInformation for Projects 2 and 3\n\n\n\n\n\nFeb 11, 2025\n\n\nMarguerite Butler\n\n\n\n\n\n\n\n\n\n\n\n\nProject 0 (optional)\n\n\n\n\n\n\nproject 0\n\n\nprojects\n\n\n\nInformation for Project 0 (entirely optional, but hopefully useful and fun!)\n\n\n\n\n\nJan 14, 2025\n\n\nMarguerite Butler\n\n\n\n\n\n\n\n\n\n\n\n\nOral Presentation\n\n\n\n\n\n\nproject 3\n\n\nprojects\n\n\n\nInformation for Final Oral Presenatation\n\n\n\n\n\nApr 27, 2023\n\n\nMarguerite Butler\n\n\n\n\n\n\n\n\n\n\n\n\nProject 1\n\n\n\n\n\n\nproject 1\n\n\nprojects\n\n\n\nInformation for Project 1\n\n\n\n\n\nJan 30, 2023\n\n\nMarguerite Butler\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects/2025-01-14-project-0/index.html",
+    "href": "projects/2025-01-14-project-0/index.html",
+    "title": "Project 0 (optional)",
+    "section": "",
+    "text": "This exercise is modified from material developed by Stephanie Hicks."
+  },
+  {
+    "objectID": "projects/2025-01-14-project-0/index.html#acknowledgements",
+    "href": "projects/2025-01-14-project-0/index.html#acknowledgements",
+    "title": "Project 0 (optional)",
+    "section": "",
+    "text": "This exercise is modified from material developed by Stephanie Hicks."
+  },
+  {
+    "objectID": "projects/2025-01-28-project-1/index.html",
+    "href": "projects/2025-01-28-project-1/index.html",
+    "title": "Project 1",
+    "section": "",
+    "text": "This exercise is modified from material developed by Andreas Handel."
+  },
+  {
+    "objectID": "projects/2025-01-28-project-1/index.html#acknowledgements",
+    "href": "projects/2025-01-28-project-1/index.html#acknowledgements",
+    "title": "Project 1",
+    "section": "",
+    "text": "This exercise is modified from material developed by Andreas Handel."
+  },
+  {
+    "objectID": "posts/2025-01-16-your-computer-filesystems/index.html",
+    "href": "posts/2025-01-16-your-computer-filesystems/index.html",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "",
+    "text": "Read ahead\n\n\n\nFor future lectures, Iʻll give you some reading or podcasts to prepare\n\n\n\nMaterial for this lecture was borrowed and adopted from\n\nhttps://academind.com/tutorials/terminal-zsh-basics"
+  },
+  {
+    "objectID": "posts/2025-01-16-your-computer-filesystems/index.html#the-kernel",
+    "href": "posts/2025-01-16-your-computer-filesystems/index.html#the-kernel",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "The kernel",
+    "text": "The kernel\nThe kernel is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.\n\n\n\n\n\n\n\n\n[Source: Map of MacOS: the heart of everything is called Darwin; and within it, we have separate system utilities (the shell) and the XNU kernel, which is composed in parts by the Mach kernel and by the BSD kernel.]"
+  },
+  {
+    "objectID": "posts/2025-01-16-your-computer-filesystems/index.html#the-shell",
+    "href": "posts/2025-01-16-your-computer-filesystems/index.html#the-shell",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "The shell",
+    "text": "The shell\nThe shell is another key part of the core operating system (note in the diagram above it is part of the System Utilities, and the partner of the kernel). The shell is a software (an app) that allows humans to control the computer. You are already familiar with the GUI interface, or the Graphical User Interface. It is important that you are comfortable using the Command Line Interface as well.\n\n\n\n\n\n\nThere are many reasons to be proficient in the shell:\n\n\n\n\nData analysis increasingly uses many files. The shell provides a simple but very powerful means to do all kinds of operations on files: move, delete, organize, combine, rename, etc.\nUsing the shell encourages you to understand your computerʻs filesystem, and helps you to more precisely control input and output to any place along your file paths.\nShell operations are fast.\nYou can use wildcards to control matching or excluding many files.\nThe shell can be used to execute (run) software.\nThe shell is probably the oldest app, so it is very stable with lasting power.\nIt is part of the OS, so when your apps fail or you are having some issues, you would turn to the shell to kill troublesome processes (programs) or diagnose and fix the issues.\n\n\n\nMacs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called Terminal, which you will find in your Application folder, in the Utilities subfolder (here is a screentshot of our GUI Interface).\n\n\n\n\n\n\n\n\nOn a PC you would use the Command Prompt otherwise known as the Windows Command Processor or CMD. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:\n\nOpen the Start Menu and type “command prompt” or\nPress Win + R and type “cmd” in the run box or\nPress Win + X and select Command Prompt from the menu.\n\nNote: you may see Windows PowerShell or Windows Terminal instead, these are similar apps."
+  },
+  {
+    "objectID": "posts/2025-01-16-your-computer-filesystems/index.html#the-dots",
+    "href": "posts/2025-01-16-your-computer-filesystems/index.html#the-dots",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "The dots",
+    "text": "The dots\n\n“.” is the current working directory (where you are currently)\n“..” is the directory one level up\n“./foldername” will take you to the folder one level down, for example “./Data”\n\nYou can use these paths to move directories using cd or to list the contents of the directories using ls or to make new directories using mkdir\nls .\nls ./Data\nmkdir ./Data/A\nMake multiple directories:\nmkdir ./Data/B ./Data/C\nList the files one level up or two levels up:\nls ..  # for PC use dir ..\nls ../..\nUp one level, and over to another directory:\nls ../AnotherDirectory\nYou can wander anywhere along your computerʻs file directory! Just add more steps to the path."
+  },
+  {
+    "objectID": "posts/2025-01-16-your-computer-filesystems/index.html#rtistry",
+    "href": "posts/2025-01-16-your-computer-filesystems/index.html#rtistry",
+    "title": "Introduction to your computerʻs terminal utilities",
+    "section": "rtistry",
+    "text": "rtistry\n\n\n\n\n\n\n\n\n[‘Flametree’ from Danielle Navarro https://art.djnavarro.net]"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#the-modern-computationally-literate-scientist",
+    "href": "posts/2025-01-14-the-big-picture/index.html#the-modern-computationally-literate-scientist",
+    "title": "Introduction and The Big Idea",
+    "section": "The Modern Computationally-Literate Scientist",
+    "text": "The Modern Computationally-Literate Scientist\n\n\nUses computational tools to test ideas\nHas Computing Skills to:\n\nHandle any kind of data\nImplement any kind of test\nProduce graphics for exploration and communication\nTest and validate code (how do we know its right?)\nInteract with other computing systems and the Cloud\nCan archive and disseminate data and workflow\nProduce reproducible results!"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#data-science-workflow",
+    "href": "posts/2025-01-14-the-big-picture/index.html#data-science-workflow",
+    "title": "Introduction and The Big Idea",
+    "section": "Data Science Workflow",
+    "text": "Data Science Workflow\nFrom R for Data Science 2e by Hadley Wickam, Garrett Grolemund, and Mine Çetinkaya-Rundel\n\n\n\nQuestion Development\nExploration and Testing\nCommunication"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#our-work-is-interdisciplinary",
+    "href": "posts/2025-01-14-the-big-picture/index.html#our-work-is-interdisciplinary",
+    "title": "Introduction and The Big Idea",
+    "section": "Our Work is Interdisciplinary",
+    "text": "Our Work is Interdisciplinary\n\n\nDisciplinary Knowledge (Biology) -&gt; Question Development\nStatistics -&gt; Exploration and Testing\nComputer Science -&gt; Repeatable, Scalable, Reusable\n\nCode MUST be FREE OF ERROR\nClean and Well documented (understandable)\nModular - enhances creativity and scalability"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#data-science-workflow-requirements",
+    "href": "posts/2025-01-14-the-big-picture/index.html#data-science-workflow-requirements",
+    "title": "Introduction and The Big Idea",
+    "section": "Data Science Workflow Requirements:",
+    "text": "Data Science Workflow Requirements:\nThe difference between analyzing data for an assignment (Undergraduate work) vs. professional science (publication)\n\n\nThe “answer” must be correct - code validation\nMust be repeatable\nWorkflow must be complete, well organized, documented\nData and code shared on a public repository with a DOI\n\ne.g., GitHub and Zotero (free options!)\nor Dryad ($150 per dataset)"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#open-source-tools-you-will-learn-in-this-course",
+    "href": "posts/2025-01-14-the-big-picture/index.html#open-source-tools-you-will-learn-in-this-course",
+    "title": "Introduction and The Big Idea",
+    "section": "Open Source Tools you will learn in this course",
+    "text": "Open Source Tools you will learn in this course\n\n\nR [watch short podcast, up to 4:00]\nCommand Line (UNIX/ Windows/ File Commands in your operating system)\n\nUnderstand your computer’s organization and filepaths\nMore precisely control your files and information\nInstall some command-line software\n\nGit/GitHub\nQuarto/Rmarkdown\nand many more…"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#how-the-tools-fit-together",
+    "href": "posts/2025-01-14-the-big-picture/index.html#how-the-tools-fit-together",
+    "title": "Introduction and The Big Idea",
+    "section": "How the Tools Fit Together",
+    "text": "How the Tools Fit Together\n\n\n\n\n\nNeed\nTools\n\n\n\n\nObserve -&gt; Record Data -&gt; Data Table\nNotebooks\n\n\nCode -&gt; Document -&gt; Comment (annotate)\nR\n\n\nOrganize Project -&gt; Version Control -&gt; Share\nGit/GitHub\n\n\nCommunicate\nQuarto/Rmarkdown"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#software",
+    "href": "posts/2025-01-14-the-big-picture/index.html#software",
+    "title": "Introduction and The Big Idea",
+    "section": "Software",
+    "text": "Software\n\nDo you have R installed and working? (R studio is optional)\nFor a longer walk-through here is another resource: Introduction to R/Rstudio\nGit/GitHub: Please Install for next time. Letʻs follow Introduction to Git/GitHub"
+  },
+  {
+    "objectID": "posts/2025-01-14-the-big-picture/index.html#learning-r---a-first-session",
+    "href": "posts/2025-01-14-the-big-picture/index.html#learning-r---a-first-session",
+    "title": "Introduction and The Big Idea",
+    "section": "Learning R - A first session",
+    "text": "Learning R - A first session\n\n\nThink about how R works as you try out commands\n“Mistakes” are opportunities to learn how R works!\nLearning Language involves a lot of trial and error\nDon’t be afraid to try - poke it - it won’t break!\nhttps://www.r-project.org Go to manuals, click on An Introduction to R\nFollow Section 2.1\ninput -&gt; R -&gt; output\nWhat came out? What does it tell you about the rules R follows?\nComputers only do Exactly what you tell them to do\nJump to Appendix A - letʻs try to understand some rules of R together"
+  },
+  {
+    "objectID": "projects/2023-03-22-oral-presentation/index.html",
+    "href": "projects/2023-03-22-oral-presentation/index.html",
+    "title": "Oral Presentation",
+    "section": "",
+    "text": "Oral Presentation\nOn the last day of class, we will have oral presentations.\nThey will be informal talks on your final projects. I want you to cover the following in about 10 minutes:\n\nBrief introduction to the disciplinary (biological, etc.) problem + More introduction to the data science (cleaning+analysis) problem.\n\nBriefly but Clearly describe your data, and itʻs structure\nWhat are you starting with? What are you aiming to get to?\n\nMethods - how did you do what you needed to do? Be sure to mention any new packages or tricky code you had to figure out. These often identify data manipulation steps that turn out to be critical.\nResults - what do the data show? What else did you find out?\nConclusions - what does it mean? What potential do you see here? If itʻs not finished, speculate on what you might be able to infer or what questions it might answer?\nWhat did you learn? What was most interesting, confusing, fun to figure out? Whatever you want to say\n\nSlides are optional, but can be helpful if you need a prompt to remember what to say. Or you can talk us through your writeup like I do in class, whatever is more comfortable for you. Do show us key elements like your repo, and how to access it, etc."
+  },
+  {
+    "objectID": "projects/2023-03-22-project-2-3/index.html",
+    "href": "projects/2023-03-22-project-2-3/index.html",
+    "title": "Projects 2,3",
+    "section": "",
+    "text": "This exercise is modified from material developed by Andreas Handel."
+  },
+  {
+    "objectID": "projects/2023-03-22-project-2-3/index.html#acknowledgements",
+    "href": "projects/2023-03-22-project-2-3/index.html#acknowledgements",
+    "title": "Projects 2,3",
+    "section": "",
+    "text": "This exercise is modified from material developed by Andreas Handel."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "",
+    "text": "Welcome to Data Science for Biologists at the University of Hawaiʻi!"
+  },
+  {
+    "objectID": "index.html#what-is-this-course",
+    "href": "index.html#what-is-this-course",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "What is this course?",
+    "text": "What is this course?\nThis course covers the basics of computational and programming skills required for research in biological sciences and related disciplines. We will cover practical issues in data organization and management as well as programming in R and the tidyverse. Some of the topics will include: data ethics, best practices for coding and reproducible research, introduction to data visualizations, best practices for working with special data types (dates/times, text data, etc), best practices for storing data, basics of debugging, organizing and commenting code, basics of interacting with other computational resources from R. Topics in statistical data analysis, morphometrics, phylogenetic tree visualization, and other practical examples provide working examples."
+  },
+  {
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "Getting started",
+    "text": "Getting started\nPlease look over the Syllabus and Schedule under General Information. Lectures are provided under the course materials tab."
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThis course was developed and is maintained by Marguerite Butler.\nA big thank you to Stephanie Hicks for generously sharing the beautifully designed quarto template for this course.\nMaterials have been adapted from courses developed by the following individuals (more to come): Stephanie Hicks.\nThe course materials are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Linked and embedded materials are governed by their own licenses. I assume that all external materials used or embedded here are covered under the educational fair use policy. If this is not the case and any material displayed here violates copyright, please let me know and I will remove it."
+  },
+  {
+    "objectID": "index.html#useful-free-r-resources",
+    "href": "index.html#useful-free-r-resources",
+    "title": "Welcome to Introduction to Data Science in R for Biologists!",
+    "section": "Useful (Free) R Resources",
+    "text": "Useful (Free) R Resources\nIntro to R (by the R Core Group): https://cran.r-project.org/doc/manuals/r-release/R-intro.html R for Data Science: http://r4ds.had.co.nz/ Intro to Data Science: http://rafalab.dfci.harvard.edu/dsbook/ Various “Cheat Sheets”: https://www.rstudio.com/resources/cheatsheets/ DataCamp: http://www.datacamp.com R reference card: http://cran.r-project.org/doc/contrib/Short-refcard.pdfUCLA R Data Import/Export (by the R Core Group): https://cran.r-project.org/doc/manuals/r-release/R-data.html"
+  },
+  {
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Lectures",
+    "section": "",
+    "text": "Introduction to your computerʻs terminal utilities\n\n\n\n\n\n\nmodule 1\n\n\nweek 1\n\n\nprogramming\n\n\nfilesystem\n\n\nshell\n\n\n\nSo much power; or how I got my computer to do my bidding\n\n\n\n\n\nJan 16, 2025\n\n\nMarguerite Butler\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction and The Big Idea\n\n\n\n\n\n\nmodule 1\n\n\nweek 1\n\n\nintroduction\n\n\n\nThe big idea\n\n\n\n\n\nJan 14, 2025\n\n\nMarguerite Butler\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "Learning R\n\nBig Book of R: https://www.bigbookofr.com\nList of resources to learn R (but also Python, SQL, Javascript): https://github.com/delabj/datacamp_alternatives/blob/master/index.md\nlearnr4free. Resources (books, videos, interactive websites, papers) to learn R. Some of the resources are beginner-friendly and start with the installation process: https://www.learnr4free.com/en\nData Science with R by Danielle Navarro: https://robust-tools.djnavarro.net"
+  }
+]
