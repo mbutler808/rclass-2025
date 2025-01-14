@@ -12,15 +12,15 @@ tbl-colwidths: [15,10, 55, 25]
 
 For Qmd files (markdown document with [Quarto](https://quarto.org/docs/authoring/markdown-basics.html) which are cross-language executable code), go to the [course GitHub repository](https://github.com/mbutler808/mbutler808.github.io/) and navigate the directories, or best of all clone the repo and navigate within RStudio or your text browser and R console.  
 
-Current Website: <https://mbutler808.github.io/rclass-2025/> 
-Last time (2023): <https://mbutler808.github.io/rclass/>
+Current Website: <https://mbutler808.github.io/rclass-2025/>   
+2023 Website: <https://mbutler808.github.io/rclass/>
 
 ::: column-page
 | Week         | Dates   | Topics | Projects |     |
 |---------------|---------------|---------------|---------------|---------------|
 | **Module 1** |         | **Computational Tools for Data Science** |||
 ||||||
-| Week 1       | Jan 14  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2025-01-14-the-big-picture/)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-14-the-big-picture/index.qmd)\] |  ||
+| Week 1       | Jan 14  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2025-01-14-the-big-picture/)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-14-the-big-picture/index.qmd)\] |  | Watch \[[rest of podcast starting at 4:00](https://youtu.be/wzPRpyoNaa8?si=TKoTToGX2eRRmjzN)\] R manual \[[2.1, 2.2, 2.3, 2.6](https://cloud.r-project.org/doc/manuals/r-release/R-intro.html#Simple-manipulations_003b-numbers-and-vectors)\]|
 |              | Jan 16  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2025-01-16-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-16-your-computer-filesystems/index.qmd)\] |||
 | Week 2       | Jan 21 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html]\] \[[Qmd]\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2025-01-14-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2025-01-14-project-0/index.qmd)\]  | |
 ||||||
@@ -39,16 +39,16 @@ Last time (2023): <https://mbutler808.github.io/rclass/>
 ||||||
 | **Module 3** |         | **Data Visulization in R** | | |
 ||||||
-|  Week 5        | Feb 18 | `r emojifont::emoji('hocho')` Tidying Data \[[html]\] \[[Qmd]\] | ||
-|              | Feb 20 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html]\] \[[Qmd]\] | `r emojifont::emoji('seedling')` Project 1 assigned |     |
+|  Week 5        | Feb 18 | `r emojifont::emoji('hocho')` Tidying Data \[[html]\] \[[Qmd]\] | `r emojifont::emoji('seedling')` Project 1 assigned ||
+|              | Feb 20 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html]\] \[[Qmd]\] |  |     |
 ||||||
 | Week 6       | Feb 25 | `r emojifont::emoji('bar_chart')` Plotting with ggplot2 \[[html]\] \[[Qmd]\]| | |
-|              |  Feb 27 | `r emojifont::emoji('bar_chart')` ggplot2 continued | | |
+|              |  Feb 27 | `r emojifont::emoji('bar_chart')` ggplot2 continued | `r emojifont::emoji('fallen_leaf')` Project 1 due | |
 ||||||
 | **Module 4** |         | **Tour of Stats in R and Data Wrangling** |||
 ||||||
 |  Week 7       | Mar 4 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html]\] \[[Qmd]\] | |
-|              | Mar 6  | `r emojifont::emoji('racehorse')`  A tour of some multivariate methods in R \[[html]\] \[[Qmd]\]  | `r emojifont::emoji('seedling')` Project 1 due||
+|              | Mar 6  | `r emojifont::emoji('racehorse')`  A tour of some multivariate methods in R \[[html]\] \[[Qmd]\]  | `r emojifont::emoji('seedling')` Project 2 assigned ||
 ||||||
 | Week 8       | Mar 6 | `r emojifont::emoji('calendar')` A tour of some univariate methods in R \[[html]\] \[[Qmd]\] | | |
 |              | Mar 11 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html]\] \[[Qmd]\] | | |
@@ -61,7 +61,7 @@ Last time (2023): <https://mbutler808.github.io/rclass/>
 ||||||
 | Week 10      | Mar 20 | `r emojifont::emoji('mushroom')` Functions \[[html]\] \[[Qmd]\] | | |
 ||||||
-|              | Mar 25   | `r emojifont::emoji('cactus')` Lists and For Loops \[[html]\] \[[Qmd]\] |   | |
+|              | Mar 25   | `r emojifont::emoji('cactus')` Lists and For Loops \[[html]\] \[[Qmd]\] | `r emojifont::emoji('fallen_leaf')` Project 2 due| |
 ||||||
 |              | Mar 27   | `r emojifont::emoji('cactus')` Apply Functions \[[html]\] \[[Qmd]\]|   | |
 ||||||
@@ -71,7 +71,7 @@ Last time (2023): <https://mbutler808.github.io/rclass/>
 ||||||
 |              | Apr 3   | `r emojifont::emoji('straight_ruler')` Intro to Morphometrics \[[html]\] \[[Qmd]\]|||
 ||||||
-|  Week 12     | Apr 8  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |`r emojifont::emoji('fallen_leaf')` Project 2 due||
+|  Week 12     | Apr 8  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |||
 ||||||
 |              | Apr 10  | `r emojifont::emoji('skull')` 3D Morphometrics |`r emojifont::emoji('chestnut')` Project 3 data check due||
 ||||||
