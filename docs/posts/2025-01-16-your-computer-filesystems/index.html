@@ -240,11 +240,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
   <li><a href="#the-working-directory" id="toc-the-working-directory" class="nav-link" data-scroll-target="#the-working-directory">The Working Directory</a></li>
   <li><a href="#making-a-new-folder-from-the-command-line" id="toc-making-a-new-folder-from-the-command-line" class="nav-link" data-scroll-target="#making-a-new-folder-from-the-command-line">Making a new folder from the command Line</a></li>
-  <li><a href="#more-useful-commands-move-copy-remove-and-friends" id="toc-more-useful-commands-move-copy-remove-and-friends" class="nav-link" data-scroll-target="#more-useful-commands-move-copy-remove-and-friends">More useful commands <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</a></li>
+  <li><a href="#more-useful-commands-move-copy-remove-and-friends" id="toc-more-useful-commands-move-copy-remove-and-friends" class="nav-link" data-scroll-target="#more-useful-commands-move-copy-remove-and-friends">More useful commands: <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</a></li>
   <li><a href="#wildcards" id="toc-wildcards" class="nav-link" data-scroll-target="#wildcards">Wildcards</a></li>
   <li><a href="#relative-paths-vs.-absolute-paths" id="toc-relative-paths-vs.-absolute-paths" class="nav-link" data-scroll-target="#relative-paths-vs.-absolute-paths">Relative paths vs.&nbsp;Absolute paths</a></li>
   <li>
-<a href="#navigating-your-filedirectories" id="toc-navigating-your-filedirectories" class="nav-link" data-scroll-target="#navigating-your-filedirectories">Navigating your filedirectories</a>
+<a href="#navigating-your-file-directories" id="toc-navigating-your-file-directories" class="nav-link" data-scroll-target="#navigating-your-file-directories">Navigating your file directories</a>
   <ul class="collapse">
 <li><a href="#the-dots" id="toc-the-dots" class="nav-link" data-scroll-target="#the-dots">The dots</a></li>
   </ul>
@@ -256,7 +256,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
 <li><a href="#final-questions" id="toc-final-questions" class="nav-link" data-scroll-target="#final-questions">Final Questions</a></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
-  <li><a href="#rtistry" id="toc-rtistry" class="nav-link" data-scroll-target="#rtistry">rtistry</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -308,7 +307,7 @@ Learning objectives
 </section><section id="introduction-to-the-shell" class="level1"><h1>Introduction to the shell</h1>
 <p>This document gives a brief explanation of your computerʻs filesystems and how we will use the command line for this course.</p>
 <section id="the-kernel" class="level2"><h2 class="anchored" data-anchor-id="the-kernel">The kernel</h2>
-<p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.</p>
+<p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel (“X is not UNIX”), in modern Windows machines it is the Windows NT kernel.</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
 <div>
@@ -350,7 +349,7 @@ There are many reasons to be proficient in the shell:
 </div>
 </div>
 </div>
-<p>On a PC you would use the <em>Command Prompt</em> otherwise known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
+<p>On a PC if you installed <a href="https://happygitwithr.com/install-git">Git For Windows</a>, you can use <em>Git-Bash</em> (a UNIX emulator) and follow the UNIX instructions (this would be my personal preference). Otherwise you use the <em>Command Prompt</em> also known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
 <ol type="1">
 <li>Open the Start Menu and type “command prompt” or</li>
 <li>Press <strong>Win + R</strong> and type “cmd” in the run box or</li>
@@ -358,9 +357,9 @@ There are many reasons to be proficient in the shell:
 </ol>
 <p>Note: you may see <em>Windows PowerShell</em> or <em>Windows Terminal</em> instead, these are similar apps.</p>
 </section></section><section id="the-working-directory" class="level1"><h1>The Working Directory</h1>
-<p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may looks something like a subdirectory of your C drive “C:[Username]".</p>
+<p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may look something like a subdirectory of your C drive “C:[Username]".</p>
 <p>This is where you currently are in your computerʻs file structure.</p>
-<p>First, lets check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
+<p>First, let’s check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Mac/UNIX</a></li>
@@ -398,12 +397,6 @@ An important principle of programming is <strong>VERIFICATION</strong>
 <div class="sourceCode" id="cb3"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Documents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="making-a-new-folder-from-the-command-line" class="level1"><h1>Making a new folder from the command Line</h1>
 <p>In both systems, the <strong>mkdir</strong> command for <em>make directory</em> will create a new folder, and <strong>cd</strong> will change directories. :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Rclass</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Rclass</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>  <span class="co"># or dir in PC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You have now created the Rclass directory, changed directory again into Rclass, and listed files. (It should be empty.)</p>
-<p>This seems like a lot of trouble, when you can just point and click in the GUI. But the beauty of the shell is its power. We can automate actions, execute code, and use wildcards to do many at once (coming up below).</p>
-<p>Letʻs say you wanted to create files in a new subfolder. <strong>touch</strong> is a command that creates a new (empty) file, or alters the timestamp of existing files.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Mac/UNIX</a></li>
@@ -411,20 +404,20 @@ An important principle of programming is <strong>VERIFICATION</strong>
 </ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="sourceCode" id="cb5"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> shell</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> shell</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> dat.txt  <span class="co"># PC does not have the touch function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Rclass</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Rclass</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>  <span class="co"># or dir in PC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="sourceCode" id="cb6"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> shell</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> shell</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span> nul <span class="op">&gt;</span> dat.txt  <span class="co"># for PC use type nul with pipe instead of touch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mkdir Rclass</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cd Rclass</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>dir</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<p>Check that you have a subfolder within Rclass that has one file named dat.txt.</p>
-<p>Suppose we wanted to create 10 files. You can so easily in the UNIX shell:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> dat<span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">10</span><span class="dt">}</span>.txt  <span class="co"># for PC type nul &gt; dat1.txt multiple times</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You have now created the Rclass directory, changed directory again into Rclass, and listed files. (It should be empty.)</p>
+<p>This seems like a lot of trouble, when you can just point and click in the GUI. But the beauty of the shell is its power. We can automate actions, execute code, and use wildcards to do many at once (coming up below).</p>
+<p>Letʻs say you wanted to create files in a new subfolder. <strong>touch</strong> is a command that creates a new (empty) file, or alters the timestamp of existing files.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Mac/UNIX</a></li>
@@ -432,14 +425,35 @@ An important principle of programming is <strong>VERIFICATION</strong>
 </ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<p>To check your files timestamps list files with the -l flag:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The -a flag shows hidden files. You can do both at once:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> shell</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> shell</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> dat.txt  <span class="co"># PC does not have the touch function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="sourceCode" id="cb7"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> shell</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> shell</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span> nul <span class="op">&gt;</span> dat.txt  <span class="co"># for PC use type nul with pipe instead of touch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Check that you have a subfolder within Rclass that has one file named dat.txt.</p>
+<p>Suppose we wanted to create 10 files. You can so easily in the UNIX shell:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> dat<span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">10</span><span class="dt">}</span>.txt  <span class="co"># for PC type nul &gt; dat1.txt multiple times</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Mac/UNIX</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">PC</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>To check your files timestamps list files with the -l flag:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The -a flag shows hidden files. You can do both at once:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>The <strong>dir</strong> command provides the timestamp as well as other information.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -460,11 +474,11 @@ Exercise:
 </ol>
 </div>
 </div>
-</section><section id="more-useful-commands-move-copy-remove-and-friends" class="level1"><h1>More useful commands <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
+</section><section id="more-useful-commands-move-copy-remove-and-friends" class="level1"><h1>More useful commands: <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
 <p>Some additional very useful commands are those for moving, copying, and removing (deleting) files. These can operate on your current directory, or you can add the <em>path</em> to your file. For example, to move your file into the Data subdirectory:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> dat1.txt Data/dat1.txt</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> dat1.txt Data/dat1.txt</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Anywhere where you can indicate a filename, you can also add a path to that file.</p>
 <table class="caption-top table">
 <colgroup>
@@ -533,9 +547,9 @@ Exercise:
 <p><em>Note: UNIX commands are case-sensitive, Windows commands are not.</em> <em>Apologies in advance for any Windows command errors - Iʻm really not an expert. Please let me know so I can fix it. Thank you!</em></p>
 </section><section id="wildcards" class="level1"><h1>Wildcards</h1>
 <p>You can also select multiple files at once using wildcards. If you want to grab all of the .txt files, for example, you can do:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="pp">*</span>.txt Data</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>  <span class="co"># PC: use dir</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Data <span class="co"># PC: use dir Data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="pp">*</span>.txt Data</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>  <span class="co"># PC: use dir</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Data <span class="co"># PC: use dir Data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And you should have copied <em>all</em> files that end in .txt into Data. You could alternatively used dat* which will select all files that begin with “dat” but can end in anything else. The * will match any characters (zero or more).</p>
 <p>There are a lot of other wildcards that you can use.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -582,69 +596,91 @@ Note:
 <p>Check out what is in these directories:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
-<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">PC</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Mac/UNIX</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">PC</a></li>
 </ul>
 <div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="sourceCode" id="cb13"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="sourceCode" id="cb14"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>Shortcuts in Windows are called Windows Environment Path Variables:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> %UserProfile%  <span class="co"># is this C:\\Users\\{username} ?</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> %SystemDrive%   <span class="co"># is this C: ?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> %UserProfile%  <span class="co"># is this C:\\Users\\{username} ?</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> %SystemDrive%   <span class="co"># is this C: ?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>With the advent of the OneDrive, there is now a parallel user directory in OneDrive that also has Documents, etc.</p>
 <p>Donʻt get confused! “C:" drive is not the”OneDrive”. (the OneDrive is a location on your hard drive, sometimes on C:, sometimes on D:) Windows makes use of a lot of symbolic links to make it easier for the user. These are different directories, sometims on different drives or partitions, but to the user it looks like theyʻre in the same folder). Symbolic links can be generally used in filepaths, but it can be very confusing if you accidentally end up with a circular reference or when you need to find the actual location on the hard drive.</p>
 <p>Use the “\ad” flag with <strong>dir</strong> to see all of the symbolic links too. They call these symbolic links <em>namespace junctions</em>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> %UserProfile% <span class="dt">\\</span>ad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> %UserProfile% <span class="dt">\\</span>ad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 <p>You can use these as shortcuts as starting points for your path to basically write an absolute path. This becomes important when you write a script that may be moved to different locations or shared with different people on different computers.</p>
 <p>For example, “cd ~/Documents” will take you to the Documents folder inside your user directory, regardless of where you are currently because it is an <strong>absolute path</strong>.</p>
 <p>A <strong>relative path</strong> will traverse the file directory <em>relative</em> to where you are currently. For example “Documents” will start at current working directory and look for a subfolder called Documents:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Documents  <span class="co"># relative path, is there a Documents folder here?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Documents  <span class="co"># relative path, is there a Documents folder here?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">~</span><span class="dt">\D</span>ocuments <span class="co"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On the Mac, an asbolute path will start with “" (or a shortcut that contains a starting”"), whereas on a PC an absolute path will start with “C:”</p>
-</section><section id="navigating-your-filedirectories" class="level1"><h1>Navigating your filedirectories</h1>
+<div class="sourceCode" id="cb18"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">~</span><span class="dt">\D</span>ocuments <span class="co"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On the Mac, an asbolute path will start with “\” (or a shortcut that contains a starting “\”), whereas on a PC an absolute path will start with “C:”</p>
+</section><section id="navigating-your-file-directories" class="level1"><h1>Navigating your file directories</h1>
 <section id="the-dots" class="level2"><h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
 <ul>
 <li>“.” is the current working directory (where you are currently)</li>
 <li>“..” is the directory one level up</li>
 <li>“./foldername” will take you to the folder one level down, for example “./Data”</li>
 </ul>
-<p>You can use these paths to move directories using <em>cd</em> or to list the contents of the directories using <em>ls</em> or to make new directories using <em>mkdir</em></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> .</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ./Data</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ./Data/A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can use these paths to change directories using <em>cd</em> or to list <em>ls</em> the contents of the directories or to make new directories using <em>mkdir</em></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> .</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ./Data</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ./Data/A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Make multiple directories:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ./Data/B ./Data/C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ./Data/B ./Data/C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>List the files one level up or two levels up:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ..  <span class="co"># for PC use dir ..</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ..  <span class="co"># for PC use dir ..</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Up one level, and over to another directory:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../AnotherDirectory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../AnotherDirectory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can wander anywhere along your computerʻs file directory! Just add more steps to the path.</p>
 </section></section><section id="executing-software-from-the-command-line" class="level1"><h1>Executing software from the command Line</h1>
-<p>coming soon</p>
+<p>The command line is the OG (original) method for using your computer. You can of course run software from the command line as well, not just UNIX or shell commands. For example, you can run R from a unix shell using:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Mac/UNIX</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="sourceCode" id="cb23"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Which will launch R within the console, and look something like this:</p>
+<div class="cell fig-cap-location-top">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="../../images/R_command.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Invoke help by typing:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> help.start<span class="op">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And quit with:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">q()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Choose “n” when asked if you want to save workspace image?</p>
 </section><section id="piping-commands" class="level1"><h1>Piping commands</h1>
 <p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"A"</span> <span class="op">&gt;</span> dat1.txt</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat1.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"A"</span> <span class="op">&gt;</span> dat1.txt</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat1.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>&gt;</em> pipes (or sends) output to the file named “dat1.txt”. If the file doesnʻt exist, it will create it. If it already exists, it will <em>replace</em> the file.</p>
 <p>If you want to add on to the file, use “&gt;&gt;”</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Another letter B"</span> <span class="op">&gt;&gt;</span> dat1.txt</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat1.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Another letter B"</span> <span class="op">&gt;&gt;</span> dat1.txt</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat1.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Output to multiple files:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"c"</span> <span class="op">&gt;</span>dat2.txt <span class="op">&gt;</span>dat3.txt</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat2.txt</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat3.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"c"</span> <span class="op">&gt;</span>dat2.txt <span class="op">&gt;</span>dat3.txt</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat2.txt</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> dat3.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Concatenate (combine) multiple files using <em>cat</em> and send it to file</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> dat1.txt dat2.txt dat3.txt</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> dat1.txt dat2.txt dat3.txt <span class="op">&gt;</span>all.txt</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> all.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> dat1.txt dat2.txt dat3.txt</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> dat1.txt dat2.txt dat3.txt <span class="op">&gt;</span>all.txt</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> all.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
 <section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
@@ -683,6 +719,22 @@ For additional practice:
 </ol>
 </div>
 </div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In Preparation for Next Time:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Install git. Follow instructions at for Mac or PC at [<a href="https://happygitwithr.com/install-git">Happy Git and GitHub for the useR</a>] For Windows install, installation of “Git-Bash” is highly recommended.</p></li>
+<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">Advice here:</a>]</p></li>
+</ol>
+</div>
+</div>
 </section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -702,16 +754,6 @@ Tip
 </ul>
 </div>
 </div>
-</section><section id="rtistry" class="level2"><h2 class="anchored" data-anchor-id="rtistry">rtistry</h2>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://github.com/djnavarro/art/raw/master/static/gallery/flametree/extra/001_flametree_20_13.jpg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>[‘Flametree’ from Danielle Navarro <a href="https://art.djnavarro.net" class="uri">https://art.djnavarro.net</a>]</p>
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

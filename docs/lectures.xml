@@ -10,7 +10,545 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 16 Jan 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 21 Jan 2025 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introduction to git/GitHub</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-01-21-intro-git-github/</link>
+  <description><![CDATA[ <!-- Add interesting quote --><section id="lecture-materials" class="level1"><h1>Lecture materials</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Helpful references for this lecture
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>
+<a href="https://happygitwithr.com">Happy Git with R</a> from Jenny Bryan</li>
+<li>
+<a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
+<li>
+<a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
+</ol>
+</div>
+</div>
+<section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
+<li><a href="https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html" class="uri">https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html</a></li>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Last time, you should have created and set up a GitHub account.</p>
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Know what Git and GitHub are.</li>
+<li>Know why one might want to use them.</li>
+<li>Have created a repo and executed basic push/pull commands.</li>
+</ul>
+</div>
+</div>
+</section><section id="introduction-to-gitgithub" class="level1"><h1>Introduction to git/GitHub</h1>
+<p>This document gives a brief explanation of GitHub and how we will use it for this course.</p>
+<section id="git" class="level2"><h2 class="anchored" data-anchor-id="git">git</h2>
+<p><strong>Git</strong> is software that implements what is called a <em>version control system</em> for a repository of files (also known as a <em>repo</em>). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.</p>
+<p><strong>GitHub</strong> is an online server and user interface that provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
+<p><strong>Git</strong> and <strong>GitHub</strong> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/A-Solo-work-with-DIY-version-control-via-filename-B-Collaborative-work-with-DIY_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Figure 1. Whether working solo (A) or collaborating in a group (B) version tracking by naming files is a mess when you want to retrace the steps of the analysis (C). Git and GitHub track all changes and the complete branching tree of the project (D). The commit history is a powerful tool to retrace the development of the project or can be used to roll back to any prior version.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
+<p>It is very well suited for collaborative work, as it was developed by Linus Torvalds (in about 10 days of coding!) for collaborative software development of the Linux kernel <a href="https://www.linuxfoundation.org/blog/blog/10-years-of-git-an-interview-with-git-creator-linus-torvalds">pretty interesting interview with Torvalds</a>. What it did really well was <em>distributed control</em>, and allowing everyone to have their <em>own copy of the repository</em>.</p>
+<p><em>Git</em>/<em>GitHub</em> is now the dominant version control system with <em>GitHub</em> hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.</p>
+<p>Another great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by <a href="https://peerj.com/preprints/3159/">Jenny Bryan</a>.</p>
+</section><section id="what-to-not-use-gitgithub-for" class="level2"><h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
+<p><strong>GitHub is ideal if</strong> you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.</p>
+<p><strong>GitHub is less useful if</strong> you have a lot of non-text files (e.g.&nbsp;Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.</p>
+<p><strong>GitHub also has a problem with <em>large files</em></strong>. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. <em>This is because the ENTIRE history is saved, including the addition of the huge file.</em> Therefore keep large (&gt;50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g.&nbsp;Dropbox, OneDrive, GoogleDrive) and load them from there.</p>
+<p><strong>Finally, if you have <em>data</em></strong>, you need to be careful since by default, GitHub repositories are public. You can set the repository to private, but you need to be careful that you don’t accidentally expose confidential data to the public. It is in general not a good idea to have confidential data on GitHub. First anonymize your data (ensure that it is not at risk of identifiability), then you can place it in a private repository. If you put it in a public repo, be very careful!! (And you may need IRB approval, check with your institutional research office.)</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Git/GitHub has version control features like a turbo-charged version of “track changes” but more rigorous, powerful, and scaled up to multiple files</li>
+<li>Great for solo or collaborative work</li>
+<li>Saves the entire history of every change made</li>
+<li>Allows for multiple verisions or “branches” to be developed and later merged</li>
+<li>GitHub allows distributed collaboration (potentially among complete strangers) and has greatly promoted open-source software development, collaboration, distribution, and bug/issue tracking for users to get help</li>
+<li>GitHub allows <em>webpages</em> for your projects or repositories</li>
+</ul>
+</div>
+</div>
+<p>Note that other interfaces to <em>Git</em> exist, e.g., <em>Bitbucket</em>, but <em>GitHub</em> is the most widely used one.</p>
+</section><section id="why-use-gitgithub" class="level2"><h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
+<p>You want to use <em>GitHub</em> to avoid this:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>How not to use GitHub <a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">image from PhD Comics</a></figcaption></figure>
+</div>
+</div>
+</div>
+<p>To learn a bit more about Git/GitHub and why you might want to use it, <a href="https://peerj.com/preprints/3159/">read this article by Jenny Bryan</a>.</p>
+<p><strong>Note her explanation of what’s special with the <code>README.md</code> file on GitHub.</strong></p>
+</section><section id="how-to-use-gitgithub" class="level2"><h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
+<p>Git/GitHub is fundamentally <strong>based on commands you type into the command line</strong>. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.</p>
+<ul>
+<li>
+<a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
+<li>RStudio also has <a href="https://happygitwithr.com/rstudio-git-github.html">Git/GitHub integration</a>. Of course this only works for R project GitHub integration.</li>
+<li>There are also third party GitHub clients with many advanced features, most of which you won’t need initially, but might eventually.</li>
+</ul>
+<p><strong>Note</strong>: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e.&nbsp;access to unlimited private repositories is one benefit), see the <a href="https://education.github.com/pack">GitHub student developer pack</a> on how to do this.</p>
+</section></section><section id="getting-started-with-git" class="level1"><h1>Getting Started with git</h1>
+<p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan (especially for Rstudio users):</p>
+<ul>
+<li><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></li>
+</ul>
+<p>It is one of the <strong>most comprehensive resources</strong> out there for getting started with git/GitHub. I will encourage all of you to go read through the online book. Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I hope you will agree it is a worthwhile investment to understand the basics as well as to know you can get help.</p>
+<section id="sec-profile" class="level2"><h2 class="anchored" data-anchor-id="sec-profile">Set up your profile in git on your computer</h2>
+<p>Before making changes to your repository, GitHub will want to verify your identity.</p>
+<p>In order for your computer to talk to GitHub smoothly, you will need to set up your <strong>username</strong> and <strong>email</strong> in the <strong>git profile</strong> stored on your computer.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Be sure to match</strong> your GitHub account <code>username</code> and <code>email</code>! Otherwise <em>GitHub</em> wonʻt know who you are</p>
+</div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> config <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--global</span> user.name <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'GitHubUsername'</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> config <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--global</span> user.email <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'GitHub_email@example.com'</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> config <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--global</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--list</span></span></code></pre></div>
+</div>
+<p>That last line will show all of your current <code>git config</code> settings.</p>
+<p>If you are using Rstudio, easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
+</section><section id="sec-token" class="level2"><h2 class="anchored" data-anchor-id="sec-token">Set up your Personal Authentication Token on your computer</h2>
+<p>GitHub will also want to check your credentials to authenticate you are really you before writing changes to your repo.</p>
+<p>There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a <em>Personal Access Token</em> for HTTPS from your GitHub account which will be stored on your personal machine.</p>
+<p>I prefer the GithHub command line interface or <code>gh</code> to do this. To install the CLI, follow <a href="https://github.com/cli/cli#installation">the instructions here for your operating system</a>. For Mac users, I suggest that you install <code>homebrew</code>, it is a command-line general software manager for many different software packages.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Storing your Personal Access Token
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>From GitHub: Generate your personal access token <a href="https://happygitwithr.com/https-pat.html#get-a-pat">instructions</a>
+<ol type="a">
+<li>Find the token generator on GitHub under your <em>User Icon &gt; settings &gt; developer settings (left side bar) &gt; Personal access tokens &gt; Tokens (classic) &gt; Generate new Token &gt; classic</em> <strong>note this menu may change</strong>
+</li>
+<li>Select at least these scopes: “admin:org”,“repo”, “user”, “gist”, and “workflow”</li>
+</ol>
+</li>
+<li>From your Command Line: Use <code>gh auth login</code> to store your token and follow the prompts.
+<ol type="a">
+<li>select <code>HTTPS</code> for your preferred protocol</li>
+<li>select <code>Y</code> for authenticate with GitHub credentials</li>
+<li>Alternatively if you want to do this all from the command line you can run the following line (if your token is saved in <code>mytoken.txt</code>):</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">gh</span> auth login <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--with-token</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> mytoken.txt</span></code></pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<p>Many more details are explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
+<p>You only have to store your credentials once for each computer (or PAT expiration date), then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
+</section><section id="configuring-your-default-git-editor" class="level2"><h2 class="anchored" data-anchor-id="configuring-your-default-git-editor">Configuring your default git editor</h2>
+<p>You may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).</p>
+<p>For example the nano editor is easy to use on the command line for a Unix shell:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Mac/Linux</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="Mac/Linux" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">$</span> git config <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--global</span> core.editor <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nano -w"</span></span></code></pre></div>
+</div>
+<p><em>The Carpentries</em> provide a <a href="https://swcarpentry.github.io/git-novice/02-setup/#line-endings">full list of editors</a> by operating system, a great resource.</p>
+</section></section><section id="using-gitgithub-in-our-course" class="level1"><h1>Using git/GitHub in our course</h1>
+<p>In this course, you will use git/GitHub in the following ways:</p>
+<ol type="1">
+<li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
+<li>Projects 1-4 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc) .</li>
+</ol>
+<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
+</section><section id="clone-a-repo-to-your-local-directory---easy" class="level1"><h1>Clone a repo to your local directory - Easy!</h1>
+<p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/github_cloning.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Cloning from an existing repo</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>In your Terminal or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal(Mac/Linux)</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="Terminal(Mac/Linux)" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">pwd</span></span>
+<span id="cb4-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># navigate to your git folder</span></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>CMD(Windows)</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="CMD(Windows)" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dir</span></span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># navigate to your git folder</span></span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
+</div>
+<p>If you set up your personal access token, it should appear on your computer! If not, go back to Section&nbsp;4.2 and try again.</p>
+</section><section id="make-a-github-repo-started-from-your-local-files" class="level1"><h1>Make a GitHub repo started from your local files</h1>
+<p>Suppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called <strong>test</strong></p>
+<ol type="1">
+<li>Create a folder in your <code>Documents/git</code> directory called <code>test</code> and copy some files there.</li>
+<li>Go to your GitHub account and create a new repository. Click on the small black + on the top right corner</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/git_newrepo.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Create a new repo button</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Give your new repo a name (“test”) and choose to create a blank repo with no README.md or .gitignore. We can add them later.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/git_create_new_repo.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Set up a blank repo</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li>You will see the following page giving you helpful hints for linking your GitHub repo with your local repo. We will follow the first set of instructions, slightly modified.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/github_quicksetup.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Explantations for each line of code:</p>
+<ul>
+<li>
+<code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
+<li>
+<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
+<li>
+<code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
+<li>
+<code>git commit -m "first commit"</code> Commit message</li>
+<li>
+<code>git branch -M main</code> Renames the local branch to main</li>
+<li>
+<code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
+<li>
+<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
+</ul>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"# test"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> README.md</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> init</span>
+<span id="cb6-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> add .</span>
+<span id="cb6-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"first commit"</span></span>
+<span id="cb6-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> branch <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-M</span> main</span>
+<span id="cb6-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> remote add origin https://github.com/mbutler808/test.git</span>
+<span id="cb6-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> push <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-u</span> origin main</span></code></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GitHub requires authentication to overwrite your repository (this is a good thing 😃👍)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Did <em>GitHub</em> complain that it doesnʻt know your <strong>username</strong> or <strong>email</strong>?</li>
+</ul>
+<p>This might be because the defaults on your computer donʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: Section&nbsp;4.1</p>
+<ul>
+<li>Did <em>GitHub</em> complain that your <strong>authentication</strong> failed?</li>
+</ul>
+<p>Donʻt worry, just try it again: Section&nbsp;4.2. Nice bonus, you only have to do it once for each computer.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Check your remote repo. The files from your computer should be there!</li>
+<li>Now try pushing up another change. Make some edits to one or more local files.</li>
+<li>Add, Commit, Push:</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb7" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> add .</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"made a small change"</span></span>
+<span id="cb7-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> push origin main</span></code></pre></div>
+</div>
+<p>Check your remote repo. Did it go up? Well done! 😍</p>
+<p>Your local files and your GitHub repository files are now synced!</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/With-Git-all-contributors-have-a-copy-of-the-repo-with-all-files-and-the-full-history_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Everyone is one with the repo</figcaption></figure>
+</div>
+</div>
+</div>
+<p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
+<ol start="8" type="1">
+<li>The nuclear option</li>
+</ol>
+<p>If you need to start over you can delete and remake your repos. (For example if you canʻt get your local and remote repos to communicate and you canʻt figure out why.)</p>
+<p>Since your GitHub repo is empty and youʻre just getting started, there is really no harm in deleting it and starting over. From your repo on github.com, go to <code>settings</code>, then scrolll all the way down until you reach <code>The Danger Zone</code> where you will find the <code>Delete this repository</code> button.</p>
+<p>If you just want to delete your local git tracking without deleting all of the files you created, you can just delete your local hidden <code>.git</code> directory, leaving the rest of the files and directories in place. From your command line:</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+NOTE: This will delete your local git history, and is not reversible.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb8" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rm</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-rf</span> .git</span></code></pre></div>
+</div>
+</div>
+</div>
+</section><section id="a-word-about-merge-conflicts" class="level1"><h1>A word about merge conflicts</h1>
+<p>Sooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!</p>
+<p>Sometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> push <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--force</span></span></code></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The main danger is that a force push or pull will force git to write over a conflict, and can possibly destroy someone elseʻs work. If youʻre the only one on the repo, then itʻs only your changes that youʻll lose</li>
+<li>Just be aware but donʻt be afraid to practice. You can always revert back.</li>
+<li>See the help page for <a href="https://git-scm.com/docs/git-push">git push</a>. See the -f or –force flag. Itʻs terse computer help, but if you make the effort it will start to make sense.</li>
+<li>Iʻll link a more tutorial type resource later</li>
+</ul>
+</div>
+</div>
+</section><section id="forking-a-repo" class="level1"><h1>Forking a repo</h1>
+<p>When you want to build on someone elseʻs repo, that is a great time to <strong>fork</strong> a repo. This happens when you donʻt have write permission to the repo, but you want provide suggestions (for example if you want to fix a bug). Or if you want to use that repo as a template or a launching off point for your own project.</p>
+<p>After you fork and clone the repo to your computer, you can edit, add, and commit the changes. When you are ready to submit the suggestions to the repo owner, start a <strong>pull request</strong>. They will then read over your suggested edits, and if they approve they can merge the changes into the working repo.</p>
+<p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
+<p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
+</section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<p>Here are some post-lecture questions to help you think about the material discussed.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>What is version control?</p></li>
+<li><p>What is the difference between git and GitHub?</p></li>
+<li><p>What are some benefits and case uses for repositories with version control using git and GitHub?</p></li>
+</ol>
+</div>
+</div>
+</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<a href="https://rafalab.github.io/dsbook/git.html">git and GitHub in the <code>dsbook</code></a> by Rafael Irizarry</li>
+</ul>
+</div>
+</div>
+
+
+</section></section> ]]></description>
+  <category>module 1</category>
+  <category>week 2</category>
+  <category>programming</category>
+  <category>version control</category>
+  <category>git</category>
+  <category>GitHub</category>
+  <guid>https://mbutler808.github.io/posts/2025-01-21-intro-git-github/</guid>
+  <pubDate>Tue, 21 Jan 2025 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Introduction to your computerʻs terminal utilities</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -58,7 +596,7 @@ Learning objectives
 </section><section id="introduction-to-the-shell" class="level1"><h1>Introduction to the shell</h1>
 <p>This document gives a brief explanation of your computerʻs filesystems and how we will use the command line for this course.</p>
 <section id="the-kernel" class="level2"><h2 class="anchored" data-anchor-id="the-kernel">The kernel</h2>
-<p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.</p>
+<p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel (“X is not UNIX”), in modern Windows machines it is the Windows NT kernel.</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
 <div>
@@ -100,7 +638,7 @@ There are many reasons to be proficient in the shell:
 </div>
 </div>
 </div>
-<p>On a PC you would use the <em>Command Prompt</em> otherwise known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
+<p>On a PC if you installed <a href="https://happygitwithr.com/install-git">Git For Windows</a>, you can use <em>Git-Bash</em> (a UNIX emulator) and follow the UNIX instructions (this would be my personal preference). Otherwise you use the <em>Command Prompt</em> also known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
 <ol type="1">
 <li>Open the Start Menu and type “command prompt” or</li>
 <li>Press <strong>Win + R</strong> and type “cmd” in the run box or</li>
@@ -108,9 +646,9 @@ There are many reasons to be proficient in the shell:
 </ol>
 <p>Note: you may see <em>Windows PowerShell</em> or <em>Windows Terminal</em> instead, these are similar apps.</p>
 </section></section><section id="the-working-directory" class="level1"><h1>The Working Directory</h1>
-<p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may looks something like a subdirectory of your C drive “C:[Username]".</p>
+<p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may look something like a subdirectory of your C drive “C:[Username]".</p>
 <p>This is where you currently are in your computerʻs file structure.</p>
-<p>First, lets check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
+<p>First, let’s check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs">
 <li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">Mac/UNIX</a></li>
@@ -152,6 +690,13 @@ background-color: null;
 font-style: inherit;">cd</span> Documents</span></code></pre></div>
 </section><section id="making-a-new-folder-from-the-command-line" class="level1"><h1>Making a new folder from the command Line</h1>
 <p>In both systems, the <strong>mkdir</strong> command for <em>make directory</em> will create a new folder, and <strong>cd</strong> will change directories. :</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs">
+<li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true">Mac/UNIX</a></li>
+<li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false">PC</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> Rclass</span>
@@ -163,36 +708,44 @@ background-color: null;
 font-style: inherit;">ls</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># or dir in PC</span></span></code></pre></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" aria-labelledby="tabset-2-2-tab">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1">mkdir Rclass</span>
+<span id="cb5-2">cd Rclass</span>
+<span id="cb5-3">dir</span></code></pre></div>
+</div>
+</div>
+</div>
 <p>You have now created the Rclass directory, changed directory again into Rclass, and listed files. (It should be empty.)</p>
 <p>This seems like a lot of trouble, when you can just point and click in the GUI. But the beauty of the shell is its power. We can automate actions, execute code, and use wildcards to do many at once (coming up below).</p>
 <p>Letʻs say you wanted to create files in a new subfolder. <strong>touch</strong> is a command that creates a new (empty) file, or alters the timestamp of existing files.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false">PC</a></li>
+<li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true">Mac/UNIX</a></li>
+<li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false">PC</a></li>
 </ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> shell</span>
-<span id="cb5-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> shell</span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">touch</span> dat.txt  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># PC does not have the touch function</span></span></code></pre></div>
-</div>
-<div id="tabset-2-2" class="tab-pane" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-1" class="tab-pane active" aria-labelledby="tabset-3-1-tab">
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> shell</span>
 <span id="cb6-2"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> shell</span>
-<span id="cb6-3"><span class="bu" style="color: null;
+<span id="cb6-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">touch</span> dat.txt  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># PC does not have the touch function</span></span></code></pre></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" aria-labelledby="tabset-3-2-tab">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> shell</span>
+<span id="cb7-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> shell</span>
+<span id="cb7-3"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">type</span> nul <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -204,7 +757,7 @@ font-style: inherit;"># for PC use type nul with pipe instead of touch</span></s
 </div>
 <p>Check that you have a subfolder within Rclass that has one file named dat.txt.</p>
 <p>Suppose we wanted to create 10 files. You can so easily in the UNIX shell:</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb8-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">touch</span> dat<span class="dt" style="color: #AD0000;
 background-color: null;
@@ -221,27 +774,27 @@ background-color: null;
 font-style: inherit;"># for PC type nul &gt; dat1.txt multiple times</span></span></code></pre></div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false">PC</a></li>
+<li class="nav-item"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" aria-controls="tabset-4-1" aria-selected="true">Mac/UNIX</a></li>
+<li class="nav-item"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" aria-controls="tabset-4-2" aria-selected="false">PC</a></li>
 </ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" aria-labelledby="tabset-4-1-tab">
 <p>To check your files timestamps list files with the -l flag:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-l</span></span></code></pre></div>
 <p>The -a flag shows hidden files. You can do both at once:</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-la</span></span></code></pre></div>
 </div>
-<div id="tabset-3-2" class="tab-pane" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-2" class="tab-pane" aria-labelledby="tabset-4-2-tab">
 <p>The <strong>dir</strong> command provides the timestamp as well as other information.</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">dir</span></span></code></pre></div>
 </div>
@@ -264,15 +817,15 @@ Exercise:
 </ol>
 </div>
 </div>
-</section><section id="more-useful-commands-move-copy-remove-and-friends" class="level1"><h1>More useful commands <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
+</section><section id="more-useful-commands-move-copy-remove-and-friends" class="level1"><h1>More useful commands: <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
 <p>Some additional very useful commands are those for moving, copying, and removing (deleting) files. These can operate on your current directory, or you can add the <em>path</em> to your file. For example, to move your file into the Data subdirectory:</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mv</span> dat1.txt Data/dat1.txt</span>
-<span id="cb11-2"><span class="fu" style="color: #4758AB;
+<span id="cb12-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span></span>
-<span id="cb11-3"><span class="fu" style="color: #4758AB;
+<span id="cb12-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> Data</span></code></pre></div>
 <p>Anywhere where you can indicate a filename, you can also add a path to that file.</p>
@@ -343,17 +896,17 @@ font-style: inherit;">ls</span> Data</span></code></pre></div>
 <p><em>Note: UNIX commands are case-sensitive, Windows commands are not.</em> <em>Apologies in advance for any Windows command errors - Iʻm really not an expert. Please let me know so I can fix it. Thank you!</em></p>
 </section><section id="wildcards" class="level1"><h1>Wildcards</h1>
 <p>You can also select multiple files at once using wildcards. If you want to grab all of the .txt files, for example, you can do:</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cp</span> <span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">*</span>.txt Data</span>
-<span id="cb12-2"><span class="fu" style="color: #4758AB;
+<span id="cb13-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># PC: use dir</span></span>
-<span id="cb12-3"><span class="fu" style="color: #4758AB;
+<span id="cb13-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> Data <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -404,26 +957,26 @@ Note:
 <p>Check out what is in these directories:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" aria-controls="tabset-4-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" aria-controls="tabset-4-2" aria-selected="false">PC</a></li>
+<li class="nav-item"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" aria-controls="tabset-5-1" aria-selected="true">Mac/UNIX</a></li>
+<li class="nav-item"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" aria-controls="tabset-5-2" aria-selected="false">PC</a></li>
 </ul>
 <div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" aria-labelledby="tabset-4-1-tab">
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+<div id="tabset-5-1" class="tab-pane active" aria-labelledby="tabset-5-1-tab">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb14-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> /</span>
-<span id="cb13-2"><span class="fu" style="color: #4758AB;
+<span id="cb14-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> ~</span></code></pre></div>
 </div>
-<div id="tabset-4-2" class="tab-pane" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-5-2" class="tab-pane" aria-labelledby="tabset-5-2-tab">
 <p>Shortcuts in Windows are called Windows Environment Path Variables:</p>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb14-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb15-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">dir</span> %UserProfile%  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># is this C:\\Users\\{username} ?</span></span>
-<span id="cb14-2"><span class="fu" style="color: #4758AB;
+<span id="cb15-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">dir</span> %SystemDrive%   <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -431,7 +984,7 @@ font-style: inherit;"># is this C: ?</span></span></code></pre></div>
 <p>With the advent of the OneDrive, there is now a parallel user directory in OneDrive that also has Documents, etc.</p>
 <p>Donʻt get confused! “C:" drive is not the”OneDrive”. (the OneDrive is a location on your hard drive, sometimes on C:, sometimes on D:) Windows makes use of a lot of symbolic links to make it easier for the user. These are different directories, sometims on different drives or partitions, but to the user it looks like theyʻre in the same folder). Symbolic links can be generally used in filepaths, but it can be very confusing if you accidentally end up with a circular reference or when you need to find the actual location on the hard drive.</p>
 <p>Use the “\ad” flag with <strong>dir</strong> to see all of the symbolic links too. They call these symbolic links <em>namespace junctions</em>.</p>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">dir</span> %UserProfile% <span class="dt" style="color: #AD0000;
 background-color: null;
@@ -442,13 +995,13 @@ font-style: inherit;">\\</span>ad</span></code></pre></div>
 <p>You can use these as shortcuts as starting points for your path to basically write an absolute path. This becomes important when you write a script that may be moved to different locations or shared with different people on different computers.</p>
 <p>For example, “cd ~/Documents” will take you to the Documents folder inside your user directory, regardless of where you are currently because it is an <strong>absolute path</strong>.</p>
 <p>A <strong>relative path</strong> will traverse the file directory <em>relative</em> to where you are currently. For example “Documents” will start at current working directory and look for a subfolder called Documents:</p>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> Documents  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># relative path, is there a Documents folder here?</span></span></code></pre></div>
 <p>In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.</p>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> <span class="pp" style="color: #AD0000;
 background-color: null;
@@ -457,70 +1010,100 @@ background-color: null;
 font-style: inherit;">\D</span>ocuments <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code></pre></div>
-<p>On the Mac, an asbolute path will start with “" (or a shortcut that contains a starting”"), whereas on a PC an absolute path will start with “C:”</p>
-</section><section id="navigating-your-filedirectories" class="level1"><h1>Navigating your filedirectories</h1>
+<p>On the Mac, an asbolute path will start with “\” (or a shortcut that contains a starting “\”), whereas on a PC an absolute path will start with “C:”</p>
+</section><section id="navigating-your-file-directories" class="level1"><h1>Navigating your file directories</h1>
 <section id="the-dots" class="level2"><h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
 <ul>
 <li>“.” is the current working directory (where you are currently)</li>
 <li>“..” is the directory one level up</li>
 <li>“./foldername” will take you to the folder one level down, for example “./Data”</li>
 </ul>
-<p>You can use these paths to move directories using <em>cd</em> or to list the contents of the directories using <em>ls</em> or to make new directories using <em>mkdir</em></p>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+<p>You can use these paths to change directories using <em>cd</em> or to list <em>ls</em> the contents of the directories or to make new directories using <em>mkdir</em></p>
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb19-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> .</span>
-<span id="cb18-2"><span class="fu" style="color: #4758AB;
+<span id="cb19-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> ./Data</span>
-<span id="cb18-3"><span class="fu" style="color: #4758AB;
+<span id="cb19-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> ./Data/A</span></code></pre></div>
 <p>Make multiple directories:</p>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb19-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb20-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> ./Data/B ./Data/C</span></code></pre></div>
 <p>List the files one level up or two levels up:</p>
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb20-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb21-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> ..  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># for PC use dir ..</span></span>
-<span id="cb20-2"><span class="fu" style="color: #4758AB;
+<span id="cb21-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> ../..</span></code></pre></div>
 <p>Up one level, and over to another directory:</p>
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb21-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> ../AnotherDirectory</span></code></pre></div>
 <p>You can wander anywhere along your computerʻs file directory! Just add more steps to the path.</p>
 </section></section><section id="executing-software-from-the-command-line" class="level1"><h1>Executing software from the command Line</h1>
-<p>coming soon</p>
+<p>The command line is the OG (original) method for using your computer. You can of course run software from the command line as well, not just UNIX or shell commands. For example, you can run R from a unix shell using:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" aria-controls="tabset-6-1" aria-selected="true">Mac/UNIX</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" aria-labelledby="tabset-6-1-tab">
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb23-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">R</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<p>Which will launch R within the console, and look something like this:</p>
+<div class="cell fig-cap-location-top">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/R_command.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Invoke help by typing:</p>
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> help.start<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">()</span></span></code></pre></div>
+<p>And quit with:</p>
+<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">q()</span></span></code></pre></div>
+<p>Choose “n” when asked if you want to save workspace image?</p>
 </section><section id="piping-commands" class="level1"><h1>Piping commands</h1>
 <p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><span class="bu" style="color: null;
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb26-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"A"</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> dat1.txt</span>
-<span id="cb22-2"><span class="fu" style="color: #4758AB;
+<span id="cb26-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">less</span> dat1.txt</span></code></pre></div>
 <p><em>&gt;</em> pipes (or sends) output to the file named “dat1.txt”. If the file doesnʻt exist, it will create it. If it already exists, it will <em>replace</em> the file.</p>
 <p>If you want to add on to the file, use “&gt;&gt;”</p>
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb23-1"><span class="bu" style="color: null;
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb27-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Another letter B"</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;&gt;</span> dat1.txt</span>
-<span id="cb23-2"><span class="fu" style="color: #4758AB;
+<span id="cb27-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">less</span> dat1.txt</span></code></pre></div>
 <p>Output to multiple files:</p>
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><span class="bu" style="color: null;
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb28-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -529,22 +1112,22 @@ background-color: null;
 font-style: inherit;">&gt;</span>dat2.txt <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span>dat3.txt</span>
-<span id="cb24-2"><span class="fu" style="color: #4758AB;
+<span id="cb28-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">less</span> dat2.txt</span>
-<span id="cb24-3"><span class="fu" style="color: #4758AB;
+<span id="cb28-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">less</span> dat3.txt</span></code></pre></div>
 <p>Concatenate (combine) multiple files using <em>cat</em> and send it to file</p>
-<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb29-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span> dat1.txt dat2.txt dat3.txt</span>
-<span id="cb25-2"><span class="fu" style="color: #4758AB;
+<span id="cb29-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span> dat1.txt dat2.txt dat3.txt <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span>all.txt</span>
-<span id="cb25-3"><span class="fu" style="color: #4758AB;
+<span id="cb29-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">less</span> all.txt</span></code></pre></div>
 </section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
@@ -585,6 +1168,22 @@ For additional practice:
 </ol>
 </div>
 </div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In Preparation for Next Time:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Install git. Follow instructions at for Mac or PC at [<a href="https://happygitwithr.com/install-git">Happy Git and GitHub for the useR</a>] For Windows install, installation of “Git-Bash” is highly recommended.</p></li>
+<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">Advice here:</a>]</p></li>
+</ol>
+</div>
+</div>
 </section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -604,16 +1203,6 @@ Tip
 </ul>
 </div>
 </div>
-</section><section id="rtistry" class="level2"><h2 class="anchored" data-anchor-id="rtistry">rtistry</h2>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://github.com/djnavarro/art/raw/master/static/gallery/flametree/extra/001_flametree_20_13.jpg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>[‘Flametree’ from Danielle Navarro <a href="https://art.djnavarro.net" class="uri">https://art.djnavarro.net</a>]</p>
 
 
 </section></section> ]]></description>

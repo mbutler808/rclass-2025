@@ -50,7 +50,7 @@ This document gives a brief explanation of your computerʻs filesystems and how 
 
 ## The kernel
 
-The *kernel* is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel, in modern Windows machines it is the Windows NT kernel.
+The *kernel* is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel ("X is not UNIX"), in modern Windows machines it is the Windows NT kernel.
 
 ```{r}
 #| label: MacOSguts
@@ -85,7 +85,7 @@ Macs use the same terminal utilities as UNIX/Linux systems. On the Mac, the comm
 knitr::include_graphics("../../images/terminal.png")
 ```
 
-On a PC you would use the *Command Prompt* otherwise known as the *Windows Command Processor* or *CMD*. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:
+On a PC if you installed [Git For Windows](https://happygitwithr.com/install-git), you can use _Git-Bash_ (a UNIX emulator) and follow the UNIX instructions (this would be my personal preference).  Otherwise you use the *Command Prompt* also known as the *Windows Command Processor* or *CMD*. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:
 
 1. Open the Start Menu and type "command prompt" or
 2. Press **Win + R** and type "cmd" in the run box or
@@ -96,12 +96,12 @@ Note: you may see *Windows PowerShell* or *Windows Terminal* instead, these are 
 
 # The Working Directory
 
-By default, the working directory on a Mac and UNIX/Linux systems is your home user directory "\~". On a PC the default working directory may looks something like a subdirectory of your C drive "C:\Users\[Username]\".
+By default, the working directory on a Mac and UNIX/Linux systems is your home user directory "\~". On a PC the default working directory may look something like a subdirectory of your C drive "C:\Users\[Username]\".
 
 This is where you currently are in your computerʻs file structure.
 
-First, lets check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e. UNIX vs. PC).
-Listing the contents of a directory is done with **ls** in UNIX and **dir** in PC:
+First, let's check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e. UNIX vs. PC).
+Listing the contents of a directory is done with __ls__ in UNIX and __dir__ in PC:
 
 ::: {.panel-tabset}
 
@@ -139,11 +139,25 @@ cd Documents
 
 In both systems, the **mkdir** command for *make directory* will create a new folder, and **cd** will change directories. :
 
+::: {.panel-tabset}
+
+## Mac/UNIX
+
 ```zsh
 mkdir Rclass
 cd Rclass
 ls  # or dir in PC
 ```
+
+## PC
+
+```default
+mkdir Rclass
+cd Rclass
+dir
+```
+
+:::
 
 You have now created the Rclass directory, changed directory again into Rclass, and listed files. (It should be empty.)
 
@@ -209,7 +223,7 @@ dir
 3. Create 2 subdirectories, one called "Data" and one called "Images"
 :::
 
-# More useful commands **move** **copy** **remove** and friends
+# More useful commands: **move** **copy** **remove** and friends
 
 Some additional very useful commands are those for moving, copying, and removing (deleting) files.  These can operate on your current directory, or you can add the *path* to your file. For example, to move your file into the Data subdirectory:
 
@@ -317,10 +331,10 @@ In contrast, an absolute path will start from the very beginning of your root di
 ls ~\Documents # this is an absolute path because ~ = "\Users\marguerite"
 ```
 
-On the Mac, an asbolute path will start with "\" (or a shortcut that contains a starting "\"), whereas on a PC an absolute path will start with "C:"
+On the Mac, an asbolute path will start with "\\" (or a shortcut that contains a starting "\\"), whereas on a PC an absolute path will start with "C:"
 
 
-# Navigating your filedirectories
+# Navigating your file directories
 
 ## The dots
 
@@ -328,7 +342,7 @@ On the Mac, an asbolute path will start with "\" (or a shortcut that contains a 
 - ".." is the directory one level up
 - "./foldername" will take you to the folder one level down, for example "./Data"
 
-You can use these paths to move directories using *cd*  or to list the contents of the directories using *ls* or to make new directories using *mkdir*
+You can use these paths to change directories using *cd*  or to list *ls* the contents of the directories or to make new directories using *mkdir*
 
 ```zsh
 ls .
@@ -358,7 +372,38 @@ You can wander anywhere along your computerʻs file directory! Just add more ste
 
 # Executing software from the command Line
 
-coming soon
+The command line is the OG (original) method for using your computer. You can of course run software from the command line as well, not just UNIX or shell commands. For example, you can run R from a unix shell using: 
+
+::: {.panel-tabset}
+
+## Mac/UNIX
+
+```zsh
+R
+```
+::: 
+
+Which will launch R within the console, and look something like this: 
+
+```{r}
+#| label: Rcommand
+#| echo: false
+#| fig-cap-location: "top"
+knitr::include_graphics("../../images/R_command.png")
+```
+
+Invoke help by typing: 
+
+```zsh
+ls help.start()
+```
+
+And quit with: 
+
+```zsh
+q()
+```
+Choose "n" when asked if you want to save workspace image?
 
 # Piping commands
 
@@ -421,6 +466,15 @@ Here are some post-lecture questions to help you think about the material discus
 3. Practice moving junk lying around in your downloads folder into the trash using the command line (or at least putting them into a common folder "opala" folder which you can then manually put into the trash). (FYI on the Mac Trash is in "~/.Trash" so it is a hidden folder)
 :::
 
+
+::: callout-important
+### In Preparation for Next Time:
+
+1.  Install git. Follow instructions at for Mac or PC at \[[Happy Git and GitHub for the useR](https://happygitwithr.com/install-git)\] For Windows install, installation of "Git-Bash" is highly recommended. 
+
+2.  Create an account at GitHub \[[Advice here:](https://happygitwithr.com/github-acct)\]
+:::
+
 ### Additional Resources
 
 ::: callout-tip
@@ -430,13 +484,3 @@ Here are some post-lecture questions to help you think about the material discus
 - [Windows CMD cheat sheet](https://serverspace.us/support/help/windows-cmd-commands-cheat-sheet/)
 :::
 
-## rtistry
-
-```{r}
-#| label: flametree
-#| echo: false
-#| fig-cap-location: "top"
-knitr::include_graphics("https://github.com/djnavarro/art/raw/master/static/gallery/flametree/extra/001_flametree_20_13.jpg")
-```
-
-\['Flametree' from Danielle Navarro <https://art.djnavarro.net>\]
