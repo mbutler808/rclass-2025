@@ -328,10 +328,10 @@ ls Documents  # relative path, is there a Documents folder here?
 In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.
 
 ```zsh
-ls ~\Documents # this is an absolute path because ~ = "\Users\marguerite"
+ls ~/Documents # this is an absolute path because ~ = "\Users\marguerite"
 ```
 
-On the Mac, an asbolute path will start with "\\" (or a shortcut that contains a starting "\\"), whereas on a PC an absolute path will start with "C:"
+On the Mac, an asbolute path will start with "/" (or a shortcut that contains a starting "/"), whereas on a PC an absolute path will start with "C:"
 
 
 # Navigating your file directories
@@ -403,7 +403,7 @@ And quit with:
 ```zsh
 q()
 ```
-Choose "n" when asked if you want to save workspace image?
+Choose "n" when asked if you want to save workspace image.
 
 # Piping commands
 
@@ -472,7 +472,7 @@ Here are some post-lecture questions to help you think about the material discus
 
 1.  Install git. Follow instructions at for Mac or PC at \[[Happy Git and GitHub for the useR](https://happygitwithr.com/install-git)\] For Windows install, installation of "Git-Bash" is highly recommended. 
 
-2.  Create an account at GitHub \[[Advice here:](https://happygitwithr.com/github-acct)\]
+2.  Create an account at GitHub \[[advice here](https://happygitwithr.com/github-acct)\]
 :::
 
 ### Additional Resources

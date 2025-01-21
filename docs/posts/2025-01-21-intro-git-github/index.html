@@ -272,13 +272,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="lecture-materials" class="level1"><h1>Lecture materials</h1>
-<div class="callout callout-style-default callout-note callout-titled">
+<div id="nte-info" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Helpful references for this lecture
+Note&nbsp;1: Helpful references for this lecture
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -289,7 +289,9 @@ Helpful references for this lecture
 <a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
 <li>
 <a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
+<li>Either before or after Tuesday’s class, please watch the podcast <em>GitHub my Computer and me</em>. You can stop at ~11:15:</li>
 </ol>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2MjsHnNMp7o" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
 </div>
 <section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
@@ -468,9 +470,9 @@ Storing your Personal Access Token
 <p>In this course, you will use git/GitHub in the following ways:</p>
 <ol type="1">
 <li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
-<li>Projects 1-4 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc) .</li>
+<li>Projects 1-3 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc).</li>
 </ol>
-<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
+<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code with other people, or suggesting changes or bug fixes to other projects). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
 </section><section id="clone-a-repo-to-your-local-directory---easy" class="level1"><h1>Clone a repo to your local directory - Easy!</h1>
 <p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
 <div class="cell">
@@ -482,13 +484,13 @@ Storing your Personal Access Token
 </div>
 </div>
 <ol start="2" type="1">
-<li>In your Terminal or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
+<li>In your Terminal, Git-Bash, or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
 </ol>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>Terminal(Mac/Linux)</strong></pre>
+<pre><strong>Terminal(Mac/Linux/Git-bash)</strong></pre>
 </div>
-<div class="sourceCode" id="cb4" data-filename="Terminal(Mac/Linux)"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<div class="sourceCode" id="cb4" data-filename="Terminal(Mac/Linux/Git-bash)"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Documents/git  <span class="co"># navigate to your git folder</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -542,7 +544,7 @@ Storing your Personal Access Token
 <li>
 <code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
 <li>
-<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
+<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once for each repo)</li>
 <li>
 <code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
 <li>
@@ -552,7 +554,7 @@ Storing your Personal Access Token
 <li>
 <code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
 <li>
-<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
+<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch “main” on origin).</li>
 </ul>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -667,6 +669,7 @@ Warning
 <p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
 <p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
 </section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<p>If you haven’t already done so, please watch the podcast <em>GitHub my Computer and me</em> (see <a href="#nte-info" class="quarto-xref">Note&nbsp;1</a> #4).</p>
 <section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout callout-style-default callout-note callout-titled">

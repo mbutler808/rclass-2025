@@ -1,0 +1,513 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"con",
+				"contrees"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "posts/2025-01-21-intro-git-github/index.qmd",
+			"settings":
+			{
+				"buffer_size": 21014,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/R/R.sublime-build",
+					""
+				],
+				[
+					"Packages/SendCode/support/R - Source File.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/SendCode/support/R - Source File.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"quarto",
+				"Set Syntax: Quarto"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"term",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Install Package Control"
+			],
+			[
+				"termin",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"ter",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"termi",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"terminus",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"markdown",
+				"GitHub Flavored Markdown: Preview"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"MarkdownPreview",
+				"MarkdownLivePreview: Open Settings"
+			],
+			[
+				"Markdown",
+				"Preferences: MarkdownEditing Settings"
+			],
+			[
+				"MarkdownLi",
+				"MarkdownLivePreview: Open Preview"
+			],
+			[
+				"previw",
+				"MarkdownLivePreview: Open Preview"
+			],
+			[
+				"sendcode",
+				"SendCode: Choose Program"
+			],
+			[
+				"preview",
+				"MarkdownLivePreview: Open Preview"
+			],
+			[
+				"markdownliv",
+				"MarkdownLivePreview: Open Preview"
+			],
+			[
+				"",
+				"Set Syntax: R"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"set",
+				"Set Syntax: R"
+			],
+			[
+				"set syntax: R",
+				"Set Syntax: R"
+			],
+			[
+				"terminus: ope",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"set syntax: r",
+				"Set Syntax: R Console"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 160.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/rclass-2025",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/rclass-2025/posts",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/rclass-2025/posts/2025-01-21-intro-git-github"
+	],
+	"file_history":
+	[
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/Oreophryne_manuscript/Products/oreophryne.bib",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/Oreophryne_manuscript/Products/oreo.cut.qmd",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/Oreophryne_manuscript/Products/oreo.qmd",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/Oreophryne_manuscript/Code/plotting_functions.R",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/Oreophryne_manuscript/Code/oreoplots.R",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/animalphys-2024/animalphys2024.sublime-project",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/animalphys-2024/animalphys2024.sublime-workspace",
+		"/Users/marguerite/Library/Mobile Documents/com~apple~CloudDocs/Documents/git/animalphys-2024/schedule.qmd",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/tables.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/processing_code.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/plotting_functions.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/genetree_speciestree_stats_all.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Products/oreophryne.bib",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/oreocode.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/print_def_cut_text.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/clean_metadata.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree_5loci/iqtreerun_genetreespeciestree_all198_5partitions.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Products/oreo.qmd",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/treeplotting_gradient.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/edit.nexus.R",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/ic_oaref.csv",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/ils_oacp.csv",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/trimmed_iqtree_2024_metadata.csv",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/Rplot_colors.pdf",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Code/temp.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree_5loci/all198_5loci.iqtree",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree_5loci/iqtreerun_genetreespeciestree_all198_15partitions.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/twotaxa_tests/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/mesquite_20240508_oreophryne_aphantophryne_cophix_paedo_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/mesquite_20240508_oreophryne_aphantophryne_outgroup_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/mesquite_20240508_oreophryne_aphantophryne_references_allspecies_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/mesquite_20240508_oreophryne_aphantophryne_references_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/mesquite_20240508_oreophryne_outgroup_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_allspecies_198tips.fasta",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/input/asterophryinae_5partitions.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/mesquite_20240508_oreophryne_aphantophryne_cophix_paedo_outgroup_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_oreophryne_outgroup_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_oreophryne_aphantophryne_references_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_oreophryne_aphantophryne_cophix_paedo_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_oreophryne_aphantophryne_cophix_paedo_outgroup_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_oreophryne_aphantophryne_outgroup_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_oreophryne_aphantophryne_references_allspecies_trimmed.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_allspecies_207tips.fasta",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/alignment_20240508_allspecies_207tips.fasta.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree/iqtreerun_genetreespeciestree_oaref.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/oreophryne_auparoparo_aphantophryne_outgroup_trimmed/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/oreophryne_aphantophryne_references_trimmed_allspecies/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/oreophryne_aphantophryne_references_trimmed/oreo_aupa_apha_references_trimmed.log",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/oreophryne_aphantophryne_references_trimmed_allspecies/oreophryne_aphantophryne_references_trimmed.log",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/oreophryne_aphantophryne_references_trimmed/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/oreophryne_aphantophryne_cophix_paedo_outgroup_trimmed/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Products/Oreophryne Manuscript Draft.qmd",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/Astral/Astral_speciestree.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/onetaxa_tests_threeoutgroups/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/twotaxa_tests_A_sp4/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/twotaxa_twocoph_tests/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/twotaxa_tests/iqtreerun_bestmodel_oreo.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Products/Oreophryne Manuscript Draft_old.qmd",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree/iqtreerun_genetreespeciestree_oacp.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree/iqtreerun_genetreespeciestree_oa.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree/iqtreerun_genetreespeciestree_all207.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/genetree_speciestree/iqtreerun_genetreespeciestree.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/input/asterophryinae_dates.txt",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/onetaxa_tests/iqtreerun_bestmodel.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/onetaxa_tests_threeoutgroups/iqtreerun_bestmodel_oreo.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/onetaxa_tests/iqtreerun_bestmodel_oreo.sh",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/Data/IQTree/mesquite_alignment/onetaxa/aupa1.nex",
+		"/Users/marguerite/Documents/git/Oreophryne_manuscript/.gitignore",
+		"/Users/marguerite/Documents/Macroevolution/Exam_1.md",
+		"/Users/marguerite/Documents/git/macroevolution-class/README.md",
+		"/Users/marguerite/Documents/git/macroevolution-class/exams/exam1/Exam1notes.md",
+		"/Users/marguerite/Documents/git/macroevolution-class/discussions/2024-02-29-modularity/README.md",
+		"/Users/marguerite/Documents/git/macroevolution-class/discussions/2024-02-15-20-species-concepts/README.md",
+		"/Users/marguerite/Documents/git/macroevolution-class/discussions/2024-02-15-species-concepts/README.md",
+		"/Users/marguerite/Documents/git/macroevolution-class/discussions/2024-02-06-cladistic-taxonomy/README.md",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design4.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-10-16-muscles2/muscles2.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab12-human-renal/Lab12.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-11-20-osmoregulation2/osmoregulation2.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design3a.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-11-06-ventilation/ventilation.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/slides.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-10-09-muscles/muscles.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/schedule.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab8-human-emg/Lab8.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/resources.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/_quarto.yml",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab11-human-eeg/Lab11.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-11-27-excretion/excretion.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/docs/projects/design4.pdf",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design3-resources.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design4-resources.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design1-FAQ.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-11-13-osmoregulation/osmoregulation.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design3.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design3-turnin.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/slides 2.html",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab11-human-eeg/Lab11-AF-2.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab11-human-eeg/Lab8.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-09-25-digestion/digestion.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design3-process.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-10-30-blood-respiration/blood-respiration.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab9-10-toad-muscle/Lab9-10.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-09-18-feeding/feeding.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design1.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-08-28-Metabolism/index.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab7-toad-nerve/Lab7.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-10-23-biomechanics-locomotion/biomechanics-locomotion.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design2-turnin.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab6-lobster-heart/Lab6.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/_column_examples.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/index.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab3-human-peripheral-circulation-dive-response/Lab3.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/syllabus.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design1-turnin.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-10-02-neurons/neurons.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab2-zoo/index.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs-misc/lab-notebook.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab4-human-ecg/Lab4.qmd",
+		"/Users/marguerite/Documents/git/rclass-site/_quarto.yml",
+		"/Users/marguerite/Documents/git/rclass-site/lectures.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/labs/Lab1-heart-rate-and-data-analysis/index.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design2.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/projects/design2-FAQ.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-10-02-neurons/_neurons.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/posts/2023-09-11-cardiac-function/cardiac.qmd",
+		"/Users/marguerite/Documents/git/animalphys-site/homework/HW3feeding_digestion.pdf",
+		"/Users/marguerite/Documents/git/animalphys-site/.gitignore"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 116.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "posts/2025-01-21-intro-git-github/index.qmd",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21014,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Quarto/Quarto.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 0,
+					"file": "posts/2025-01-21-intro-git-github/index.qmd",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21014,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Quarto/Quarto.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": true,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 44.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.Terminus":
+	{
+		"height": 66.0
+	},
+	"output.Terminus 2":
+	{
+		"height": 280.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.markdown":
+	{
+		"height": 126.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 36.0
+	},
+	"pinned_build_system": "",
+	"project": "rclass.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/git/rclass-site/syllabus.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 244.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -620,8 +620,8 @@ Note:
 <p>A <strong>relative path</strong> will traverse the file directory <em>relative</em> to where you are currently. For example “Documents” will start at current working directory and look for a subfolder called Documents:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Documents  <span class="co"># relative path, is there a Documents folder here?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">~</span><span class="dt">\D</span>ocuments <span class="co"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On the Mac, an asbolute path will start with “\” (or a shortcut that contains a starting “\”), whereas on a PC an absolute path will start with “C:”</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/Documents <span class="co"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On the Mac, an asbolute path will start with “/” (or a shortcut that contains a starting “/”), whereas on a PC an absolute path will start with “C:”</p>
 </section><section id="navigating-your-file-directories" class="level1"><h1>Navigating your file directories</h1>
 <section id="the-dots" class="level2"><h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
 <ul>
@@ -664,7 +664,7 @@ Note:
 <div class="sourceCode" id="cb24"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> help.start<span class="op">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And quit with:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">q()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Choose “n” when asked if you want to save workspace image?</p>
+<p>Choose “n” when asked if you want to save workspace image.</p>
 </section><section id="piping-commands" class="level1"><h1>Piping commands</h1>
 <p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"A"</span> <span class="op">&gt;</span> dat1.txt</span>
@@ -731,7 +731,7 @@ In Preparation for Next Time:
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Install git. Follow instructions at for Mac or PC at [<a href="https://happygitwithr.com/install-git">Happy Git and GitHub for the useR</a>] For Windows install, installation of “Git-Bash” is highly recommended.</p></li>
-<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">Advice here:</a>]</p></li>
+<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">advice here</a>]</p></li>
 </ol>
 </div>
 </div>

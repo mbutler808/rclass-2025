@@ -10,19 +10,918 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Tue, 21 Jan 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 23 Jan 2025 10:00:00 GMT</lastBuildDate>
 <item>
-  <title>Introduction to git/GitHub</title>
+  <title>Reproducible Research</title>
   <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-01-21-intro-git-github/</link>
-  <description><![CDATA[ <!-- Add interesting quote --><section id="lecture-materials" class="level1"><h1>Lecture materials</h1>
+  <link>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
+</blockquote>
+<section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Helpful references for this lecture
+Read ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li>
+<a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
+<li>
+<a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
+</ol>
+</div>
+</div>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
+<li><a href="http://users.stat.umn.edu/~geyer/repro.pdf" class="uri">http://users.stat.umn.edu/~geyer/repro.pdf</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776" class="uri">https://rdpeng.github.io/Biostat776</a></li>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Know the difference between replication and reproducibility</li>
+<li>Identify valid reasons why replication and/or reproducibility is not always possible</li>
+<li>Identify the type of reproducibility</li>
+<li>Identify key components to enable reproducible data analyses</li>
+</ul>
+</div>
+</div>
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
+<p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
+<p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
+<p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
+<ul>
+<li><a href="https://www.science.org/toc/science/334/6060" class="uri">https://www.science.org/toc/science/334/6060</a></li>
+</ul>
+<p>Take for example a recent study by the <a href="https://doi.org/10.1073/pnas.2203150119">Crowdsourced Replication Initiative (2022)</a>. It was a massive effort by 166 coauthors published in PNAS to test repeatability:</p>
+<ul>
+<li>73 research teams from around the world analyzed the <strong>same social science data</strong>.</li>
+<li>They investigated the <strong>same hypothesis</strong>: that more immigration will reduce public support for government provision of social policies.</li>
+<li>Together they fit 1261 statistical models and came to widely varying concluisons.</li>
+<li>A meta-analysis of the results by the PIs could not explain the variation in results. Even after accounting for the choices made by the research teams in designing their statistical tests, 95% of the total variation remained unexplained.</li>
+<li>The authors claim that “a hidden universe of uncertainty remains.”</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/reproducible_study.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
+<p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
+</section><section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1"><h1>Some of the issues from a statisticianʻs perspective</h1>
+<p>Greyer provides nine ideas worth considering:</p>
+<ol type="1">
+<li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
+<ol type="a">
+<li>mathematical or computational error,</li>
+<li>statistical procedures inappropriate for the data, or</li>
+<li>statistical procedures that do not lead to the inferences claimed.</li>
+</ol>
+</li>
+<li>Good computing practices — version control, well thought out testing, code reviews, literate programming — are essential to correct computing.</li>
+<li>Failure to do all calculations from raw data to conclusions (every number or figure shown in a paper) in a way that is fully reproducible and available in a permanent public repository is, by itself, a questionable research practice.</li>
+<li>Failure to do statistics as if it could have been pre-registered is a questionable research practice.</li>
+<li>Journals that use P &lt; 0.05 as a criterion of publication are not scientific journals (publishing only one side of a story is as unscientific as it is possible to be).</li>
+<li>Statistics should be adequately described, at least in the supplementary material.</li>
+<li>Scientific papers whose conclusions depend on nontrivial statistics should have statistical referees, and those referees should be heeded.</li>
+<li>Not all errors are describable by statistics. There is also what physicists call <em>systematic error</em> that is the same in every replication of an experiment. Physicists regularly attempt to quantify this. Others should too.</li>
+</ol>
+<p>A reasonable ideal for reproducible research today - Research should be reproducible. Anything in a scientific paper should be reproducible by the reader. - Whatever may have been the case in low tech days, this ideal has long gone. Much scientific research in recent years is too complicated and the published details to scanty for anyone to reproduce it. - The lack of detail is not entirely the author’s fault. Journals have severe page pressure and no room for full explanations. - For many years, the only hope of reproducibility is old-fashioned person-to-person contact. Write the authors, ask for data, code, whatever. Some authors help, some don’t. If the authors are not cooperative, tough. - Even cooperative authors may be unable to help. If too much time has gone by and their archiving was not systematic enough and if their software was unportable, there may be no way to recreate the analysis. - Fortunately, the internet comes to the rescue. No page pressure there! - Nowadays, many scientific papers also point to supplementary materials on the internet. Data, computer programs, whatever should be there, permanently. Ideally with a permanent Document Identifier or DOI. There are complaints that many Supplmentary Materials are incomprehensible, but that can be improved with practices of reproducible reserach.</p>
+<p>Therefore, at the very least scientists should use in their statistical programming - version control, - software testing, - code reviews, - literate programming, and - all data and code available in a permanent public repository.</p>
+<p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
+<ul>
+<li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
+</ul></section><section id="recommendations" class="level1"><h1>Recommendations</h1>
+<p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
+<section id="authors-and-readers" class="level3"><h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
+<p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
+<p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
+<ul>
+<li>Publishing data and code today is not necessarily a trivial task. Although there are a number of resources available now, that were not available even five years ago, it is still a bit of a challenge to get things out on the web (or at least distributed widely).</li>
+<li>Resources like <a href="https://github.com">GitHub</a>, <a href="https://kipoi.org">kipoi</a>, and <a href="http://rpubs.com">RPubs</a> and various data repositories have made a big difference, but there is still a ways to go with respect to building up the public reproducibility infrastructure.</li>
+</ul>
+<p>Furthermore, <strong>even when data and code are available</strong>, readers often have to download the data, download the code, and then they have to piece everything together, usually by hand. It’s <strong>not always an easy task to put the data and code together</strong>.</p>
+<ul>
+<li>Readers may not have the same computational resources that the original authors did.</li>
+<li>If the original authors used an enormous computing cluster, for example, to do their analysis, the readers may not have that same enormous computing cluster at their disposal. It may be difficult for readers to reproduce the same results.</li>
+</ul>
+<p>Generally, the <strong>toolbox for doing reproducible research is small</strong>, although <strong>it’s definitely growing</strong>.</p>
+<ul>
+<li>In practice, authors often just throw things up on the web. There are journals and supplementary materials, but they are famously disorganized.</li>
+<li>There are only a few central databases that authors can take advantage of to post their data and make it available. So if you are working in a field that has a central database that everyone uses, that is great. If you are not, then you have to assemble your own resources.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The process of conducting and disseminating research can be depicted as a “data science pipeline”</p></li>
+<li><p>Readers and consumers of data science research are typically not privy to the details of the data science pipeline</p></li>
+<li><p>One view of reproducibility is that it gives research consumers partial access to the raw pipeline elements.</p></li>
+</ul>
+</div>
+</div>
+</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<p>Here are some post-lecture questions to help you think about the material discussed.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Why can replication be difficult to achieve? Why is reproducibility a reasonable minimum standard when replication is not possible?</p></li>
+<li><p>What is needed to reproduce the results of a data analysis?</p></li>
+</ol>
+</div>
+</div>
+</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
+</ul>
+</div>
+</div>
+
+
+</section></section> ]]></description>
+  <category>module 1</category>
+  <category>week 2</category>
+  <category>R</category>
+  <category>reproducibility</category>
+  <guid>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</guid>
+  <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Literate Statistical Programming and Quarto</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-01-23-intro-quarto/</link>
+  <description><![CDATA[ <!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level2"><h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522" class="uri">https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522</a></li>
+<li>Creating a Website in Quarto quickstart <em>up to and including Render</em> <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a>
+</li>
+<li>Publishing to GitHub <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a>
+</li>
+</ol>
+</div>
+</div>
+</section><section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/</a></li>
+<li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776/lecture-literate-statistical-programming.html" class="uri">https://rdpeng.github.io/Biostat776/lecture-literate-statistical-programming.html</a></li>
+<li><a href="https://statsandr.com/blog/tips-and-tricks-in-rstudio-and-r-markdown" class="uri">https://statsandr.com/blog/tips-and-tricks-in-rstudio-and-r-markdown</a></li>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to define literate programming</li>
+<li>Know how to use R plus a text editor or Rstudio to practice literate programming</li>
+<li>Create a Quarto markdown document</li>
+</ul>
+</div>
+</div>
+</section><section id="literate-programming" class="level1"><h1>Literate Programming</h1>
+<p>Before there was widespread concern about “Reproducible Research”, the term <strong>literate programming</strong> was coined by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>, one of the true geniuses of computing, the author/inventor of TeX, and the notion of structured programming, among other things. He wrote a book about it in 1984!</p>
+<blockquote class="blockquote">
+<p>Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The main idea is to treat a program as a piece of literature, <em>addressed to human beings rather than to a computer</em>. The program is also viewed as a hypertext document, rather like the World Wide Web. (Indeed, I used the word WEB for this purpose long before CERN grabbed it!) —<em>Donald Knuth</em></p>
+</blockquote>
+<p>The basic idea is that:</p>
+<ul>
+<li>Programs are useless without descriptions.</li>
+<li>Descriptions should be literate, not comments in code or typical reference manuals.</li>
+<li>The <em>code</em> in the descriptions <em>should work</em>. Thus it is necessary to extract the real working code from the literary description.</li>
+</ul>
+<p>These concepts were baked into the R help pages. You will see that there are working code examples for every single function in R at the bottom of each help page. In fact it is required before a package will be published on CRAN.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Additional Reading
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Knuthʻs Webpage about his <a href="https://www-cs-faculty.stanford.edu/~knuth/lp.html">book on Literate Programming</a>
+</li>
+</ul>
+</div>
+</div>
+</section><section id="the-data-science-pipeline" class="level1"><h1>The Data Science Pipeline</h1>
+<p>The basic issue is when you read a description of a data analysis, such as in an article or a technical report, for the most part, what you get is the report and nothing else.</p>
+<p>Of course, everyone knows that behind the scenes <strong>there’s a lot that went into this article</strong> and that is what I call the <strong>data science pipeline</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/dspipeline.png" class="img-fluid figure-img"></p>
+<figcaption>The Data Science Pipeline</figcaption></figure>
+</div>
+</section><section id="literate-programming-in-practice" class="level1"><h1>Literate Programming in Practice</h1>
+<p>One basic idea to make writing reproducible reports easier is what’s known as <em>literate statistical programming</em>. The idea is to <strong>think of a report or a publication as a stream of text and code</strong>.</p>
+<ul>
+<li><p>The text is readable by people and the code is readable by computers.</p></li>
+<li><p>The analysis is described in a series of text and code chunks.</p></li>
+<li><p>Each kind of code chunk will do something like load some data or compute some results.</p></li>
+<li><p>Each text chunk will relay something in a human readable language.</p></li>
+<li><p><strong>The code and text remain together</strong> in a single source document. No more separate analysis files and word processing files. When code is edited, the report is automatically generated and updated.</p></li>
+</ul>
+<p>There might also be <strong>presentation code</strong> that formats tables and figures and there’s article text that explains what’s going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.</p>
+<section id="weaving-and-tangling" class="level2"><h2 class="anchored" data-anchor-id="weaving-and-tangling">Weaving and Tangling</h2>
+<p>Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.</p>
+<p>Literate programs can be <strong>weaved</strong> to produce human readable documents like PDFs or HTML web pages, and they can <strong>tangled</strong> to produce machine-readable “documents”, or in other words, machine readable code.</p>
+<p>In order to use a system like this you need a documentational language, that’s human readable, and you need a programming language that’s machine readable (or can be compiled/interpreted into something that’s machine readable).</p>
+</section><section id="sweave" class="level2"><h2 class="anchored" data-anchor-id="sweave">Sweave</h2>
+<p>One of the original literate programming systems in R that was designed to do this was called Sweave written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>. Sweave enables users to combine R code with a documentation program called LaTeX. Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project.</p>
+<p><strong>Sweave files ends a <code>.Rnw</code></strong> and have R code weaved through the document:</p>
+<pre><code>&lt;&lt;plot1, height=4, width=5, eval=FALSE&gt;&gt;=
+data(airquality)
+plot(airquality$Ozone ~ airquality$Wind)
+@</code></pre>
+<p>Once you have created your <code>.Rnw</code> file, Sweave will process the file, executing the R chunks and replacing them with output as appropriate before creating the PDF document.</p>
+<p>Sweaveʻs main limitation is that it requires knowledge of LaTeX</p>
+<ul>
+<li>LaTeX is very powerful for laying out mathematical equations and fine-tuned control of formatting, but is not a documentation language that is widely used outside of mathematics.</li>
+<li>Therefore, there is a steep learning curve.</li>
+<li>Sweave also <strong>lacks a lot of features that people find useful</strong> like caching, and multiple plots per page and mixing programming languages.</li>
+</ul>
+<p>Instead, folks have moved towards using something called <strong>knitr</strong>, which offers everything Sweave does, plus it extends it to much simpler Markdown documents.</p>
+</section><section id="rmarkdown" class="level2"><h2 class="anchored" data-anchor-id="rmarkdown">rmarkdown</h2>
+<p>Another choice for literate programming is to build documents based on <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> language. A markdown file is a plain text file that is typically given the extension <code>.md</code>. The <a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> R package takes a R Markdown file (<code>.Rmd</code>) and weaves together R code chunks Figure&nbsp;1, producing a large number of user-specified outputs.</p>
+<div id="fig-rmarkdown" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rmarkdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://mbutler808.github.io/images/Rmarkdown.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rmarkdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: R markdown translates text and code to many different formats
+</figcaption></figure>
+</div>
+<p>R chunks surrounded by text looks like this:</p>
+<pre><code>```{r plot1, height=4, width=5, eval=FALSE, echo=TRUE}
+data(airquality)
+plot(airquality$Ozone ~ airquality$Wind)
+```</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The best resource for learning about R Markdown this by Yihui Xie, J. J. Allaire, and Garrett Grolemund:</p>
+<ul>
+<li><a href="https://bookdown.org/yihui/rmarkdown" class="uri">https://bookdown.org/yihui/rmarkdown</a></li>
+</ul>
+<p>The R Markdown Cookbook by Yihui Xie, Christophe Dervieux, and Emily Riederer is really good too:</p>
+<ul>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook</a></li>
+</ul>
+<p>The authors of the 2nd book describe the motivation for the 2nd book as:</p>
+<blockquote class="blockquote">
+<p>“However, we have received comments from our readers and publisher that it would be beneficial to provide more practical and relatively short examples to show the interesting and useful usage of R Markdown, because it can be daunting to find out how to achieve a certain task from the aforementioned reference book (put another way, that book is too dry to read). As a result, this cookbook was born.”</p>
+</blockquote>
+</div>
+</div>
+<p>Because this is lecture is built in a <code>.qmd</code> file (which is very similar to a <code>.Rmd</code> file), let’s demonstrate how this work. I am going to change <code>eval=FALSE</code> to <code>eval=TRUE</code>.</p>
+<div class="cell" height="4" width="5">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Wind</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-01-23-intro-quarto/index_files/figure-html/plot2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Why do we not see the back ticks ``` anymore in the code chunk above that made the plot?</li>
+<li>What do you think we should do if we want to have the code executed, but we want to hide the code that made it?</li>
+</ol>
+</div>
+</div>
+<p>Before we leave this section, I find that there is quite a bit of terminology to understand the magic behind <code>rmarkdown</code> that can be confusing, so let’s break it down:</p>
+<ul>
+<li>
+<a href="https://pandoc.org">Pandoc</a>. Pandoc is a command line tool with no GUI that converts documents (e.g.&nbsp;from number of different markup formats to many other formats, such as .doc, .pdf etc). It is completely independent from R (but does come bundled with RStudio). If you donʻt have Rstudio installed, you will have to install <code>pandoc</code>.</li>
+<li>
+<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> (<strong>markup language</strong>). Markdown is a lightweight <a href="https://en.wikipedia.org/wiki/Markup_language">markup language</a> with plain text formatting syntax designed so that it can be converted to HTML and many other formats. A markdown file is a plain text file that is typically given the extension <code>.md.</code> It is completely independent from R.</li>
+<li>R Markdown (<strong>markup language</strong>). R Markdown is an extension of the markdown syntax for weaving together text with R code. R Markdown files are plain text files that typically have the file extension <code>.Rmd</code>.</li>
+<li>
+<a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> (<strong>R package</strong>). The R package <code>rmarkdown</code> is a library that uses pandoc to process and convert text and R code written in <code>.Rmd</code> files into a number of different formats. This core function is <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">rmarkdown::render()</a></code>. <strong>Note</strong>: this package only deals with the markdown language. If the input file is e.g.&nbsp;<code>.Rhtml</code> or <code>.Rnw</code>, then you need to use <code>knitr</code> prior to calling pandoc (see below).</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Check out the R Markdown Quick Tour for more:</p>
+<ul>
+<li><a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html" class="uri">https://rmarkdown.rstudio.com/authoring_quick_tour.html</a></li>
+</ul>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/rmarkdown_rockstar.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Artwork by Allison Horst on RMarkdown</figcaption></figure>
+</div>
+<section id="knitr" class="level3"><h3 class="anchored" data-anchor-id="knitr">knitr</h3>
+<p>One of the alternative that has come up in recent times is something called <code>knitr</code>.</p>
+<ul>
+<li>The <code>knitr</code> package for R takes a lot of these ideas of literate programming and updates and improves upon them.</li>
+<li>
+<code>knitr</code> still uses R as its programming language, but it allows you to mix other programming languages in.</li>
+<li>You can also use a variety of documentation languages now, such as LaTeX, markdown and HTML.</li>
+<li>
+<code>knitr</code> was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.</li>
+</ul>
+<p>Knitr takes a plain text document with embedded code, executes the code and ‘knits’ the results back into the document.</p>
+<p>For for example, it converts</p>
+<ul>
+<li>An R Markdown (<code>.Rmd)</code> file into a standard markdown file (<code>.md</code>)</li>
+<li>An <code>.Rnw</code> (Sweave) file into to <code>.tex</code> format.</li>
+<li>An <code>.Rhtml</code> file into to <code>.html</code>.</li>
+</ul>
+<p>The core function is <code><a href="https://rdrr.io/pkg/knitr/man/knit.html">knitr::knit()</a></code> and by default this will look at the input document and try and guess what type it is e.g.&nbsp;<code>Rnw</code>, <code>Rmd</code> etc.</p>
+<p>This core function performs three roles:</p>
+<ul>
+<li>A <strong>source parser</strong>, which looks at the input document and detects which parts are code that the user wants to be evaluated.</li>
+<li>A <strong>code evaluator</strong>, which evaluates this code</li>
+<li>An <strong>output renderer</strong>, which writes the results of evaluation back to the document in a format which is interpretable by the raw output type. For instance, if the input file is an <code>.Rmd</code>, the output render marks up the output of code evaluation in <code>.md</code> format.</li>
+</ul>
+<div class="cell" data-layout-align="center" data-preview="true">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/9791d/images/rmarkdownflow.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Converting a Rmd file to many outputs using knitr and pandoc</figcaption></figure>
+</div>
+</div>
+</div>
+<p>[<a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">Source</a>]</p>
+<p>As seen in the figure above, from there pandoc is used to convert e.g.&nbsp;a <code>.md</code> file into many other types of file formats into a <code>.html</code>, etc.</p>
+<p>So in summary:</p>
+<blockquote class="blockquote">
+<p>“R Markdown stands on the shoulders of knitr and Pandoc. The former executes the computer code embedded in Markdown, and converts R Markdown to Markdown. The latter renders Markdown to the output format you want (such as PDF, HTML, Word, and so on).”</p>
+</blockquote>
+<p>[<a href="https://bookdown.org/yihui/rmarkdown/">Source</a>]</p>
+</section></section></section><section id="in-comes-quarto" class="level1"><h1>In comes Quarto</h1>
+<p>The folks who developed R Markdown have moved on to a new package called <a href="https://quarto.org">Quarto</a>. Quarto contains many of the features of R Markdown, but importantly, is now separate from Rstudio. It is intentionally developed as a cross-platform, cross-language markup language. It works with R, Python, Julia, and Observable. And is rapidly catching on with the statistical coding community.</p>
+<p>Quarto can render output to many formats of documents including html, pdf, docx, md. It can also layout websites, presentations, or even books. It supports interactive apps such as Rshiny among other things.</p>
+<p>We are going to learn using Quarto. Letʻs start by getting a simple webpage up. Conceptually, there are three tasks:</p>
+<ol type="1">
+<li>Create your quarto website on your computer</li>
+<li>Make your website folder into a GitHub repo</li>
+<li>Publish your website via GitHub</li>
+</ol>
+<section id="create-your-website-locally-with-quarto" class="level2"><h2 class="anchored" data-anchor-id="create-your-website-locally-with-quarto">Create your website locally with Quarto</h2>
+<p>In this section, I am adding a bit more explanation to the Quarto quickstart guide <em>up to and including Render</em>. If something is not clear, please consult <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a></p>
+<p>There are three main quarto commands we will use:</p>
+<ul>
+<li>
+<code>quarto create-project</code>: Make a website project template</li>
+<li>
+<code>quarto preview</code>: Take a look at what the webite will look like</li>
+<li>
+<code>quarto render</code>: Render your <code>qmd</code> to <code>html</code>
+</li>
+</ul>
+<section id="make-your-website-directory-and-template" class="level3"><h3 class="anchored" data-anchor-id="make-your-website-directory-and-template">Make your website directory and template</h3>
+<p>Create your website (here called <code>mysite</code>) using the following command. It will make a directory of the same name and put the website contents within it.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">quarto</span> create-project mysite <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--type</span> website</span></code></pre></div>
+</div>
+<p>You should now see the following files in your <code>mysite</code> directory (Figure&nbsp;2):</p>
+<div id="fig-webshell" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-webshell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://mbutler808.github.io/images/quarto_web_shell_terminal.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-webshell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Website files from the Terminal view
+</figcaption></figure>
+</div>
+<p>This is the bare-bones version of your website. Check that the code is functional by looking at a preview:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">quarto</span> preview</span></code></pre></div>
+</div>
+<p>This should open up a browser window showing a temporary file made by quarto by rendering your website files.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<code>quarto preview</code> will refresh the preview every time you save your <code>index.qmd</code> (or any) website files. So itʻs a good idea to keep the preview open as you make edits and saves.</li>
+<li>Check every edit, it is easier to debug in small steps.</li>
+<li>Terminate <code>quarto preview</code> with <code>Control-c</code>
+</li>
+</ul>
+</div>
+</div>
+</section><section id="render-your-website-to-html" class="level3"><h3 class="anchored" data-anchor-id="render-your-website-to-html">Render your website to html</h3>
+<p>Use quarto to render your content to html, the format used by browsers. First navigate into your website directory then render:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> mysite</span>
+<span id="cb6-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">quarto</span> render</span></code></pre></div>
+</div>
+<p>Take a look at the <code>mysite</code> contents after rendering, you should see a new directory <code>_site</code> (Figure&nbsp;3). The html was rendered and put in there (go ahead, open up the files and check it out):</p>
+<div id="fig-afterrender" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-afterrender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://mbutler808.github.io/images/quarto_web_rendered.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-afterrender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Website files after rendering
+</figcaption></figure>
+</div>
+</section><section id="personalize-your-content" class="level3"><h3 class="anchored" data-anchor-id="personalize-your-content">Personalize your content</h3>
+<p>What is really nice is that you can personalize your website by simply editing the quarto markdown and yaml files.</p>
+<section id="web-content-goes-in-.qmd" class="level4"><h4 class="anchored" data-anchor-id="web-content-goes-in-.qmd">Web content goes in <code>.qmd</code>
+</h4>
+<p>Using any text editor, edit the <code>index.qmd</code> to personalize your website.</p>
+<p>The first section of your <code>index.qmd</code> is the header. You can change the title and add additional header information, including any cover images and website templates.</p>
+<p>For example this is what I have in my course website <code>index.qmd</code> header. Note that my cover image is in a folder called <code>images</code> within at the top level of my website directory. If you want to try this out substitute or remove the image line and change the twitter/github handles.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>index.qmd</strong></pre>
+</div>
+<div class="sourceCode" id="cb7" data-filename="index.qmd" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb7-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">title:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Welcome to Introduction to Data Science in R for Biologists!"</span></span>
+<span id="cb7-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">image:</span> images/mycoolimage.png</span>
+<span id="cb7-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">about:</span></span>
+<span id="cb7-5">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">template:</span> jolla</span>
+<span id="cb7-6">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">links:</span></span>
+<span id="cb7-7">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">-</span> icon: twitter</span>
+<span id="cb7-8">      <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">text:</span> Twitter</span>
+<span id="cb7-9">      <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">href:</span> https://twitter.com/mbutler808</span>
+<span id="cb7-10">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">-</span> icon: github</span>
+<span id="cb7-11">      <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">text:</span> Github</span>
+<span id="cb7-12">      <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">href:</span> https://github.com/mbutler808</span>
+<span id="cb7-13"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">---</span></span></code></pre></div>
+</div>
+<p>You should edit the body of your website as well. You simply edit the text.</p>
+<p>The <a href="https://quarto.org/docs/authoring/markdown-basics.html">quarto markdown page</a> has great examples showing how to format your content. Take a look at how to specify header sizes, lists, figures and tables.</p>
+<p>Try editing the <code>about.qmd</code> file as well. You will notice that this is another tab in your website. YOu can add more tabs by adding <code>.qmd</code> files.</p>
+<p>With each addition, be sure to <code>quarto preview</code> your changes to make sure it works. When you are satisfied with your website, <code>quarto render</code> to render to html.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>When editing markdown, take care to note spaces and indents as they are interpreted for formatting.</li>
+<li>Indentations are really important for formatting lists.</li>
+<li>For example in a hyperlink, there is no space between the square brackets and parentheses. <code>[This is a cool link](http://mycoollink.com)</code>
+</li>
+</ul>
+</div>
+</div>
+</section><section id="website-wide-settings-go-in-_quarto.yml" class="level4"><h4 class="anchored" data-anchor-id="website-wide-settings-go-in-_quarto.yml">Website-wide settings go in <code>_quarto.yml</code>
+</h4>
+<p>All Quarto projects include a <code>_quarto.yml</code> configuration file that sets the global options that apply across the entire website.</p>
+<p><code>YAML</code> started off as “Yet Another Markup Language” 😜. It is clean, clear, and widely used. You can edit your YAML to add options or change the format of your website. Take a look at your <code>_quarto.yml</code>.</p>
+<p>Here is an example for a simple website. <code>title:</code> is the parameter to set the websiteʻs title. <code>navbar:</code> sets the menu, in this case on the left sidebar. By default tabs will be named based on the names of the <code>.qmd</code> files, but you can set them manually. There are many <a href="https://quarto.org/docs/output-formats/html-themes.html">themes</a> you can choose from too, check them out. For something different try <code>cyborg</code>.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_quarto.yml</strong></pre>
+</div>
+<pre class="bask" data-filename="_quarto.yml"><code>project:
+  type: website
+
+website:
+  title: "today"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: minty
+    css: styles.css
+    toc: true</code></pre>
+</div>
+<p>Again, after saving your edits, <code>quarto preview</code> to see the effects. When you are satisfied with your website, <code>quarto render</code> to render to html.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">quarto</span> render</span></code></pre></div>
+</div>
+</section></section></section><section id="publishing-your-website-to-github" class="level2"><h2 class="anchored" data-anchor-id="publishing-your-website-to-github">Publishing your website to GitHub</h2>
+<p>You can publish your website for free on GitHub, which is a very cool feature. In his section I am adding a bit more explanation to the Quarto quickstart guide <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a>. I describe the most important stpes below:</p>
+<ol type="1">
+<li>Render your html to a <code>docs</code> directory</li>
+<li>Supress GitHub <code>jekyll</code> html processing by creating a <code>.nojekyll</code> file</li>
+<li>Make your website directory into a repo, and link it to a GitHub repo</li>
+<li>Edit the GitHub repo settings to publish your website</li>
+</ol>
+<section id="render-your-html-to-docs" class="level3"><h3 class="anchored" data-anchor-id="render-your-html-to-docs">Render your html to <code>docs</code>
+</h3>
+<p>Edit the <code>_quarto.yml</code> file at the top level of your website to send output to <code>docs</code>. This will also create the <code>docs</code> folder.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_quarto.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb10" data-filename="_quarto.yml" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">project:</span></span>
+<span id="cb10-2">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">type:</span> website</span>
+<span id="cb10-3">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">output-dir:</span> docs</span></code></pre></div>
+</div>
+<p>The next time you <code>quarto render</code> it will create <code>docs</code> and all of its contents.</p>
+</section><section id="supress-github-jekyll-html-processing" class="level3"><h3 class="anchored" data-anchor-id="supress-github-jekyll-html-processing">Supress GitHub <code>jekyll</code> html processing</h3>
+<p>GitHub uses a sofware called <code>jekyll</code> to render html from markdown. Since weʻre using <code>quarto</code>, we want to supress that. Create an empty file named <code>.nojekyll</code> at the top level of your website directory to supress default <code>jekyll</code> processing.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 47%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Mac/Linux/ Git-bash</td>
+<td><div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb11" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">touch</span> .nojekyll</span></code></pre></div>
+</div></td>
+</tr>
+<tr class="even">
+<td>Windows</td>
+<td><div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>CMD</strong></pre>
+</div>
+<div class="sourceCode" id="cb12" data-filename="CMD" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">copy</span> NUL .nojekyll</span></code></pre></div>
+</div></td>
+</tr>
+</tbody>
+</table></section><section id="setup-a-github-repo-for-your-website" class="level3"><h3 class="anchored" data-anchor-id="setup-a-github-repo-for-your-website">Setup a GitHub repo for your website</h3>
+<ol type="1">
+<li>Turn your website directory into a git repo:</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb13" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> init</span>
+<span id="cb13-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> add .</span>
+<span id="cb13-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"first commit"</span></span></code></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Create a GitHub repo by the same name</li>
+</ol>
+<p>For example, mine might be <code>github.com/mbutler808/mysite</code>.</p>
+<ol start="3" type="1">
+<li>Link your local repo and GitHub repo together</li>
+</ol>
+<p>If you forgot how to do this, <a href="https://mbutler808.github.io/rclass/posts/2023-01-24-intro-git-github/#make-a-github-repo-started-from-your-local-files">go back here</a></p>
+<ol start="4" type="1">
+<li>Check your GitHub repo. Are your files there?</li>
+</ol></section><section id="github-settings-to-serve-your-webpage" class="level3"><h3 class="anchored" data-anchor-id="github-settings-to-serve-your-webpage">GitHub settings to serve your webpage</h3>
+<p>Almost there! A couple more steps.</p>
+<p>From your GitHub repo, click on <code>Settings</code> in the top menu, and <code>Pages</code> on the left menu.</p>
+<p>Your website should deploy from branch. Under <code>Select branch</code> choose <code>main</code> and under <code>Select folder</code> choose <code>docs</code>.</p>
+<p>After clicking <code>save</code> GitHub will trigger a deployment of your website. After a few minutes, your URL will appear near the top at <code>Your site is live at...</code>:</p>
+<p><img src="https://mbutler808.github.io/images/github_pages.png" class="img-fluid"></p>
+<p>Congratulations! ⚡️ Your website is now live 🎉🎊😍</p>
+</section></section><section id="now-make-more-changes" class="level2"><h2 class="anchored" data-anchor-id="now-make-more-changes">Now make more changes!</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Quarto Workflow is
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Edit the content in .qmd</li>
+<li>From the Command line:
+<ul>
+<li>
+<code>quarto preview</code> to check that edits are correct</li>
+<li>
+<code>quarto render</code> to render <code>.qmd</code> to <code>.html</code>
+</li>
+<li><code>git add .</code></li>
+<li><code>git commit -m "message"</code></li>
+<li><code>git push origin main</code></li>
+</ul>
+</li>
+<li>Check your website (this may take a beat)</li>
+</ul>
+</div>
+</div>
+</section><section id="for-fun" class="level2"><h2 class="anchored" data-anchor-id="for-fun">For fun</h2>
+<p>You can have fun with emoji! Guangchuang Yu wrote the package <code>emojifont</code> (this is the same person who wrote the widely used <code>ggtree</code> package) and now you can bring your emoji out of your phone and into your quarto documents! Install the R package <code>emojifont</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"emojifont"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Then anywhere you want an emoji in the markdown file, you just type:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">`r emojifont::emoji('palm_tree')`</span></span></code></pre></div>
+</div>
+<p>🌴</p>
+<p>Or if you want several, just line them up:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">r emojifont::emoji('balloon')</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">``</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">r emojifont::emoji('tada')</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">``</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">r emojifont::emoji('smiley')</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span></span></code></pre></div>
+</div>
+<p>🎈🎉😃</p>
+<p>There is a handy cheat sheet of emoji names here <a href="https://gist.github.com/rxaviers/7360908" class="uri">https://gist.github.com/rxaviers/7360908</a></p>
+</section><section id="final-tips" class="level2"><h2 class="anchored" data-anchor-id="final-tips">Final tips</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<strong>Always always</strong> <code>quarto render</code> before you push up your changes to GitHub!</li>
+<li>If your changes are not appearing, try <code>quarto preview</code> and check that your changes appear in the preview. Then <code>quarto render</code> before you use git to add, commit, and push</li>
+<li>Note: It can take a few minutes to render on GitHub before your changes appear on your website</li>
+</ul>
+</div>
+</div>
+<p><strong>Please see <a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-01-literate-programming/#create-and-knit-your-first-r-markdown-document">Stephanie Hicksʻ lecture</a></strong> for more literate programming examples and tips.</p>
+</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<p>Here are some post-lecture questions to help you think about the material discussed.</p>
+</section><section id="questions-1" class="level3 questions"><h3 class="anchored" data-anchor-id="questions-1">Questions</h3>
+<ol type="1">
+<li><p>What is literate programming?</p></li>
+<li><p>What was the first literate statistical programming tool to weave together a statistical language (R) with a markup language (LaTeX)?</p></li>
+<li><p>What is <code>knitr</code> and how is different than other literate statistical programming tools?</p></li>
+<li><p>Where can you find a list of other commands that help make your code writing more efficient when using Quarto?</p></li>
+</ol></section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<a href="http://www.r-project.org/conferences/DSC-2001/Proceedings/Rossini.pdf">Literate statistical practice</a>)</li>
+<li>The introduction of Sweave by Friedrich Leisch in <a href="https://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf">2001 pg. 28</a>
+</li>
+<li>
+<a href="https://indrajeetpatil.github.io/RmarkdownTips/">RMarkdown Tips and Tricks</a> by Indrajeet Patil</li>
+<li><a href="https://bookdown.org/yihui/rmarkdown" class="uri">https://bookdown.org/yihui/rmarkdown</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook</a></li>
+</ul>
+</div>
+</div>
+
+
+</section></section> ]]></description>
+  <category>module 1</category>
+  <category>week 2</category>
+  <category>Markdown</category>
+  <category>Quarto</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2025-01-23-intro-quarto/</guid>
+  <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Introduction to git/GitHub</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-01-21-intro-git-github/</link>
+  <description><![CDATA[ <!-- Add interesting quote --><section id="lecture-materials" class="level1"><h1>Lecture materials</h1>
+<div id="nte-info" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;1: Helpful references for this lecture
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -33,7 +932,9 @@ Helpful references for this lecture
 <a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
 <li>
 <a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
+<li>Either before or after Tuesday’s class, please watch the podcast <em>GitHub my Computer and me</em>. You can stop at ~11:15:</li>
 </ol>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2MjsHnNMp7o" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
 </div>
 <section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
@@ -242,9 +1143,9 @@ font-style: inherit;">"nano -w"</span></span></code></pre></div>
 <p>In this course, you will use git/GitHub in the following ways:</p>
 <ol type="1">
 <li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
-<li>Projects 1-4 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc) .</li>
+<li>Projects 1-3 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc).</li>
 </ol>
-<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code as a group). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
+<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code with other people, or suggesting changes or bug fixes to other projects). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
 </section><section id="clone-a-repo-to-your-local-directory---easy" class="level1"><h1>Clone a repo to your local directory - Easy!</h1>
 <p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
 <div class="cell">
@@ -256,13 +1157,13 @@ font-style: inherit;">"nano -w"</span></span></code></pre></div>
 </div>
 </div>
 <ol start="2" type="1">
-<li>In your Terminal or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
+<li>In your Terminal, Git-Bash, or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
 </ol>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>Terminal(Mac/Linux)</strong></pre>
+<pre><strong>Terminal(Mac/Linux/Git-bash)</strong></pre>
 </div>
-<div class="sourceCode" id="cb4" data-filename="Terminal(Mac/Linux)" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+<div class="sourceCode" id="cb4" data-filename="Terminal(Mac/Linux/Git-bash)" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">pwd</span></span>
 <span id="cb4-2"><span class="bu" style="color: null;
@@ -332,7 +1233,7 @@ font-style: inherit;">git</span> clone https://github.com/mbutler808/rclassdata.
 <li>
 <code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
 <li>
-<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once)</li>
+<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once for each repo)</li>
 <li>
 <code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
 <li>
@@ -342,7 +1243,7 @@ font-style: inherit;">git</span> clone https://github.com/mbutler808/rclassdata.
 <li>
 <code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
 <li>
-<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch main on origin).</li>
+<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch “main” on origin).</li>
 </ul>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -501,6 +1402,7 @@ Warning
 <p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
 <p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
 </section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<p>If you haven’t already done so, please watch the podcast <em>GitHub my Computer and me</em> (see Note&nbsp;1 #4).</p>
 <section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1003,14 +1905,10 @@ font-style: inherit;"># relative path, is there a Documents folder here?</span><
 <p>In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.</p>
 <div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">ls</span> <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">~</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\D</span>ocuments <span class="co" style="color: #5E5E5E;
+font-style: inherit;">ls</span> ~/Documents <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code></pre></div>
-<p>On the Mac, an asbolute path will start with “\” (or a shortcut that contains a starting “\”), whereas on a PC an absolute path will start with “C:”</p>
+<p>On the Mac, an asbolute path will start with “/” (or a shortcut that contains a starting “/”), whereas on a PC an absolute path will start with “C:”</p>
 </section><section id="navigating-your-file-directories" class="level1"><h1>Navigating your file directories</h1>
 <section id="the-dots" class="level2"><h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
 <ul>
@@ -1077,7 +1975,7 @@ font-style: inherit;">()</span></span></code></pre></div>
 <div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">q()</span></span></code></pre></div>
-<p>Choose “n” when asked if you want to save workspace image?</p>
+<p>Choose “n” when asked if you want to save workspace image.</p>
 </section><section id="piping-commands" class="level1"><h1>Piping commands</h1>
 <p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
 <div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb26-1"><span class="bu" style="color: null;
@@ -1180,7 +2078,7 @@ In Preparation for Next Time:
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Install git. Follow instructions at for Mac or PC at [<a href="https://happygitwithr.com/install-git">Happy Git and GitHub for the useR</a>] For Windows install, installation of “Git-Bash” is highly recommended.</p></li>
-<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">Advice here:</a>]</p></li>
+<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">advice here</a>]</p></li>
 </ol>
 </div>
 </div>

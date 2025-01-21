@@ -11,6 +11,8 @@
   {
     "listing": "/lectures.html",
     "items": [
+      "/posts/2025-01-23-reproducible-research/index.html",
+      "/posts/2025-01-23-intro-quarto/index.html",
       "/posts/2025-01-21-intro-git-github/index.html",
       "/posts/2025-01-16-your-computer-filesystems/index.html",
       "/posts/2025-01-14-the-big-picture/index.html"

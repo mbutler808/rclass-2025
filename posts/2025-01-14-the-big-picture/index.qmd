@@ -107,6 +107,21 @@ There is a difference between one-time "getting it to work" vs. professional sci
 - Document so that you can understand it 1 year from now
 :::
 
+## Course Topics
+
+::: {.incremental}
+- Your Computer 
+  + Where information is stored - FILEPATHS
+  + Your OS (Operating System) 
+- Git/GitHub
+- R
+- Making them talk to each other
+- Coding Fundamentals
+- Tour of Univariate + Multivariate Statistics
+- Graphics 
+- Special Topics - Tell me your interests! \[[Google Form](https://forms.gle/znU4dM5vf1TfKbUn8)\]
+:::
+
 ## Software
 
 - Do you have R installed and working? (R studio is optional)
