@@ -7,7 +7,7 @@ author:
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 # number-sections: true
 description: "Introduction to literate statistical programming tools including  Quarto Markdown"
-date: 2025-01-23
+date: 2025-01-28
 categories: [module 1, week 2, Markdown, Quarto, programming]
 bibliography: my-refs.bib
 ---

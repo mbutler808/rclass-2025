@@ -10,193 +10,7 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 23 Jan 2025 10:00:00 GMT</lastBuildDate>
-<item>
-  <title>Reproducible Research</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</link>
-  <description><![CDATA[ <blockquote class="blockquote">
-<p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
-</blockquote>
-<section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Read ahead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
-<ol type="1">
-<li>
-<a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
-<li>
-<a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
-</ol>
-</div>
-</div>
-</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
-<li><a href="http://users.stat.umn.edu/~geyer/repro.pdf" class="uri">http://users.stat.umn.edu/~geyer/repro.pdf</a></li>
-<li><a href="https://rdpeng.github.io/Biostat776" class="uri">https://rdpeng.github.io/Biostat776</a></li>
-<li>
-<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
-</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Know the difference between replication and reproducibility</li>
-<li>Identify valid reasons why replication and/or reproducibility is not always possible</li>
-<li>Identify the type of reproducibility</li>
-<li>Identify key components to enable reproducible data analyses</li>
-</ul>
-</div>
-</div>
-</section><section id="introduction" class="level1"><h1>Introduction</h1>
-<p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
-<p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
-<p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
-<ul>
-<li><a href="https://www.science.org/toc/science/334/6060" class="uri">https://www.science.org/toc/science/334/6060</a></li>
-</ul>
-<p>Take for example a recent study by the <a href="https://doi.org/10.1073/pnas.2203150119">Crowdsourced Replication Initiative (2022)</a>. It was a massive effort by 166 coauthors published in PNAS to test repeatability:</p>
-<ul>
-<li>73 research teams from around the world analyzed the <strong>same social science data</strong>.</li>
-<li>They investigated the <strong>same hypothesis</strong>: that more immigration will reduce public support for government provision of social policies.</li>
-<li>Together they fit 1261 statistical models and came to widely varying concluisons.</li>
-<li>A meta-analysis of the results by the PIs could not explain the variation in results. Even after accounting for the choices made by the research teams in designing their statistical tests, 95% of the total variation remained unexplained.</li>
-<li>The authors claim that “a hidden universe of uncertainty remains.”</li>
-</ul>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/reproducible_study.png" class="img-fluid figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
-<p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
-</section><section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1"><h1>Some of the issues from a statisticianʻs perspective</h1>
-<p>Greyer provides nine ideas worth considering:</p>
-<ol type="1">
-<li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
-<ol type="a">
-<li>mathematical or computational error,</li>
-<li>statistical procedures inappropriate for the data, or</li>
-<li>statistical procedures that do not lead to the inferences claimed.</li>
-</ol>
-</li>
-<li>Good computing practices — version control, well thought out testing, code reviews, literate programming — are essential to correct computing.</li>
-<li>Failure to do all calculations from raw data to conclusions (every number or figure shown in a paper) in a way that is fully reproducible and available in a permanent public repository is, by itself, a questionable research practice.</li>
-<li>Failure to do statistics as if it could have been pre-registered is a questionable research practice.</li>
-<li>Journals that use P &lt; 0.05 as a criterion of publication are not scientific journals (publishing only one side of a story is as unscientific as it is possible to be).</li>
-<li>Statistics should be adequately described, at least in the supplementary material.</li>
-<li>Scientific papers whose conclusions depend on nontrivial statistics should have statistical referees, and those referees should be heeded.</li>
-<li>Not all errors are describable by statistics. There is also what physicists call <em>systematic error</em> that is the same in every replication of an experiment. Physicists regularly attempt to quantify this. Others should too.</li>
-</ol>
-<p>A reasonable ideal for reproducible research today - Research should be reproducible. Anything in a scientific paper should be reproducible by the reader. - Whatever may have been the case in low tech days, this ideal has long gone. Much scientific research in recent years is too complicated and the published details to scanty for anyone to reproduce it. - The lack of detail is not entirely the author’s fault. Journals have severe page pressure and no room for full explanations. - For many years, the only hope of reproducibility is old-fashioned person-to-person contact. Write the authors, ask for data, code, whatever. Some authors help, some don’t. If the authors are not cooperative, tough. - Even cooperative authors may be unable to help. If too much time has gone by and their archiving was not systematic enough and if their software was unportable, there may be no way to recreate the analysis. - Fortunately, the internet comes to the rescue. No page pressure there! - Nowadays, many scientific papers also point to supplementary materials on the internet. Data, computer programs, whatever should be there, permanently. Ideally with a permanent Document Identifier or DOI. There are complaints that many Supplmentary Materials are incomprehensible, but that can be improved with practices of reproducible reserach.</p>
-<p>Therefore, at the very least scientists should use in their statistical programming - version control, - software testing, - code reviews, - literate programming, and - all data and code available in a permanent public repository.</p>
-<p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
-<ul>
-<li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
-</ul></section><section id="recommendations" class="level1"><h1>Recommendations</h1>
-<p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
-<section id="authors-and-readers" class="level3"><h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
-<p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
-<p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
-<ul>
-<li>Publishing data and code today is not necessarily a trivial task. Although there are a number of resources available now, that were not available even five years ago, it is still a bit of a challenge to get things out on the web (or at least distributed widely).</li>
-<li>Resources like <a href="https://github.com">GitHub</a>, <a href="https://kipoi.org">kipoi</a>, and <a href="http://rpubs.com">RPubs</a> and various data repositories have made a big difference, but there is still a ways to go with respect to building up the public reproducibility infrastructure.</li>
-</ul>
-<p>Furthermore, <strong>even when data and code are available</strong>, readers often have to download the data, download the code, and then they have to piece everything together, usually by hand. It’s <strong>not always an easy task to put the data and code together</strong>.</p>
-<ul>
-<li>Readers may not have the same computational resources that the original authors did.</li>
-<li>If the original authors used an enormous computing cluster, for example, to do their analysis, the readers may not have that same enormous computing cluster at their disposal. It may be difficult for readers to reproduce the same results.</li>
-</ul>
-<p>Generally, the <strong>toolbox for doing reproducible research is small</strong>, although <strong>it’s definitely growing</strong>.</p>
-<ul>
-<li>In practice, authors often just throw things up on the web. There are journals and supplementary materials, but they are famously disorganized.</li>
-<li>There are only a few central databases that authors can take advantage of to post their data and make it available. So if you are working in a field that has a central database that everyone uses, that is great. If you are not, then you have to assemble your own resources.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Summary
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>The process of conducting and disseminating research can be depicted as a “data science pipeline”</p></li>
-<li><p>Readers and consumers of data science research are typically not privy to the details of the data science pipeline</p></li>
-<li><p>One view of reproducibility is that it gives research consumers partial access to the raw pipeline elements.</p></li>
-</ul>
-</div>
-</div>
-</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
-<p>Here are some post-lecture questions to help you think about the material discussed.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Why can replication be difficult to achieve? Why is reproducibility a reasonable minimum standard when replication is not possible?</p></li>
-<li><p>What is needed to reproduce the results of a data analysis?</p></li>
-</ol>
-</div>
-</div>
-</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>
-<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
-</ul>
-</div>
-</div>
-
-
-</section></section> ]]></description>
-  <category>module 1</category>
-  <category>week 2</category>
-  <category>R</category>
-  <category>reproducibility</category>
-  <guid>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</guid>
-  <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
-</item>
+<lastBuildDate>Tue, 28 Jan 2025 10:00:00 GMT</lastBuildDate>
 <item>
   <title>Literate Statistical Programming and Quarto</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -908,6 +722,192 @@ Tip
   <category>Quarto</category>
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2025-01-28-intro-quarto/</guid>
+  <pubDate>Tue, 28 Jan 2025 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Reproducible Research</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
+</blockquote>
+<section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li>
+<a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
+<li>
+<a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
+</ol>
+</div>
+</div>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
+<li><a href="http://users.stat.umn.edu/~geyer/repro.pdf" class="uri">http://users.stat.umn.edu/~geyer/repro.pdf</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776" class="uri">https://rdpeng.github.io/Biostat776</a></li>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Know the difference between replication and reproducibility</li>
+<li>Identify valid reasons why replication and/or reproducibility is not always possible</li>
+<li>Identify the type of reproducibility</li>
+<li>Identify key components to enable reproducible data analyses</li>
+</ul>
+</div>
+</div>
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
+<p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
+<p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
+<p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
+<ul>
+<li><a href="https://www.science.org/toc/science/334/6060" class="uri">https://www.science.org/toc/science/334/6060</a></li>
+</ul>
+<p>Take for example a recent study by the <a href="https://doi.org/10.1073/pnas.2203150119">Crowdsourced Replication Initiative (2022)</a>. It was a massive effort by 166 coauthors published in PNAS to test repeatability:</p>
+<ul>
+<li>73 research teams from around the world analyzed the <strong>same social science data</strong>.</li>
+<li>They investigated the <strong>same hypothesis</strong>: that more immigration will reduce public support for government provision of social policies.</li>
+<li>Together they fit 1261 statistical models and came to widely varying concluisons.</li>
+<li>A meta-analysis of the results by the PIs could not explain the variation in results. Even after accounting for the choices made by the research teams in designing their statistical tests, 95% of the total variation remained unexplained.</li>
+<li>The authors claim that “a hidden universe of uncertainty remains.”</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/reproducible_study.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
+<p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
+</section><section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1"><h1>Some of the issues from a statisticianʻs perspective</h1>
+<p>Greyer provides nine ideas worth considering:</p>
+<ol type="1">
+<li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
+<ol type="a">
+<li>mathematical or computational error,</li>
+<li>statistical procedures inappropriate for the data, or</li>
+<li>statistical procedures that do not lead to the inferences claimed.</li>
+</ol>
+</li>
+<li>Good computing practices — version control, well thought out testing, code reviews, literate programming — are essential to correct computing.</li>
+<li>Failure to do all calculations from raw data to conclusions (every number or figure shown in a paper) in a way that is fully reproducible and available in a permanent public repository is, by itself, a questionable research practice.</li>
+<li>Failure to do statistics as if it could have been pre-registered is a questionable research practice.</li>
+<li>Journals that use P &lt; 0.05 as a criterion of publication are not scientific journals (publishing only one side of a story is as unscientific as it is possible to be).</li>
+<li>Statistics should be adequately described, at least in the supplementary material.</li>
+<li>Scientific papers whose conclusions depend on nontrivial statistics should have statistical referees, and those referees should be heeded.</li>
+<li>Not all errors are describable by statistics. There is also what physicists call <em>systematic error</em> that is the same in every replication of an experiment. Physicists regularly attempt to quantify this. Others should too.</li>
+</ol>
+<p>A reasonable ideal for reproducible research today - Research should be reproducible. Anything in a scientific paper should be reproducible by the reader. - Whatever may have been the case in low tech days, this ideal has long gone. Much scientific research in recent years is too complicated and the published details to scanty for anyone to reproduce it. - The lack of detail is not entirely the author’s fault. Journals have severe page pressure and no room for full explanations. - For many years, the only hope of reproducibility is old-fashioned person-to-person contact. Write the authors, ask for data, code, whatever. Some authors help, some don’t. If the authors are not cooperative, tough. - Even cooperative authors may be unable to help. If too much time has gone by and their archiving was not systematic enough and if their software was unportable, there may be no way to recreate the analysis. - Fortunately, the internet comes to the rescue. No page pressure there! - Nowadays, many scientific papers also point to supplementary materials on the internet. Data, computer programs, whatever should be there, permanently. Ideally with a permanent Document Identifier or DOI. There are complaints that many Supplmentary Materials are incomprehensible, but that can be improved with practices of reproducible reserach.</p>
+<p>Therefore, at the very least scientists should use in their statistical programming - version control, - software testing, - code reviews, - literate programming, and - all data and code available in a permanent public repository.</p>
+<p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
+<ul>
+<li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
+</ul></section><section id="recommendations" class="level1"><h1>Recommendations</h1>
+<p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
+<section id="authors-and-readers" class="level3"><h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
+<p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
+<p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
+<ul>
+<li>Publishing data and code today is not necessarily a trivial task. Although there are a number of resources available now, that were not available even five years ago, it is still a bit of a challenge to get things out on the web (or at least distributed widely).</li>
+<li>Resources like <a href="https://github.com">GitHub</a>, <a href="https://kipoi.org">kipoi</a>, and <a href="http://rpubs.com">RPubs</a> and various data repositories have made a big difference, but there is still a ways to go with respect to building up the public reproducibility infrastructure.</li>
+</ul>
+<p>Furthermore, <strong>even when data and code are available</strong>, readers often have to download the data, download the code, and then they have to piece everything together, usually by hand. It’s <strong>not always an easy task to put the data and code together</strong>.</p>
+<ul>
+<li>Readers may not have the same computational resources that the original authors did.</li>
+<li>If the original authors used an enormous computing cluster, for example, to do their analysis, the readers may not have that same enormous computing cluster at their disposal. It may be difficult for readers to reproduce the same results.</li>
+</ul>
+<p>Generally, the <strong>toolbox for doing reproducible research is small</strong>, although <strong>it’s definitely growing</strong>.</p>
+<ul>
+<li>In practice, authors often just throw things up on the web. There are journals and supplementary materials, but they are famously disorganized.</li>
+<li>There are only a few central databases that authors can take advantage of to post their data and make it available. So if you are working in a field that has a central database that everyone uses, that is great. If you are not, then you have to assemble your own resources.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The process of conducting and disseminating research can be depicted as a “data science pipeline”</p></li>
+<li><p>Readers and consumers of data science research are typically not privy to the details of the data science pipeline</p></li>
+<li><p>One view of reproducibility is that it gives research consumers partial access to the raw pipeline elements.</p></li>
+</ul>
+</div>
+</div>
+</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<p>Here are some post-lecture questions to help you think about the material discussed.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Why can replication be difficult to achieve? Why is reproducibility a reasonable minimum standard when replication is not possible?</p></li>
+<li><p>What is needed to reproduce the results of a data analysis?</p></li>
+</ol>
+</div>
+</div>
+</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
+</ul>
+</div>
+</div>
+
+
+</section></section> ]]></description>
+  <category>module 1</category>
+  <category>week 2</category>
+  <category>R</category>
+  <category>reproducibility</category>
+  <guid>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</guid>
   <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
 </item>
 <item>
