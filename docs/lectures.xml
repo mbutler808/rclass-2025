@@ -200,7 +200,7 @@ Tip
 <item>
   <title>Literate Statistical Programming and Quarto</title>
   <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-01-23-intro-quarto/</link>
+  <link>https://mbutler808.github.io/posts/2025-01-28-intro-quarto/</link>
   <description><![CDATA[ <!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
 <section id="read-ahead" class="level2"><h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -389,7 +389,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-01-23-intro-quarto/index_files/figure-html/plot2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-01-28-intro-quarto/index_files/figure-html/plot2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -907,7 +907,7 @@ Tip
   <category>Markdown</category>
   <category>Quarto</category>
   <category>programming</category>
-  <guid>https://mbutler808.github.io/posts/2025-01-23-intro-quarto/</guid>
+  <guid>https://mbutler808.github.io/posts/2025-01-28-intro-quarto/</guid>
   <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
 </item>
 <item>

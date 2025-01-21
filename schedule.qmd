@@ -22,12 +22,12 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 | Week 1       | Jan 14  | `r emojifont::emoji('wave')` Installing R/RStudio, GitHub \[[html](posts/2025-01-14-the-big-picture/)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-14-the-big-picture/index.qmd)\] |  | Watch \[[rest of podcast starting at 4:00](https://youtu.be/wzPRpyoNaa8?si=TKoTToGX2eRRmjzN)\] R manual \[[2.1, 2.2, 2.3, 2.6](https://cloud.r-project.org/doc/manuals/r-release/R-intro.html#Simple-manipulations_003b-numbers-and-vectors)\]|
 |              | Jan 16  | `r emojifont::emoji('woman_technologist')` Shell scripts, File Organization \[[html](posts/2025-01-16-your-computer-filesystems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-16-your-computer-filesystems/index.qmd)\] |||
-| Week 2       | Jan 21 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2025-01-21-intro-git-github/index.qmd))\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-21-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2025-01-14-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2025-01-14-project-0/index.qmd)\]  | |
+| Week 2       | Jan 21 | `r emojifont::emoji('octopus')`  Intro to Git and GitHub \[[html](posts/2025-01-21-intro-git-github/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-21-intro-git-github/index.qmd)\] |  `r emojifont::emoji('palm_tree')` Project 0 \[[html](projects/2025-01-14-project-0/index.qmd)\] \[[Qmd](https://github.com/mbutler808/mbutler808.github.io/blob/main/projects/2025-01-14-project-0/index.qmd)\]  | |
 ||||||
 | **Module 2** |         | **Reproducible Research** |||
 ||||||
-|        | Jan 23 | `r emojifont::emoji('octopus')` Reproducible Research \[[html]\] \[[Qmd]\]  |||
-| Week 3 | Jan 28 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html]\] \[[Qmd]\]|||
+|        | Jan 23 | `r emojifont::emoji('octopus')` Reproducible Research \[[html](posts/2025-01-23-reproducible-research/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-23-reproducible-research/index.qmd)\]  |||
+| Week 3 | Jan 28 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html](posts/2025-01-28-intro-quarto/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-28-intro-quarto/index.qmd)\]|||
 |       | Jan 30  | `r emojifont::emoji('microscope')` What is the Question? \[[html]\] \[[Qmd]\] | | |
 ||||||
 | **Module 3** |         | **Data Analysis in R ** |||
