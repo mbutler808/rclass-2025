@@ -1130,9 +1130,9 @@ font-style: inherit;">&lt;</span> mytoken.txt</span></code></pre></div>
 <div class="code-with-filename-file">
 <pre><strong>Mac/Linux</strong></pre>
 </div>
-<div class="sourceCode" id="cb3" data-filename="Mac/Linux" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="sourceCode" id="cb3" data-filename="Mac/Linux" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">$</span> git config <span class="at" style="color: #657422;
+font-style: inherit;">git</span> config <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--global</span> core.editor <span class="st" style="color: #20794D;
 background-color: null;

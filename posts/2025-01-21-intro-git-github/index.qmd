@@ -186,7 +186,7 @@ You may want to set your default git editor to something you know how to use (it
 For example the nano editor is easy to use on the command line for a Unix shell:
 
 ```{.bash filename=Mac/Linux}
-$ git config --global core.editor "nano -w"
+git config --global core.editor "nano -w"
 ```
 
 *The Carpentries* provide a [full list of editors](https://swcarpentry.github.io/git-novice/02-setup/#line-endings) by operating system, a great resource.

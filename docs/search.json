@@ -235,7 +235,7 @@
     "href": "posts/2025-01-21-intro-git-github/index.html#configuring-your-default-git-editor",
     "title": "Introduction to git/GitHub",
     "section": "Configuring your default git editor",
-    "text": "Configuring your default git editor\nYou may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).\nFor example the nano editor is easy to use on the command line for a Unix shell:\n\n\nMac/Linux\n\n$ git config --global core.editor \"nano -w\"\n\nThe Carpentries provide a full list of editors by operating system, a great resource."
+    "text": "Configuring your default git editor\nYou may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).\nFor example the nano editor is easy to use on the command line for a Unix shell:\n\n\nMac/Linux\n\ngit config --global core.editor \"nano -w\"\n\nThe Carpentries provide a full list of editors by operating system, a great resource."
   },
   {
     "objectID": "posts/2025-01-23-reproducible-research/index.html",
