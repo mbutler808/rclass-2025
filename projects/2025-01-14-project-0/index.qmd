@@ -128,7 +128,7 @@ Following steps 2-5, here is my example website:
 
 ### 6. Share your website
 
--   Go to Slack and write a short post with a link (URL) to your website (and URL to the corresponding GitHub repository) that you created.
+-   Go to Discord and write a short post with a link (URL) to your website (and URL to the corresponding GitHub repository) that you created.
 -   As you read the introductions from other folks in the class, feel free to comment/reply using Discussion board.
 
-In class on Feb 7, I will show as many websites as I can `r emojifont::emoji('star')``r emojifont::emoji('heart_eyes')`
+I will show as many websites as I can on the class period after the due date `r emojifont::emoji('star')``r emojifont::emoji('heart_eyes')`
