@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Marguerite Butler">
 <meta name="dcterms.date" content="2025-01-28">
@@ -68,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap-2c128a76c5dbb243be50ea3089ffe19d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -226,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link active" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
   <ul class="collapse">
-<li><a href="#read-ahead" id="toc-read-ahead" class="nav-link" data-scroll-target="#read-ahead">Read ahead</a></li>
+<li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">INSTALL</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   </ul>
 </li>
@@ -286,7 +286,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level2"><h2 class="anchored" data-anchor-id="read-ahead">Read ahead</h2>
+<section id="install" class="level2"><h2 class="anchored" data-anchor-id="install">INSTALL</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Before class, you can prepare by installing the following materials:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Install <code>quarto</code> <a href="https://quarto.org/docs/get-started/" class="uri">https://quarto.org/docs/get-started/</a>
+</li>
+<li>Install <code>tinytex</code>, a version of <code>LaTex</code> to render output. Open a Terminal window (<code>git-BASH</code> on Windows) and type:</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> install tinytex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note: This will not add <code>tinytex</code> to the system <code>PATH</code> so if you would like to use <code>tinytex</code> with other applications, or you have a different installation of <code>TeX</code> that you prefer to use instead with quarto, see notes here <a href="https://quarto.org/docs/output-formats/pdf-engine.html" class="uri">https://quarto.org/docs/output-formats/pdf-engine.html</a>.</p>
+<ol start="3" type="1">
+<li>Install <code>pandoc</code>, which translates output to almost any format. <a href="https://pandoc.org/installing.html" class="uri">https://pandoc.org/installing.html</a> Follow instructions for whichever installer you prefer. If you are using homebrew on a mac:</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install pandoc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li>Install <code>rmarkdown</code> (“R Markdown), which <code>quarto</code> builds upon. <code>rmarkdown</code> also includes the package <code>knitr</code> which executes the R code and provides <code>LaTeX</code> formatting for the output. From within your R console:</li>
+</ol>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R_Console</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="R_Console"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">install.packages</span><span class="er">(</span><span class="st">"rmarkdown"</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -299,7 +341,6 @@ Read ahead
 <div class="callout-body-container callout-body">
 <p><strong>Before class, you can prepare by reading the following materials:</strong></p>
 <ol type="1">
-<li><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522" class="uri">https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522</a></li>
 <li>Creating a Website in Quarto quickstart <em>up to and including Render</em> <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a>
 </li>
 <li>Publishing to GitHub <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a>
@@ -374,20 +415,21 @@ Additional Reading
 </section><section id="literate-programming-in-practice" class="level1"><h1>Literate Programming in Practice</h1>
 <p>One basic idea to make writing reproducible reports easier is what’s known as <em>literate statistical programming</em>. The idea is to <strong>think of a report or a publication as a stream of text and code</strong>.</p>
 <ul>
-<li><p>The text is readable by people and the code is readable by computers.</p></li>
-<li><p>The analysis is described in a series of text and code chunks.</p></li>
-<li><p>Each kind of code chunk will do something like load some data or compute some results.</p></li>
-<li><p>Each text chunk will relay something in a human readable language.</p></li>
 <li><p><strong>The code and text remain together</strong> in a single source document. No more separate analysis files and word processing files. When code is edited, the report is automatically generated and updated.</p></li>
+<li><p>The <strong><em>text</em> is readable by <em>people</em></strong> and the <strong><em>code</em> is readable by <em>computers</em>.</strong> It is actually a human-readable document that executes the entire analysis.</p></li>
+<li><p><strong>Well Documented:</strong> The <em>analysis is described</em> in a series of text and code chunks.</p></li>
+<li><p><strong>Modular:</strong> Each kind of <em>code chunk</em> will do something like <em>load some data</em> or <em>compute some results</em>.</p></li>
+<li><p><strong>Readable:</strong> Each <em>text chunk</em> will relay something in a human readable language.</p></li>
 </ul>
+<p>There might also be a separation of <strong>raw data</strong> and <strong>processed data</strong>. To preserve the integrity of the raw data as it was collected or received, as well as a record of the data cleaning to produce processed data.</p>
 <p>There might also be <strong>presentation code</strong> that formats tables and figures and there’s article text that explains what’s going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.</p>
 <section id="weaving-and-tangling" class="level2"><h2 class="anchored" data-anchor-id="weaving-and-tangling">Weaving and Tangling</h2>
 <p>Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.</p>
 <p>Literate programs can be <strong>weaved</strong> to produce human readable documents like PDFs or HTML web pages, and they can <strong>tangled</strong> to produce machine-readable “documents”, or in other words, machine readable code.</p>
 <p>In order to use a system like this you need a documentational language, that’s human readable, and you need a programming language that’s machine readable (or can be compiled/interpreted into something that’s machine readable).</p>
 </section><section id="sweave" class="level2"><h2 class="anchored" data-anchor-id="sweave">Sweave</h2>
-<p>One of the original literate programming systems in R that was designed to do this was called Sweave written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>. Sweave enables users to combine R code with a documentation program called LaTeX. Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project.</p>
-<p><strong>Sweave files ends a <code>.Rnw</code></strong> and have R code weaved through the document:</p>
+<p>R now has a number of options for literate programming systems, but one of the original that was designed to do this in R was called <strong>Sweave</strong> written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>. Sweave enables users to combine R code with a documentation program called <strong>LaTeX</strong>. Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project. To see an example of LaTeX see [<a href="./small2e.tex">small2e.tex</a>] and for Sweave, check out [<a href="./Little_Sweave.Rnw">Little_Sweave.Rnw</a>].</p>
+<p><strong>Sweave files have a <code>.Rnw</code> file ending</strong> and have R code weaved through the document:</p>
 <pre><code>&lt;&lt;plot1, height=4, width=5, eval=FALSE&gt;&gt;=
 data(airquality)
 plot(airquality$Ozone ~ airquality$Wind)
@@ -439,9 +481,9 @@ Tip
 </blockquote>
 </div>
 </div>
-<p>Because this is lecture is built in a <code>.qmd</code> file (which is very similar to a <code>.Rmd</code> file), let’s demonstrate how this work. I am going to change <code>eval=FALSE</code> to <code>eval=TRUE</code>.</p>
+<p>Because this is lecture is built in a <code>.qmd</code> file (which is very similar to a <code>.Rmd</code> file), let’s demonstrate how this works. I am going to change <code>eval=FALSE</code> to <code>eval=TRUE</code>.</p>
 <div class="cell" height="4" width="5">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">airquality</span><span class="op">$</span><span class="va">Wind</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -502,6 +544,8 @@ Tip
 <li>The <code>knitr</code> package for R takes a lot of these ideas of literate programming and updates and improves upon them.</li>
 <li>
 <code>knitr</code> still uses R as its programming language, but it allows you to mix other programming languages in.</li>
+<li>
+<code>knitr</code> is included in the installation of <code>rmarkdown</code>.</li>
 <li>You can also use a variety of documentation languages now, such as LaTeX, markdown and HTML.</li>
 <li>
 <code>knitr</code> was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.</li>
@@ -562,7 +606,7 @@ Tip
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb4" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> create-project mysite <span class="at">--type</span> website</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> create-project mysite <span class="at">--type</span> website</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You should now see the following files in your <code>mysite</code> directory (<a href="#fig-webshell" class="quarto-xref">Figure&nbsp;2</a>):</p>
 <div id="fig-webshell" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -578,7 +622,7 @@ Figure&nbsp;2: Website files from the Terminal view
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb5" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should open up a browser window showing a temporary file made by quarto by rendering your website files.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -606,8 +650,8 @@ Tip
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb6" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mysite</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mysite</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Take a look at the <code>mysite</code> contents after rendering, you should see a new directory <code>_site</code> (<a href="#fig-afterrender" class="quarto-xref">Figure&nbsp;3</a>). The html was rendered and put in there (go ahead, open up the files and check it out):</p>
 <div id="fig-afterrender" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -629,22 +673,22 @@ Figure&nbsp;3: Website files after rendering
 <div class="code-with-filename-file">
 <pre><strong>index.qmd</strong></pre>
 </div>
-<div class="sourceCode" id="cb7" data-filename="index.qmd"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">title:</span> <span class="st">"Welcome to Introduction to Data Science in R for Biologists!"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">image:</span> images/mycoolimage.png</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">about:</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">template:</span> jolla</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">links:</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> icon: twitter</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">text:</span> Twitter</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="ex">href:</span> https://twitter.com/mbutler808</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> icon: github</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">text:</span> Github</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="ex">href:</span> https://github.com/mbutler808</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10" data-filename="index.qmd"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">title:</span> <span class="st">"Welcome to Introduction to Data Science in R for Biologists!"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">image:</span> images/mycoolimage.png</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">about:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">template:</span> jolla</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">links:</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> icon: twitter</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">text:</span> Twitter</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      <span class="ex">href:</span> https://twitter.com/mbutler808</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> icon: github</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">text:</span> Github</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="ex">href:</span> https://github.com/mbutler808</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You should edit the body of your website as well. You simply edit the text.</p>
-<p>The <a href="https://quarto.org/docs/authoring/markdown-basics.html">quarto markdown page</a> has great examples showing how to format your content. Take a look at how to specify header sizes, lists, figures and tables.</p>
+<p>The <a href="https://quarto.org/docs/authoring/markdown-basics.html">quarto markdown page</a> has great examples showing how to format your content. Take a look at how to specify header sizes, lists, figures and tables. <strong>You might want to bookmark this page!</strong></p>
 <p>Try editing the <code>about.qmd</code> file as well. You will notice that this is another tab in your website. YOu can add more tabs by adding <code>.qmd</code> files.</p>
 <p>With each addition, be sure to <code>quarto preview</code> your changes to make sure it works. When you are satisfied with your website, <code>quarto render</code> to render to html.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -696,7 +740,7 @@ format:
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb9" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section></section><section id="publishing-your-website-to-github" class="level2"><h2 class="anchored" data-anchor-id="publishing-your-website-to-github">Publishing your website to GitHub</h2>
 <p>You can publish your website for free on GitHub, which is a very cool feature. In his section I am adding a bit more explanation to the Quarto quickstart guide <em>up to and including Render to docs</em> <a href="https://quarto.org/docs/publishing/github-pages.html" class="uri">https://quarto.org/docs/publishing/github-pages.html</a>. I describe the most important stpes below:</p>
@@ -713,9 +757,9 @@ format:
 <div class="code-with-filename-file">
 <pre><strong>_quarto.yml</strong></pre>
 </div>
-<div class="sourceCode" id="cb10" data-filename="_quarto.yml"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">project:</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">type:</span> website</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">output-dir:</span> docs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13" data-filename="_quarto.yml"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">project:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">type:</span> website</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">output-dir:</span> docs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next time you <code>quarto render</code> it will create <code>docs</code> and all of its contents.</p>
 </section><section id="supress-github-jekyll-html-processing" class="level3"><h3 class="anchored" data-anchor-id="supress-github-jekyll-html-processing">Supress GitHub <code>jekyll</code> html processing</h3>
@@ -732,7 +776,7 @@ format:
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb11" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></td>
 </tr>
 <tr class="even">
@@ -741,7 +785,7 @@ format:
 <div class="code-with-filename-file">
 <pre><strong>CMD</strong></pre>
 </div>
-<div class="sourceCode" id="cb12" data-filename="CMD"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">copy</span> NUL .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15" data-filename="CMD"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">copy</span> NUL .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -753,9 +797,9 @@ format:
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb13" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"first commit"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"first commit"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
 <li>Create a GitHub repo by the same name</li>
@@ -806,16 +850,16 @@ The Quarto Workflow is
 </section><section id="for-fun" class="level2"><h2 class="anchored" data-anchor-id="for-fun">For fun</h2>
 <p>You can have fun with emoji! Guangchuang Yu wrote the package <code>emojifont</code> (this is the same person who wrote the widely used <code>ggtree</code> package) and now you can bring your emoji out of your phone and into your quarto documents! Install the R package <code>emojifont</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"emojifont"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"emojifont"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then anywhere you want an emoji in the markdown file, you just type:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">`r emojifont::emoji('palm_tree')`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">`r emojifont::emoji('palm_tree')`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>🌴</p>
 <p>Or if you want several, just line them up:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r emojifont::emoji('balloon')</span><span class="st">``</span><span class="at">r emojifont::emoji('tada')</span><span class="st">``</span><span class="at">r emojifont::emoji('smiley')</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r emojifont::emoji('balloon')</span><span class="st">``</span><span class="at">r emojifont::emoji('tada')</span><span class="st">``</span><span class="at">r emojifont::emoji('smiley')</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>🎈🎉😃</p>
 <p>There is a handy cheat sheet of emoji names here <a href="https://gist.github.com/rxaviers/7360908" class="uri">https://gist.github.com/rxaviers/7360908</a></p>
@@ -955,8 +999,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1067,7 +1109,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

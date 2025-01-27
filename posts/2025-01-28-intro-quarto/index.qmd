@@ -16,16 +16,39 @@ bibliography: my-refs.bib
 
 # Pre-lecture materials
 
-## Read ahead
+## INSTALL 
+
+::: callout-note
+### Before class, you can prepare by installing the following materials:
+
+1.  Install `quarto` <https://quarto.org/docs/get-started/>
+2.  Install `tinytex`, a version of `LaTex` to render output.  Open a Terminal window (`git-BASH` on Windows) and type: 
+
+```{.bash filename=Terminal}
+quarto install tinytex
+```
+Note: This will not add `tinytex` to the system `PATH` so if you would like to use `tinytex` with other applications, or you have a different installation of `TeX` that you prefer to use instead with quarto, see notes here <https://quarto.org/docs/output-formats/pdf-engine.html>.
+
+3.   Install `pandoc`, which translates output to almost any format. <https://pandoc.org/installing.html>  Follow instructions for whichever installer you prefer. If you are using homebrew on a mac: 
+
+```{.bash filename=Terminal}
+brew install pandoc
+```
+
+4.   Install `rmarkdown` ("R Markdown), which `quarto` builds upon. `rmarkdown` also includes the package `knitr` which executes the R code and provides `LaTeX` formatting for the output. From within your R console:  
+
+```{.bash filename=R_Console}
+install.packages("rmarkdown")
+```
+:::
 
 ::: callout-note
 ### Read ahead
 
 **Before class, you can prepare by reading the following materials:**
 
-1.  <https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522>
-2.  Creating a Website in Quarto quickstart *up to and including Render* <https://quarto.org/docs/websites/>
-3.  Publishing to GitHub *up to and including Render to docs* <https://quarto.org/docs/publishing/github-pages.html>
+1.  Creating a Website in Quarto quickstart *up to and including Render* <https://quarto.org/docs/websites/>
+1.  Publishing to GitHub *up to and including Render to docs* <https://quarto.org/docs/publishing/github-pages.html>
 :::
 
 ## Acknowledgements
@@ -85,13 +108,17 @@ Of course, everyone knows that behind the scenes **there's a lot that went into 
 
 One basic idea to make writing reproducible reports easier is what's known as *literate statistical programming*. The idea is to **think of a report or a publication as a stream of text and code**.
 
-- The text is readable by people and the code is readable by computers.
-- The analysis is described in a series of text and code chunks.
+- __The code and text remain together__ in a single source document. No more separate analysis files and word processing files. When code is edited, the report is automatically generated and updated.
 
-- Each kind of code chunk will do something like load some data or compute some results.
-- Each text chunk will relay something in a human readable language.
+- The ___text_ is readable by _people___ and the ___code_ is readable by _computers_.__ It is actually a human-readable document that executes the entire analysis.
 
-- **The code and text remain together** in a single source document. No more separate analysis files and word processing files. When code is edited, the report is automatically generated and updated.
+- __Well Documented:__ The _analysis is described_ in a series of text and code chunks.
+
+- __Modular:__ Each kind of _code chunk_ will do something like _load some data_ or _compute some results_.
+
+- __Readable:__ Each _text chunk_ will relay something in a human readable language.
+
+There might also be a separation of __raw data__ and __processed data__. To preserve the integrity of the raw data as it was collected or received, as well as a record of the data cleaning to produce processed data. 
 
 There might also be **presentation code** that formats tables and figures and there's article text that explains what's going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.
 
@@ -105,14 +132,15 @@ In order to use a system like this you need a documentational language, that's h
 
 ## Sweave
 
-One of the original literate programming systems in R that was designed to do this was called Sweave written by [Friedrich Leisch](https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf). Sweave enables users to combine R code with a documentation program called LaTeX.  Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project.
+R now has a number of options for literate programming systems, but one of the original that was designed to do this in R was called __Sweave__ written by [Friedrich Leisch](https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf). Sweave enables users to combine R code with a documentation program called __LaTeX__.  Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project. To see an example of LaTeX see \[[small2e.tex](./small2e.tex)\] and for Sweave, check out \[[Little_Sweave.Rnw](./Little_Sweave.Rnw)\]. 
 
-**Sweave files ends a `.Rnw`** and have R code weaved through the document:
+**Sweave files have a `.Rnw` file ending** and have R code weaved through the document:
 
     <<plot1, height=4, width=5, eval=FALSE>>=
     data(airquality)
     plot(airquality$Ozone ~ airquality$Wind)
     @
+
 
 Once you have created your `.Rnw` file, Sweave will process the file, executing the R chunks and replacing them with output as appropriate before creating the PDF document.
 
@@ -152,7 +180,7 @@ The authors of the 2nd book describe the motivation for the 2nd book as:
 > "However, we have received comments from our readers and publisher that it would be beneficial to provide more practical and relatively short examples to show the interesting and useful usage of R Markdown, because it can be daunting to find out how to achieve a certain task from the aforementioned reference book (put another way, that book is too dry to read). As a result, this cookbook was born."
 :::
 
-Because this is lecture is built in a `.qmd` file (which is very similar to a `.Rmd` file), let's demonstrate how this work. I am going to change `eval=FALSE` to `eval=TRUE`.
+Because this is lecture is built in a `.qmd` file (which is very similar to a `.Rmd` file), let's demonstrate how this works. I am going to change `eval=FALSE` to `eval=TRUE`.
 
 ```{r plot2, height=4, width=5, eval=TRUE, echo=TRUE}
 data(airquality)
@@ -187,6 +215,7 @@ One of the alternative that has come up in recent times is something called `kni
 
 - The `knitr` package for R takes a lot of these ideas of literate programming and updates and improves upon them.
 - `knitr` still uses R as its programming language, but it allows you to mix other programming languages in.
+- `knitr` is included in the installation of `rmarkdown`.
 - You can also use a variety of documentation languages now, such as LaTeX, markdown and HTML.
 - `knitr` was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.
 
@@ -311,7 +340,7 @@ about:
 
 You should edit the body of your website as well. You simply edit the text.
 
-The [quarto markdown page](https://quarto.org/docs/authoring/markdown-basics.html) has great examples showing how to format your content. Take a look at how to specify header sizes, lists, figures and tables.
+The [quarto markdown page](https://quarto.org/docs/authoring/markdown-basics.html) has great examples showing how to format your content. Take a look at how to specify header sizes, lists, figures and tables. __You might want to bookmark this page!__
 
 Try editing the `about.qmd` file as well. You will notice that this is another tab in your website. YOu can add more tabs by adding `.qmd` files.
 
