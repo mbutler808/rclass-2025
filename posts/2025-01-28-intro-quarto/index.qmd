@@ -22,7 +22,7 @@ bibliography: my-refs.bib
 ### Before class, you can prepare by installing the following materials:
 
 1.  Install `quarto` <https://quarto.org/docs/get-started/>
-2.  Install `tinytex`, a version of `LaTex` to render output.  Open a Terminal window (`git-BASH` on Windows) and type: 
+2.  Install `tinytex`, a version of {{< latex >}} to render output.  Open a Terminal window (`git-BASH` on Windows) and type: 
 
 ```{.bash filename=Terminal}
 quarto install tinytex
@@ -35,7 +35,7 @@ Note: This will not add `tinytex` to the system `PATH` so if you would like to u
 brew install pandoc
 ```
 
-4.   Install `rmarkdown` ("R Markdown), which `quarto` builds upon. `rmarkdown` also includes the package `knitr` which executes the R code and provides `LaTeX` formatting for the output. From within your R console:  
+4.   Install `rmarkdown` ("R Markdown), which `quarto` builds upon. `rmarkdown` also includes the package `knitr` which executes the R code and provides {{< latex >}} formatting for the output. From within your R console:  
 
 ```{.bash filename=R_Console}
 install.packages("rmarkdown")
@@ -74,7 +74,7 @@ Material for this lecture was borrowed and adopted from
 
 # Literate Programming
 
-Before there was widespread concern about "Reproducible Research", the term **literate programming** was coined by [Donald Knuth](https://www-cs-faculty.stanford.edu/~knuth/), one of the true geniuses of computing, the author/inventor of TeX, and the notion of structured programming,  among other things. He wrote a book about it in 1984!
+Before there was widespread concern about "Reproducible Research", the term **literate programming** was coined by [Donald Knuth](https://www-cs-faculty.stanford.edu/~knuth/), one of the true geniuses of computing, the author/inventor of {{< tex >}}, and the notion of structured programming,  among other things. He wrote a book about it in 1984!
 
 > Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.
 
@@ -120,21 +120,33 @@ One basic idea to make writing reproducible reports easier is what's known as *l
 
 There might also be a separation of __raw data__ and __processed data__. To preserve the integrity of the raw data as it was collected or received, as well as a record of the data cleaning to produce processed data. 
 
-There might also be **presentation code** that formats tables and figures and there's article text that explains what's going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.
+There might also be **presentation code** that formats tables and figures and there's article text that explains what's going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.  All of the tools we describe here are open source projects. 
 
 ## Weaving and Tangling
 
 Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.
 
-Literate programs can be **weaved** to produce human readable documents like PDFs or HTML web pages, and they can **tangled** to produce machine-readable "documents", or in other words, machine readable code.
+Literate programs can be **weaved** to produce human readable documents like PDFs or HTML web pages, and they can **tangled** to produce machine readable code. To do this we need a documentation language. 
 
-In order to use a system like this you need a documentational language, that's human readable, and you need a programming language that's machine readable (or can be compiled/interpreted into something that's machine readable).
+## Sweave and {{< latex >}}
 
-## Sweave
+The first literate programming system for R is called __Sweave__. `sweave` enables users to combine `R` code with a typesetting language called {{< latex >}}.  
 
-R now has a number of options for literate programming systems, but one of the original that was designed to do this in R was called __Sweave__ written by [Friedrich Leisch](https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf). Sweave enables users to combine R code with a documentation program called __LaTeX__.  Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project. To see an example of LaTeX see \[[small2e.tex](./small2e.tex)\] and for Sweave, check out \[[Little_Sweave.Rnw](./Little_Sweave.Rnw)\]. 
+{{< latex >}} markup specifies how the text, mathematical equations, tables, and figures will be formatted, allowing the separation of content from formatting (as opposed to WYSYWIG word processors like Word or Google Docs). 
 
-**Sweave files have a `.Rnw` file ending** and have R code weaved through the document:
+{{< latex >}} is very powerful for:  
+
+-  Laying out mathematical equations. __This is its superpower!__
+-  Fine-tuned control of formatting (all kinds!)
+-  Powerful tools for integrating citations via {{< bibtex >}} and cross-references to Figures, Tables, Equations, Sections, anything you wish to label. 
+
+{{< latex >}} was written by [Leslie Lamport](https://en.wikipedia.org/wiki/Leslie_Lamport) when he was at the Stanford Research Institute, as a set of macros for {{< tex >}}, which is the underlying typesetting engine written by [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth). Lamport wanted to write a book using {{< tex >}}, so he wrote the {{< latex >}} macros and a manual, which made it easier for many others to use {{< tex >}}. 
+
+Before `sweave`, one would write code to perform statistical analysis or modeling in `R`, and the manuscript in `latex` once the coding was complete. As projects develop, however, keeping these processes separate can lead to a lack of reproducibility. 
+
+`sweave` revolutionized coding, and has become part of the R base code. `sweave` was written by [Friedrich Leisch](https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf), who  is on the R Core Development Team and the BioConductor Project. To see an example of LaTeX see \[[small2e.tex](./small2e.tex)\] and for Sweave, check out \[[Little_Sweave.Rnw](./Little_Sweave.Rnw)\]. 
+
+**Sweave files have a `.Rnw` file ending** and have R code weaved through the document, interspered with :
 
     <<plot1, height=4, width=5, eval=FALSE>>=
     data(airquality)
@@ -142,21 +154,20 @@ R now has a number of options for literate programming systems, but one of the o
     @
 
 
-Once you have created your `.Rnw` file, Sweave will process the file, executing the R chunks and replacing them with output as appropriate before creating the PDF document.
+Once you have created your `.Rnw` file containing code chunks for your R code, and {{< latex >}} tags to format your text, from your R console you run the `sweave()` function to __weave__ the file, executing the R chunks and replacing them with output as appropriate to typeset before creating the PDF document.
 
-Sweaveʻs main limitation is that it requires knowledge of LaTeX
+Sweaveʻs main limitation is that it requires knowledge of {{< latex >}}, which has a steep learning curve.
 
-- LaTeX is very powerful for laying out mathematical equations and fine-tuned control of formatting, but is not a documentation language that is widely used outside of mathematics.
-- Therefore, there is a steep learning curve.
 - Sweave also **lacks a lot of features that people find useful** like caching, and multiple plots per page and mixing programming languages.
+- For developers, Sweave is hard to extend with new functions. 
 
-Instead, folks have moved towards using something called **knitr**, which offers everything Sweave does, plus it extends it to much simpler Markdown documents.
+Inspired by Sweave, Yihui Xie wrote [**knitr**](https://yihui.org/knitr/) to extend literate programming  capabilities in R even further by combining features of other add on packages into one package. It adds richer graphics features and importantly extends use of much simpler Markdown documents to take advantage of LaTeX without having to write it!
 
 ## rmarkdown
 
-Another choice for literate programming is to build documents based on [Markdown](https://en.wikipedia.org/wiki/Markdown) language. A markdown file is a plain text file that is typically given the extension `.md`. The [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) R package takes a R Markdown file (`.Rmd`) and weaves together R code chunks @fig-rmarkdown, producing a large number of user-specified outputs.
+[Markdown](https://en.wikipedia.org/wiki/Markdown) is a much simpler document language. A markdown file is a plain text file that is typically given the extension `.md`. The [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) R package takes a R Markdown file (`.Rmd`) and weaves together R code chunks @fig-rmarkdown, which can be output in a variety of different possible formats.
 
-![R markdown translates text and code to many different formats](../../images/Rmarkdown.png){width=80% #fig-rmarkdown}
+![R markdown can be used to translate text and code into many different output formats](../../images/Rmarkdown.png){width=80% #fig-rmarkdown}
 
 R chunks surrounded by text looks like this:
 
@@ -167,7 +178,7 @@ R chunks surrounded by text looks like this:
     ```
 
 ::: callout-tip
-The best resource for learning about R Markdown this by Yihui Xie, J. J. Allaire, and Garrett Grolemund:
+The best resource for learning about R Markdown this the book by Yihui Xie, J. J. Allaire, and Garrett Grolemund:
 
 -   <https://bookdown.org/yihui/rmarkdown>
 
@@ -175,12 +186,12 @@ The R Markdown Cookbook by Yihui Xie, Christophe Dervieux, and Emily Riederer is
 
 -   <https://bookdown.org/yihui/rmarkdown-cookbook>
 
-The authors of the 2nd book describe the motivation for the 2nd book as:
+The authors describe the motivation for the 2nd book as:
 
 > "However, we have received comments from our readers and publisher that it would be beneficial to provide more practical and relatively short examples to show the interesting and useful usage of R Markdown, because it can be daunting to find out how to achieve a certain task from the aforementioned reference book (put another way, that book is too dry to read). As a result, this cookbook was born."
 :::
 
-Because this is lecture is built in a `.qmd` file (which is very similar to a `.Rmd` file), let's demonstrate how this works. I am going to change `eval=FALSE` to `eval=TRUE`.
+Because this is lecture is built using a `.qmd` file (which is very similar to a `.Rmd` file), let's demonstrate how this works. I am going to change `eval=FALSE` to `eval=TRUE`.
 
 ```{r plot2, height=4, width=5, eval=TRUE, echo=TRUE}
 data(airquality)
@@ -216,7 +227,7 @@ One of the alternative that has come up in recent times is something called `kni
 - The `knitr` package for R takes a lot of these ideas of literate programming and updates and improves upon them.
 - `knitr` still uses R as its programming language, but it allows you to mix other programming languages in.
 - `knitr` is included in the installation of `rmarkdown`.
-- You can also use a variety of documentation languages now, such as LaTeX, markdown and HTML.
+- You can also use a variety of documentation languages now, such as {{< latex >}} , markdown and HTML.
 - `knitr` was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.
 
 Knitr takes a plain text document with embedded code, executes the code and 'knits' the results back into the document.
@@ -241,7 +252,7 @@ knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf95505
 
 \[[Source](https://rmarkdown.rstudio.com/authoring_quick_tour.html)\]
 
-As seen in the figure above, from there pandoc is used to convert e.g. a `.md` file into many other types of file formats into a `.html`, etc.
+As seen in the figure above, from there `pandoc` is used to convert e.g. a `.md` file into many other types of file formats into a `.html`, etc.
 
 So in summary:
 

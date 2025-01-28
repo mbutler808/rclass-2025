@@ -97,7 +97,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link rel="stylesheet" href="../../styles.css">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../styles.css">
 </head>
 <body class="floating nav-fixed">
 
@@ -237,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <a href="#literate-programming-in-practice" id="toc-literate-programming-in-practice" class="nav-link" data-scroll-target="#literate-programming-in-practice">Literate Programming in Practice</a>
   <ul class="collapse">
 <li><a href="#weaving-and-tangling" id="toc-weaving-and-tangling" class="nav-link" data-scroll-target="#weaving-and-tangling">Weaving and Tangling</a></li>
-  <li><a href="#sweave" id="toc-sweave" class="nav-link" data-scroll-target="#sweave">Sweave</a></li>
+  <li><a href="#sweave-and" id="toc-sweave-and" class="nav-link" data-scroll-target="#sweave-and">Sweave and <span class="math inline">\(\LaTeX\)</span></a></li>
   <li>
 <a href="#rmarkdown" id="toc-rmarkdown" class="nav-link" data-scroll-target="#rmarkdown">rmarkdown</a>
   <ul class="collapse">
@@ -300,7 +325,7 @@ Before class, you can prepare by installing the following materials:
 <ol type="1">
 <li>Install <code>quarto</code> <a href="https://quarto.org/docs/get-started/" class="uri">https://quarto.org/docs/get-started/</a>
 </li>
-<li>Install <code>tinytex</code>, a version of <code>LaTex</code> to render output. Open a Terminal window (<code>git-BASH</code> on Windows) and type:</li>
+<li>Install <code>tinytex</code>, a version of <span class="math inline">\(\LaTeX\)</span> to render output. Open a Terminal window (<code>git-BASH</code> on Windows) and type:</li>
 </ol>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -319,7 +344,7 @@ Before class, you can prepare by installing the following materials:
 <div class="sourceCode" id="cb2" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install pandoc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
-<li>Install <code>rmarkdown</code> (“R Markdown), which <code>quarto</code> builds upon. <code>rmarkdown</code> also includes the package <code>knitr</code> which executes the R code and provides <code>LaTeX</code> formatting for the output. From within your R console:</li>
+<li>Install <code>rmarkdown</code> (“R Markdown), which <code>quarto</code> builds upon. <code>rmarkdown</code> also includes the package <code>knitr</code> which executes the R code and provides <span class="math inline">\(\LaTeX\)</span> formatting for the output. From within your R console:</li>
 </ol>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -375,7 +400,7 @@ Learning objectives
 </div>
 </div>
 </section><section id="literate-programming" class="level1"><h1>Literate Programming</h1>
-<p>Before there was widespread concern about “Reproducible Research”, the term <strong>literate programming</strong> was coined by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>, one of the true geniuses of computing, the author/inventor of TeX, and the notion of structured programming, among other things. He wrote a book about it in 1984!</p>
+<p>Before there was widespread concern about “Reproducible Research”, the term <strong>literate programming</strong> was coined by <a href="https://www-cs-faculty.stanford.edu/~knuth/">Donald Knuth</a>, one of the true geniuses of computing, the author/inventor of <span class="math inline">\(\TeX\)</span>, and the notion of structured programming, among other things. He wrote a book about it in 1984!</p>
 <blockquote class="blockquote">
 <p>Literate programming is a methodology that combines a programming language with a documentation language, thereby making programs more robust, more portable, more easily maintained, and arguably more fun to write than programs that are written only in a high-level language.</p>
 </blockquote>
@@ -422,34 +447,44 @@ Additional Reading
 <li><p><strong>Readable:</strong> Each <em>text chunk</em> will relay something in a human readable language.</p></li>
 </ul>
 <p>There might also be a separation of <strong>raw data</strong> and <strong>processed data</strong>. To preserve the integrity of the raw data as it was collected or received, as well as a record of the data cleaning to produce processed data.</p>
-<p>There might also be <strong>presentation code</strong> that formats tables and figures and there’s article text that explains what’s going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis.</p>
+<p>There might also be <strong>presentation code</strong> that formats tables and figures and there’s article text that explains what’s going on around all this code. This stream of text and code is a literate statistical program or a literate statistical analysis. All of the tools we describe here are open source projects.</p>
 <section id="weaving-and-tangling" class="level2"><h2 class="anchored" data-anchor-id="weaving-and-tangling">Weaving and Tangling</h2>
 <p>Literate programs by themselves are a bit difficult to work with, but they can be processed in two important ways.</p>
-<p>Literate programs can be <strong>weaved</strong> to produce human readable documents like PDFs or HTML web pages, and they can <strong>tangled</strong> to produce machine-readable “documents”, or in other words, machine readable code.</p>
-<p>In order to use a system like this you need a documentational language, that’s human readable, and you need a programming language that’s machine readable (or can be compiled/interpreted into something that’s machine readable).</p>
-</section><section id="sweave" class="level2"><h2 class="anchored" data-anchor-id="sweave">Sweave</h2>
-<p>R now has a number of options for literate programming systems, but one of the original that was designed to do this in R was called <strong>Sweave</strong> written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>. Sweave enables users to combine R code with a documentation program called <strong>LaTeX</strong>. Sweave revolutionized coding, and has become part of the R base code. Leisch is on the R Core Development Team and the BioConductor Project. To see an example of LaTeX see [<a href="./small2e.tex">small2e.tex</a>] and for Sweave, check out [<a href="./Little_Sweave.Rnw">Little_Sweave.Rnw</a>].</p>
-<p><strong>Sweave files have a <code>.Rnw</code> file ending</strong> and have R code weaved through the document:</p>
+<p>Literate programs can be <strong>weaved</strong> to produce human readable documents like PDFs or HTML web pages, and they can <strong>tangled</strong> to produce machine readable code. To do this we need a documentation language.</p>
+</section><section id="sweave-and" class="level2"><h2 class="anchored" data-anchor-id="sweave-and">Sweave and <span class="math inline">\(\LaTeX\)</span>
+</h2>
+<p>The first literate programming system for R is called <strong>Sweave</strong>. <code>sweave</code> enables users to combine <code>R</code> code with a typesetting language called <span class="math inline">\(\LaTeX\)</span>.</p>
+<p><span class="math inline">\(\LaTeX\)</span> markup specifies how the text, mathematical equations, tables, and figures will be formatted, allowing the separation of content from formatting (as opposed to WYSYWIG word processors like Word or Google Docs).</p>
+<p><span class="math inline">\(\LaTeX\)</span> is very powerful for:</p>
+<ul>
+<li>Laying out mathematical equations. <strong>This is its superpower!</strong>
+</li>
+<li>Fine-tuned control of formatting (all kinds!)</li>
+<li>Powerful tools for integrating citations via <span style="font-variant: small-caps;">Bib</span><span style="letter-spacing:-2px;">T</span><sub style="font-size: inherit; letter-spacing:-1px;">E</sub>X and cross-references to Figures, Tables, Equations, Sections, anything you wish to label.</li>
+</ul>
+<p><span class="math inline">\(\LaTeX\)</span> was written by <a href="https://en.wikipedia.org/wiki/Leslie_Lamport">Leslie Lamport</a> when he was at the Stanford Research Institute, as a set of macros for <span class="math inline">\(\TeX\)</span>, which is the underlying typesetting engine written by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a>. Lamport wanted to write a book using <span class="math inline">\(\TeX\)</span>, so he wrote the <span class="math inline">\(\LaTeX\)</span> macros and a manual, which made it easier for many others to use <span class="math inline">\(\TeX\)</span>.</p>
+<p>Before <code>sweave</code>, one would write code to perform statistical analysis or modeling in <code>R</code>, and the manuscript in <code>latex</code> once the coding was complete. As projects develop, however, keeping these processes separate can lead to a lack of reproducibility.</p>
+<p><code>sweave</code> revolutionized coding, and has become part of the R base code. <code>sweave</code> was written by <a href="https://documents.uow.edu.au/content/groups/public/@web/@commerce/documents/doc/uow012868.pdf">Friedrich Leisch</a>, who is on the R Core Development Team and the BioConductor Project. To see an example of LaTeX see [<a href="./small2e.tex">small2e.tex</a>] and for Sweave, check out [<a href="./Little_Sweave.Rnw">Little_Sweave.Rnw</a>].</p>
+<p><strong>Sweave files have a <code>.Rnw</code> file ending</strong> and have R code weaved through the document, interspered with :</p>
 <pre><code>&lt;&lt;plot1, height=4, width=5, eval=FALSE&gt;&gt;=
 data(airquality)
 plot(airquality$Ozone ~ airquality$Wind)
 @</code></pre>
-<p>Once you have created your <code>.Rnw</code> file, Sweave will process the file, executing the R chunks and replacing them with output as appropriate before creating the PDF document.</p>
-<p>Sweaveʻs main limitation is that it requires knowledge of LaTeX</p>
+<p>Once you have created your <code>.Rnw</code> file containing code chunks for your R code, and <span class="math inline">\(\LaTeX\)</span> tags to format your text, from your R console you run the <code>sweave()</code> function to <strong>weave</strong> the file, executing the R chunks and replacing them with output as appropriate to typeset before creating the PDF document.</p>
+<p>Sweaveʻs main limitation is that it requires knowledge of <span class="math inline">\(\LaTeX\)</span>, which has a steep learning curve.</p>
 <ul>
-<li>LaTeX is very powerful for laying out mathematical equations and fine-tuned control of formatting, but is not a documentation language that is widely used outside of mathematics.</li>
-<li>Therefore, there is a steep learning curve.</li>
 <li>Sweave also <strong>lacks a lot of features that people find useful</strong> like caching, and multiple plots per page and mixing programming languages.</li>
+<li>For developers, Sweave is hard to extend with new functions.</li>
 </ul>
-<p>Instead, folks have moved towards using something called <strong>knitr</strong>, which offers everything Sweave does, plus it extends it to much simpler Markdown documents.</p>
+<p>Inspired by Sweave, Yihui Xie wrote <a href="https://yihui.org/knitr/"><strong>knitr</strong></a> to extend literate programming capabilities in R even further by combining features of other add on packages into one package. It adds richer graphics features and importantly extends use of much simpler Markdown documents to take advantage of LaTeX without having to write it!</p>
 </section><section id="rmarkdown" class="level2"><h2 class="anchored" data-anchor-id="rmarkdown">rmarkdown</h2>
-<p>Another choice for literate programming is to build documents based on <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> language. A markdown file is a plain text file that is typically given the extension <code>.md</code>. The <a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> R package takes a R Markdown file (<code>.Rmd</code>) and weaves together R code chunks <a href="#fig-rmarkdown" class="quarto-xref">Figure&nbsp;1</a>, producing a large number of user-specified outputs.</p>
+<p><a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> is a much simpler document language. A markdown file is a plain text file that is typically given the extension <code>.md</code>. The <a href="https://CRAN.R-project.org/package=rmarkdown"><code>rmarkdown</code></a> R package takes a R Markdown file (<code>.Rmd</code>) and weaves together R code chunks <a href="#fig-rmarkdown" class="quarto-xref">Figure&nbsp;1</a>, which can be output in a variety of different possible formats.</p>
 <div id="fig-rmarkdown" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rmarkdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../images/Rmarkdown.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rmarkdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: R markdown translates text and code to many different formats
+Figure&nbsp;1: R markdown can be used to translate text and code into many different output formats
 </figcaption></figure>
 </div>
 <p>R chunks surrounded by text looks like this:</p>
@@ -467,7 +502,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The best resource for learning about R Markdown this by Yihui Xie, J. J. Allaire, and Garrett Grolemund:</p>
+<p>The best resource for learning about R Markdown this the book by Yihui Xie, J. J. Allaire, and Garrett Grolemund:</p>
 <ul>
 <li><a href="https://bookdown.org/yihui/rmarkdown" class="uri">https://bookdown.org/yihui/rmarkdown</a></li>
 </ul>
@@ -475,13 +510,13 @@ Tip
 <ul>
 <li><a href="https://bookdown.org/yihui/rmarkdown-cookbook" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook</a></li>
 </ul>
-<p>The authors of the 2nd book describe the motivation for the 2nd book as:</p>
+<p>The authors describe the motivation for the 2nd book as:</p>
 <blockquote class="blockquote">
 <p>“However, we have received comments from our readers and publisher that it would be beneficial to provide more practical and relatively short examples to show the interesting and useful usage of R Markdown, because it can be daunting to find out how to achieve a certain task from the aforementioned reference book (put another way, that book is too dry to read). As a result, this cookbook was born.”</p>
 </blockquote>
 </div>
 </div>
-<p>Because this is lecture is built in a <code>.qmd</code> file (which is very similar to a <code>.Rmd</code> file), let’s demonstrate how this works. I am going to change <code>eval=FALSE</code> to <code>eval=TRUE</code>.</p>
+<p>Because this is lecture is built using a <code>.qmd</code> file (which is very similar to a <code>.Rmd</code> file), let’s demonstrate how this works. I am going to change <code>eval=FALSE</code> to <code>eval=TRUE</code>.</p>
 <div class="cell" height="4" width="5">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">airquality</span><span class="op">$</span><span class="va">Wind</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -546,7 +581,7 @@ Tip
 <code>knitr</code> still uses R as its programming language, but it allows you to mix other programming languages in.</li>
 <li>
 <code>knitr</code> is included in the installation of <code>rmarkdown</code>.</li>
-<li>You can also use a variety of documentation languages now, such as LaTeX, markdown and HTML.</li>
+<li>You can also use a variety of documentation languages now, such as <span class="math inline">\(\LaTeX\)</span> , markdown and HTML.</li>
 <li>
 <code>knitr</code> was developed by Yihui Xie while he was a graduate student at Iowa State and it has become a very popular package for writing literate statistical programs.</li>
 </ul>
@@ -573,7 +608,7 @@ Tip
 </div>
 </div>
 <p>[<a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">Source</a>]</p>
-<p>As seen in the figure above, from there pandoc is used to convert e.g.&nbsp;a <code>.md</code> file into many other types of file formats into a <code>.html</code>, etc.</p>
+<p>As seen in the figure above, from there <code>pandoc</code> is used to convert e.g.&nbsp;a <code>.md</code> file into many other types of file formats into a <code>.html</code>, etc.</p>
 <p>So in summary:</p>
 <blockquote class="blockquote">
 <p>“R Markdown stands on the shoulders of knitr and Pandoc. The former executes the computer code embedded in Markdown, and converts R Markdown to Markdown. The latter renders Markdown to the output format you want (such as PDF, HTML, Word, and so on).”</p>
