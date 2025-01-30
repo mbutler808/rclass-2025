@@ -1,0 +1,295 @@
+---
+title: "Reference management"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "How to use citations and include your bibliography in R Quarto."
+date: 2025-01-30
+categories: [module 1, week 3, Quarto, authoring, BibTeX, programming]
+bibliography: my-refs.bib
+---
+
+<!-- Add interesting quote -->
+
+# Pre-lecture materials
+
+### Read ahead
+
+::: callout-note
+## Read ahead
+
+**Before class, you can prepare by skimming the following materials:**
+
+1.  R Markdown [cheatsheet](https://rmarkdown.rstudio.com/lesson-15.html)
+1.  Bibliographies and Citations in [pandoc](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
+2.  Citations from [Reproducible Research in R](https://monashdatafluency.github.io/r-rep-res/citations.html) from the [Monash Data Fluency](https://monashdatafluency.github.io) initiative
+3.  Citation style, appendix, etc. [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html)
+:::
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   <https://www.stephaniehicks.com/jhustatcomputing2022/>
+-   <https://andreashandel.github.io/MADAcourse>
+-   <https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html>
+-   <https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html>
+-   <https://monashdatafluency.github.io/r-rep-res/citations.html>
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Know what types of bibliography file formats can be used in a R Markdown file
+-   Learn how to add citations to a Quarto file
+-   Know how to change the citation style (e.g. APA, Chicago, Evolution, etc)
+:::
+
+# Introduction
+
+Your citation list is a critical aspect of research, as all research is built on the contribution in prior work. One of the most tedious tasks of science is hand-editing bibiolographies --- and one of the great benefits of the LaTeX environment is the automated *formatting references for bibliographies*. `r emojifont::emoji('confetti_ball')`
+
+Itʻs worth taking a little time to learn how to use these tools, as citations are critical for every paper, project report, or academic website, and is often even required in paper assignments. Since R markdown and Quarto work nicely with LaTeX (and BibTeX, the associated reference management software), we get a bonus in having access to the power of BibTeX without writing any LaTeX, maing it easy to add citations to our Quarto markdown projects.
+
+Quarto documentation currently doesnʻt include citations, but seems to support all the features presnt in R markdown. We will be using `.bib` format references in this tutorial, but R markdown (and presumably Quarto) supports other citation formats as well ([for more info see](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)).
+
+
+## The Parts
+
+There are three basic parts:
+
+1.  The citation data which is stored in the `.bib` file @sec-bib, and
+2.  In-text citations added by the author into the `.qmd` document @sec-inline, and
+3.  Linking the ʻ.bibʻ file in the `YAML` header @sec-linking.
+
+From this, both the *in-text citations* as well as the *citation list* at the end of the document will be rendered.
+
+There are additional customization options. You can change the *style* of the bibliography using style and class files @sec-style. This is at the level of the entire document, it is easy to switch. Within the document, there are also many options for in-text citation styles @sec-options.  You can also customize the style file by editing the LaTeX.
+
+*Reference managers* are helper software (independent of BibTeX) that are wonderful tools to help you collect and organize your citation data @sec-manager.
+
+
+# The Bibliography is in `.bib` files {#sec-bib}
+
+The citation data are stored in a `.bib` file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as *Web of Science*, *PubMed*, directly from jornal websites, etc.
+
+R provides nice function `citation()` that generating the citation blob for R packages. Let's try generating citation text for the R environment by using the following command
+
+```{r, echo = TRUE}
+citation("base")
+```
+
+You can replace "base" with any R package name, such as "rmarkdown" or my package "ouch".
+You can see that the format is simple, the information is in a key = value format, and the various parts have tags.
+
+Multiple citations are stored in your `.bib` file, with each citation separated by a blank line.
+
+# Reference Managers {#sec-manager}
+
+Personally, I really like [BibDesk]<https://bibdesk.sourceforge.io> for Mac OS to manage my citations.  It  is easy to use and has all the features I need. A cross-platform option that is popular now is JabRef <https://github.com/JabRef/jabref>. [JabRef](https://en.wikipedia.org/wiki/JabRef) is written in Java, is open source and has support for Linux, Windows, and MacOS.
+
+## Citation management software
+
+In addition to `.bib` (BibTeX) there are a lot of file formats in use including `.medline` (MEDLINE), `.ris` (RIS), and `.enl` (EndNote), among others. You can generally download the results of your literature search in the format of your choice (some citation manager software can convert formats as well).
+
+If you recall the output from `citation("rmarkdown")` above, one option is to copy and paste the BibTeX output into a text file labeled `.bib` or into citation management software, but instead we can use Rʻs `write_bib()` function from the `knitr` package to create a bibliography file.
+
+Let's run the following code in order to generate a `my-refs.bib` file
+
+```{r}
+knitr::write_bib("rmarkdown", file = "my-refs.bib")
+```
+
+You can output multiple citations by passing a vector of package names:
+
+```{r}
+knitr::write_bib(c("rmarkdown","base"), file = "my-refs.bib")
+```
+
+Now we can see we have the file saved locally.
+
+```{r}
+list.files()
+```
+
+If you open up the `my-refs.bib` file, you will see
+
+    @Manual{R-base,
+      title = {R: A Language and Environment for Statistical Computing},
+      author = {{R Core Team}},
+      organization = {R Foundation for Statistical Computing},
+      address = {Vienna, Austria},
+      year = {2022},
+      url = {https://www.R-project.org/},
+    }
+
+    @Manual{R-rmarkdown,
+      title = {rmarkdown: Dynamic Documents for R},
+      author = {JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone},
+      year = {2021},
+      note = {R package version 2.8},
+      url = {https://CRAN.R-project.org/package=rmarkdown},
+    }
+
+    @Book{rmarkdown2018,
+      title = {R Markdown: The Definitive Guide},
+      author = {Yihui Xie and J.J. Allaire and Garrett Grolemund},
+      publisher = {Chapman and Hall/CRC},
+      address = {Boca Raton, Florida},
+      year = {2018},
+      note = {ISBN 9781138359338},
+      url = {https://bookdown.org/yihui/rmarkdown},
+    }
+
+    @Book{rmarkdown2020,
+      title = {R Markdown Cookbook},
+      author = {Yihui Xie and Christophe Dervieux and Emily Riederer},
+      publisher = {Chapman and Hall/CRC},
+      address = {Boca Raton, Florida},
+      year = {2020},
+      note = {ISBN 9780367563837},
+      url = {https://bookdown.org/yihui/rmarkdown-cookbook},
+    }
+
+::: resources
+**Note there are three keys that we will use later on**:
+
+-   `R-rmarkdown`
+-   `rmarkdown2018`
+-   `rmarkdown2020`
+:::
+
+# Linking `.bib` file with `.rmd` or `.qmd` files {#sec-linking}
+
+In order to use references within a R Markdown file, you will need to specify the name and a location of a bibliography file using the bibliography metadata field in a YAML metadata section. For example:
+
+``` yaml
+---
+title: "My top ten favorite R packages"
+output: html_document
+bibliography: my-refs.bib
+---
+```
+
+You can include multiple reference files using the following syntax, alternatively you can concatenate two bib files into one.
+
+``` yaml
+---
+bibliography: ["my-refs1.bib", "my-refs2.bib"]
+---
+```
+
+# Inline citation {#sec-inline}
+
+Now we can start using those bib keys that we have learned just before, using the following syntax
+
+-   `[@key]` for single citation
+-   `[@key1; @key2]` multiple citation can be separated by semi-colon
+-   `[-@key]` in order to suppress author name, and just display the year
+-   `[see @key1 p 12; also this ref @key2]` is also a valid syntax
+
+Let's start by citing the `rmarkdown` package using the following code and press `Knit` button:
+
+------------------------------------------------------------------------
+
+I have been using the amazing Rmarkdown package [@R-rmarkdown]! These look like great books to read [@rmarkdown2018; and @rmarkdown2020].
+
+------------------------------------------------------------------------
+
+Pretty cool, huh??
+
+# Citation styles {#sec-style}
+
+By default, Pandoc will use a Chicago author-date format for citations and references.
+
+To use another style, for example, in ecology and evolution, we often use the `evolution.csl` style. You will need to specify a CSL (Citation Style Language) file in the `csl` metadata field, e.g.,
+
+``` yaml
+---
+title: "My top ten favorite R packages"
+output: html_document
+bibliography: my-refs.bib
+csl: biomed-central.csl
+---
+```
+
+::: callout-note
+### Resources
+The [Zotero Style Repository](https://www.zotero.org/styles) makes it easy to search for and download your desired style. Just include it in the same directory as with your `.qmd` file.
+:::
+
+CSL files also can be tweaked to meet custom formatting requirements. For example, we can change the number of authors required before "et al." is used to abbreviate them. This can be simplified through the use of visual editors such as the one available at <https://editor.citationstyles.org>.
+
+# Other cool features {#sec-options}
+
+#### Add an item to a bibliography without using it
+
+By default, the bibliography will only display items that are directly referenced in the document. If you want to include items in the bibliography without actually citing them in the body text, you can define a dummy nocite metadata field and put the citations there. They will be included in the references cited at the end, even though there is no in-text citation.
+
+``` yaml
+---
+nocite: |
+  @item1, @item2
+---
+```
+
+#### Add all items to the bibliography
+
+If we do not wish to explicitly state all of the items within the bibliography but would still like to show them in our references, we can use the following syntax:
+
+``` yaml
+---
+nocite: '@*'
+---
+```
+
+This will force all items to be displayed in the bibliography.
+
+::: callout-note
+### Resources
+You can also have an appendix appear after bibliography. For more on this, see:
+
+-   <https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html>
+:::
+
+# A Comment
+
+We have learned that within your bibliography file (e.g. `my-refs.bib`), each reference gets a key, which is a shorthand that is generated by the reference manager or by yourself.
+
+For instance, I use a format of `author:year` for example `Butler:2023` because itʻs easy for me to remember the literature that I want to cite that way. It makes it easier to write the content.
+
+When there are multiple citations in a year by the same author last name, my BibDesk software adds two unique letters after the year (I usually manually change it to one letter, i.e., `Butler:2023a`) so that each citation has a unique key.
+
+You can choose any format you wish, just pick one and use it *forever*.  As you write more papers, you can easily copy citations into your different bibliographies.  You are building a database that is *reusable*. 
+
+In your R Markdown document, you can then cite the reference by adding the key, such as `...in the paper by Butler et al. [@Butler:2022]...`.
+
+# Post-lecture materials
+
+### Practice
+
+Here are some post-lecture tasks to practice some of the material discussed.
+
+::: callout-note
+### Questions
+
+**Try out the following:**
+
+1.  What do you notice that's different when you run `citation("tidyverse")` (compared to `citation("rmarkdown")`)?
+
+2.  Install the following packages:
+
+```{r}
+#| eval: false
+install.packages(c("bibtex", "RefManageR")
+```
+
+What do they do? How might they be helpful to you in terms of reference management?
+
+3.  Practice using a different CSL file to change the citation style.
+:::

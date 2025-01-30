@@ -28,11 +28,11 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 |        | Jan 23 | `r emojifont::emoji('octopus')` Reproducible Research \[[html](posts/2025-01-23-reproducible-research/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-23-reproducible-research/index.qmd)\]  |||
 | Week 3 | Jan 28 | `r emojifont::emoji('octopus')` Literate Programming / Intro to Quarto \[[html](posts/2025-01-28-intro-quarto/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-28-intro-quarto/index.qmd)\]|||
-|       | Jan 30  | `r emojifont::emoji('microscope')` What is the Question? \[[html]\] \[[Qmd]\] | | |
+|              | Jan 30 | `r emojifont::emoji('eyeglasses')` Reference Management \[[html](posts/2025-01-30-reference-management/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-01-30-reference-management/index.qmd)\]  | ||
 ||||||
 | **Module 3** |         | **Data Analysis in R ** |||
 ||||||
-|              | Feb 4 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html]\] \[[Qmd]\]| `r emojifont::emoji('fallen_leaf')` Project 0 due | |
+|              | Feb 4 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html](posts/2025-02-04-reading-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-04-reading-data/index.qmd)\]| `r emojifont::emoji('fallen_leaf')` Project 0 due | |
 |              | Feb 6 | `r emojifont::emoji('eyeglasses')` Reference Management \[[html]\] \[[Qmd]\]  | ||
 | Week 4       | Feb 11  | `r emojifont::emoji('octopus')` Scripts \[[html]\] \[[Qmd]\] | | |
 |              | Feb 13 | `r emojifont::emoji('nut_and_bolt')` Data \[[html]\] \[[Qmd]\] | | |
