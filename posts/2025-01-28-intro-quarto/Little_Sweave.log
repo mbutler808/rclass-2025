@@ -1,0 +1,588 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.8.12)  29 JAN 2025 23:23
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**Little_Sweave.tex
+(./Little_Sweave.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-02-20>
+(/usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(/usr/local/texlive/2024/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count188
+\c@section=\count189
+\c@subsection=\count190
+\c@subsubsection=\count191
+\c@paragraph=\count192
+\c@subparagraph=\count193
+\c@figure=\count194
+\c@table=\count195
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+\FV@CodeLineNo=\count196
+\FV@InFile=\read2
+\FV@TabBox=\box51
+\c@FancyVerbLine=\count197
+\FV@StepNumber=\count198
+\FV@OutFile=\write3
+)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2022/01/06 v1.3d Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 149.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+
+! LaTeX Error: File `Sweave.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+(/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count199
+\l__pdf_internal_box=\box52
+)
+No file Little_Sweave.aux.
+\openout1 = `Little_Sweave.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+(/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count266
+\scratchdimen=\dimen141
+\scratchbox=\box53
+\nofMPsegments=\count267
+\nofMParguments=\count268
+\everyMPshowfont=\toks18
+\MPscratchCnt=\count269
+\MPscratchDim=\dimen142
+\MPnumerator=\count270
+\makeMPintoPDFobject=\count271
+\everyMPtoPDFconversion=\toks19
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 11.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 11.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 11.
+
+
+./Little_Sweave.tex:31: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.31 \begin{Schunk}
+                   
+? 
+
+./Little_Sweave.tex:32: LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.32 \begin{Sinput}
+                   
+? 
+
+./Little_Sweave.tex:35: LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35 \end{Sinput}
+                 
+? 
+
+./Little_Sweave.tex:36: LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.36 \begin{Soutput}
+                    
+? 
+
+./Little_Sweave.tex:39: LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.39 \end{Soutput}
+                  
+? 
+
+./Little_Sweave.tex:40: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.40 \end{Schunk}
+                 
+? 
+
+Overfull \hbox (8.94524pt too wide) in paragraph at lines 33--41
+[]\OT1/cmr/m/n/10 > x <- rnorm(1000) > x[1:10]   [1] -0.24555704 0.94196672 -0.
+68219638 1.10484918
+ []
+
+
+./Little_Sweave.tex:44: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.44 \begin{Schunk}
+                   
+? 
+
+./Little_Sweave.tex:45: LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.45 \begin{Soutput}
+                    
+? 
+
+./Little_Sweave.tex:48: LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.48 \end{Soutput}
+                  
+? 
+
+./Little_Sweave.tex:49: LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 \begin{Soutput}
+                    
+? 
+
+./Little_Sweave.tex:51: LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.51 \end{Soutput}
+                  
+? 
+
+./Little_Sweave.tex:52: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.52 \end{Schunk}
+                 
+? 
+
+Overfull \hbox (12.22308pt too wide) in paragraph at lines 46--53
+[]\OT1/cmr/m/n/10 [1] -1.0478118 0.3942632 1.3823847 -0.2940653 -0.7029665 -2.4
+368603 -0.3751244
+ []
+
+
+./Little_Sweave.tex:61: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61 \begin{Schunk}
+                   
+? 
+
+./Little_Sweave.tex:62: LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62 \begin{Sinput}
+                   
+? 
+
+./Little_Sweave.tex:64: LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \end{Sinput}
+                 
+? 
+
+./Little_Sweave.tex:65: LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.65 \begin{Soutput}
+                    
+? 
+
+./Little_Sweave.tex:67: LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \end{Soutput}
+                  
+? 
+
+./Little_Sweave.tex:68: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \end{Schunk}
+                 
+? 
+
+./Little_Sweave.tex:75: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 \begin{Schunk}
+                   
+? 
+
+./Little_Sweave.tex:76: LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.76 \begin{Sinput}
+                   
+? 
+
+./Little_Sweave.tex:78: LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.78 \end{Sinput}
+                 
+? 
+
+./Little_Sweave.tex:79: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.79 \end{Schunk}
+                 
+? 
+./Little_Sweave.tex:80: Undefined control sequence.
+l.80 \includegraphics
+                     {Little_Sweave-005}
+? 
+./Little_Sweave.tex:80: Missing $ inserted.
+<inserted text> 
+                $
+l.80 \includegraphics{Little_
+                             Sweave-005}
+? 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 80.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 80.
+./Little_Sweave.tex:80: Extra }, or forgotten $.
+l.80 \includegraphics{Little_Sweave-005}
+                                        
+? 
+./Little_Sweave.tex:81: Missing $ inserted.
+<inserted text> 
+                $
+l.81 
+     
+? 
+
+./Little_Sweave.tex:86: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 \begin{Schunk}
+                   
+? 
+
+./Little_Sweave.tex:87: LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.87 \begin{Sinput}
+                   
+? 
+
+./Little_Sweave.tex:89: LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.89 \end{Sinput}
+                 
+? 
+
+./Little_Sweave.tex:90: LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 \begin{Soutput}
+                    
+? 
+
+./Little_Sweave.tex:92: LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.92 \end{Soutput}
+                  
+? 
+
+./Little_Sweave.tex:93: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.93 \end{Schunk}
+                 
+? 
+
+Overfull \hbox (3.08394pt too wide) in paragraph at lines 95--96
+[]\OT1/cmr/m/n/10 If you want to make many plots, it's use-ful to work in a dis
+-tinct (sub)directory. 
+ []
+
+
+./Little_Sweave.tex:100: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.100 \begin{Schunk}
+                    
+? 
+
+./Little_Sweave.tex:101: LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 \begin{Sinput}
+                    
+? 
+
+./Little_Sweave.tex:106: LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.106 \end{Sinput}
+                  
+? 
+
+./Little_Sweave.tex:107: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.107 \end{Schunk}
+                  
+? 
+./Little_Sweave.tex:108: Undefined control sequence.
+l.108 \includegraphics
+                      {Little_Sweave-007}
+? 
+./Little_Sweave.tex:108: Missing $ inserted.
+<inserted text> 
+                $
+l.108 \includegraphics{Little_
+                              Sweave-007}
+? 
+./Little_Sweave.tex:108: Extra }, or forgotten $.
+l.108 \includegraphics{Little_Sweave-007}
+                                         
+? 
+./Little_Sweave.tex:109: Missing $ inserted.
+<inserted text> 
+                $
+l.109 
+      
+? 
+
+Overfull \hbox (4.97086pt too wide) in paragraph at lines 102--109
+[]\OT1/cmr/m/n/10 > lay-out(matrix(c(1, 2, 1, 3), 2)) > plot(x, y) > hist(x) > 
+hist(y)   Little$[]\OML/cmm/m/it/10 weave \OMS/cmsy/m/n/10 ^^@
+ []
+
+[1
+
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+./Little_Sweave.tex:112: LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.112 \begin{Schunk}
+                    
+? 
+
+./Little_Sweave.tex:113: LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 \begin{Sinput}
+                    
+? 
+
+./Little_Sweave.tex:117: LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.117 \end{Sinput}
+                  
+? 
+
+./Little_Sweave.tex:118: LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.118 \end{Schunk}
+                  
+? 
+./Little_Sweave.tex:119: Undefined control sequence.
+l.119 \includegraphics
+                      {Little_Sweave-008}
+? 
+./Little_Sweave.tex:119: Missing $ inserted.
+<inserted text> 
+                $
+l.119 \includegraphics{Little_
+                              Sweave-008}
+? 
+./Little_Sweave.tex:119: Extra }, or forgotten $.
+l.119 \includegraphics{Little_Sweave-008}
+                                         
+? 
+./Little_Sweave.tex:120: Missing $ inserted.
+<inserted text> 
+                $
+l.120 
+      
+? 
+[2] (./Little_Sweave.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-02-20>
+ ***********
+ )
+(\end occurred inside a group at level 3)
+
+### simple group (level 3) entered at line 119 ({)
+### simple group (level 2) entered at line 108 ({)
+### simple group (level 1) entered at line 80 ({)
+### bottom level 
+Here is how much of TeX's memory you used:
+ 1456 strings out of 474116
+ 23791 string characters out of 5743682
+ 1933187 words of memory out of 5000000
+ 23863 multiletter control sequences out of 15000+600000
+ 561709 words of font info for 48 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 42i,6n,51p,197b,197s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb>
+Output written on Little_Sweave.pdf (2 pages, 85539 bytes).
+PDF statistics:
+ 46 PDF objects out of 1000 (max. 8388607)
+ 27 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

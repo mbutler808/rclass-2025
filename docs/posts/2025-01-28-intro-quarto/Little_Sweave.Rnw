@@ -83,35 +83,25 @@ hist(x)
 hist(y)
 @ 
 
-Any R command can be put in the R chuncks. Let's read some data with ape:
+Any R command can be put in the R chuncks. Let's check out the islands built-in dataset, it contains areas of the worlds islands in thousands of square miles:
 
-<<>>=
-library(ape)
-data(woodmouse)
-x <- woodmouse
-x
+<<fig=true>>=
+data(islands)
+dotchart(log(islands[order(islands)], 10),
+   main = "islands data: log10(area) (log10(sq. miles))")
 @ 
 
 The nice thing with Sweave is that you know exactly which data file
 has been used since the code has been executed at the same time than
 the document is printed!
 
-Just for fun, let's plot the NJ tree done with a K80 distance:
-
-<<fig=true>>=
-plot(nj(dist.dna(x)))
-add.scale.bar()
-@ 
-
-Not the proper way to do this kind of analysis, of course ;)
-
 \section{Conclusion}
 
 I hope this starter will give you the feel to write many Sweave
-documents. A final word about LaTeX:    it
-ignores                               extra
-white                spaces
-          between
+documents. A final word about LaTeX:	it
+ignores  		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		 		extra
+white  		 		 		 		 		 		 		 		 		 		 		 		 		 		 		spaces
+ 		 		 		 		 		 		 		 		 		 		between
 words.
 
 \end{document}

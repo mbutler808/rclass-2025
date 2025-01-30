@@ -340,15 +340,17 @@ Learning objectives
 <section id="the-parts" class="level2"><h2 class="anchored" data-anchor-id="the-parts">The Parts</h2>
 <p>There are three basic parts:</p>
 <ol type="1">
-<li>The citation data which is stored in the <code>.bib</code> file <a href="#sec-bib" class="quarto-xref">Section&nbsp;4</a>, and</li>
-<li>In-text citations added by the author into the <code>.qmd</code> document <a href="#sec-inline" class="quarto-xref">Section&nbsp;7</a>, and</li>
-<li>Linking the ʻ.bibʻ file in the <code>YAML</code> header <a href="#sec-linking" class="quarto-xref">Section&nbsp;6</a>.</li>
+<li>The <strong>citation data</strong> is stored in the <code>.bib</code> file <a href="#sec-bib" class="quarto-xref">Section&nbsp;4</a>, and</li>
+<li>
+<strong>In-text citations</strong> added by the author into the <code>.qmd</code> document <a href="#sec-inline" class="quarto-xref">Section&nbsp;7</a>, and</li>
+<li>
+<strong>Linking the ʻ.bibʻ file</strong> in the <code>YAML</code> header <a href="#sec-linking" class="quarto-xref">Section&nbsp;6</a>.</li>
 </ol>
 <p>From this, both the <em>in-text citations</em> as well as the <em>citation list</em> at the end of the document will be rendered.</p>
 <p>There are additional customization options. You can change the <em>style</em> of the bibliography using style and class files <a href="#sec-style" class="quarto-xref">Section&nbsp;8</a>. This is at the level of the entire document, it is easy to switch. Within the document, there are also many options for in-text citation styles <a href="#sec-options" class="quarto-xref">Section&nbsp;9</a>. You can also customize the style file by editing the LaTeX.</p>
 <p><em>Reference managers</em> are helper software (independent of BibTeX) that are wonderful tools to help you collect and organize your citation data <a href="#sec-manager" class="quarto-xref">Section&nbsp;5</a>.</p>
 </section></section><section id="sec-bib" class="level1"><h1>The Bibliography is in <code>.bib</code> files</h1>
-<p>The citation data are stored in a <code>.bib</code> file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as <em>Web of Science</em>, <em>PubMed</em>, directly from jornal websites, etc.</p>
+<p>The <strong>citation data</strong> are stored in a <code>.bib</code> file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as <em>Web of Science</em>, <em>PubMed</em>, directly from jornal websites, etc.</p>
 <p>R provides nice function <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> that generating the citation blob for R packages. Let’s try generating citation text for the R environment by using the following command</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -394,8 +396,8 @@ citing R packages.</code></pre>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ButlerPapers.bib" "evolution.csl"    "index.qmd"        "index.rmarkdown" 
-[5] "my-refs.bib"     </code></pre>
+<pre><code>[1] "ButlerPapers.bib" "evolution.csl"    "index_files"      "index.qmd"       
+[5] "index.rmarkdown"  "my-refs.bib"     </code></pre>
 </div>
 </div>
 <p>If you open up the <code>my-refs.bib</code> file, you will see</p>

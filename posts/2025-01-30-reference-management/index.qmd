@@ -63,9 +63,9 @@ Quarto documentation currently doesnʻt include citations, but seems to support 
 
 There are three basic parts:
 
-1.  The citation data which is stored in the `.bib` file @sec-bib, and
-2.  In-text citations added by the author into the `.qmd` document @sec-inline, and
-3.  Linking the ʻ.bibʻ file in the `YAML` header @sec-linking.
+1.  The __citation data__ is stored in the `.bib` file @sec-bib, and
+2.  __In-text citations__ added by the author into the `.qmd` document @sec-inline, and
+3.  __Linking the ʻ.bibʻ file__ in the `YAML` header @sec-linking.
 
 From this, both the *in-text citations* as well as the *citation list* at the end of the document will be rendered.
 
@@ -76,7 +76,7 @@ There are additional customization options. You can change the *style* of the bi
 
 # The Bibliography is in `.bib` files {#sec-bib}
 
-The citation data are stored in a `.bib` file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as *Web of Science*, *PubMed*, directly from jornal websites, etc.
+The __citation data__ are stored in a `.bib` file which is a text file. Most people donʻt type these entries themselves (unless itʻs for a new publication!) but rather download these through journal databases such as *Web of Science*, *PubMed*, directly from jornal websites, etc.
 
 R provides nice function `citation()` that generating the citation blob for R packages. Let's try generating citation text for the R environment by using the following command
 
