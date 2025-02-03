@@ -15,8 +15,24 @@
   <title>Saving your work as R scripts</title>
   <dc:creator>Marguerite Butler</dc:creator>
   <link>https://mbutler808.github.io/posts/2025-02-06-scripts/</link>
-  <description><![CDATA[ <!-- Add interesting quote --><!-- # Pre-lecture materials --><!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 --><p>✏️</p>
-<section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+  <description><![CDATA[ <!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Watch ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by watching this podcast:</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/DDInqjxUnS4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<p>✏️</p>
+</section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

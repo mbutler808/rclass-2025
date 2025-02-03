@@ -12,7 +12,15 @@ categories: [module 1, week 3, R, scripts, reproducibility ]
 
 <!-- Add interesting quote -->
 
-<!-- # Pre-lecture materials -->
+# Pre-lecture materials
+
+::: callout-note
+## Watch ahead
+
+**Before class, you can prepare by watching this podcast:**
+
+{{< video https://youtu.be/DDInqjxUnS4 >}}
+:::
 
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
 `r emojifont::emoji('pencil2')`
