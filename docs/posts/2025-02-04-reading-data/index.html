@@ -312,7 +312,7 @@ Learning objectives
 </div>
 </section><section id="introduction" class="level1"><h1>Introduction</h1>
 <!-- Sweave2knitr() -->
-<p>So far, we have been working within R, either typing data in directly or using R’s functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll probably want to write files from R to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’re just going to do it. We’ll talk more about what’s going on in a later section on the R Environment.</p>
+<p>So far we have either typed data in directly into R or used R functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll want to write files to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’ll practice doing it, so you learn the mechanics. Please be patient and we’ll talk more about what’s going on in the next lesson on scripts and the R Environment.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -375,38 +375,31 @@ There are many different ways to access data in R
 </div>
 <p>The <code>cannot open the conection</code> is a pipe or path error. It cannot open a pipe or a connection to the file. <code>No such file or directory</code> is just that. R doesnʻt know where the file is. Is there a typo? Is it the correct path?</p>
 <p>Once we are in the correct working directory and fixed all typos, most of the time we are good, but we may have some surprises in the file format which weʻll go into below.</p>
-<p>The issue is basically that R is parsing the information stream as it reads the file and filtering what counts as data, and what is not data (also called “delimeters” or the things that separate your data). Once you understnad how to specify delimeters, you are in great shape!</p>
+<p>The issue is basically that R is parsing the information stream as it reads the file and filtering what counts as data, and what is not data (also called “delimeters” or the things that separate your data). Once you understand how to specify delimeters, you are in great shape!</p>
 </section><section id="reading-in-text-files" class="level1"><h1>Reading in Text Files</h1>
 <p>The most convenient way to read data into R is using the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function. This requires that your data is saved in <code>.csv</code> format, which is possible from Microsoft Excel (save as… csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).</p>
 <p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
 <section id="get-the-files-onto-your-computer" class="level2"><h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
-<p>First, get the data files from the <code>rcassdatadata</code> GitHub repo. Navigate to within the rclassdata folder on your computer and execute:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb6" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>You should probably make a R working directory for your class work. Maybe call it <code>Rclass</code>? Then move or drag <code>rclassdata</code> within it.</p>
-<p>Next, from within R, check which working directory you are in. You should be in your Rclass folder. If you are not, use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> to get there.</p>
+<p>First, get the data files from the <a href="https://github.com/mbutler808/rclassdata"><code>rclassdata</code></a> GitHub repo by cloning the repo to your <code>Documents/git/rclass</code> folder.</p>
+<p>Open R by double clicking on an R script within your <code>rclassdata</code> folder. Which working directory are you in? If necessary, use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> to get move into the <code>rclassdata</code> folder.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">"~/Rclass"</span><span class="op">)</span>  <span class="co"># my folder is at the top level of my user directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">"~/Documents/git/rclass/rclassdata"</span><span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># will tell us which files are in this folder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Copy the <code>2023-01-31-DataIO</code> folder into Rclass to work for today.</p>
 </section><section id="read.csv" class="level2"><h2 class="anchored" data-anchor-id="read.csv">read.csv</h2>
-<p>Getting the file in is easy. If it is in csv format, you just use:</p>
+<p>Getting the file into R is easy. If it is in csv format, you just use:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"anolisSSD.csv"</span><span class="op">)</span>  <span class="co"># look for the file in the Data directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"anolisSSD.csv"</span><span class="op">)</span>  <span class="co"># look for the file in the working directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
-<p>To save the data, give it a name and save it:</p>
+<p>To save the data as an R object, give it a name and save it:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">anolis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"anolisSSD.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">anolis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"anolisSSD.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species   logSSD    ecomorph
 1      oc -0.00512        twig
@@ -416,7 +409,7 @@ There are many different ways to access data in R
 5      ol  0.09844  grass-bush
 6      in  0.06137        twig</code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   species  logSSD     ecomorph
 18      cr 0.39796 trunk-ground
@@ -427,7 +420,18 @@ There are many different ways to access data in R
 23      an 0.13547         twig</code></pre>
 </div>
 </div>
-<p>Voila! Now you can plot, take the mean, etc. Which prints out the first six and last six lines of the file.</p>
+<p>Which prints out the first six and last six lines of the file.</p>
+<p>Voila! Now you can plot, take the mean, etc. For example:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">$</span><span class="va">ecomorph</span><span class="op">)</span>, <span class="va">anolis</span><span class="op">$</span><span class="va">logSSD</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>(Aside) You probably didn’t understand the line of code above, but we will get into this very soon in the next lectures. But you can break it down bit by bit.</p>
 <p>Now try reading in <code>anolisSSDsemicolon.csv</code> what did you get? Try reading it in with <code><a href="https://rdrr.io/r/utils/read.table.html">read.table()</a></code> - check out the help page.</p>
 <p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from <code><a href="https://rdrr.io/r/utils/help.start.html">help.start()</a></code> or at <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a>.</p>
 </section><section id="input-files-generated-by-data-loggers" class="level2"><h2 class="anchored" data-anchor-id="input-files-generated-by-data-loggers">Input files generated by data loggers</h2>
@@ -614,13 +618,29 @@ Use the correct file format
 <section id="human-error" class="level2"><h2 class="anchored" data-anchor-id="human-error">Human Error</h2>
 <p>It is very easy to make a typo, and humans are really bad at catching our own typos in real time. Right? They creep in despite our best efforts. This is why even though it is possible to measure specimens and enter the numbers directly into the computer, itʻs not something I would do.</p>
 <p>I always write my measurements down into a notebook or a datasheet using pencil and paper. This has saved me many errors in three ways (1) sometimes my brain is still processing what I just wrote and I will catch a typo. (2) I write my data in rows for specimens and columns for the different measurements. As the dataset builds, it is easy to notice errors if some number is really off. (3) If you have any doubts, you can quickly look over your page and re-measure anything suspicous. If you have the person-power, you can also have one person taking the measurements and calling them out, and another writing them down and repeating them back. It is a very effective way to check on the spot.</p>
-<p>I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked. The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of “double checking” 😝. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice 😲. Please, whenever possible check your data entry. So here are some tips:</p>
+<p>I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked. The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of “double checking” 😝. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice 😲. Please, whenever possible check your data entry.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Here are some tips:
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
-<li>Record data in a notebook (paper and pencil). It serves as a permanent record.</li>
-<li>Write it down in a data table format in an order that minimizes error. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.</li>
-<li>Organize your spreadsheet to mirror the hand-written data. This will minimize data entry errors.</li>
-<li>Have another person check your data entry against the notebook.</li>
-</ol></section><section id="organizing-your-spreadhseet" class="level2"><h2 class="anchored" data-anchor-id="organizing-your-spreadhseet">Organizing your spreadhseet</h2>
+<li>
+<strong>Record data in a notebook</strong> (paper and pencil). It serves as a <strong>permanent record</strong>.</li>
+<li>Write it down in a <strong>data table format</strong> in an <strong>order that minimizes error</strong>. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.</li>
+<li>
+<strong>Organize your spreadsheet</strong> to <em>mirror</em> the hand-written data. This will minimize data entry errors.</li>
+<li>
+<strong>Have another person check</strong> your data entry against the <em>notebook</em> (data source).</li>
+</ol>
+</div>
+</div>
+</section><section id="organizing-your-spreadhseet" class="level2"><h2 class="anchored" data-anchor-id="organizing-your-spreadhseet">Organizing your spreadhseet</h2>
 <p>When it comes time to enter your data in a spreadsheet, there are many things you can do to improve organization. Below is a summary of the recommendations made in paper by Karl Broman and Kara Woo <span class="citation" data-cites="Broman:2018">(<a href="#ref-Broman:2018" role="doc-biblioref">Broman and Woo 2018</a>)</span>.</p>
 <ul>
 <li>

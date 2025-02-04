@@ -1,5 +1,8 @@
 /.quarto/
 
+# Sublime
+.sublime-project
+
 # Mac Finder information
 .DS_Store
 
