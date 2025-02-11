@@ -84,15 +84,17 @@ Here is the basic structure of a script:
 #library( ...addonpackage... )    # anything between ... needs to be changed 
       # if none, then you don't need that line
 
-#dat <- read.csv(..."your input file.csv"... )       # input data
+#dat <- read.csv(..."your input file.csv"... )       # input data from file
+
+iris # Fishers's Iris dataset (built in)
 
 # Your lines of code to run analyses
 # You may have output or processed data that you want to save, 
 # create an object for it and write it out to a csv file at the end 
 
-# plot graphics
+# plot graphics, etc. 
 
-write.csv(out, file="myoutput.csv")      # output data 
+write.csv(iris, file="iris-data.csv")      # output data 
 ```
 
 

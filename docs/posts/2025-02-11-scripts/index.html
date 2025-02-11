@@ -339,15 +339,17 @@ All good script follows the first three R’s, as you increase along the path of
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#library( ...addonpackage... )    # anything between ... needs to be changed </span></span>
 <span>      <span class="co"># if none, then you don't need that line</span></span>
 <span></span>
-<span><span class="co">#dat &lt;- read.csv(..."your input file.csv"... )       # input data</span></span>
+<span><span class="co">#dat &lt;- read.csv(..."your input file.csv"... )       # input data from file</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="co"># Fishers's Iris dataset (built in)</span></span>
 <span></span>
 <span><span class="co"># Your lines of code to run analyses</span></span>
 <span><span class="co"># You may have output or processed data that you want to save, </span></span>
 <span><span class="co"># create an object for it and write it out to a csv file at the end </span></span>
 <span></span>
-<span><span class="co"># plot graphics</span></span>
+<span><span class="co"># plot graphics, etc. </span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">out</span>, file<span class="op">=</span><span class="st">"myoutput.csv"</span><span class="op">)</span>      <span class="co"># output data </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">iris</span>, file<span class="op">=</span><span class="st">"iris-data.csv"</span><span class="op">)</span>      <span class="co"># output data </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here is an example example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures.</p>
 <div class="cell">
