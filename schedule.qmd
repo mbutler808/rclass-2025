@@ -33,9 +33,9 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 | **Module 3** |         | **Data Analysis in R ** |||
 ||||||
 |              | Feb 4 | `r emojifont::emoji('eyeglasses')` Reading/Writing data \[[html](posts/2025-02-04-reading-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-04-reading-data/index.qmd)\]| `r emojifont::emoji('fallen_leaf')` Project 0 due | |
-|              | Feb 6 | `r emojifont::emoji('eyeglasses')` Reference Management \[[html]\] \[[Qmd]\]  | ||
-| Week 4       | Feb 11  | `r emojifont::emoji('octopus')` Scripts \[[html]\] \[[Qmd]\] | | |
-|              | Feb 13 | `r emojifont::emoji('nut_and_bolt')` Data \[[html]\] \[[Qmd]\] | | |
+|              | Feb 6 | `r emojifont::emoji('eyeglasses')` Reading/Writing data continued \[[html](posts/2025-02-04-reading-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-04-reading-data/index.qmd)\]  | ||
+| Week 4       | Feb 11  | `r emojifont::emoji('octopus')` Scripts \[[html](posts/2025-02-11-scripts/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-11-scripts/index.qmd)\] | | |
+|              | Feb 13 | `r emojifont::emoji('nut_and_bolt')` Data \[[html](posts/2025-02-13-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-13-data/index.qmd)\] | | |
 ||||||
 | **Module 3** |         | **Data Visulization in R** | | |
 ||||||

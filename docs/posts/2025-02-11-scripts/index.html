@@ -5,9 +5,9 @@
 <meta name="generator" content="quarto-1.6.40">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Marguerite Butler">
-<meta name="dcterms.date" content="2025-02-06">
+<meta name="dcterms.date" content="2025-02-11">
 <meta name="description" content="Save your hard work as scripts!">
-<title>Saving your work as R scripts – ZOOL710 Data Science in R for Biologists</title>
+<title>Saving your work as R scripts – ZOOL710 Data Science in R for Biologists 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">ZOOL710 Data Science in R for Biologists</span>
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists 2025</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../index.qmd"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 6, 2025</p>
+        <p class="date">February 11, 2025</p>
       </div>
     </div>
     
@@ -319,20 +319,24 @@ All good script follows the first three R’s, as you increase along the path of
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Readable – If you look at the script in a month or 6 months, will you be able to easily understand it?</li>
-<li>Right – Does it run free of error, and does it produce correct results?</li>
-<li>Repeatable – Can you reproduce your results from your input data?</li>
-<li>Reusable – Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?</li>
+<li>
+<strong>Readable</strong> – If you look at the script in a month or 6 months, will you be able to easily understand it?</li>
+<li>
+<strong>Right</strong> – Does it run free of error, and does it produce correct results?</li>
+<li>
+<strong>Repeatable</strong> – Can you reproduce your results from your input data?</li>
+<li>
+<strong>Reusable</strong> – Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?</li>
 </ul>
 </div>
 </div>
 <p>The mac interface has a very nice text editor, and the newer Windows R interfaces are getting better too (or install Notepad++). From the R menu, choose File &gt; New Document (or command-N). Simply type or cut and paste your code from your history file into here. Let’s make a script for the analyses we’ve done thus far.</p>
 </section><section id="script-template" class="level1"><h1>Script Template</h1>
-<p>First, make sure that you are in the directory that you want the script to execute from (<code>Rclass\...</code>). Start off with any packages that you wish to load, then begin to cut and paste your code.</p>
+<p>First, make sure that you are in the directory that you want the script to execute from (<code>Documents/git/rclass/rclassdata</code>). Start off with any packages that you wish to load, then begin to cut and paste your code.</p>
 <p>Make sure to add comments indicated by the <code>#</code> symbol so that you know what the code does:</p>
 <p>Here is the basic structure of a script:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#require( ...addonpackage... )    # anything between ... needs to be changed </span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#library( ...addonpackage... )    # anything between ... needs to be changed </span></span>
 <span>      <span class="co"># if none, then you don't need that line</span></span>
 <span></span>
 <span><span class="co">#dat &lt;- read.csv(..."your input file.csv"... )       # input data</span></span>
@@ -345,10 +349,10 @@ All good script follows the first three R’s, as you increase along the path of
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">out</span>, file<span class="op">=</span><span class="st">"myoutput.csv"</span><span class="op">)</span>      <span class="co"># output data </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>And here is a simple example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures.</p>
+<p>Here is an example example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures.</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#require(stats)        # stats is part of the base package and doesn't need to be loaded, </span></span>
-<span>    <span class="co"># but if you need an add-on package, you would require it here.</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#library(stats)        # stats is part of the base package and doesn't need to be loaded, </span></span>
+<span>    <span class="co"># but if you need an add-on package, you would use library or require here.</span></span>
 <span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span> <span class="op">(</span><span class="st">"Data/morphpre.csv"</span><span class="op">)</span>  <span class="co"># read in data</span></span>
 <span></span>
@@ -369,8 +373,8 @@ All good script follows the first three R’s, as you increase along the path of
 <span><span class="co">#   to save a meaningful analysis</span></span>
 <span><span class="co">###</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that I have used spacing and indents to increase the ``readability’’ of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy. We will talk more about this in the functions section.</p>
-<p>Save the script file as <code>testScript.R</code> or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
+<p>Note that I have used spacing and indents to increase the <strong>readability</strong> of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy. We will talk more about this in the functions section.</p>
+<p>Save the script file as <code>testScript.R</code> or a title of your choice in your <code>rclassdata</code> folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"testScript.R"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -403,23 +407,23 @@ All good script follows the first three R’s, as you increase along the path of
 </div>
 <p>This is an ordinary text file, which you can open up and edit (removing all the mistakes), and save as a <code>scriptname.R</code> file.</p>
 <p>Another helpful tip when writing source code is to use <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> functions to print out your output to the console. When you are using R in interactive mode, when you type the name of a variable, you get a print of its contents. However, when you source the same code, the variable does not print to the screen. You have to explicitly put a <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> or <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> function around it.</p>
-<p>Let’s use a built-in dataset called <code>iris</code>, which is the famous Fisher iris dataset. Make a test script file and save it as <code>test.R</code>:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>test.R</strong></pre>
-</div>
-<div class="sourceCode" id="cb7" data-filename="test.R"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">names</span><span class="er">(</span><span class="ex">iris</span><span class="kw">)</span>   <span class="co"># will not print to console when sourced</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span> <span class="op">&lt;</span>- unique<span class="er">(</span><span class="ex">iris</span><span class="va">$Species</span><span class="kw">)</span>  <span class="co"># only unique values</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span> <span class="op">&lt;</span>- as.character<span class="er">(</span><span class="ex">spp</span><span class="kw">)</span>     <span class="co"># factor -&gt; character</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">spp</span>   <span class="co"># will not print to console when sourced</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">print</span><span class="er">(</span><span class="st">'Species names'</span><span class="kw">)</span>  <span class="co"># will print</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">print</span><span class="er">(</span><span class="ex">spp</span><span class="kw">)</span>              <span class="co"># will print</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span><span class="er">(</span><span class="st">'\n'</span><span class="ex">,</span> <span class="st">'Species names ='</span>, spp<span class="kw">)</span>  <span class="co"># concatenate </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># \n is a carriage return character</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">summary</span><span class="er">(</span><span class="ex">iris</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s use a built-in dataset called <code>iris</code>, which is the famous Fisher iris dataset. Make a test script file and save it as <code>test.R</code> (or pull it down from the <code>rclassdata</code> repo:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>    <span class="co"># iris is a built-in dataset. Print first few lines to screen</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>   <span class="co"># will not print to console when sourced</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span>  <span class="co"># only unique values</span></span>
+<span><span class="va">spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">spp</span><span class="op">)</span>     <span class="co"># factor -&gt; character</span></span>
+<span><span class="va">spp</span>            <span class="co"># will not print to console when sourced</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">'Species names'</span><span class="op">)</span>  <span class="co"># will print</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">spp</span><span class="op">)</span>              <span class="co"># will print</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">'\n'</span>, <span class="st">'Species names ='</span>, <span class="va">spp</span><span class="op">)</span>  <span class="co"># concatenate </span></span>
+<span>              <span class="co"># \n is a carriage return character</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>             </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then test it by running:</p>
 <div class="cell">

@@ -6,7 +6,7 @@ author:
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Save your hard work as scripts!"
-date: 2025-02-06
+date: 2025-02-11
 categories: [module 1, week 3, R, scripts, reproducibility ]
 ---
 
@@ -63,24 +63,25 @@ Writing **clean scripts** help you to accomplish these goals. *Scripts are lines
 
 ::: {.callout-tip}
 ## All good script follows the first three R's, as you increase along the path of R jedi-hood, you will add on the 4th R
--   Readable -- If you look at the script in a month or 6 months, will you be able to easily understand it?
--   Right -- Does it run free of error, and does it produce correct results?
--   Repeatable -- Can you reproduce your results from your input data?
--   Reusable -- Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?
+-   __Readable__ -- If you look at the script in a month or 6 months, will you be able to easily understand it?
+-   __Right__ -- Does it run free of error, and does it produce correct results?
+-   __Repeatable__ -- Can you reproduce your results from your input data?
+-   __Reusable__ -- Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?
 :::
 
 The mac interface has a very nice text editor, and the newer Windows R interfaces are getting better too (or install Notepad++). From the R menu, choose File > New Document (or command-N). Simply type or cut and paste your code from your history file into here. Let's make a script for the analyses we've done thus far.
 
 # Script Template
 
-First, make sure that you are in the directory that you want the script to execute from (`Rclass\...`).  Start off with any packages that you wish to load, then begin to cut and paste your code. 
+First, make sure that you are in the directory that you want the script to execute from (`Documents/git/rclass/rclassdata`).  Start off with any packages that you wish to load, then begin to cut and paste your code. 
 
 Make sure to add comments indicated by the `#` symbol so that you know what the code does:
 
 Here is the basic structure of a script:
 
 ```{r eval=F}
-#require( ...addonpackage... )    # anything between ... needs to be changed 
+#| label: myscript.R
+#library( ...addonpackage... )    # anything between ... needs to be changed 
       # if none, then you don't need that line
 
 #dat <- read.csv(..."your input file.csv"... )       # input data
@@ -94,11 +95,12 @@ Here is the basic structure of a script:
 write.csv(out, file="myoutput.csv")      # output data 
 ```
 
-And here is a simple example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures. 
+
+Here is an example example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures. 
 
 ```{r eval=F}
-#require(stats)        # stats is part of the base package and doesn't need to be loaded, 
-    # but if you need an add-on package, you would require it here.
+#library(stats)        # stats is part of the base package and doesn't need to be loaded, 
+    # but if you need an add-on package, you would use library or require here.
 
 dat <- read.csv ("Data/morphpre.csv")  # read in data
 
@@ -120,9 +122,9 @@ abline(lm.HLSVL, col="red")              # plots the regression line, in red
 ###
 ```
 
-Note that I have used spacing and indents to increase the ``readability'' of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy.  We will talk more about this in the functions section.
+Note that I have used spacing and indents to increase the __readability__ of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy.  We will talk more about this in the functions section.
 
-Save the script file as `testScript.R` or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):
+Save the script file as `testScript.R` or a title of your choice in your `rclassdata` folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):
 
 ```{r eval=F}
 source("testScript.R")
@@ -171,21 +173,25 @@ This is an ordinary text file, which you can open up and edit (removing all the 
 
 Another helpful tip when writing source code is to use `print()` and `cat()` functions to print out your output to the console. When you are using R in interactive mode, when you type the name of a variable, you get a print of its contents. However, when you source the same code, the variable does not print to the screen. You have to explicitly put a `print()` or `cat()` function around it. 
 
-Let's use a built-in dataset called `iris`, which is the famous Fisher iris dataset. Make a test script file and save it as `test.R`:
+Let's use a built-in dataset called `iris`, which is the famous Fisher iris dataset. Make a test script file and save it as `test.R` (or pull it down from the `rclassdata` repo:
 
-```{.bash filename="test.R"}
+```{r eval=F}
+#| label: test.R
+head(iris)    # iris is a built-in dataset. Print first few lines to screen
 names(iris)   # will not print to console when sourced
+
+plot(iris$Sepal.Length, iris$Sepal.Width)
 
 spp <- unique(iris$Species)  # only unique values
 spp <- as.character(spp)     # factor -> character
-spp   # will not print to console when sourced
+spp            # will not print to console when sourced
 
 print('Species names')  # will print
 print(spp)              # will print
 
 cat('\n', 'Species names =', spp)  # concatenate 
-    # \n is a carriage return character
-summary(iris)
+              # \n is a carriage return character
+summary(iris)             
 ```
 
 Then test it by running:

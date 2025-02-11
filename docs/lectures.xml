@@ -5,16 +5,1635 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>ZOOL710 Data Science in R for Biologists</title>
+<title>ZOOL710 Data Science in R for Biologists 2025</title>
 <link>https://mbutler808.github.io/lectures.html</link>
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
-<description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023</description>
+<description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2025</description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Thu, 06 Feb 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 13 Feb 2025 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Types of Data</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-02-13-data/</link>
+  <description><![CDATA[ <!-- Add interesting quote --><!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 --><p>✏️</p>
+<section id="overview" class="level1"><h1>Overview</h1>
+<p>We will discuss different types of data, how they are represented in R, and how data type influences the types of data analyses we may employ.</p>
+<p>A practical benefit of understanding how R handles data is that a major source of error for novice R programmers is <em>trying to use functions but providing the wrong type or class of data than what the function was written for</em>. This is very confusing if you donʻt understand about objects in R, but very clear and easy to fix if you do!</p>
+</section><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="watch" class="level3"><h3 class="anchored" data-anchor-id="watch">Watch</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Watch
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by watching:</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/wzPRpyoNaa8?start=350" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+</section><section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://andreashandel.github.io/MADAcourse/Data_Types.html" class="uri">https://andreashandel.github.io/MADAcourse/Data_Types.html</a></li>
+<li><a href="https://r-coder.com/data-types-r/#Raw_data_type_in_R" class="uri">https://r-coder.com/data-types-r/#Raw_data_type_in_R</a></li>
+<li>
+<a href="https://www.stat.auckland.ac.nz/~paul/ItDT/HTML/node76.html" class="uri">https://www.stat.auckland.ac.nz/~paul/ItDT/HTML/node76.html</a> # Learning objectives</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand different types of data and how they are represented computationally</li>
+<li>Understand that different data types require different analysis approaches</li>
+<li>Recognize different base <strong>data types</strong> in R and know how to work with them</li>
+<li>Recognize the base <strong>data structures</strong> or <strong>objects</strong> in R and how to use them to do what you want</li>
+</ul>
+</div>
+</div>
+</section></section><section id="what-is-data-anyway" class="level1"><h1>What is data anyway?</h1>
+<p>Merriam Webster defines <strong>data</strong> as <em>factual information (such as <strong>measurements</strong> or <strong>statistics</strong>) used as a basis for <strong>reasoning</strong>, <strong>discussion</strong>, or <strong>calculation</strong>.</em></p>
+<p>From a practicing scientistsʻ point of view, data is anything <strong>measureable</strong> or <strong>scorable</strong> that could provide <strong>information</strong> regarding a phenomenon of interest.</p>
+<p>Ideally, data:</p>
+<ul>
+<li>are <strong>repeatable</strong> (at least within statistical error).<br>
+</li>
+<li>contain more <strong>signal</strong> than <strong>noise</strong>.</li>
+</ul>
+<p>For example, if we are studying how morphology changes with body size, we could take measurements such as <em>body length</em>, <em>head length</em>, <em>arm length</em>, and <em>leg length</em> on a sample of <em>individuals</em>. These measurements would provide linear, <strong>continuous data</strong> that would inform our study of size and scaling. If we also expected males and females to differ, then <em>sex</em> would be a <strong>categorical variable</strong>.</p>
+<ul>
+<li>It is important to <em>define the variables</em> so that the measurements are <em>repeatable</em> by other scientists collecting data on the same or similar samples.<br>
+</li>
+<li>The <em>variables</em> chosen are expected to be related to the phenomenon of interest (here, scaling).<br>
+</li>
+<li>The <em>individuals</em> are replicates from the same sample population, meaning that they should be equally embody or be influenced by the phenomenon we are studying. In other words, they form a homogenous sample. In the example of sexual dimorphism, we potentially have different groups within our sample. This can be taken account of in analyses using our <em>categorical grouping variable</em> <em>sex</em>.</li>
+</ul>
+<p>Data have many forms such as images, sound, video, text, or any combination. Today we also have access to large volume datastreams from remote sensing, social media, or from all the various -omics. The kind of data, and how messy it is, determines the amount of processing that needs to be done before analysis.</p>
+<p>At some point your data will most likely be arranged into spreadsheets, with observations as rows and variables as columns. <strong>In this course, we will focus on the data source that you are most likely to encounter in your analyses, the “(messy) spreadsheet” type, containing bits of information collected on individuals.</strong> Please do feel free to play around with other data types on your own, e.g.&nbsp;for your course project.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://mbutler808.github.io/images/i-have-data_3.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Weʻve all been here. Source: timoelliott.com
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p><a href="https://timoelliott.com/blog/cartoons/analytics-cartoons">Source: timoelliott.com</a></p>
+</section><section id="types-of-variables" class="level1"><h1>Types of Variables</h1>
+<p>Variables are the conceptual elements of the data. Variables are typically categorized by the nature of how they can vary (i.e., quantitative, qualitative, ordinal), because these differences dictate different analytical approaches and statistical methods.</p>
+<p><strong>Quantitative:</strong> This data type, also called <em>metric</em> data, represents variation in magnitude and generally allows one to do certain mathematical operations, e.g., subtraction or addition. The most common variations include:</p>
+<ul>
+<li>
+<em><strong>Continuous</strong></em>: Can take on any numerical value. Examples include mass, length, distance, age, etc.</li>
+<li>
+<em><strong>Discrete</strong></em>: Can only take countable (integer) values, e.g., the number of offspring an indivdiual produces.</li>
+<li>
+<em><strong>Fraction/Proportion</strong></em>: A continuous ratio of two values, with the numerator being a part to the whole which is represented by the demoninator. Thus these variables take on values between 0 and 1.</li>
+<li>
+<em><strong>Ratios</strong></em>: A continuous ratio of any two values. Data measured on a ratio scale have all the properties of continuous data.</li>
+</ul>
+<p><strong>Qualitative:</strong> Generally speaking, qualitative data indicate <em>categories</em> which have no intrinsic numeric value or natural order. Therefore it would not make sense to apply arithmetic to qualitative data such as color, sex, or family group, etc. You may see the term <em>nominal</em> (definition: “pertaining to names”) data applied to categorial data in the statistical literature. Major types of <strong>qualitative</strong> data include:</p>
+<ul>
+<li>
+<em><strong>Categorical</strong></em>: e.g., flower color, continent of origin, social status, disease state, etc.</li>
+<li>
+<em><strong>Descriptive</strong></em>: e.g., free text data from field observations.</li>
+</ul>
+<p><strong>Ordinal:</strong> Related to categorical data, this type differs in that they can be ranked, at least qualitatively.</p>
+<p>For example, while body condition may be a qualitative assessment, “obese” clearly indicates greater fat stores than “well-conditioned”, which is greater than “emaciated”. Thus, ordinal data fall between being strictly quantitative or strictly qualitative. In some cases, if there are numerous categories, you can begin to think of them as approaching continuous data, although one important difference is that there is no clear numerical value that you can assign to the different categories (i.e., it is unclear whether the difference between obese and well-conditioned is the same as the difference between well-conditioned and emaciated). It may make sense to apply rank order statistics to ordinal data, but it would not make sense to add, subtract, or multiply these categories.</p>
+</section><section id="analysis-approaches-and-their-relationship-to-data" class="level1"><h1>Analysis approaches and their relationship to data</h1>
+<p>It may be obvious that data type will dictate the types of analyses one can do. It might be less obvious that the <strong>question of interest</strong> and whether there is a <em>quantitative or ordinal outcome</em> also drive our analyitical approach.</p>
+<section id="when-we-want-to-know-the-strength-of-the-quantitative-relationship" class="level3"><h3 class="anchored" data-anchor-id="when-we-want-to-know-the-strength-of-the-quantitative-relationship">When we want to know the strength of the quantitative relationship</h3>
+<p>Methods for <strong>quantitative responses</strong> (or outcomes) that address questions such as “<em>how much does leg length increase with body size?</em>”? In other words, “<em>how much does variable Y change with each increment of change in variable X</em>?” These are usually referred to as <strong>regression approaches</strong>.</p>
+<p>There are many subtypes of regression such as linear regression for continuous outcomes, and Poisson regression for discrete outcomes.</p>
+<ul>
+<li>
+<strong><em>Linear regression</em></strong> predicts a continuous response, such as body size.</li>
+<li>
+<strong><em>Poisson regression</em></strong> predicts a count or discrete response, such as population size.</li>
+</ul>
+<p>Both types of regression can be based independent variables that are continuous, discrete, or categorical (or some combination). They differ in the underlying distribution of the modeled response variable, often a normal distribution for linear regression, and a Poisson distribution for the Poisson regression.</p>
+</section><section id="when-we-want-to-know-about-grouping" class="level3"><h3 class="anchored" data-anchor-id="when-we-want-to-know-about-grouping">When we want to know about grouping</h3>
+<p>Methods that recover <strong>categorical responses</strong>, in other words, categorizing observations based on the analysis of data, are usually referred to as <strong>classification approaches.</strong> These methods are useful for looking for order in nature, such as whether different species can be grouped into “ecomorphs” based on their morphology, or to predict the type of behavioral response (e.g., “attack” or “flee”) based on responses to different stimuli.</p>
+<p>It is possible to obtain an ordinal response as well, using <a href="https://en.wikipedia.org/wiki/Ordinal_regression"><strong>ordinal regression</strong></a>. Alternatively, the the response can be treated as unordered categorical or as continuous (depending on how you code them, i.e., in R as a factor or numeric).</p>
+<p>There are no hard and fast rules regarding when it is appropriate to treat an ordinal variable as fully quantitative. It should, however, at least be explained or justified. You can always treat it as categorical, but then you lose some information on the ranking of the variable.</p>
+<p>To add to the confusion, these classification methods are often based on regression, with the decision to classify based on one category or another dependent on comparing distances or probabilities based on regression results.<sup>1</sup></p>
+<p>Recently, there has been a lot of interest in AI and machine learning. This is often just a fancy way of renaming <strong><em>discriminant function analysis</em></strong> and <strong><em>cluster analysis</em></strong>. When you see <em>supervised</em> learning in the literature, it refers to cases when we have the categories predefined, and often we have a training dataset with data on individuals of each category to use to train the classification algorithm before we use it to predict grouping (i.e., <em>discriminant function analysis</em>). When we donʻt have the categories <em>a priori</em>, and the algorithms determine the categories and their number, these analysis methods are usually referred to as <em>clustering approaches</em> and are also called <em>unsupervised</em> learning methods.</p>
+<p>We will return to and apply some of those methods later in the course.</p>
+</section></section><section id="data-types-in-r" class="level1"><h1>Data types in R</h1>
+<p>Now that we have a basic understanding of the conceptual landscape of data, letʻs breifly discuss how these different types of data are represented in and handled by R.</p>
+<p>If you would like a gentle video walk through/demonstration of data types, now would be a good time to check out the <em>Types</em> section of the RStudio <a href="https://rstudio.cloud/learn/primers/1.2">programming basic primer</a>. For more details and examples see <a href="https://rafalab.github.io/dsbook/r-basics.html">chapter 3 of IDS</a>.</p>
+<section id="basic-data-types" class="level2"><h2 class="anchored" data-anchor-id="basic-data-types">Basic data types</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+R has six basic (atomic) types of data:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Atomic Type</th>
+<th style="text-align: left;">Short Description</th>
+<th style="text-align: left;">Size in bytes</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<strong>string</strong> (or character)</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">1 (per character)</td>
+</tr>
+<tr class="even">
+<td><strong>integer</strong></td>
+<td style="text-align: left;">countable numbers</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="odd">
+<td><strong>real</strong></td>
+<td style="text-align: left;">real numbers</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td><strong>logical</strong></td>
+<td style="text-align: left;">TRUE or FALSE</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="odd">
+<td><strong>complex</strong></td>
+<td style="text-align: left;">numbers with imaginary component</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td><strong>raw</strong></td>
+<td style="text-align: left;">raw bytes</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>All other data types are derived from the atomic types</strong></em></p>
+</div>
+</div>
+<p>Note: Most computers use 64-bit operating systems these days, so the sizes above are for 64-bit software.</p>
+<p>For a quick tour of the data types, see <a href="https://r-coder.com/data-types-r" class="uri">https://r-coder.com/data-types-r</a></p>
+<p><strong>String/character:</strong> Character values are alphanumeric values (plus whitespace, punctuation, etc.). A string is a collection of characters, in other words “text”.</p>
+<ul>
+<li>strings can be pasted together using the <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code> function.</li>
+<li>R has powerful tools for <strong>string manipulation</strong>, including searching, replacing, and customized partial matching (with or without replacement) using <strong>wildcards</strong> and perl-like <a href="https://github.com/rstudio/cheatsheets/blob/master/regex.pdf"><strong>regular expressions</strong> (or <strong>regex</strong>)</a> using base functions such as
+<ul>
+<li><code><a href="https://rdrr.io/r/base/grep.html">grep()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/grep.html">sub()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/substr.html">substr()</a></code></li>
+</ul>
+</li>
+<li>There are also packages specific for string manipulation including the <a href="https://stringr.tidyverse.org/"><code>stringr</code> package</a> which is part of the tidyverse.</li>
+</ul>
+<p>It is very likely that you will need to work with strings at some point during a data analysis, even if it is only to find specific values, clean up variable names, etc.</p>
+<p>These problems can be quite the headache! But instead of editing them by hand and possibly making an error, it is better to do this with code. It also makes it easier to keep a record of the original data and all of the changes made to it, improving the reproducibility of your analysis.</p>
+<p>There is a learning curve to using these tools, especially <strong>regex</strong> syntax, but they are very powerful and well worth your time.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Good sources for practice manipulating strings:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>For beginners: Review <a href="https://r4ds.had.co.nz/strings.html">the <em>Strings</em> chapter (14) of R4DS</a>, and do the exercises.</li>
+<li><a href="https://rafalab.github.io/dsbook/string-processing.html">The <em>string processing</em> chapter (25) of IDS</a></li>
+<li>
+<a href="https://stat545.com/character-vectors.html">the <em>Character Vectors</em> chapter in the STAT 545 book</a> by <a href="https://jennybryan.org/">Jenny Bryan</a>
+</li>
+</ul>
+<p><strong>Decide which one is right for your level and work through some examples. I think youʻll agree that it is worth your time.</strong></p>
+</div>
+</div>
+<p><strong>Numeric (double or integer):</strong> Variables of type <code>numeric</code> in R are either integers or double precision (representing real numbers).</p>
+<ul>
+<li>Integers and real values are different, but in practice most R users donʻt pay attention to this distinction. Integer values tend to be coerced (converted) to real values if any mathematical operations are done to them.</li>
+<li>If an integer is explicity needed, you can create them using functions such as <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code>.</li>
+<li>Note that when you type an integer value, e.g.&nbsp;<code>x &lt;- 2</code>, into R, this is considered numeric by default.</li>
+<li>If you want to make sure a value is treated as integer, add an <code>L</code>, e.g.&nbsp;<code>x &lt;- 2L</code>.</li>
+</ul>
+<p><strong>Logical:</strong> Logical variables are binary and can take on only two values, <code>TRUE</code> or <code>FALSE</code> (which are <em>reserved words</em> that only take on these meanings in R).</p>
+<ul>
+<li>In R, logical values are treated as <strong>integers</strong>, and interpreted as 1 for <code>TRUE</code> and 0 for <code>FALSE</code>. It is possible to <code>sum(TRUE)</code> or a vector of logicals, for example.<br>
+</li>
+<li>R also understands <code>T</code>, <code>True</code>, and <code>true</code> for <code>TRUE</code>, and the corresponding representations for <code>FALSE</code>.</li>
+<li>Importantly, logical comparisons are used for <strong>indexing</strong>. You will use logical comparisons when cleaning and checking your data, or running analyses, e.g., if you want to see if your variable <code>x</code> is greater than 5, then the R command <code>x &gt; 5</code> will return either TRUE or FALSE, based on the value of <code>x</code>.</li>
+<li>
+<em>Note: reserved words are understood as constants and should not be “quoted”</em>.</li>
+</ul></section><section id="derived-data-types" class="level2"><h2 class="anchored" data-anchor-id="derived-data-types">Derived data types</h2>
+<p>R also allows derived data types called <strong>classes</strong> that are built up from atomic data types. There are R base classes as well as new classes that can be defined as needed by programmers (maybe you?).</p>
+<p><strong>Factors:</strong> Are Rʻs class for categorical variables.</p>
+<ul>
+<li>
+<strong>Factors</strong> have <strong>names</strong> and <strong>values</strong>.</li>
+<li>For example, a <strong>size</strong> factor may have <code>names</code> (or <code>levels</code>) of <code>small</code>, <code>medium</code>. and <code>large</code> with values 0,1,2. Here, the values simply indicate the different categories, with the names being the human-friendly labels for the values.<br>
+</li>
+<li>Factors can be ordered/ordinal or not.</li>
+<li>Factors could be numeric values, e.g., the number of offspring.</li>
+<li>Or it could be a factor coding for 3 types of habitat (unordered),</li>
+<li>Or 3 levels of life history stage (ordered).</li>
+<li>An excellent package to work with factors is the <a href="https://forcats.tidyverse.org/"><code>forcats</code> package</a>.</li>
+</ul>
+<p>For more about factors, work through the <a href="https://r4ds.had.co.nz/factors.html"><em>Factors</em> chapter of R4DS</a>, and do the exercises.</p>
+<p><strong>Date/time:</strong> Dates in base R are of the class <code>Date</code> (and are called <code>POSIX</code> variables). The <a href="https://lubridate.tidyverse.org/"><code>lubridate</code> package</a> is a tidyverse package to work with dates, which many people find easier. There are other packages as well.</p>
+<p>Additional resources are the <a href="https://r4ds.had.co.nz/dates-and-times.html"><em>Dates and times</em> chapter of R4DS</a> and the <a href="https://rafalab.github.io/dsbook/parsing-dates-and-times.html"><em>Parsing Dates and Times</em> chapter of IDS</a>.</p>
+<p><strong>Programmer-defined classes</strong> Many packages define their own classes. For example class <code>phylo</code> is used to represent phylogenetic trees in the <code>ape</code> package.</p>
+<section id="there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" class="level3"><h3 class="anchored" data-anchor-id="there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object">There are several functions that can show you the data type of an R object</h3>
+<p>such as <code><a href="https://rdrr.io/r/base/typeof.html">typeof()</a></code>, <code><a href="https://rdrr.io/r/base/mode.html">mode()</a></code>, <code><a href="https://rdrr.io/r/base/mode.html">storage.mode()</a></code>, <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> and <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>.</p>
+</section></section></section><section id="data-structures-in-r" class="level1"><h1>Data structures in R</h1>
+<p>Data in R are stored in data structures called <strong>objects</strong>.</p>
+<p><strong>Vectors:</strong> vectors are the simplest object, a collection of data elements in a single sequence.</p>
+<ul>
+<li>One way to create vectors is with the <code>concatenate</code> command, <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>.<br>
+</li>
+<li>
+<code>1:3</code> is shorthand for a numeric sequence <code>=c(1,2,3)</code>
+</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3 12  5</code></pre>
+</div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>A single vector can contain only one type</strong> (e.g., all characters or all numeric).</li>
+<li>If you try to mix and match, everything will default to the lowest common denominator, typically a character (anything can be a character).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dog"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x1</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "3"   "1"   "dog"</code></pre>
+</div>
+</div>
+<p>What happened?</p>
+<p><strong>Matrices:</strong> A matrix is a rectangular collection of data elements in rows and columns.</p>
+<ul>
+<li>A matrix can contain only one type.</li>
+<li>Internally, R stores matrices as a long vector, keeping track of where the columm breaks are.</li>
+<li>Matrices are really important for the matrix math used to solve many statistical models.</li>
+</ul>
+<p><strong>Data frames:</strong> A data frame is a rectangular data structure that is designed to store records of individual subjects.</p>
+<ul>
+<li>A data frame has rows and columns.</li>
+<li>Columns are allowed to be of different data types (for example, “character” for the subject names and “numeric” for measured variables for each subject, and “factors” for categories such as sex, etc.).</li>
+<li>Internally, data frames are stored as a list of vectors, one for each column. This allows each column to have a different type.</li>
+<li>Each columm must have the same number of elements or rows, i.e., it must be rectangular.</li>
+<li>Typically, the columms of data frames have names corresponding to variable names.</li>
+</ul>
+<p><strong>Lists:</strong> Lists do not have to be rectangular and are the most flexible data type in R. A list is a vector possibly composed of different structures and of varying length (this is the only type where that is allowed!). &gt; - Lists are commonly used for model fits in statistical functions. For example, you may want to store the model (an expression), the input data (a dataframe), the output coefficients (a vector), - R has many powerful functions that operate on lists.</p>
+<p>Other types of data structures exist; they are often introduced by specific R packages. An important one to know is the <code>tibble</code> which is a type of data frame used in the <code>tidyverse</code>. It is similar, but not exactly like a data frame. You can read more about <code>tibbles</code> <a href="https://tibble.tidyverse.org/">on its package website</a> and in <a href="https://r4ds.had.co.nz/tibbles.html">R4DS chapter 10</a>.</p>
+<section id="other-derived-data-types" class="level2"><h2 class="anchored" data-anchor-id="other-derived-data-types">Other derived data types</h2>
+<p><strong>Timeseries:</strong> A very useful set of tools for times-series analysis in R is the set of packages called <a href="https://tidyverts.org/">the tidyverts</a>. CRAN also has a <a href="https://cran.r-project.org/web/views/TimeSeries.html">Task View for <em>Time Series Analysis</em>.</a> (A <em>Task View</em> on CRAN is a site that tries to combine and summarize various R packages for a specific topic). Another task view that deals with longitudinal/time-series data is the <a href="https://cran.r-project.org/web/views/Survival.html"><em>Survival Analysis</em> Task View</a>.</p>
+<p><strong>Omics:</strong> The <a href="https://www.bioconductor.org/">bioconductor</a> website is your source for (almost) all tools and resources related to omics-type data analyses in R.</p>
+<p><strong>Text:</strong> Working with and analyzing larger sections of text is different from the simple string manipulation discussed above. These days, analysis of text often goes by the term <em>natural language processing</em>. Such text analysis will continue to increase in importance, given the increasing data streams of that type. If you are interested in doing full analyses of text data, the <a href="https://juliasilge.github.io/tidytext/"><code>tidytext</code> R package</a> and the <a href="https://www.tidytextmining.com/">Text mining with R book</a> are great resources. A short introduction to this topic is <a href="https://rafalab.github.io/dsbook/text-mining.html">The <em>text mining</em> chapter (27) of IDS.</a></p>
+<p><strong>Images:</strong> Images are generally converted into multiple matrices of values for different pixels of an image. For instance, one could divide an image into a 100x100 grid of pixels, and assign each pixel a RGB values and intensity. That means one would have 4 matrices of numeric values, each of size 100x100. One would then perform operations on those values. We won’t do anything with images here, there are some R packages for analyzing image data.</p>
+<p><strong>Videos:</strong> Are a time-series of images. Analysis of videos therefore has an extra layer of complexity.</p>
+</section></section><section id="attributes-of-objects" class="level1"><h1>Attributes of Objects</h1>
+<p>Each object in R has certain characteristics called <strong>attributes</strong>. You can think of this as the metadata for R objects. These attributes are what allow functions written by anyone to be reusable by others, so long as the object is of the correct class.</p>
+<p>The common attributes of objects (the most helpful to know are <strong>class, mode, length, dimension</strong>, and <strong>names</strong>:</p>
+<ul>
+<li>
+<code>class</code> Describes the derived type of object, it may be a built-in class or written by a package author or user. Classes are used for methods dispatch.</li>
+<li>
+<code>mode</code> Often describes the atomic type of object. Sometimes called <em>storage mode</em>. Can be the same as the class, if it is an atomic type.</li>
+<li>
+<code>length</code> The number of fundamental elements of a vector.</li>
+<li>
+<code>dimension</code> Rectangular objects such as matrices and data frames have two dimensions, for the numbers of rows and columns (or the length of the vectors and numbers of vectors). 3D and higher dimensional arrays have 3 or more dimensions.</li>
+<li>
+<code>names</code> Names are optional but often useful to apply labels to internal elements of objects. If no names are given, the internal values can be referenced by their position (index).</li>
+</ul></section><section id="helpful-functions-for-creating-objects" class="level1"><h1>Helpful functions for creating objects</h1>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Functions</th>
+<th style="text-align: left;">Actions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>c(n1, n2, n3)</td>
+<td style="text-align: left;">combines elements into an object</td>
+</tr>
+<tr class="even">
+<td>cbind(x, y)</td>
+<td style="text-align: left;">binds objects together by column</td>
+</tr>
+<tr class="odd">
+<td>rbind(x, y)</td>
+<td style="text-align: left;">binds objects together by row</td>
+</tr>
+</tbody>
+</table>
+<section id="for-sequences" class="level2"><h2 class="anchored" data-anchor-id="for-sequences">For sequences</h2>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Functions</th>
+<th style="text-align: left;">Actions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>seq()</td>
+<td style="text-align: left;">generate a sequence of numbers</td>
+</tr>
+<tr class="even">
+<td>1:10</td>
+<td style="text-align: left;">sequence from 1 to 10 by 1</td>
+</tr>
+<tr class="odd">
+<td>rep(x, times)</td>
+<td style="text-align: left;">replicates x</td>
+</tr>
+<tr class="even">
+<td>sample(x, size, replace=FALSE)</td>
+<td style="text-align: left;">sample size elements from x</td>
+</tr>
+<tr class="odd">
+<td>rnorm(n, mean=0, sd=1)</td>
+<td style="text-align: left;">draw n samples from normal distribution</td>
+</tr>
+</tbody>
+</table></section><section id="creating-or-coercing-objects-to-different-class" class="level2"><h2 class="anchored" data-anchor-id="creating-or-coercing-objects-to-different-class">Creating or Coercing objects to different class</h2>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Functions</th>
+<th style="text-align: left;">Actions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>vector()</td>
+<td style="text-align: left;">create a vector</td>
+</tr>
+<tr class="even">
+<td>matrix()</td>
+<td style="text-align: left;">create a matrix</td>
+</tr>
+<tr class="odd">
+<td>data.frame()</td>
+<td style="text-align: left;">create a data frame</td>
+</tr>
+<tr class="even">
+<td>as.vector(x)</td>
+<td style="text-align: left;">coerces x to vector</td>
+</tr>
+<tr class="odd">
+<td>as.matrix(x)</td>
+<td style="text-align: left;">coerces to matrix</td>
+</tr>
+<tr class="even">
+<td>as.data.frame(x)</td>
+<td style="text-align: left;">coerces to data frame</td>
+</tr>
+<tr class="odd">
+<td>as.character(x)</td>
+<td style="text-align: left;">coerces to character</td>
+</tr>
+<tr class="even">
+<td>as.numeric(x)</td>
+<td style="text-align: left;">coerces to numeric</td>
+</tr>
+<tr class="odd">
+<td>factor(x)</td>
+<td style="text-align: left;">creates factor levels for elements of x</td>
+</tr>
+<tr class="even">
+<td>levels()</td>
+<td style="text-align: left;">orders the factor levels as specified</td>
+</tr>
+</tbody>
+</table></section></section><section id="examples" class="level1"><h1>Examples</h1>
+<section id="various-ways-to-create-vectors" class="level3"><h3 class="anchored" data-anchor-id="various-ways-to-create-vectors">Various ways to create vectors:</h3>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># numeric</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7 2 6</code></pre>
+</div>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, times<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 5 7 2 6 1 5 7 2 6</code></pre>
+</div>
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0.70831083  0.02616606  0.76951907  0.49269606  0.17509325  2.23678382
+[7] -0.07900867  0.89378805</code></pre>
+</div>
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">goodanswer</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># logical</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">goodanswer</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># special stored data object: lower case letters a - d</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d"</code></pre>
+</div>
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LETTERS</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A B C  # character</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "B" "C"</code></pre>
+</div>
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treatment</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"low"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"low"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"high"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"med"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"high"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># character vector</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treatment</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "low"  "low"  "high" "med"  "high"</code></pre>
+</div>
+<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treatment</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create a factor</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low  low  high med  high
+Levels: high low med</code></pre>
+</div>
+</div>
+<p>The vector <code>treat</code> has five elements, it is factor with levels of <code>low</code>, <code>med</code>, or <code>high</code>.</p>
+<p>It is simple to do arithmetic on numeric vectors:</p>
+<div class="cell">
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7 2 6</code></pre>
+</div>
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 7 9 4 8</code></pre>
+</div>
+<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1 25 49  4 36</code></pre>
+</div>
+</div>
+<p>Typically the class of a vector is returned as the type of information contained, so that return values of the atomic types “numeric”, “character”, “factor”, or “logical” indicate that the object is a vector:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+</section><section id="factors-are-categorical-data" class="level3"><h3 class="anchored" data-anchor-id="factors-are-categorical-data">Factors are categorical data</h3>
+<p>For example, <code>large</code> and <code>small</code>, or <code>blue</code>, <code>red</code>, and <code>yellow</code>. Factors may be ordered, which means that the order of the categories has meaning (like income categories). By default, factors are unordered. Levels are the categories that the factor can take on.</p>
+<p>You can easily coerce one type to another:</p>
+<div class="cell">
+<div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coerce to numeric</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 2 1 3 1</code></pre>
+</div>
+<div class="sourceCode" id="cb39" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coerce to character</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "0.708310834684403"   "0.0261660569479235"  "0.769519071353493"  
+[4] "0.49269605923231"    "0.17509324974742"    "2.23678382276967"   
+[7] "-0.0790086663337881" "0.893788053618042"  </code></pre>
+</div>
+</div>
+<p>Note that when values are quoted, they are of type character.</p>
+<div class="cell">
+<div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pony"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<p>However, notice that factors return different values for class and mode:</p>
+<div class="cell">
+<div class="sourceCode" id="cb43" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode" id="cb45" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p>And sometimes, when doing ordinary manipulations such as coercing to numeric or combining vectors together to create a matrix, we get:</p>
+<div class="cell">
+<div class="sourceCode" id="cb47" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 2 1 3 1</code></pre>
+</div>
+<div class="sourceCode" id="cb49" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x treat
+[1,] 1     2
+[2,] 5     2
+[3,] 7     1
+[4,] 2     3
+[5,] 6     1</code></pre>
+</div>
+<div class="sourceCode" id="cb51" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-13-data/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is because internally, factors are stored as digits, 1, 2, etc. to the number of categories. The characters that you see are actually labels for the factor categories called “levels”. Look at the help page for factor (<code><a href="https://rdrr.io/r/base/factor.html">?factor</a></code>) and read the entry for levels. If nothing is specified for the order of the levels, then they are numbered alphabetically! This explains the weird behavior. So if you want the order of the levels to be a more logical “low, medium, high”, you can do so by specifying the order of the levels explicitly when you create the factor:</p>
+<div class="cell">
+<div class="sourceCode" id="cb52" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span>, levels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"low"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"med"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"high"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low  low  high med  high
+Levels: low med high</code></pre>
+</div>
+<div class="sourceCode" id="cb54" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-13-data/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you get frustrated because youʻre trying to treat a factor as a character, itʻs sometimes safer to manipulate factors by coercing to character first before doing anything else.</p>
+<p>Hereʻs another illustration of methods dispatch - The plot function by default accepts arguments in x, y order. If x is a factor as above, the plot assumes a categorial format for the x-axis. However, if you switch the order:</p>
+<div class="cell">
+<div class="sourceCode" id="cb55" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-13-data/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is treated as a continuous x-axis. This is because methods dispatch for the plot function will be guided by the class of the objects that you supply. With x as a factor, R assumes you want a discrete x-axis, with the x as a continuous variable and y as the factor level, it will plot on the internal codes for the factor levels (if you want a horizontal bar plot use <code>barplot(..., horiz=TRUE)</code>. If you want histograms use <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>.</p>
+<p>If you name a vector, the names are attached to each value:</p>
+<div class="cell">
+<div class="sourceCode" id="cb56" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treatment</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> low  low high  med high 
+   1    5    7    2    6 </code></pre>
+</div>
+<div class="sourceCode" id="cb58" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "low"  "low"  "high" "med"  "high"</code></pre>
+</div>
+</div>
+</section><section id="matrices" class="level3"><h3 class="anchored" data-anchor-id="matrices">Matrices</h3>
+<p>Data are often rectangular. For example, you might have height and weight columns for each subject (rows), or you might have a matrix describing the genetic relatedness between each pair of individuals in a family. Whether it is a square or a rectangular matrix, you will have a series of vectors of equal length. In fact, in R you can think of it as a single long vector with breaks at the end of each column.</p>
+<p>Creating a matrix:</p>
+<div class="cell">
+<div class="sourceCode" id="cb60" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xy</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># column bind</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in cbind(x, y): number of rows of result is not a multiple of vector
+length (arg 1)</code></pre>
+</div>
+<div class="sourceCode" id="cb62" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xy</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x           y
+[1,] 1  0.70831083
+[2,] 5  0.02616606
+[3,] 7  0.76951907
+[4,] 2  0.49269606
+[5,] 6  0.17509325
+[6,] 1  2.23678382
+[7,] 5 -0.07900867
+[8,] 7  0.89378805</code></pre>
+</div>
+<div class="sourceCode" id="cb64" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, nrow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#create a matrix with 2 rows</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6</code></pre>
+</div>
+<div class="sourceCode" id="cb66" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, nrow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, byrow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6</code></pre>
+</div>
+<div class="sourceCode" id="cb68" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+<div class="sourceCode" id="cb70" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p>Names applied to a matrix will attach the names to each value. If you want to name the rows and columns of a matrix you must use <code><a href="https://rdrr.io/r/base/colnames.html">rownames()</a></code> or <code><a href="https://rdrr.io/r/base/colnames.html">colnames()</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb72" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  </span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb74" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"c"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>c 
+3 </code></pre>
+</div>
+<div class="sourceCode" id="cb76" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"f"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>f 
+6 </code></pre>
+</div>
+<div class="sourceCode" id="cb78" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tom"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dick"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"harry"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   1    3     5
+[2,]   2    4     6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+</div>
+<p>Matrices have rows and columns, and are all of the same type whether it is numeric or character. There is a full suite of matrix math facilities in R to operate on numeric matrices.</p>
+<div class="cell">
+<div class="sourceCode" id="cb80" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   3    5     7
+[2,]   4    6     8</code></pre>
+</div>
+<div class="sourceCode" id="cb82" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ordinary element-by-element multiplication</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   2    6    10
+[2,]   4    8    12</code></pre>
+</div>
+<div class="sourceCode" id="cb84" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># matrix multiplication</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   27
+[2,]   34</code></pre>
+</div>
+</div>
+</section><section id="data-frames" class="level3"><h3 class="anchored" data-anchor-id="data-frames">Data Frames</h3>
+<p>Dataframes are superficially similar to matrices. They are rectangular. However, a major difference is that the vectors that comprise a dataframe can have vectors of different type. For example, one column can contain species names, whereas the other columns might contain numerical data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb86" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Internally, it is no longer a single vector but actually a list of vectors:</p>
+<div class="cell">
+<div class="sourceCode" id="cb87" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode" id="cb89" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb91" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "species" "x"       "y"      </code></pre>
+</div>
+<div class="sourceCode" id="cb93" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode" id="cb95" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 3</code></pre>
+</div>
+</div>
+<p>This is why the length of a dataframe is the number of columns. The names are the names of the columns, etc.</p>
+<p>You can access the columns of dataframes using the <code>$</code> operator, or using brackets, or by index number: and the name of the element, by the index number and double brackets, or by name and double bracket. Or a single value by using indexing on the row and column number separated by a comma. More on this later in the indexing chapter.</p>
+<div class="cell">
+<div class="sourceCode" id="cb97" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c"</code></pre>
+</div>
+<div class="sourceCode" id="cb99" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species
+1       a
+2       b
+3       c</code></pre>
+</div>
+<div class="sourceCode" id="cb101" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.027375</code></pre>
+</div>
+</div>
+</section><section id="lists" class="level3"><h3 class="anchored" data-anchor-id="lists">Lists</h3>
+<p>Lists are vectors of arbitrary objects. You can string any kind of objects together in a list. Sometimes the objects are identical, such as when you are doing a massive simulation study and each list element may be a simulated dataset in form of a dataframe. Alternatively, each element of a list may contain a different type of object. This is especially useful for model fitting output, for example, where you may want to store the input data in one list element, and in other list elements: the expression for the model, the fitted parameters, and the information criteria. All of these items are logically related, and if you name the list elements you can easily access the information wanted.</p>
+<div class="cell">
+<div class="sourceCode" id="cb103" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"species"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"z"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb105" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb107" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode" id="cb109" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>Note that lists have no <strong>dimension</strong> (because they are more flexible vectors - kinda like stretchy christmas stockings). However, if you have a matrix or a dataframe within a list those will have vectors. The object within lists have their own attributes.</p>
+<p>You can access the z element of mylist in a number of ways, using the <code>$</code> operator and the name of the element, by the index number and double brackets, or by name and double bracket:</p>
+<div class="cell">
+<div class="sourceCode" id="cb111" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   1    3     5
+[2,]   2    4     6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb113" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb115" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb117" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"z"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+</div>
+<p>To see the structure of the list object, use <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb119" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ species: chr [1:3] "a" "b" "c"
+ $ x      : num [1:3] 1 2 4
+ $ y      : num [1:3] -1.03 -1.39 1.72
+ $ z      : int [1:2, 1:3] 1 2 3 4 5 6
+  ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : NULL
+  .. ..$ : chr [1:3] "tom" "dick" "harry"</code></pre>
+</div>
+</div>
+<p>You can see that there are four elements of <code>mylist</code>, a character vector named <code>species</code>, two numeric vectors named <code>x</code> and <code>y</code>, and a integer matrix called <code>z</code>. Is it starting to make sense?</p>
+
+
+</section></section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>For example, logistic regression (a regression to predict a binary [yes/no] outcome) is used for classification. The underlying model predicts a quantitative outcome (a value between 0 and 1 usually interpreted as a probability), which is then binned to make categorical predictions.↩︎</p></li>
+</ol></section></div> ]]></description>
+  <category>module 2</category>
+  <category>week 4</category>
+  <category>data</category>
+  <category>data structures</category>
+  <category>objects</category>
+  <guid>https://mbutler808.github.io/posts/2025-02-13-data/</guid>
+  <pubDate>Thu, 13 Feb 2025 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Saving your work as R scripts</title>
   <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-02-06-scripts/</link>
+  <link>https://mbutler808.github.io/posts/2025-02-11-scripts/</link>
   <description><![CDATA[ <!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -87,22 +1706,26 @@ All good script follows the first three R’s, as you increase along the path of
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Readable – If you look at the script in a month or 6 months, will you be able to easily understand it?</li>
-<li>Right – Does it run free of error, and does it produce correct results?</li>
-<li>Repeatable – Can you reproduce your results from your input data?</li>
-<li>Reusable – Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?</li>
+<li>
+<strong>Readable</strong> – If you look at the script in a month or 6 months, will you be able to easily understand it?</li>
+<li>
+<strong>Right</strong> – Does it run free of error, and does it produce correct results?</li>
+<li>
+<strong>Repeatable</strong> – Can you reproduce your results from your input data?</li>
+<li>
+<strong>Reusable</strong> – Is your coding modular and designed well so that your code can interact with other scripts, and/or use it for other purposes?</li>
 </ul>
 </div>
 </div>
 <p>The mac interface has a very nice text editor, and the newer Windows R interfaces are getting better too (or install Notepad++). From the R menu, choose File &gt; New Document (or command-N). Simply type or cut and paste your code from your history file into here. Let’s make a script for the analyses we’ve done thus far.</p>
 </section><section id="script-template" class="level1"><h1>Script Template</h1>
-<p>First, make sure that you are in the directory that you want the script to execute from (<code>Rclass\...</code>). Start off with any packages that you wish to load, then begin to cut and paste your code.</p>
+<p>First, make sure that you are in the directory that you want the script to execute from (<code>Documents/git/rclass/rclassdata</code>). Start off with any packages that you wish to load, then begin to cut and paste your code.</p>
 <p>Make sure to add comments indicated by the <code>#</code> symbol so that you know what the code does:</p>
 <p>Here is the basic structure of a script:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#require( ...addonpackage... )    # anything between ... needs to be changed </span></span>
+font-style: inherit;">#library( ...addonpackage... )    # anything between ... needs to be changed </span></span>
 <span>      <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># if none, then you don't need that line</span></span>
@@ -141,14 +1764,14 @@ font-style: inherit;">)</span>      <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># output data </span></span></code></pre></div>
 </div>
-<p>And here is a simple example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures.</p>
+<p>Here is an example example script that reads in data, calculates summary statistics, a linear regression, and a couple of figures.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#require(stats)        # stats is part of the base package and doesn't need to be loaded, </span></span>
+font-style: inherit;">#library(stats)        # stats is part of the base package and doesn't need to be loaded, </span></span>
 <span>    <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># but if you need an add-on package, you would require it here.</span></span>
+font-style: inherit;"># but if you need an add-on package, you would use library or require here.</span></span>
 <span></span>
 <span><span class="va" style="color: #111111;
 background-color: null;
@@ -341,8 +1964,8 @@ font-style: inherit;">#   to save a meaningful analysis</span></span>
 background-color: null;
 font-style: inherit;">###</span></span></code></pre></div>
 </div>
-<p>Note that I have used spacing and indents to increase the ``readability’’ of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy. We will talk more about this in the functions section.</p>
-<p>Save the script file as <code>testScript.R</code> or a title of your choice in your class folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
+<p>Note that I have used spacing and indents to increase the <strong>readability</strong> of the code. Use it to set of blocks of code that accomplish one task, with indents to indicate heirarchy. We will talk more about this in the functions section.</p>
+<p>Save the script file as <code>testScript.R</code> or a title of your choice in your <code>rclassdata</code> folder. Now if you want to run the code, you simply type at the R console (from within your Rclass directory):</p>
 <div class="cell">
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
@@ -516,114 +2139,141 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>This is an ordinary text file, which you can open up and edit (removing all the mistakes), and save as a <code>scriptname.R</code> file.</p>
 <p>Another helpful tip when writing source code is to use <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> functions to print out your output to the console. When you are using R in interactive mode, when you type the name of a variable, you get a print of its contents. However, when you source the same code, the variable does not print to the screen. You have to explicitly put a <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> or <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> function around it.</p>
-<p>Let’s use a built-in dataset called <code>iris</code>, which is the famous Fisher iris dataset. Make a test script file and save it as <code>test.R</code>:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>test.R</strong></pre>
-</div>
-<div class="sourceCode" id="cb7" data-filename="test.R" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+<p>Let’s use a built-in dataset called <code>iris</code>, which is the famous Fisher iris dataset. Make a test script file and save it as <code>test.R</code> (or pull it down from the <code>rclassdata</code> repo:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">names</span><span class="er" style="color: #AD0000;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="ex" style="color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">iris</span><span class="kw" style="color: #003B4F;
+font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-weight: bold;
+font-style: inherit;">)</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># iris is a built-in dataset. Print first few lines to screen</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># will not print to console when sourced</span></span>
-<span id="cb7-2"></span>
-<span id="cb7-3"><span class="ex" style="color: null;
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Sepal.Length</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Sepal.Width</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">spp</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;</span>- unique<span class="er" style="color: #AD0000;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="ex" style="color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">iris</span><span class="va" style="color: #111111;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">$Species</span><span class="kw" style="color: #003B4F;
+font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-weight: bold;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Species</span><span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># only unique values</span></span>
-<span id="cb7-4"><span class="ex" style="color: null;
+<span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">spp</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;</span>- as.character<span class="er" style="color: #AD0000;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="ex" style="color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">spp</span><span class="kw" style="color: #003B4F;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-weight: bold;
+font-style: inherit;">spp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;">)</span>     <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># factor -&gt; character</span></span>
-<span id="cb7-5"><span class="ex" style="color: null;
+<span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">spp</span>   <span class="co" style="color: #5E5E5E;
+font-style: inherit;">spp</span>            <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># will not print to console when sourced</span></span>
-<span id="cb7-6"></span>
-<span id="cb7-7"><span class="ex" style="color: null;
+<span></span>
+<span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">print</span><span class="er" style="color: #AD0000;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'Species names'</span><span class="kw" style="color: #003B4F;
+font-style: inherit;">'Species names'</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-weight: bold;
 font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># will print</span></span>
-<span id="cb7-8"><span class="ex" style="color: null;
+<span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">print</span><span class="er" style="color: #AD0000;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="ex" style="color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">spp</span><span class="kw" style="color: #003B4F;
+font-style: inherit;">spp</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-weight: bold;
 font-style: inherit;">)</span>              <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># will print</span></span>
-<span id="cb7-9"></span>
-<span id="cb7-10"><span class="fu" style="color: #4758AB;
+<span></span>
+<span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">cat</span><span class="er" style="color: #AD0000;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'\n'</span><span class="ex" style="color: null;
+font-style: inherit;">'\n'</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+font-style: inherit;">'Species names ='</span>, <span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">'Species names ='</span>, spp<span class="kw" style="color: #003B4F;
+font-style: inherit;">spp</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-weight: bold;
 font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># concatenate </span></span>
-<span id="cb7-11">    <span class="co" style="color: #5E5E5E;
+<span>              <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># \n is a carriage return character</span></span>
-<span id="cb7-12"><span class="ex" style="color: null;
+<span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">summary</span><span class="er" style="color: #AD0000;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="ex" style="color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">iris</span><span class="kw" style="color: #003B4F;
+font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-weight: bold;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">)</span>             </span></code></pre></div>
 </div>
 <p>Then test it by running:</p>
 <div class="cell">
@@ -761,8 +2411,8 @@ font-style: inherit;"># or the name of your linear model object          </span>
   <category>R</category>
   <category>scripts</category>
   <category>reproducibility</category>
-  <guid>https://mbutler808.github.io/posts/2025-02-06-scripts/</guid>
-  <pubDate>Thu, 06 Feb 2025 10:00:00 GMT</pubDate>
+  <guid>https://mbutler808.github.io/posts/2025-02-11-scripts/</guid>
+  <pubDate>Tue, 11 Feb 2025 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Data IO</title>

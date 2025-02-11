@@ -3,9 +3,9 @@ project:
   output-dir: docs
 
 website:
-  title: "ZOOL710 Data Science in R for Biologists"
+  title: "ZOOL710 Data Science in R for Biologists 2025"
   site-url: https://mbutler808.github.io
-  description: "Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2023"
+  description: "Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2025"
   navbar:
     right:
       - text: "Home"
