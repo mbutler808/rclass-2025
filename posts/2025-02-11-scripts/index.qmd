@@ -7,7 +7,7 @@ author:
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Save your hard work as scripts!"
 date: 2025-02-11
-categories: [module 1, week 3, R, scripts, reproducibility ]
+categories: [module 1, week 4, R, scripts, reproducibility ]
 ---
 
 <!-- Add interesting quote -->
