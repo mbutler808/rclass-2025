@@ -91,7 +91,26 @@ Multiple citations are stored in your `.bib` file, with each citation separated 
 
 # Reference Managers {#sec-manager}
 
-Personally, I really like [BibDesk]<https://bibdesk.sourceforge.io> for Mac OS to manage my citations.  It  is easy to use and has all the features I need. A cross-platform option that is popular now is JabRef <https://github.com/JabRef/jabref>. [JabRef](https://en.wikipedia.org/wiki/JabRef) is written in Java, is open source and has support for Linux, Windows, and MacOS.
+Personally, I really like [BibDesk]<https://bibdesk.sourceforge.io> for Mac OS to manage my citations.  It  is easy to use and has all the features I need. 
+
+A cross-platform option that is popular now is `JabRef` <https://github.com/JabRef/jabref>. [`JabRef`](https://en.wikipedia.org/wiki/JabRef) is written in Java, is open source and has support for Linux, Windows, and MacOS.
+
+If you use `JabRef`, you should change these settings for generating Cite Keys. __Be sure to delete the `:` from the first red circle__, and add in a `:` between `[auth]` and `[year]` in the second red circle. Be sure to hit Return so that the line is blue, and then Save. 
+
+```{r}
+#| echo: false
+#| fig-cap-location: "top"
+knitr::include_graphics("../../images/JabRef-citekey-prefs.jpg")
+```
+
+
+You can also set `JabRef` to automatically send the citekeys in Markdown format to `Sublime` when you are editing your `quarto`. I couldn't get it to automatically send to Sublime, but it did copy the citekey which I can paste with Apple-k (probably Control-K on PC).  
+
+```{r}
+#| echo: false
+#| fig-cap-location: "top"
+knitr::include_graphics("../../images/JabRef-to-sublime.png")
+```
 
 ## Citation management software
 
