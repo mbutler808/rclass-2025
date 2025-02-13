@@ -1,0 +1,425 @@
+---
+title: "Tidying and Exploring Data"  
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "All about data and how it is represented in R"  
+date: 2025-02-18
+categories: [module 2, week 4, data, data structures, objects]  
+---
+
+<!-- Add interesting quote -->
+
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+`r emojifont::emoji('pencil2')`
+
+# Overview 
+
+As a biologist, these data manipulation topics may seem dry, but they are really powerful and will allow you do to much more sophisticated analyses, and to do them with confidence. 
+
+There are two main steps in the data analysis pipeline where these skills become critical: 
+
+1.  Tyipcally, we canʻt even look at the data in any meaningful way unless we can pluck out the parts we need or reshape the data.  We can then do the intial data exploration and assessment. 
+2.  The __data processing__ step where we convert _raw data_ to _analytical data_. 
+    + Is the data clean of typos, or errors? 
+    + How do we want to deal with missing data? 
+    + Do we need to transform the data?
+    + Do we want to take summary statistics (i.e, species means, etc.)?
+    + Do we need to reshape the data for downstream analyses?
+
+Vetting and reorganizing the data can take more programming time and effort than the actual statistical analyses. These tools will be a huge help, so it is well worth taking some time to learn how to use them well. 
+
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will know how to use:**
+
+* __Indexing__ accessing particular elements of your data object 
+* __Matching__ using logical comparisons to index an entire object
+* __Subsetting__ saving subsets of your data, often with indexing
+* __String Matching__ and replacement using `grep()`, `sub()`
+* __Sorting__ reordering data
+:::
+
+
+
+# Indexing
+
+
+In general, accessing elements of vectors, matrices, or dataframes is achieved through __indexing__ by *__position__* or *__name__*. 
+
+This is extremely useful for selecting relevant data, excluding irrelevant data, or selcting building blocks to form new objects. 
+
+There are many ways to achieve this:
+
+*  __inclusion__ a vector of positive integers indicating which elements of the vector to include
+*  __exclusion__ a vector of negative integers
+*  __logical values__ a vector of TRUE / FALSE values indicating which elements to include / exclude
+*  __by name__ a character vector of names of columns (only) or columns and rows
+*  __blank index__ take the entire column, row, or object
+*  __missing values__ can be indexed in much the same way, but because they *match ALL values* -- you have to use the `is.na()` function.
+
+## Vectors
+
+The __index__ of a vector is it's number in the array. Each and every element in any data object has at least one index (if vector, it is one dimensional so it is its position along the vector, if a matrix or data frame, which are two-dimensional, it's the row and column number, etc.)
+
+Let's create a vector:
+```{r}
+xx <- c(1, 5, 2, 3, 5)
+xx
+```
+
+Access specific values of `xx` by number:
+```{r}
+xx[1]
+xx[3]
+```
+
+You can use a function to generate an index. Get the last element (without knowing how many there are) by:
+```{r}
+xx[length(xx)]
+```
+
+Retrieve multiple elements of `xx` by using a __vector__ as an argument:
+```{r}
+xx[c(1, 3, 4)]
+xx[1:3]
+xx[c(1, length(xx))]  # first and last
+```
+
+Exclude elements by using a negative index:
+```{r}
+xx
+xx[-1]  # exclude first
+xx[-2] # exclude second
+xx[-(1:3)] # exclude first through third
+xx[-c(2, 4)] # exclude second and fourth, etc. 
+```
+
+Use a logical __vector__:
+```{r}
+xx[ c( T, F, T, F, T) ]  # T is the same as TRUE
+```
+```{r}
+xx > 2
+xx[ xx > 2 ]
+xx > 2 & xx < 5
+xx[ xx>2 & xx<5]
+```
+
+__Subsetting__ (picking particular observations out of an R object) is something that you will have to do all the time. It's worth the time to understand it clearly.
+
+```{r}
+subset_xx <-  xx[ xx > 2 ]
+subset_xx2 <- subset(xx, xx>2)  # using subset function
+subset_xx == subset_xx2   # check if the same
+```
+
+The `subset` function is just another way of subsetting by index, just in function form with arguments. It can be more clear to use for __dataframes__, but it is really a matter of personal preference as you develop your style. Whichever way you go, it is important to be aware of the different ways to achieve the same goals. 
+
+
+## Matrices and Dataframes
+
+__Matrices__ and __dataframes__ are both rectangular having two dimensions, and are handled very similarly for indexing and subsetting. 
+
+Let's work with a dataframe that is provided with the `geiger` package called `geospiza`. It is a list with a tree and a dataframe. The dataframe contains five morphological measurements for 13 species. First, let's clear the workspace (or clear and start a new R session):
+
+```{r eval=F}
+install.packages("geiger")  # if you need to install geiger
+```
+
+Get the built-in dataset this way:
+
+```{r}
+rm(list=ls())
+library(geiger)
+data(geospiza)   # load the dataset into the workspace
+ls()               # list the objects in the workspace
+```
+
+Let's find out some basic information about this object:
+```{r}
+class(geospiza)
+attributes(geospiza)
+str(geospiza)
+```
+
+It is a list with four elements. Here we want the data
+```{r}
+geo <- geospiza$geospiza.data
+dim(geo)
+```
+
+Its a rectangle of data, but let's see what type of object it is: 
+```{r}
+class(geo)
+```
+It is a matrix, but we want to work with a dataframe, so let's coerce it: 
+```{r}
+geo <- as.data.frame(geo)
+```
+If we want to know all the attributes of geo:
+```{r}
+attributes(geo)
+```
+It is a dataframe with 13 rows and 5 columns. 
+We see that it has a "names" attribute, which refers to column names in a dataframe. Typically, the columns of a dataframe are the variables in the dataset. It also has "rownames" which contains the species names (so it does not have a separate column for species names). 
+
+Dataframes have two dimensions which we can use to index with:  dataframe[row, column]. 
+```{r eval=F}
+geo     # the entire object, same as geo[] or geo[,]
+geo[c(1, 3), ]   # select the first and third rows, all columns
+geo[, 3:5]   # all rows, third through fifth columns
+geo[1, 5]  # first row, fifth column (a single number)
+geo[1:2, c(3, 1)]  # first and second row, third and first column (2x2 matrix)
+geo[-c(1:3, 10:13), ]  # everything but the first three and last three rows
+geo[ 1:3, 5:1]  # first three species, but variables in reverse order
+```
+
+To prove to ourselves that we can access matrices in the same way, let's coerce geo to be a matrix:
+```{r}
+geom <- as.matrix( geo ) 
+class(geom)
+class(geo)
+geo[1,5]  # try a few more from the choices above to test
+```
+
+Since `geo` and `geom` have row and column names, we can access by name (show that this works for `geom` too):
+
+```{r}
+geo["pauper", "wingL"]  # row pauper, column wingL
+geo["pauper", ]  # row pauper, all columns 
+```
+
+We can also use the names (or rownames) attribute if we are lazy. Suppose we wanted all the species which began with "pa". we could find which position they hold in the dataframe by looking at the rownames, saving them to a vector, and then indexing by them:
+```{r}
+sp <- rownames(geo)
+sp                            # a vector of the species names
+sp[c(7,8,10)]     # the ones we want are #7,8, and 10
+geo[ sp[c(7,8,10)], ]  # rows 7,8 and 10, same as geo[c(7, 8, 10)]
+```
+
+One difference between dataframes and matrices is that Indexing a data frame by a single vector (meaning, no comma separating) selects an entire column.  This can be done by name or by number:
+
+```{r eval=F}
+geo[3]   # third column
+geo["culmenL"]  # same
+geo[c(3,5)]  # third and fifth column
+geo[c("culmenL", "gonysW")]  # same
+```
+Prove to yourself that selecting by a single index has a different behavior for matrices (and sometimes produces an error.  
+
+:::{.callout-tip}
+## Why?
+- Because internally, a dataframe is actually a list of vectors. Thus a single name or number refers to the column, rather than a coordinate in a cartesian-coordinate-like system. 
+- However, a matrix is actually a vector with breaks in it. So a single number refers to a position along the single vector. 
+- A single name could work, but only if the individual elements of the matrix have names (like naming the individual elements of a vector).
+:::
+
+
+
+Another difference is that dataframes (and lists below) can be accessed by the `$` operator. It means indicates a column within a dataframe, so `dataframe$column`. This is another way to select by column:
+```{r}
+geo$culmenL
+```
+
+An equivalent way to index is by using the `subset` function. Some people prefer it because you have explicit parameters for what to select and which variables to include. See help page `?subset`. 
+
+## Lists
+
+A list is a vector, except that whereas an ordinary vector has the same type of data (numeric, character, factor) in each slot, a list can have different types in different slots. They are sort of like expandable containers, flexibly accommodating any group of objects that the user wants to keep together.
+
+They are accessed by numeric index or by name (if they are named), but they are accessed by double square brackets. Also, you can't access multiple elements of lists by using vectors of indices:
+```{r}
+mylist <- list( vec = 2*1:10, mat = matrix(1:10, nrow=2), cvec = c("frogs", "birds"))
+mylist
+mylist[[2]]
+mylist[["vec"]]
+# mylist[[1:3]]  # gives an error if you uncomment it
+mylist$cvec
+```
+
+# String Matching
+
+A very useful feature is string matching. R has `grep` facilities, which can do partial matching of character strings. This is different from the ordinary `==` operator, which will compare whole character strings. Partial matching is really helpful when you are not sure of the spelling, looking for typos, variations, etc. For example, we could directly search for species (the object or "x") names which contain "p" (the pattern):
+```{r}
+sp <- rownames(geo)
+grep(pattern = "p", x = sp)  # returns indices   
+grep("p", sp, value=T)  # returns the species names which match
+grep("p", sp, ignore.case=T, value=T)   # case-sensitive by default
+grep("^P", sp, value=T)  # only those which start with (^) capital P
+```
+
+It is possible to use perl-type regular expressions, and the sub function is also available. `sub` is related to `grep`, but substitutes a replacement value to the matched pattern. Notice that there are two species which have upper case letters. We can fix this with:
+
+```{r}
+sp <- rownames(geo)
+sub(pattern = "^P", replacement = "p", sp)
+rownames(geo) <- sub(pattern = "^P", replacement = "p", sp)   # to save changes
+```
+
+# Ordering Data
+
+Suppose we now want geo in alphabetical order. We can use the `sort` function to sort the rownames vector, then use it to index the dataframe:
+
+```{r eval=F}
+sort(rownames(geo))
+geo[ sort(rownames(geo)), ]
+```
+
+A better option for dataframes, though, is `order`:
+```{r}
+order(rownames(geo))   # the order that the species should take to be
+                 #  sorted from a-z
+rbind(rownames(geo), order(rownames(geo)))  # to illustrate
+oo <- order(rownames(geo))
+geo[oo,]   # sorted in alpha order
+```
+
+## Multiple arguments - breaking ties
+
+Order can sort on multiple arguments, which means that you can use other columns to break ties. Let's trim the species names to the first letter using the substring function, then sort using the __first letter of the species name__ and breaking ties by __tarsusL__:
+```{r}
+sp <- substring(rownames(geo), first=1, last=1)
+oo <- order(sp , geo$tarsusL) # order by first letter species, then tarsusL
+geot <- geo[oo,]["tarsusL"]   # ordered geo dataframe, take only the wingL column
+geo <- geo[oo,]
+```
+
+::: {.callout-tip}
+## Note: 
+
+- Using `geo["tarsusL"]` as a second index for order doesn't work, because it is a __one column dataframe__, as opposed to `geo$tarsus` which is a __vector__. 
+- The object must match `sp`, which is a __vector__. Check the `dim` and `length` of each. 
+- vectors only have __length__, dataframes have __dimensions__ (dim=2 for numbers of rows, columns).           
+- __Check your objects!__ The shapes have to be of the right __class__ even if they contain the same information.  This is because functions are written for particular classes of objects (and sometimes the programmer didnʻt write one for your type of object).
+- You can always coerce your object to the right class using `as.vector`, `as.dataframe`, etc. and try again.
+:::
+
+# Matching
+
+Matching is very easy in R, and is often used to create a logical vector to subset objects. Greater than and less than are as usual, but logical equal is two equal signs "==" to differentiate from the assignment operator "=". Also >= and <=.
+
+```{r}
+geot > 3    # a logical index 
+geot == 3  # must match exactly 3, none do
+geot[ geot > 3 ]   # use to get observations which have tarsus > 3
+#  ii <- geot > 3    # these two lines of code accomplish the same
+#  geot[ii]
+cbind(geo["tarsusL"], geot > 3)  # check
+geo[geot>3, ]["tarsusL"]  # what does this do?
+```
+
+Matching and subsetting works really well for replacing values. Suppose we thought that every measurement that was less than 2.0 was actually a mistake. We can remove them from the data:
+
+```{r}
+geo [ geo<2 ] <- NA
+```
+
+## Missing Values
+
+__Missing values compared to anything else will return a missing value__ (so NA == NA returns NA, which is usually not what you want). You must test it with `is.na` function. You can also test multiple conditions with and (`&`) and or (`|`)  
+```{r}
+!is.na(geo$gonysW) 
+geo[!is.na(geo$gonysW) & geo$wingL > 4, ]  # element by element "and"
+geo[!is.na(geo$gonysW) | geo$wingL > 4, ]   # element by element "or"
+```
+
+Matching works on strings also:
+
+```{r eval=F}
+geo[rownames(geo) == "pauper",]   # same as   geo["pauper", ]
+geo[rownames(geo) < "pauper",]
+```
+
+There are even better functions for strings, though. In the expression  `A %in% B`, the `%in%` operator compares two vectors of strings, and tells us which  elements of `A` are present in `B`.
+
+```{r eval=F}
+newsp <- c("clarkii", "pauper", "garmani")
+newsp[newsp  %in% rownames(geo)]     # which new species are in geo?
+```
+
+We can define the "without" operator: 
+```{r eval=F}
+"%w/o%" <- function(x, y) x[!x %in% y]
+newsp  %w/o% rownames(geo)   # which new species are not in geo?
+```
+
+# Explore a new Dataset
+
+![Meet the Penguins](../../images/penguins.png)
+
+We are going to look at the [**Palmer Penguins** dataset](https://allisonhorst.github.io/palmerpenguins/articles/intro.html).  It is a dataset of morphometric data from three species of penguins from Antarctica. 
+
+![Penguin Beaks](../../images/culmen_depth.png)
+
+
+Please practice some of the base R functions we covered today. One of the first tasks of data exploration is 
+
+* counting sample size
+* identifying the variables
+* creating bivariate plots of each pair of continuous variables
+* exploring the distribution of the data
+* plots of the whole dataset versus by group (here, species)
+
+Some of the functions you could use are the following: `plot()`, `points()` `lines()`, `hist()` and `density()`. You can also assign different colors using the `col="red"` etc. argument within each of these functions. 
+
+```{r eval=F}
+install.packages("palmerpenguins")
+```
+
+Load the data:
+```{r}
+require(palmerpenguins)
+data(penguins)
+```
+
+To read the help page, type `?penguins`. It is a __tibble__ which is the __tidyverse__ version of __data frames__.  All of our base functions will work on this. Try `summary(penguins)`
+
+
+How many species?
+```{r}
+unique(penguins$species)
+```
+
+## Plot()
+
+For a generic x-y plot use plot(). It will also start a graphical device. 
+
+Here we are using the `with()` function to specify which dataframe to look into for our named variables. We could instead do `penguins$body_mass_g`, etc. 
+
+```{r}
+with(penguins, plot( body_mass_g, bill_length_mm))
+```
+
+To add points to an existing plot, use `points()`
+
+
+```{r }
+with(penguins, plot( body_mass_g, bill_length_mm))
+with(penguins[penguins$species=="Adelie",], points( body_mass_g, bill_length_mm, col="red"))
+```
+
+One could fit linear models, for example, and use `lines()` to overlay the line on the plot. 
+
+## Distribution using hist() and density()
+
+To see a histogram, use `hist()`. You can change the `breaks` and many other features by checking out the help page `?hist`
+
+```{r}
+with(penguins, hist( body_mass_g ))
+```
+
+To see a density plot use `density()` to create the density, then plot it.
+
+```{r}
+dens <- with(penguins, density( body_mass_g, na.rm=T ))
+plot(dens)
+```
+
+

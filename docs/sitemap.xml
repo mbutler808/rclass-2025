@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mbutler808.github.io/schedule.html</loc>
-    <lastmod>2025-02-11T09:04:23.329Z</lastmod>
+    <lastmod>2025-02-13T09:05:15.607Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/syllabus.html</loc>
@@ -33,20 +33,24 @@
     <lastmod>2025-02-11T09:09:48.382Z</lastmod>
   </url>
   <url>
-    <loc>https://mbutler808.github.io/posts/2025-01-30-reference-management/index.html</loc>
-    <lastmod>2025-02-13T02:16:38.929Z</lastmod>
+    <loc>https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/index.html</loc>
+    <lastmod>2025-02-13T18:24:48.306Z</lastmod>
   </url>
   <url>
-    <loc>https://mbutler808.github.io/posts/2025-01-16-your-computer-filesystems/index.html</loc>
-    <lastmod>2025-01-17T02:06:55.368Z</lastmod>
+    <loc>https://mbutler808.github.io/posts/2025-02-13-data/index.html</loc>
+    <lastmod>2025-02-11T09:00:40.444Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2025-02-04-reading-data/index.html</loc>
     <lastmod>2025-02-05T07:36:45.680Z</lastmod>
   </url>
   <url>
-    <loc>https://mbutler808.github.io/posts/2025-02-13-data/index.html</loc>
-    <lastmod>2025-02-11T09:00:40.444Z</lastmod>
+    <loc>https://mbutler808.github.io/posts/2025-01-16-your-computer-filesystems/index.html</loc>
+    <lastmod>2025-01-17T02:06:55.368Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mbutler808.github.io/posts/2025-01-30-reference-management/index.html</loc>
+    <lastmod>2025-02-13T02:16:38.929Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/index.html</loc>

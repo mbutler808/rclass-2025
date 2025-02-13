@@ -39,7 +39,7 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 | **Module 3** |         | **Data Visulization in R** | | |
 ||||||
-|  Week 5        | Feb 18 | `r emojifont::emoji('hocho')` Tidying Data \[[html]\] \[[Qmd]\] | `r emojifont::emoji('seedling')` Project 1 assigned ||
+|  Week 5        | Feb 18 | `r emojifont::emoji('hocho')` Tidying Data \[[html](posts/2025-02-18-tidying-exploring-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-18-tidying-exploring-data/index.qmd)\] | `r emojifont::emoji('seedling')` Project 1 assigned ||
 |              | Feb 20 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html]\] \[[Qmd]\] |  |     |
 ||||||
 | Week 6       | Feb 25 | `r emojifont::emoji('bar_chart')` Plotting with ggplot2 \[[html]\] \[[Qmd]\]| | |

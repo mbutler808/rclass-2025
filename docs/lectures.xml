@@ -10,7 +10,2297 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2025</description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Thu, 13 Feb 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 18 Feb 2025 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Tidying and Exploring Data</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/</link>
+  <description><![CDATA[ <!-- Add interesting quote --><!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 --><p>✏️</p>
+<section id="overview" class="level1"><h1>Overview</h1>
+<p>As a biologist, these data manipulation topics may seem dry, but they are really powerful and will allow you do to much more sophisticated analyses, and to do them with confidence.</p>
+<p>There are two main steps in the data analysis pipeline where these skills become critical:</p>
+<ol type="1">
+<li>Tyipcally, we canʻt even look at the data in any meaningful way unless we can pluck out the parts we need or reshape the data. We can then do the intial data exploration and assessment.</li>
+<li>The <strong>data processing</strong> step where we convert <em>raw data</em> to <em>analytical data</em>.
+<ul>
+<li>Is the data clean of typos, or errors?</li>
+<li>How do we want to deal with missing data?</li>
+<li>Do we need to transform the data?</li>
+<li>Do we want to take summary statistics (i.e, species means, etc.)?</li>
+<li>Do we need to reshape the data for downstream analyses?</li>
+</ul>
+</li>
+</ol>
+<p>Vetting and reorganizing the data can take more programming time and effort than the actual statistical analyses. These tools will be a huge help, so it is well worth taking some time to learn how to use them well.</p>
+</section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will know how to use:</strong></p>
+<ul>
+<li>
+<strong>Indexing</strong> accessing particular elements of your data object</li>
+<li>
+<strong>Matching</strong> using logical comparisons to index an entire object</li>
+<li>
+<strong>Subsetting</strong> saving subsets of your data, often with indexing</li>
+<li>
+<strong>String Matching</strong> and replacement using <code><a href="https://rdrr.io/r/base/grep.html">grep()</a></code>, <code><a href="https://rdrr.io/r/base/grep.html">sub()</a></code>
+</li>
+<li>
+<strong>Sorting</strong> reordering data</li>
+</ul>
+</div>
+</div>
+</section><section id="indexing" class="level1"><h1>Indexing</h1>
+<p>In general, accessing elements of vectors, matrices, or dataframes is achieved through <strong>indexing</strong> by <em><strong>position</strong></em> or <em><strong>name</strong></em>.</p>
+<p>This is extremely useful for selecting relevant data, excluding irrelevant data, or selcting building blocks to form new objects.</p>
+<p>There are many ways to achieve this:</p>
+<ul>
+<li>
+<strong>inclusion</strong> a vector of positive integers indicating which elements of the vector to include</li>
+<li>
+<strong>exclusion</strong> a vector of negative integers</li>
+<li>
+<strong>logical values</strong> a vector of TRUE / FALSE values indicating which elements to include / exclude</li>
+<li>
+<strong>by name</strong> a character vector of names of columns (only) or columns and rows</li>
+<li>
+<strong>blank index</strong> take the entire column, row, or object</li>
+<li>
+<strong>missing values</strong> can be indexed in much the same way, but because they <em>match ALL values</em> – you have to use the <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> function.</li>
+</ul>
+<section id="vectors" class="level2"><h2 class="anchored" data-anchor-id="vectors">Vectors</h2>
+<p>The <strong>index</strong> of a vector is it’s number in the array. Each and every element in any data object has at least one index (if vector, it is one dimensional so it is its position along the vector, if a matrix or data frame, which are two-dimensional, it’s the row and column number, etc.)</p>
+<p>Let’s create a vector:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 2 3 5</code></pre>
+</div>
+</div>
+<p>Access specific values of <code>xx</code> by number:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>You can use a function to generate an index. Get the last element (without knowing how many there are) by:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>Retrieve multiple elements of <code>xx</code> by using a <strong>vector</strong> as an argument:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 2</code></pre>
+</div>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># first and last</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5</code></pre>
+</div>
+</div>
+<p>Exclude elements by using a negative index:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 2 3 5</code></pre>
+</div>
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># exclude first</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 2 3 5</code></pre>
+</div>
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># exclude second</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 5</code></pre>
+</div>
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># exclude first through third</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 5</code></pre>
+</div>
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># exclude second and fourth, etc. </span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 5</code></pre>
+</div>
+</div>
+<p>Use a logical <strong>vector</strong>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">F</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">F</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># T is the same as TRUE</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE  TRUE FALSE  TRUE  TRUE</code></pre>
+</div>
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 5</code></pre>
+</div>
+<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE FALSE  TRUE FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<p><strong>Subsetting</strong> (picking particular observations out of an R object) is something that you will have to do all the time. It’s worth the time to understand it clearly.</p>
+<div class="cell">
+<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">subset_xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">subset_xx2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># using subset function</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">subset_xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">subset_xx2</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># check if the same</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE TRUE TRUE</code></pre>
+</div>
+</div>
+<p>The <code>subset</code> function is just another way of subsetting by index, just in function form with arguments. It can be more clear to use for <strong>dataframes</strong>, but it is really a matter of personal preference as you develop your style. Whichever way you go, it is important to be aware of the different ways to achieve the same goals.</p>
+</section><section id="matrices-and-dataframes" class="level2"><h2 class="anchored" data-anchor-id="matrices-and-dataframes">Matrices and Dataframes</h2>
+<p><strong>Matrices</strong> and <strong>dataframes</strong> are both rectangular having two dimensions, and are handled very similarly for indexing and subsetting.</p>
+<p>Let’s work with a dataframe that is provided with the <code>geiger</code> package called <code>geospiza</code>. It is a list with a tree and a dataframe. The dataframe contains five morphological measurements for 13 species. First, let’s clear the workspace (or clear and start a new R session):</p>
+<div class="cell">
+<div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"geiger"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># if you need to install geiger</span></span></code></pre></div>
+</div>
+<p>Get the built-in dataset this way:</p>
+<div class="cell">
+<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>list<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geiger</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ape</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: phytools</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: maps</code></pre>
+</div>
+<div class="sourceCode" id="cb42" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># load the dataset into the workspace</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>               <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># list the objects in the workspace</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "geospiza"</code></pre>
+</div>
+</div>
+<p>Let’s find out some basic information about this object:</p>
+<div class="cell">
+<div class="sourceCode" id="cb44" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb46" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "geospiza.tree" "geospiza.data" "phy"           "dat"          </code></pre>
+</div>
+<div class="sourceCode" id="cb48" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ geospiza.tree:List of 4
+  ..$ edge       : num [1:26, 1:2] 15 16 17 18 19 20 21 22 23 24 ...
+  ..$ edge.length: num [1:26] 0.2974 0.0492 0.0686 0.134 0.1035 ...
+  ..$ Nnode      : int 13
+  ..$ tip.label  : chr [1:14] "fuliginosa" "fortis" "magnirostris" "conirostris" ...
+  ..- attr(*, "class")= chr "phylo"
+ $ geospiza.data: num [1:13, 1:5] 4.4 4.35 4.22 4.26 4.24 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:13] "magnirostris" "conirostris" "difficilis" "scandens" ...
+  .. ..$ : chr [1:5] "wingL" "tarsusL" "culmenL" "beakD" ...
+ $ phy          :List of 4
+  ..$ edge       : num [1:26, 1:2] 15 16 17 18 19 20 21 22 23 24 ...
+  ..$ edge.length: num [1:26] 0.2974 0.0492 0.0686 0.134 0.1035 ...
+  ..$ Nnode      : int 13
+  ..$ tip.label  : chr [1:14] "fuliginosa" "fortis" "magnirostris" "conirostris" ...
+  ..- attr(*, "class")= chr "phylo"
+ $ dat          : num [1:13, 1:5] 4.4 4.35 4.22 4.26 4.24 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:13] "magnirostris" "conirostris" "difficilis" "scandens" ...
+  .. ..$ : chr [1:5] "wingL" "tarsusL" "culmenL" "beakD" ...</code></pre>
+</div>
+</div>
+<p>It is a list with four elements. Here we want the data</p>
+<div class="cell">
+<div class="sourceCode" id="cb50" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza.data</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13  5</code></pre>
+</div>
+</div>
+<p>Its a rectangle of data, but let’s see what type of object it is:</p>
+<div class="cell">
+<div class="sourceCode" id="cb52" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+</div>
+<p>It is a matrix, but we want to work with a dataframe, so let’s coerce it:</p>
+<div class="cell">
+<div class="sourceCode" id="cb54" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>If we want to know all the attributes of geo:</p>
+<div class="cell">
+<div class="sourceCode" id="cb55" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "wingL"   "tarsusL" "culmenL" "beakD"   "gonysW" 
+
+$class
+[1] "data.frame"
+
+$row.names
+ [1] "magnirostris" "conirostris"  "difficilis"   "scandens"     "fortis"      
+ [6] "fuliginosa"   "pallida"      "fusca"        "parvulus"     "pauper"      
+[11] "Pinaroloxias" "Platyspiza"   "psittacula"  </code></pre>
+</div>
+</div>
+<p>It is a dataframe with 13 rows and 5 columns. We see that it has a “names” attribute, which refers to column names in a dataframe. Typically, the columns of a dataframe are the variables in the dataset. It also has “rownames” which contains the species names (so it does not have a separate column for species names).</p>
+<p>Dataframes have two dimensions which we can use to index with: dataframe[row, column].</p>
+<div class="cell">
+<div class="sourceCode" id="cb57" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span>     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the entire object, same as geo[] or geo[,]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># select the first and third rows, all columns</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># all rows, third through fifth columns</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># first row, fifth column (a single number)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># first and second row, third and first column (2x2 matrix)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># everything but the first three and last three rows</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># first three species, but variables in reverse order</span></span></code></pre></div>
+</div>
+<p>To prove to ourselves that we can access matrices in the same way, let’s coerce geo to be a matrix:</p>
+<div class="cell">
+<div class="sourceCode" id="cb58" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geom</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geom</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+<div class="sourceCode" id="cb60" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode" id="cb62" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># try a few more from the choices above to test</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.675983</code></pre>
+</div>
+</div>
+<p>Since <code>geo</code> and <code>geom</code> have row and column names, we can access by name (show that this works for <code>geom</code> too):</p>
+<div class="cell">
+<div class="sourceCode" id="cb64" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pauper"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wingL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># row pauper, column wingL</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.2325</code></pre>
+</div>
+<div class="sourceCode" id="cb66" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pauper"</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># row pauper, all columns </span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        wingL tarsusL culmenL  beakD gonysW
+pauper 4.2325  3.0359   2.187 2.0734 1.9621</code></pre>
+</div>
+</div>
+<p>We can also use the names (or rownames) attribute if we are lazy. Suppose we wanted all the species which began with “pa”. we could find which position they hold in the dataframe by looking at the rownames, saving them to a vector, and then indexing by them:</p>
+<div class="cell">
+<div class="sourceCode" id="cb68" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span>                            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># a vector of the species names</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "magnirostris" "conirostris"  "difficilis"   "scandens"     "fortis"      
+ [6] "fuliginosa"   "pallida"      "fusca"        "parvulus"     "pauper"      
+[11] "Pinaroloxias" "Platyspiza"   "psittacula"  </code></pre>
+</div>
+<div class="sourceCode" id="cb70" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the ones we want are #7,8, and 10</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "pallida" "fusca"   "pauper" </code></pre>
+</div>
+<div class="sourceCode" id="cb72" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># rows 7,8 and 10, same as geo[c(7, 8, 10)]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           wingL  tarsusL  culmenL    beakD   gonysW
+pallida 4.265425 3.089450 2.430250 2.016350 1.949125
+fusca   3.975393 2.936536 2.051843 1.191264 1.401186
+pauper  4.232500 3.035900 2.187000 2.073400 1.962100</code></pre>
+</div>
+</div>
+<p>One difference between dataframes and matrices is that Indexing a data frame by a single vector (meaning, no comma separating) selects an entire column. This can be done by name or by number:</p>
+<div class="cell">
+<div class="sourceCode" id="cb74" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># third column</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"culmenL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># same</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># third and fifth column</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"culmenL"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gonysW"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># same</span></span></code></pre></div>
+</div>
+<p>Prove to yourself that selecting by a single index has a different behavior for matrices (and sometimes produces an error.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Because internally, a dataframe is actually a list of vectors. Thus a single name or number refers to the column, rather than a coordinate in a cartesian-coordinate-like system.</li>
+<li>However, a matrix is actually a vector with breaks in it. So a single number refers to a position along the single vector.</li>
+<li>A single name could work, but only if the individual elements of the matrix have names (like naming the individual elements of a vector).</li>
+</ul>
+</div>
+</div>
+<p>Another difference is that dataframes (and lists below) can be accessed by the <code>$</code> operator. It means indicates a column within a dataframe, so <code>dataframe$column</code>. This is another way to select by column:</p>
+<div class="cell">
+<div class="sourceCode" id="cb75" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">culmenL</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2.724667 2.654400 2.277183 2.621789 2.407025 2.094971 2.430250 2.051843
+ [9] 1.974420 2.187000 2.311100 2.331471 2.259640</code></pre>
+</div>
+</div>
+<p>An equivalent way to index is by using the <code>subset</code> function. Some people prefer it because you have explicit parameters for what to select and which variables to include. See help page <code><a href="https://rdrr.io/r/base/subset.html">?subset</a></code>.</p>
+</section><section id="lists" class="level2"><h2 class="anchored" data-anchor-id="lists">Lists</h2>
+<p>A list is a vector, except that whereas an ordinary vector has the same type of data (numeric, character, factor) in each slot, a list can have different types in different slots. They are sort of like expandable containers, flexibly accommodating any group of objects that the user wants to keep together.</p>
+<p>They are accessed by numeric index or by name (if they are named), but they are accessed by double square brackets. Also, you can’t access multiple elements of lists by using vectors of indices:</p>
+<div class="cell">
+<div class="sourceCode" id="cb77" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> vec <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, mat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, nrow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, cvec <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"frogs"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"birds"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$vec
+ [1]  2  4  6  8 10 12 14 16 18 20
+
+$mat
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10
+
+$cvec
+[1] "frogs" "birds"</code></pre>
+</div>
+<div class="sourceCode" id="cb79" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+<div class="sourceCode" id="cb81" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"vec"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
+</div>
+<div class="sourceCode" id="cb83" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mylist[[1:3]]  # gives an error if you uncomment it</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cvec</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "frogs" "birds"</code></pre>
+</div>
+</div>
+</section></section><section id="string-matching" class="level1"><h1>String Matching</h1>
+<p>A very useful feature is string matching. R has <code>grep</code> facilities, which can do partial matching of character strings. This is different from the ordinary <code>==</code> operator, which will compare whole character strings. Partial matching is really helpful when you are not sure of the spelling, looking for typos, variations, etc. For example, we could directly search for species (the object or “x”) names which contain “p” (the pattern):</p>
+<div class="cell">
+<div class="sourceCode" id="cb85" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>pattern <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>, x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># returns indices   </span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  7  9 10 12 13</code></pre>
+</div>
+<div class="sourceCode" id="cb87" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span>, value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># returns the species names which match</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "pallida"    "parvulus"   "pauper"     "Platyspiza" "psittacula"</code></pre>
+</div>
+<div class="sourceCode" id="cb89" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span>, ignore.case<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span>, value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># case-sensitive by default</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "pallida"      "parvulus"     "pauper"       "Pinaroloxias" "Platyspiza"  
+[6] "psittacula"  </code></pre>
+</div>
+<div class="sourceCode" id="cb91" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^P"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span>, value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># only those which start with (^) capital P</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Pinaroloxias" "Platyspiza"  </code></pre>
+</div>
+</div>
+<p>It is possible to use perl-type regular expressions, and the sub function is also available. <code>sub</code> is related to <code>grep</code>, but substitutes a replacement value to the matched pattern. Notice that there are two species which have upper case letters. We can fix this with:</p>
+<div class="cell">
+<div class="sourceCode" id="cb93" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>pattern <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^P"</span>, replacement <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "magnirostris" "conirostris"  "difficilis"   "scandens"     "fortis"      
+ [6] "fuliginosa"   "pallida"      "fusca"        "parvulus"     "pauper"      
+[11] "pinaroloxias" "platyspiza"   "psittacula"  </code></pre>
+</div>
+<div class="sourceCode" id="cb95" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>pattern <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^P"</span>, replacement <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># to save changes</span></span></code></pre></div>
+</div>
+</section><section id="ordering-data" class="level1"><h1>Ordering Data</h1>
+<p>Suppose we now want geo in alphabetical order. We can use the <code>sort</code> function to sort the rownames vector, then use it to index the dataframe:</p>
+<div class="cell">
+<div class="sourceCode" id="cb96" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+</div>
+<p>A better option for dataframes, though, is <code>order</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb97" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the order that the species should take to be</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  2  3  5  6  8  1  7  9 10 11 12 13  4</code></pre>
+</div>
+<div class="sourceCode" id="cb99" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>                 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#  sorted from a-z</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># to illustrate</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]           [,2]          [,3]         [,4]       [,5]     [,6]        
+[1,] "magnirostris" "conirostris" "difficilis" "scandens" "fortis" "fuliginosa"
+[2,] "2"            "3"           "5"          "6"        "8"      "1"         
+     [,7]      [,8]    [,9]       [,10]    [,11]          [,12]       
+[1,] "pallida" "fusca" "parvulus" "pauper" "pinaroloxias" "platyspiza"
+[2,] "7"       "9"     "10"       "11"     "12"           "13"        
+     [,13]       
+[1,] "psittacula"
+[2,] "4"         </code></pre>
+</div>
+<div class="sourceCode" id="cb101" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">oo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">oo</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># sorted in alpha order</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                wingL  tarsusL  culmenL    beakD   gonysW
+conirostris  4.349867 2.984200 2.654400 2.513800 2.360167
+difficilis   4.224067 2.898917 2.277183 2.011100 1.929983
+fortis       4.244008 2.894717 2.407025 2.362658 2.221867
+fuliginosa   4.132957 2.806514 2.094971 1.941157 1.845379
+fusca        3.975393 2.936536 2.051843 1.191264 1.401186
+magnirostris 4.404200 3.038950 2.724667 2.823767 2.675983
+pallida      4.265425 3.089450 2.430250 2.016350 1.949125
+parvulus     4.131600 2.973060 1.974420 1.873540 1.813340
+pauper       4.232500 3.035900 2.187000 2.073400 1.962100
+pinaroloxias 4.188600 2.980200 2.311100 1.547500 1.630100
+platyspiza   4.419686 3.270543 2.331471 2.347471 2.282443
+psittacula   4.235020 3.049120 2.259640 2.230040 2.073940
+scandens     4.261222 2.929033 2.621789 2.144700 2.036944</code></pre>
+</div>
+</div>
+<section id="multiple-arguments---breaking-ties" class="level2"><h2 class="anchored" data-anchor-id="multiple-arguments---breaking-ties">Multiple arguments - breaking ties</h2>
+<p>Order can sort on multiple arguments, which means that you can use other columns to break ties. Let’s trim the species names to the first letter using the substring function, then sort using the <strong>first letter of the species name</strong> and breaking ties by <strong>tarsusL</strong>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb103" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/substr.html">substring</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, first<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, last<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">oo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sp</span> , <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tarsusL</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># order by first letter species, then tarsusL</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">oo</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ordered geo dataframe, take only the wingL column</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">oo</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Using <code>geo["tarsusL"]</code> as a second index for order doesn’t work, because it is a <strong>one column dataframe</strong>, as opposed to <code>geo$tarsus</code> which is a <strong>vector</strong>.</li>
+<li>The object must match <code>sp</code>, which is a <strong>vector</strong>. Check the <code>dim</code> and <code>length</code> of each.</li>
+<li>vectors only have <strong>length</strong>, dataframes have <strong>dimensions</strong> (dim=2 for numbers of rows, columns).<br>
+</li>
+<li>
+<strong>Check your objects!</strong> The shapes have to be of the right <strong>class</strong> even if they contain the same information. This is because functions are written for particular classes of objects (and sometimes the programmer didnʻt write one for your type of object).</li>
+<li>You can always coerce your object to the right class using <code>as.vector</code>, <code>as.dataframe</code>, etc. and try again.</li>
+</ul>
+</div>
+</div>
+</section></section><section id="matching" class="level1"><h1>Matching</h1>
+<p>Matching is very easy in R, and is often used to create a logical vector to subset objects. Greater than and less than are as usual, but logical equal is two equal signs “==” to differentiate from the assignment operator “=”. Also &gt;= and &lt;=.</p>
+<div class="cell">
+<div class="sourceCode" id="cb104" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># a logical index </span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             tarsusL
+conirostris    FALSE
+difficilis     FALSE
+fuliginosa     FALSE
+fortis         FALSE
+fusca          FALSE
+magnirostris    TRUE
+parvulus       FALSE
+pinaroloxias   FALSE
+pauper          TRUE
+psittacula      TRUE
+pallida         TRUE
+platyspiza      TRUE
+scandens       FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb106" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># must match exactly 3, none do</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             tarsusL
+conirostris    FALSE
+difficilis     FALSE
+fuliginosa     FALSE
+fortis         FALSE
+fusca          FALSE
+magnirostris   FALSE
+parvulus       FALSE
+pinaroloxias   FALSE
+pauper         FALSE
+psittacula     FALSE
+pallida        FALSE
+platyspiza     FALSE
+scandens       FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb108" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># use to get observations which have tarsus &gt; 3</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.038950 3.035900 3.049120 3.089450 3.270543</code></pre>
+</div>
+<div class="sourceCode" id="cb110" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#  ii &lt;- geot &gt; 3    # these two lines of code accomplish the same</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#  geot[ii]</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># check</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              tarsusL tarsusL
+conirostris  2.984200   FALSE
+difficilis   2.898917   FALSE
+fuliginosa   2.806514   FALSE
+fortis       2.894717   FALSE
+fusca        2.936536   FALSE
+magnirostris 3.038950    TRUE
+parvulus     2.973060   FALSE
+pinaroloxias 2.980200   FALSE
+pauper       3.035900    TRUE
+psittacula   3.049120    TRUE
+pallida      3.089450    TRUE
+platyspiza   3.270543    TRUE
+scandens     2.929033   FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb112" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># what does this do?</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              tarsusL
+magnirostris 3.038950
+pauper       3.035900
+psittacula   3.049120
+pallida      3.089450
+platyspiza   3.270543</code></pre>
+</div>
+</div>
+<p>Matching and subsetting works really well for replacing values. Suppose we thought that every measurement that was less than 2.0 was actually a mistake. We can remove them from the data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb114" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span></span></code></pre></div>
+</div>
+<section id="missing-values" class="level2"><h2 class="anchored" data-anchor-id="missing-values">Missing Values</h2>
+<p><strong>Missing values compared to anything else will return a missing value</strong> (so NA == NA returns NA, which is usually not what you want). You must test it with <code>is.na</code> function. You can also test multiple conditions with and (<code>&amp;</code>) and or (<code>|</code>)</p>
+<div class="cell">
+<div class="sourceCode" id="cb115" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">gonysW</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[13]  TRUE</code></pre>
+</div>
+<div class="sourceCode" id="cb117" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">gonysW</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wingL</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># element by element "and"</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                wingL  tarsusL  culmenL    beakD   gonysW
+conirostris  4.349867 2.984200 2.654400 2.513800 2.360167
+fortis       4.244008 2.894717 2.407025 2.362658 2.221867
+magnirostris 4.404200 3.038950 2.724667 2.823767 2.675983
+psittacula   4.235020 3.049120 2.259640 2.230040 2.073940
+platyspiza   4.419686 3.270543 2.331471 2.347471 2.282443
+scandens     4.261222 2.929033 2.621789 2.144700 2.036944</code></pre>
+</div>
+<div class="sourceCode" id="cb119" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">gonysW</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">wingL</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># element by element "or"</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                wingL  tarsusL  culmenL    beakD   gonysW
+conirostris  4.349867 2.984200 2.654400 2.513800 2.360167
+difficilis   4.224067 2.898917 2.277183 2.011100       NA
+fuliginosa   4.132957 2.806514 2.094971       NA       NA
+fortis       4.244008 2.894717 2.407025 2.362658 2.221867
+magnirostris 4.404200 3.038950 2.724667 2.823767 2.675983
+parvulus     4.131600 2.973060       NA       NA       NA
+pinaroloxias 4.188600 2.980200 2.311100       NA       NA
+pauper       4.232500 3.035900 2.187000 2.073400       NA
+psittacula   4.235020 3.049120 2.259640 2.230040 2.073940
+pallida      4.265425 3.089450 2.430250 2.016350       NA
+platyspiza   4.419686 3.270543 2.331471 2.347471 2.282443
+scandens     4.261222 2.929033 2.621789 2.144700 2.036944</code></pre>
+</div>
+</div>
+<p>Matching works on strings also:</p>
+<div class="cell">
+<div class="sourceCode" id="cb121" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pauper"</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># same as   geo["pauper", ]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pauper"</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+</div>
+<p>There are even better functions for strings, though. In the expression <code>A %in% B</code>, the <code>%in%</code> operator compares two vectors of strings, and tells us which elements of <code>A</code> are present in <code>B</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb122" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">newsp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"clarkii"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pauper"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"garmani"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">newsp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">newsp</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># which new species are in geo?</span></span></code></pre></div>
+</div>
+<p>We can define the “without” operator:</p>
+<div class="cell">
+<div class="sourceCode" id="cb123" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%w/o%"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">newsp</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%w/o%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># which new species are not in geo?</span></span></code></pre></div>
+</div>
+</section></section><section id="explore-a-new-dataset" class="level1"><h1>Explore a new Dataset</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/penguins.png" class="img-fluid figure-img"></p>
+<figcaption>Meet the Penguins</figcaption></figure>
+</div>
+<p>We are going to look at the <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html"><strong>Palmer Penguins</strong> dataset</a>. It is a dataset of morphometric data from three species of penguins from Antarctica.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/culmen_depth.png" class="img-fluid figure-img"></p>
+<figcaption>Penguin Beaks</figcaption></figure>
+</div>
+<p>Please practice some of the base R functions we covered today. One of the first tasks of data exploration is</p>
+<ul>
+<li>counting sample size</li>
+<li>identifying the variables</li>
+<li>creating bivariate plots of each pair of continuous variables</li>
+<li>exploring the distribution of the data</li>
+<li>plots of the whole dataset versus by group (here, species)</li>
+</ul>
+<p>Some of the functions you could use are the following: <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, <code><a href="https://rdrr.io/r/graphics/points.html">points()</a></code> <code><a href="https://rdrr.io/r/graphics/lines.html">lines()</a></code>, <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> and <code><a href="https://rdrr.io/r/stats/density.html">density()</a></code>. You can also assign different colors using the <code>col="red"</code> etc. argument within each of these functions.</p>
+<div class="cell">
+<div class="sourceCode" id="cb124" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"palmerpenguins"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Load the data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb125" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: palmerpenguins</code></pre>
+</div>
+<div class="sourceCode" id="cb127" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>To read the help page, type <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">?penguins</a></code>. It is a <strong>tibble</strong> which is the <strong>tidyverse</strong> version of <strong>data frames</strong>. All of our base functions will work on this. Try <code>summary(penguins)</code></p>
+<p>How many species?</p>
+<div class="cell">
+<div class="sourceCode" id="cb128" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Adelie    Gentoo    Chinstrap
+Levels: Adelie Chinstrap Gentoo</code></pre>
+</div>
+</div>
+<section id="plot" class="level2"><h2 class="anchored" data-anchor-id="plot">Plot()</h2>
+<p>For a generic x-y plot use plot(). It will also start a graphical device.</p>
+<p>Here we are using the <code><a href="https://rdrr.io/r/base/with.html">with()</a></code> function to specify which dataframe to look into for our named variables. We could instead do <code>penguins$body_mass_g</code>, etc.</p>
+<div class="cell">
+<div class="sourceCode" id="cb130" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">body_mass_g</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bill_length_mm</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To add points to an existing plot, use <code><a href="https://rdrr.io/r/graphics/points.html">points()</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb131" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">body_mass_g</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bill_length_mm</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Adelie"</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">body_mass_g</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bill_length_mm</span>, col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/index_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One could fit linear models, for example, and use <code><a href="https://rdrr.io/r/graphics/lines.html">lines()</a></code> to overlay the line on the plot.</p>
+</section><section id="distribution-using-hist-and-density" class="level2"><h2 class="anchored" data-anchor-id="distribution-using-hist-and-density">Distribution using hist() and density()</h2>
+<p>To see a histogram, use <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>. You can change the <code>breaks</code> and many other features by checking out the help page <code><a href="https://rdrr.io/r/graphics/hist.html">?hist</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb132" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">body_mass_g</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/index_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To see a density plot use <code><a href="https://rdrr.io/r/stats/density.html">density()</a></code> to create the density, then plot it.</p>
+<div class="cell">
+<div class="sourceCode" id="cb133" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dens</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">penguins</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">body_mass_g</span>, na.rm<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dens</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/index_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section></section> ]]></description>
+  <category>module 2</category>
+  <category>week 4</category>
+  <category>data</category>
+  <category>data structures</category>
+  <category>objects</category>
+  <guid>https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/</guid>
+  <pubDate>Tue, 18 Feb 2025 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Types of Data</title>
   <dc:creator>Marguerite Butler</dc:creator>
