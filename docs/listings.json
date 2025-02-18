@@ -11,6 +11,7 @@
   {
     "listing": "/lectures.html",
     "items": [
+      "/posts/2025-02-20-plotting-systems/index.html",
       "/posts/2025-02-18-tidying-exploring-data/index.html",
       "/posts/2025-02-13-data/index.html",
       "/posts/2025-02-11-scripts/index.html",
@@ -19,8 +20,7 @@
       "/posts/2025-01-28-intro-quarto/index.html",
       "/posts/2025-01-21-intro-git-github/index.html",
       "/posts/2025-01-16-your-computer-filesystems/index.html",
-      "/posts/2025-01-14-the-big-picture/index.html",
-      "/posts/2025-02-20-plotting-systems/index.html"
+      "/posts/2025-01-14-the-big-picture/index.html"
     ]
   }
 ]

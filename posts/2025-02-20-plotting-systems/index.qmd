@@ -6,7 +6,7 @@ author:
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Showing you base plotting, lattice, and ggplot2"  
-date: 2024-02-20
+date: 2025-02-20
 categories: [module 3, week 5, plotting, ggplot2, lattice, data visualization]  
 ---
 
