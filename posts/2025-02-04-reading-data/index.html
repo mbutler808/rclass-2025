@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2025-02-04">
+<meta name="description" content="So many ways to get data into R">
+<title>Data IO – ZOOL710 Data Science in R for Biologists 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2c128a76c5dbb243be50ea3089ffe19d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mbutler808"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mbutler808"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Data IO</h1>
+                  <div>
+        <div class="description">
+          So many ways to get data into R
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">module 2</div>
+                <div class="quarto-category">week 3</div>
+                <div class="quarto-category">data</div>
+                <div class="quarto-category">input</div>
+                <div class="quarto-category">output</div>
+                <div class="quarto-category">formats</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://butlerlab.org">Marguerite Butler</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              School of Life Sciences, University of Hawaii
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 4, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#built-in-datasets" id="toc-built-in-datasets" class="nav-link" data-scroll-target="#built-in-datasets">Built-in datasets</a></li>
+  <li><a href="#the-biggest-issue-for-fairly-new-users" id="toc-the-biggest-issue-for-fairly-new-users" class="nav-link" data-scroll-target="#the-biggest-issue-for-fairly-new-users">The biggest issue for fairly new users</a></li>
+  <li>
+<a href="#reading-in-text-files" id="toc-reading-in-text-files" class="nav-link" data-scroll-target="#reading-in-text-files">Reading in Text Files</a>
+  <ul class="collapse">
+<li><a href="#get-the-files-onto-your-computer" id="toc-get-the-files-onto-your-computer" class="nav-link" data-scroll-target="#get-the-files-onto-your-computer">Get the files onto your computer</a></li>
+  <li><a href="#read.csv" id="toc-read.csv" class="nav-link" data-scroll-target="#read.csv">read.csv</a></li>
+  <li><a href="#input-files-generated-by-data-loggers" id="toc-input-files-generated-by-data-loggers" class="nav-link" data-scroll-target="#input-files-generated-by-data-loggers">Input files generated by data loggers</a></li>
+  </ul>
+</li>
+  <li><a href="#read-from-url" id="toc-read-from-url" class="nav-link" data-scroll-target="#read-from-url">Read from URL</a></li>
+  <li><a href="#what-to-do-when-your-spreadsheet-is-malformed" id="toc-what-to-do-when-your-spreadsheet-is-malformed" class="nav-link" data-scroll-target="#what-to-do-when-your-spreadsheet-is-malformed">What to do when your spreadsheet is malformed</a></li>
+  <li>
+<a href="#entering-data-with-spreadsheets" id="toc-entering-data-with-spreadsheets" class="nav-link" data-scroll-target="#entering-data-with-spreadsheets">Entering data with spreadsheets</a>
+  <ul class="collapse">
+<li><a href="#human-error" id="toc-human-error" class="nav-link" data-scroll-target="#human-error">Human Error</a></li>
+  <li><a href="#organizing-your-spreadhseet" id="toc-organizing-your-spreadhseet" class="nav-link" data-scroll-target="#organizing-your-spreadhseet">Organizing your spreadhseet</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#a-few-words-about-encodings" id="toc-a-few-words-about-encodings" class="nav-link" data-scroll-target="#a-few-words-about-encodings">A few words about Encodings</a>
+  <ul class="collapse">
+<li><a href="#text-versus-binary-files" id="toc-text-versus-binary-files" class="nav-link" data-scroll-target="#text-versus-binary-files">Text versus binary files</a></li>
+  <li><a href="#unicode-versus-ascii" id="toc-unicode-versus-ascii" class="nav-link" data-scroll-target="#unicode-versus-ascii">Unicode versus ASCII</a></li>
+  <li><a href="#line-endings" id="toc-line-endings" class="nav-link" data-scroll-target="#line-endings">Line endings</a></li>
+  </ul>
+</li>
+  <li><a href="#calculating-memory-requirements-for-r-objects" id="toc-calculating-memory-requirements-for-r-objects" class="nav-link" data-scroll-target="#calculating-memory-requirements-for-r-objects">Calculating Memory Requirements for R Objects</a></li>
+  <li><a href="#other-data-types" id="toc-other-data-types" class="nav-link" data-scroll-target="#other-data-types">Other data types</a></li>
+  <li><a href="#ascii-art" id="toc-ascii-art" class="nav-link" data-scroll-target="#ascii-art">ASCII art</a></li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="http://rafalab.dfci.harvard.edu/dsbook/importing-data.html" class="uri">http://rafalab.dfci.harvard.edu/dsbook/importing-data.html</a></li>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022</a></li>
+</ul></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to read and write text / csv files in R</li>
+<li>Diagnose some common problems importing data and troubleshoot</li>
+<li>Be able to identify different file types and encodings</li>
+<li>Plan using best practices for data management and spreasheet design</li>
+<li>Be able to calculate memory requirements for R objects</li>
+<li>Be aware of various packages to read in other types of data</li>
+</ul>
+</div>
+</div>
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
+<!-- Sweave2knitr() -->
+<p>So far we have either typed data in directly into R or used R functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll want to write files to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’ll practice doing it, so you learn the mechanics. Please be patient and we’ll talk more about what’s going on in the next lesson on scripts and the R Environment.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+There are many different ways to access data in R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Built-in datasets - useful for practice</li>
+<li>Text files, importing from .csv is especially easy</li>
+<li>Files in other formats, e.g., .xls</li>
+<li>readLines from a connection including files</li>
+<li>Data not on your local computer, e.g., piped via a url</li>
+<li>Special connections, e.g., google sheets</li>
+</ol>
+</div>
+</div>
+</section><section id="built-in-datasets" class="level1"><h1>Built-in datasets</h1>
+<p>R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.</p>
+<p>To see a list of them, you can type <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">cars</span></span>
+<span><span class="op">?</span><span class="va">cars</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can use built-in data in R by referring to the names of the objects.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  speed dist
+1     4    2
+2     4   10
+3     7    4
+4     7   22
+5     8   16
+6     9   10</code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="the-biggest-issue-for-fairly-new-users" class="level1"><h1>The biggest issue for fairly new users</h1>
+<p>In order for R to read in data, it needs to know (1) where it the data stream, and (2) what in the datastream it is looking for. In the case of built-in datasets, both problems are solved as it is already imported into R.</p>
+<p>The biggest issue most new-ish users experience when the path or filename is incorrect. For example, I donʻt have a file called “dat.csv” here, so this is a common error:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="R"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> read.csv<span class="kw">(</span><span class="st">"dat.csv"</span><span class="kw">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Error</span> in file<span class="er">(</span><span class="fu">file</span>, <span class="st">"rt"</span><span class="kw">)</span> <span class="bu">:</span> cannot open the connection</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">In</span> addition: Warning message:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">In</span> file<span class="er">(</span><span class="fu">file</span>, <span class="st">"rt"</span><span class="kw">)</span> <span class="bu">:</span> cannot open file <span class="st">'dat.csv'</span>: No such file or directory</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>cannot open the conection</code> is a pipe or path error. It cannot open a pipe or a connection to the file. <code>No such file or directory</code> is just that. R doesnʻt know where the file is. Is there a typo? Is it the correct path?</p>
+<p>Once we are in the correct working directory and fixed all typos, most of the time we are good, but we may have some surprises in the file format which weʻll go into below.</p>
+<p>The issue is basically that R is parsing the information stream as it reads the file and filtering what counts as data, and what is not data (also called “delimeters” or the things that separate your data). Once you understand how to specify delimeters, you are in great shape!</p>
+</section><section id="reading-in-text-files" class="level1"><h1>Reading in Text Files</h1>
+<p>The most convenient way to read data into R is using the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function. This requires that your data is saved in <code>.csv</code> format, which is possible from Microsoft Excel (save as… csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).</p>
+<p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
+<section id="get-the-files-onto-your-computer" class="level2"><h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
+<p>First, get the data files from the <a href="https://github.com/mbutler808/rclassdata"><code>rclassdata</code></a> GitHub repo by cloning the repo to your <code>Documents/git/rclass</code> folder.</p>
+<p>Open R by double clicking on an R script within your <code>rclassdata</code> folder. Which working directory are you in? If necessary, use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> to get move into the <code>rclassdata</code> folder.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">"~/Documents/git/rclass/rclassdata"</span><span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># will tell us which files are in this folder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="read.csv" class="level2"><h2 class="anchored" data-anchor-id="read.csv">read.csv</h2>
+<p>Getting the file into R is easy. If it is in csv format, you just use:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"anolisSSD.csv"</span><span class="op">)</span>  <span class="co"># look for the file in the working directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
+<p>To save the data as an R object, give it a name and save it:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">anolis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"anolisSSD.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species   logSSD    ecomorph
+1      oc -0.00512        twig
+2      eq  0.08454 crown-giant
+3      co  0.24703 trunk-crown
+4     aln  0.24837 trunk-crown
+5      ol  0.09844  grass-bush
+6      in  0.06137        twig</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species  logSSD     ecomorph
+18      cr 0.39796 trunk-ground
+19      st 0.15737  trunk-crown
+20      cy 0.26024 trunk-ground
+21     alu 0.08216   grass-bush
+22      lo 0.13108        trunk
+23      an 0.13547         twig</code></pre>
+</div>
+</div>
+<p>Which prints out the first six and last six lines of the file.</p>
+<p>Voila! Now you can plot, take the mean, etc. For example:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">anolis</span><span class="op">$</span><span class="va">ecomorph</span><span class="op">)</span>, <span class="va">anolis</span><span class="op">$</span><span class="va">logSSD</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>(Aside) You probably didn’t understand the line of code above, but we will get into this very soon in the next lectures. But you can break it down bit by bit.</p>
+<p>Now try reading in <code>anolisSSDsemicolon.csv</code> what did you get? Try reading it in with <code><a href="https://rdrr.io/r/utils/read.table.html">read.table()</a></code> - check out the help page.</p>
+<p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from <code><a href="https://rdrr.io/r/utils/help.start.html">help.start()</a></code> or at <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a>.</p>
+</section><section id="input-files-generated-by-data-loggers" class="level2"><h2 class="anchored" data-anchor-id="input-files-generated-by-data-loggers">Input files generated by data loggers</h2>
+<p>Files that are generated by computer, even if they are not separated by commas (.csv) are not too bad to deal with. Take, for example, the file format generated from our hand-held Ocean Optics specroradiometer. It is very regular in structure, and we have tons of data files, so it is well worth the programming effort to code a script for automatic file input.</p>
+<p>First, you can open the file below in a text editor. If you’d rather open it in R, you can use:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"20070725_01forirr.txt"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"20070725_01forirr.txt"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can solve these issues using the <code>skip</code> and the <code>comment.char</code> arguments of <code>read.table</code> to ignore both types of lines, reading in only the “good stuff”. Also, the default delimiter in this function is the tab:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span>file<span class="op">=</span><span class="st">"20070725_01forirr.txt"</span>, skip<span class="op">=</span><span class="fl">17</span>, comment.char<span class="op">=</span><span class="st">"&gt;"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lambda"</span>, <span class="st">"intensity"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  lambda intensity
+1 177.33         0
+2 177.55         0
+3 177.77         0
+4 177.99         0
+5 178.21         0
+6 178.43         0</code></pre>
+</div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lambda intensity
+3643 888.21   0.29491
+3644 888.38   0.31306
+3645 888.54   0.28153
+3646 888.71   0.28245
+3647 888.87   0.18988
+3648 889.04   0.18988</code></pre>
+</div>
+</div>
+<p>The file produces (useless) rows of data outside of the range of accuracy of the spectraradiometer. We can get rid of these by subsetting the data, selecting only the range 300-750nm:</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&gt;=</span> <span class="fl">300</span>, <span class="op">]</span>  <span class="co"># cut off rows below 300nm</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&lt;=</span> <span class="fl">750</span>, <span class="op">]</span>  <span class="co">#cut off rows above 750nm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or do both at once:</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&gt;=</span> <span class="fl">300</span> <span class="op">&amp;</span> <span class="va">dat</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&lt;=</span> <span class="fl">750</span>,<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we are going to be doing this subsetting over and over, we might want to save this as an index vector which tells us the position of the rows of data we want to keep in the dataframe (don’t worry, we’ll cover this again in the workhorse functions chapter).</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oo</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&gt;=</span> <span class="fl">300</span> <span class="op">&amp;</span> <span class="va">dat</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&lt;=</span> <span class="fl">750</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">oo</span>, <span class="op">]</span>   <span class="co"># same as longer version above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now save the cleaned up version of the irradiance data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"20070725_01forirr.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="read-from-url" class="level1"><h1>Read from URL</h1>
+<p>A URL is just another datastream or pipe. If it is a .csv file on the internet, R supports reading it in directly:</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">anolis2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">anolis2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species   logSSD    ecomorph
+1      oc -0.00512        twig
+2      eq  0.08454 crown-giant
+3      co  0.24703 trunk-crown
+4     aln  0.24837 trunk-crown
+5      ol  0.09844  grass-bush
+6      in  0.06137        twig</code></pre>
+</div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">anolis</span>, <span class="va">anolis2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   species   logSSD     ecomorph species   logSSD     ecomorph
+1       oc -0.00512         twig      oc -0.00512         twig
+2       eq  0.08454  crown-giant      eq  0.08454  crown-giant
+3       co  0.24703  trunk-crown      co  0.24703  trunk-crown
+4      aln  0.24837  trunk-crown     aln  0.24837  trunk-crown
+5       ol  0.09844   grass-bush      ol  0.09844   grass-bush
+6       in  0.06137         twig      in  0.06137         twig
+7       cu  0.09501  crown-giant      cu  0.09501  crown-giant
+8       ri  0.08947  crown-giant      ri  0.08947  crown-giant
+9       sa  0.28893 trunk-ground      sa  0.28893 trunk-ground
+10      op  0.15963   grass-bush      op  0.15963   grass-bush
+11      va  0.14766         twig      va  0.14766         twig
+12      li  0.38873 trunk-ground      li  0.38873 trunk-ground
+13      ga  0.28768  crown-giant      ga  0.28768  crown-giant
+14      gr  0.39786  trunk-crown      gr  0.39786  trunk-crown
+15      br  0.17106        trunk      br  0.17106        trunk
+16      di  0.13801        trunk      di  0.13801        trunk
+17      kr  0.23478   grass-bush      kr  0.23478   grass-bush
+18      cr  0.39796 trunk-ground      cr  0.39796 trunk-ground
+19      st  0.15737  trunk-crown      st  0.15737  trunk-crown
+20      cy  0.26024 trunk-ground      cy  0.26024 trunk-ground
+21     alu  0.08216   grass-bush     alu  0.08216   grass-bush
+22      lo  0.13108        trunk      lo  0.13108        trunk
+23      an  0.13547         twig      an  0.13547         twig</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Use the correct file format
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure that your URL leads to a raw <code>.csv</code> file, and not the <code>.html</code> rendering of your csv file!</p>
+</div>
+</div>
+</section><section id="what-to-do-when-your-spreadsheet-is-malformed" class="level1"><h1>What to do when your spreadsheet is malformed</h1>
+<p>You will inevitably run into malformed spreadsheets. If there are unexpected characters used as delimiters, irregular delimiters, or uneven numbers of elements, these will all cause problems reading in data smoothly into any software.</p>
+<p>Most of the time, these issues are inadvertent. For example, if you cut and paste off the web, extra characters can easily be introduced. Try reading in <code>species_list_IUCN.csv</code>. It is a large spreadsheet of every species of subfamily Asteriorphinae frog in the world (over 330). Does it look OK?</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"species_list_IUCN.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                   SPECIES.OF.ASTEROPHRYINAE.REPRESENTED.IN.IUCN.SHAPEFILE.LIST.
+1   Aphantophryne minuta                                                                                                        
+2   Aphantophryne nana                                                                                                          
+3   Aphantophryne pansa                                                                                                         
+4   Aphantophryne parkeri                                                                                                       
+5   Aphantophryne sabini                                                                                                        
+6   Asterophrys eurydactyla                                                                                                     
+   X X.1 X.2 X.3
+1 NA  NA  NA  NA
+2 NA  NA  NA  NA
+3 NA  NA  NA  NA
+4 NA  NA  NA  NA
+5 NA  NA  NA  NA
+6 NA  NA  NA  NA</code></pre>
+</div>
+</div>
+<p>Itʻs hard to tell from this output what the problem is. Try <code>readLines</code>, which will show you the entire line of data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tempL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="st">"species_list_IUCN.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in readLines("species_list_IUCN.csv"): incomplete final line found on
+'species_list_IUCN.csv'</code></pre>
+</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tempL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SPECIES OF ASTEROPHRYINAE REPRESENTED IN IUCN SHAPEFILE LIST:,,,,"                                                                 
+[2] "Aphantophryne minuta                                                                                                        ,,,,"  
+[3] "Aphantophryne nana                                                                                                          ,,,,"  
+[4] "  Aphantophryne pansa                                                                                                         ,,,,"
+[5] "  Aphantophryne parkeri                                                                                                       ,,,,"
+[6] "  Aphantophryne sabini                                                                                                        ,,,,"</code></pre>
+</div>
+</div>
+<p>Now you can clearly see that it is extra whitespace. Extra blank columns, and a huge long line of white space after each species name. Starting from <em>Aphantophryne pansa</em>, there are two extra spaces in front of each species name.</p>
+<p>The easiest thing to do here is to open up the spreadsheet in your spreadsheet program (or plain text editor) and read it back in. Delete the extra columns, and do search and replace on the two leading spaces and trailing multiple spaces. Also change that very long name to something more reasonable like “gensp”. (This is an example of using variable names as annotations or comments - donʻt do it.)</p>
+<p>Alternatively, you can solve these problems within R. We will learn these object and string manipulation skills later, but here is one way to solve the problems once you have diagnosed them.</p>
+<section id="read-in-and-select-only-the-first-columns" class="level4"><h4 class="anchored" data-anchor-id="read-in-and-select-only-the-first-columns">Read in and select only the first columns</h4>
+<p>The rest of the columns are blank, so we really only need the first one. Also lets give it a shorter name.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"species_list_IUCN.csv"</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>   <span class="co"># select only the first column and resave dat</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"gensp"</span>  <span class="co"># give the column a shorter name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="use-function-trimws" class="level4"><h4 class="anchored" data-anchor-id="use-function-trimws">Use function <code>trimws</code>
+</h4>
+<p>R has a handy function <code>trimws</code> that trims white space</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gensp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">gensp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gensp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Aphantophryne minuta"    "Aphantophryne nana"     
+[3] "Aphantophryne pansa"     "Aphantophryne parkeri"  
+[5] "Aphantophryne sabini"    "Asterophrys eurydactyla"</code></pre>
+</div>
+</div>
+<p>How you deal with cleaning the data will depend on what the issue is. But the first step is always diagnosing the problem. Weʻll learn many more strategies as we go.</p>
+</section></section><section id="entering-data-with-spreadsheets" class="level1"><h1>Entering data with spreadsheets</h1>
+<p>Data management is a major issue for any scientist, so it is worthwhile to develop some best practices. Entering data into spreadsheets is a fundamental step in any study using field data or any type of information that is gathered by humans. Some of the issues to consider are:</p>
+<ol type="1">
+<li>How can we best minimize human error?</li>
+<li>What dataset structures are best for analyzing the data using software?</li>
+<li>Compatability with other datasets in the lab, or commonly used in the field.</li>
+</ol>
+<p>In the best case, we want to make our data available to the world, which means that it will have a permanence. We may also want to build on this data year after year, so it is worth thinking about a good design.</p>
+<section id="human-error" class="level2"><h2 class="anchored" data-anchor-id="human-error">Human Error</h2>
+<p>It is very easy to make a typo, and humans are really bad at catching our own typos in real time. Right? They creep in despite our best efforts. This is why even though it is possible to measure specimens and enter the numbers directly into the computer, itʻs not something I would do.</p>
+<p>I always write my measurements down into a notebook or a datasheet using pencil and paper. This has saved me many errors in three ways (1) sometimes my brain is still processing what I just wrote and I will catch a typo. (2) I write my data in rows for specimens and columns for the different measurements. As the dataset builds, it is easy to notice errors if some number is really off. (3) If you have any doubts, you can quickly look over your page and re-measure anything suspicous. If you have the person-power, you can also have one person taking the measurements and calling them out, and another writing them down and repeating them back. It is a very effective way to check on the spot.</p>
+<p>I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked. The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of “double checking” 😝. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice 😲. Please, whenever possible check your data entry.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Here are some tips:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>
+<strong>Record data in a notebook</strong> (paper and pencil). It serves as a <strong>permanent record</strong>.</li>
+<li>Write it down in a <strong>data table format</strong> in an <strong>order that minimizes error</strong>. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.</li>
+<li>
+<strong>Organize your spreadsheet</strong> to <em>mirror</em> the hand-written data. This will minimize data entry errors.</li>
+<li>
+<strong>Have another person check</strong> your data entry against the <em>notebook</em> (data source).</li>
+</ol>
+</div>
+</div>
+</section><section id="organizing-your-spreadhseet" class="level2"><h2 class="anchored" data-anchor-id="organizing-your-spreadhseet">Organizing your spreadhseet</h2>
+<p>When it comes time to enter your data in a spreadsheet, there are many things you can do to improve organization. Below is a summary of the recommendations made in paper by Karl Broman and Kara Woo <span class="citation" data-cites="Broman:2018">(<a href="#ref-Broman:2018" role="doc-biblioref">Broman and Woo 2018</a>)</span>.</p>
+<ul>
+<li>
+<strong>Be Consistent</strong> - Have a plan before you start entering data. Be consistent and stick to it.</li>
+<li>
+<strong>Choose Good Names for Things</strong> - You want the names you pick for objects, files, and directories to be memorable, easy to spell, descriptive, but concise. This is actually a hard balance to achieve and it does require time and thought.
+<ul>
+<li>One important rule to follow is do not use spaces, use underscores _ or dashes instead -.</li>
+<li>Also, avoid symbols; stick to letters and numbers.</li>
+</ul>
+</li>
+<li>
+<strong>Write Dates as YYYY-MM-DD</strong> - To avoid confusion, we strongly recommend using this global ISO 8601 standard.</li>
+<li>
+<strong>No Empty Cells</strong> - Fill in all cells and use some common code for missing data.</li>
+<li>
+<strong>Put Just One Thing in a Cell</strong> - It is better to add columns to store the extra information rather than having more than one piece of information in one cell.</li>
+<li>
+<strong>Make It a Rectangle</strong> - The spreadsheet should be a rectangle.</li>
+<li>
+<strong>Create a Data Dictionary</strong> - If you need to explain things, such as what the columns are or what the labels used for categorical variables are, do this in a separate file. This is an excellent use for a README.md file</li>
+<li>
+<strong>No Calculations in the Raw Data Files</strong> - Excel permits you to perform calculations. Do not make this part of your spreadsheet. Code for calculations should be in a script.</li>
+<li>
+<strong>Do Not Use Font Color or Highlighting as Data</strong> - Most import functions are not able to import this information. Encode this information as a variable (a “comment” column) instead.</li>
+<li>
+<strong>Make Backups</strong> - Make regular backups of your data.</li>
+<li>
+<strong>Use Data Validation to Avoid Errors</strong> - Leverage the tools in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free as possible. Think of checks you can do for “reality checks”.</li>
+<li>
+<strong>Save the Data as Text Files</strong> - Save files for sharing in comma or tab delimited format. An unambiguous text format is the best for archiving your data.</li>
+</ul></section></section><section id="a-few-words-about-encodings" class="level1"><h1>A few words about Encodings</h1>
+<section id="text-versus-binary-files" class="level2"><h2 class="anchored" data-anchor-id="text-versus-binary-files">Text versus binary files</h2>
+<p>For data science purposes, files can generally be classified into two categories: text files (also known as <strong>ASCII</strong> files) and <strong>binary</strong> files. You have already worked with text files. All your R scripts are text files and so are the Quarto files used to create this website. The .csv tables you have read are also text files. One big advantage of these files is that we can easily “look” at them using a plain text editor, without having to purchase any kind of special software.</p>
+<p>Any text editor can be used to examine a text file, including freely available editors such as <strong>R</strong>, <strong>RStudio</strong>, <strong>Atom</strong>, <strong>Notepad</strong>, <strong>TextEdit</strong>, <strong>vi</strong>, <strong>emacs</strong>, <strong>nano</strong>, and <strong>pico</strong>. However, if you try to open, say, an Excel xls file, jpg or png file, you will not be able to see anything immediately useful. These are binary files. Excel files are actually compressed folders with several text files inside. But the main distinction here is that text files can be easily examined.</p>
+<p>Although R includes tools for reading widely used binary files, such as xls files, <em>in general you will want to find data sets stored in text files</em>. If necessary, use the proprietary software to export the data into text files and go from there.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The problem with using propietary formats for data management is that htey are poor formats for achival purposes. These formats may change or they donʻt copy well, so that eventually you can no longer open them.</p>
+</div>
+</div>
+<p>Similarly, when sharing data you want to make it available as text files as long as storage is not an issue (binary files are much more efficient at saving space on your disk). In general, plain-text formats make it easier to share data since commercial software is not required for working with the data, and they are more reliable.</p>
+<p>Technically, html and xml files are text files too, but they have complicated tags around the information. In the Data Wrangling part of the book we learn to extract data from more complex text files such as html files.</p>
+</section><section id="unicode-versus-ascii" class="level2"><h2 class="anchored" data-anchor-id="unicode-versus-ascii">Unicode versus ASCII</h2>
+<p>A pitfall in data science is assuming a file is an ASCII text file when, in fact, it is something else that can look a lot like an ASCII text file, for example, a Unicode text file.</p>
+<p>To understand the difference between these, remember that everything on a computer needs to eventually be converted to 0s and 1s (binary format). ASCII is an encoding that maps bits to characters that are easier for humans to read.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Binary data can take on only two values - 0 or 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>a <strong>bit</strong> is the smallest unit, a single binary character (0 or 1).</li>
+<li>a <strong>byte</strong> is eight bits.</li>
+<li>a <strong>megabyte</strong> or MB is one million bytes.</li>
+<li>a <strong>gigabyte</strong> or GB is one billion bytes.</li>
+<li>You can roughly calculate the size of your data by the numbers of bytes per each observation.</li>
+</ul>
+</div>
+</div>
+<p>ASCII uses 7 bits – seven variables that can be either 0 or 1 – which results in 2<sup>7</sup> = 128 unique items, enough to encode all the characters on an English language keyboard (all characters, numbers, and symbols, <a href="#fig-ascii" class="quarto-xref">Figure&nbsp;1</a>, <a href="#fig-ascii2" class="quarto-xref">Figure&nbsp;2</a>). However, we need to expand the possibilities if we want to include support for other languages or additional characters.</p>
+<div id="fig-ascii" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ascii-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="ascii1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ascii-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Binary encodings in ACII, with some of the most used escape sequences like <code>\t</code> for tab and <code>\n</code> for new line.
+</figcaption></figure>
+</div>
+<div id="fig-ascii2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ascii2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="ascii2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ascii2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Some examples of ASCII encodings for A-E and a-e.
+</figcaption></figure>
+</div>
+<p>For this reason, a new encoding, using more than 7 bits, was defined: Unicode. When using Unicode, one can chose between 8, 16, and 32 bits abbreviated UTF-8, UTF-16, and UTF-32 respectively. RStudio actually defaults to UTF-8 encoding.</p>
+<p>Although we do not go into the details of how to deal with the different encodings here, it is important that you know these different encodings exist so that you can better diagnose a problem if you encounter it. One way problems manifest themselves is when you see “weird looking” characters you were not expecting.</p>
+<p>Many plain text editors (Atom, Sublime, TextWrangler, Notepad++) will detect encodings and tell you what they are and may also convert between them. Also from the command line the <code>file</code> command will reveal the encoding (should also work on Windows if you have <code>git</code> installed:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb37" data-filename="Terminal"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> filename</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This StackOverflow discussion is an example: <a href="https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell" class="uri">https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell</a>.</p>
+</section><section id="line-endings" class="level2"><h2 class="anchored" data-anchor-id="line-endings">Line endings</h2>
+<p>One last potential headache is the character used for line endings. The line ending is the invisible (to us) character that is added to your file when you press the <code>return</code> key.</p>
+<p>It is all one stream of informatin to the computer, but the computer will interpret the information as a new line when it detects one of these characters. When software is provided a file with an unexpected line ending, it is not able to properly detect the lines of information (maybe it sees only one huge line). See?</p>
+<p>There are two types of line endings in use today:</p>
+<ul>
+<li><p><strong>On UNIX and MacOS</strong>, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the <code>\n</code> escape sequence in most languages), also referred to as a linefeed (LF).</p></li>
+<li><p><strong>On Windows</strong>, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or <code>\r</code>) and a newline(<code>\n</code>), also referred to as CR/LF.</p></li>
+</ul>
+<p>If your computer complains about line endings, the easiest thing to do is to open it in one of the good plain text editors and save it with the line endings it is expecting (usually as LF instead of CR/LF).</p>
+</section></section><section id="calculating-memory-requirements-for-r-objects" class="level1"><h1>Calculating Memory Requirements for R Objects</h1>
+<p>Because <strong>R stores all of its objects in physical memory</strong>, it is important to be aware of how much memory is being used up by all of the data objects residing in your workspace.</p>
+<p>It is easy to make a back of the envelope calculation of how much memory will be required by a new dataset. For example, suppose I have a data frame with 1,500,000 rows and 120 columns, all of which are numeric data. Roughly, how much memory is required to store this data frame?</p>
+<p>Well, on most modern computers <a href="http://en.wikipedia.org/wiki/Double-precision_floating-point_format">double precision floating point numbers</a> are stored using 64 bits of memory, or 8 bytes. Given that information, you can do the following calculation</p>
+<p>1,500,000 × 120 × 8 bytes/numeric = 1,440,000,000 bytes</p>
+<p>= 1,440,000,000 bytes / 2<sup>20</sup> bytes/MB</p>
+<p>= 1,373 MB</p>
+<p>= 1.37 GB</p>
+<p>So the dataset would require about 1.37 GB of RAM. Most computers these days have at least that much RAM. However, you need to be aware of</p>
+<ul>
+<li>what other programs might be running on your computer, using up RAM</li>
+<li>what other R objects might already be taking up RAM in your workspace</li>
+</ul>
+<p>Reading in a large dataset for which you do not have enough RAM is one easy way to freeze up your computer (or at least your R session). When that happens you to kill the R process, in the best case scenario, or reboot your computer, in the worst case. So before opening up potentially huge datasets, make sure to do a rough calculation of memory requirements needed. You’ll thank me later.</p>
+<p><em>Also, itʻs aways good to build a script as you go and save frequently.</em></p>
+</section><section id="other-data-types" class="level1"><h1>Other data types</h1>
+<p>Now, there are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.</p>
+<p>For example, check out</p>
+<ul>
+<li>
+<a href="https://github.com/r-dbi/DBI"><code>DBI</code></a> for relational databases</li>
+<li>
+<a href="https://haven.tidyverse.org"><code>haven</code></a> for SPSS, Stata, and SAS data</li>
+<li>
+<a href="https://github.com/r-lib/httr"><code>httr</code></a> for web APIs</li>
+<li>
+<a href="https://readxl.tidyverse.org"><code>readxl</code></a> for <code>.xls</code> and <code>.xlsx</code> sheets</li>
+<li>
+<a href="https://googlesheets4.tidyverse.org"><code>googlesheets4</code></a> for Google Sheets</li>
+<li>
+<a href="https://googledrive.tidyverse.org"><code>googledrive</code></a> for Google Drive files</li>
+<li>
+<a href="https://github.com/tidyverse/rvest"><code>rvest</code></a> for web scraping</li>
+<li>
+<a href="https://github.com/jeroen/jsonlite#jsonlite"><code>jsonlite</code></a> for JSON</li>
+<li>
+<a href="https://github.com/r-lib/xml2"><code>xml2</code></a> for XML.</li>
+</ul></section><section id="ascii-art" class="level1"><h1>ASCII art</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="https://nl.wikipedia.org/wiki/Gebruiker:Wilinckx"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/BB-ASCII-art-screenshot-zebra.png" class="img-fluid figure-img" alt="Zebra in ASCII by Wilinckx, Wikimedia commons"></a></p>
+<figcaption>Zebra in ASCII by Wilinckx, Wikimedia commons</figcaption></figure>
+</div>
+
+
+
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Broman:2018" class="csl-entry" role="listitem">
+Broman, Karl W., and Kara H. Woo. 2018. <span>“Data Organization in Spreadsheets.”</span> <em>The American Statistician</em> 72 (1): 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>.
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/mbutler808\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

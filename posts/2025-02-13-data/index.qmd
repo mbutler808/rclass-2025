@@ -13,14 +13,6 @@ categories: [module 2, week 4, data, data structures, objects]
 <!-- Add interesting quote -->
 
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
-`r emojifont::emoji('pencil2')`
-
-# Overview 
-
-We will discuss different types of data, how they are represented in R, and how data type influences the types of data analyses we may employ. 
-
-A practical benefit of understanding how R handles data is that a major source of error for novice R programmers is _trying to use functions but providing the wrong type or class of data than what the function was written for_. This is very confusing if you donʻt understand about objects in R, but very clear and easy to fix if you do! 
-
 # Pre-lecture materials
 
 ### Watch
@@ -31,6 +23,14 @@ A practical benefit of understanding how R handles data is that a major source o
 
 {{< video https://youtu.be/wzPRpyoNaa8 start="350" >}}
 :::
+
+`r emojifont::emoji('pencil2')`
+
+# Overview 
+
+We will discuss different types of data, how they are represented in R, and how data type influences the types of data analyses we may employ. 
+
+A practical benefit of understanding how R handles data is that a major source of error for novice R programmers is _trying to use functions but providing the wrong type or class of data than what the function was written for_. This is very confusing if you donʻt understand about objects in R, but very clear and easy to fix if you do! 
 
 ## Acknowledgements
 

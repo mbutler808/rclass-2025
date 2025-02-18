@@ -7,12 +7,29 @@ author:
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "All about data and how it is represented in R"  
 date: 2025-02-18
-categories: [module 2, week 4, data, data structures, objects]  
+categories: [module 2, week 5, data, data structures, objects]  
 ---
 
 <!-- Add interesting quote -->
 
 <!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+# Pre-lecture materials
+
+### Watch
+
+::: callout-note
+# Watch 
+**Before class, you can prepare by watching:**
+
+### Factors, NAs, Operators
+
+{{< video https://youtu.be/fhB1UBGEhxQ?si=bxT76_mFXMkLIjMU >}}
+
+### Dataframe Access and What is it?
+
+{{< video https://youtu.be/qXFthbd1uYg?si=Eu61_HdP902ciNCD >}}
+:::
+
 `r emojifont::emoji('pencil2')`
 
 # Overview 

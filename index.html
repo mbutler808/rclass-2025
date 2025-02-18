@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Projects – ZOOL710 Data Science in R for Biologists 2025</title>
+<title>Introduction to Data Science in R for Biologists 2025 – ZOOL710 Data Science in R for Biologists 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,12 +30,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -68,65 +65,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-projects .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-projects'] = new List('listing-projects', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -149,7 +88,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -209,192 +148,68 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cHJvamVjdCUyMDA=">project 0 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvamVjdCUyMDE=">project 1 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvamVjdCUyMDI=">project 2 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvamVjdCUyMDM=">project 3 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cHJvamVjdHM=">projects <span class="quarto-category-count">(4)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+  <ul>
+  <li><a href="#what-is-this-course" id="toc-what-is-this-course" class="nav-link active" data-scroll-target="#what-is-this-course">What is this course?</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#useful-free-r-resources" id="toc-useful-free-r-resources" class="nav-link" data-scroll-target="#useful-free-r-resources">Useful (Free) R Resources</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-about-jolla">
+  <img src="images/coolPCA.png" class="about-image
+  round " style="height: 15em; width: 15em;">
+ <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Projects</h1>
+<h1 class="title">Introduction to Data Science in R for Biologists 2025</h1>
 </div>
-
-
-
-<div class="quarto-title-meta column-page-left">
-
-    
-  
-    
+<div class="quarto-title-meta">
   </div>
-  
+</header><main class="content" id="quarto-document-content">
+
+<p>Welcome to Data Science for Biologists at the University of Hawaiʻi!</p>
+<section id="what-is-this-course" class="level2">
+<h2 data-anchor-id="what-is-this-course">What is this course?</h2>
+<p>This course covers the basics of computational and programming skills required for research in biological sciences and related disciplines. We will cover practical issues in data organization and management as well as programming in R and the tidyverse. Some of the topics will include: data ethics, best practices for coding and reproducible research, introduction to data visualizations, best practices for working with special data types (dates/times, text data, etc), best practices for storing data, basics of debugging, organizing and commenting code, basics of interacting with other computational resources from R. Topics in statistical data analysis, morphometrics, phylogenetic tree visualization, and other practical examples provide working examples.</p>
+</section>
+<section id="getting-started" class="level2">
+<h2 data-anchor-id="getting-started">Getting started</h2>
+<p>Please look over the <a href="./syllabus.html">Syllabus</a> and <a href="./schedule.html">Schedule</a> under <strong>General Information</strong>. Lectures are provided under the course materials tab.</p>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>This course was developed and is maintained by <a href="https://butlerlab.org">Marguerite Butler</a>.</p>
+<p>A big thank you to <a href="https://www.stephaniehicks.com">Stephanie Hicks</a> for generously sharing the beautifully designed quarto template for this course.</p>
+<p>Materials have been adapted from courses developed by the following individuals (more to come): <a href="https://www.stephaniehicks.com">Stephanie Hicks</a>.</p>
+<p>The course materials are licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>. Linked and embedded materials are governed by their own licenses. I assume that all external materials used or embedded here are covered under the educational fair use policy. If this is not the case and any material displayed here violates copyright, please let me know and I will remove it.</p>
+</section>
+<section id="useful-free-r-resources" class="level2">
+<h2 data-anchor-id="useful-free-r-resources">Useful (Free) R Resources</h2>
+<p>Intro to R (by the R Core Group): <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-intro.html</a> R for Data Science: <a href="http://r4ds.had.co.nz/" class="uri">http://r4ds.had.co.nz/</a> Intro to Data Science: <a href="http://rafalab.dfci.harvard.edu/dsbook/" class="uri">http://rafalab.dfci.harvard.edu/dsbook/</a> Various “Cheat Sheets”: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a> DataCamp: <a href="http://www.datacamp.com" class="uri">http://www.datacamp.com</a> R reference card: <a href="http://cran.r-project.org/doc/contrib/Short-refcard.pdfUCLA" class="uri">http://cran.r-project.org/doc/contrib/Short-refcard.pdfUCLA</a> R Data Import/Export (by the R Core Group): <a href="https://cran.r-project.org/doc/manuals/r-release/R-data.html" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-data.html</a></p>
 
 
-</header>
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-projects">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="cHJvamVjdCUyMDIlMkNwcm9qZWN0JTIwMyUyQ3Byb2plY3Rz" data-listing-date-sort="1739268000000" data-listing-file-modified-sort="1736855030476" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="705">
-<div class="thumbnail">
-<p><a href="./projects/2023-03-22-project-2-3/index.html" class="no-external"></a></p><a href="./projects/2023-03-22-project-2-3/index.html" class="no-external">
-<!-- img(9CEB782EFEE6)[progressive=false, height=]:projects:projects/2023-03-22-project-2-3/index.html -->
-</a><p><a href="./projects/2023-03-22-project-2-3/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/2023-03-22-project-2-3/index.html" class="no-external">Projects 2,3</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/2023-03-22-project-2-3/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdCUyMDI='); return false;">
-project 2
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdCUyMDM='); return false;">
-project 3
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdHM='); return false;">
-projects
+</section>
+</main> 
+  <hr class="about-sep">
+   <div class="about-links">
+  <a href="https://twitter.com/mbutler808" class="about-link" rel="" target="">
+    <i class="bi bi-twitter"></i>
+     <span class="about-link-text">Twitter</span>
+  </a>
+  <a href="https://github.com/mbutler808" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Github</span>
+  </a>
 </div>
 </div>
-<div class="listing-description">
-<a href="./projects/2023-03-22-project-2-3/index.html" class="no-external">Information for Projects 2 and 3</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./projects/2023-03-22-project-2-3/index.html" class="no-external">
-<div class="listing-date">
-Feb 11, 2025
-</div>
-<div class="listing-author">
-Marguerite Butler
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="cHJvamVjdCUyMDAlMkNwcm9qZWN0cw==" data-listing-date-sort="1736848800000" data-listing-file-modified-sort="1737613303700" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1197">
-<div class="thumbnail">
-<p><a href="./projects/2025-01-14-project-0/index.html" class="no-external"></a></p><a href="./projects/2025-01-14-project-0/index.html" class="no-external">
-<!-- img(9CEB782EFEE6)[progressive=false, height=]:projects:projects/2025-01-14-project-0/index.html -->
-</a><p><a href="./projects/2025-01-14-project-0/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/2025-01-14-project-0/index.html" class="no-external">Project 0 (optional)</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/2025-01-14-project-0/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdCUyMDA='); return false;">
-project 0
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdHM='); return false;">
-projects
-</div>
-</div>
-<div class="listing-description">
-<a href="./projects/2025-01-14-project-0/index.html" class="no-external">Information for Project 0 (entirely optional, but hopefully useful and fun!)</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./projects/2025-01-14-project-0/index.html" class="no-external">
-<div class="listing-date">
-Jan 14, 2025
-</div>
-<div class="listing-author">
-Marguerite Butler
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="cHJvamVjdCUyMDMlMkNwcm9qZWN0cw==" data-listing-date-sort="1682589600000" data-listing-file-modified-sort="1682625516000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="222">
-<div class="thumbnail">
-<p><a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external"></a></p><a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external">
-<!-- img(9CEB782EFEE6)[progressive=false, height=]:projects:projects/2023-03-22-oral-presentation/index.html -->
-</a><p><a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external">Oral Presentation</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdCUyMDM='); return false;">
-project 3
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdHM='); return false;">
-projects
-</div>
-</div>
-<div class="listing-description">
-<a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external">Information for Final Oral Presenatation</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./projects/2023-03-22-oral-presentation/index.html" class="no-external">
-<div class="listing-date">
-Apr 27, 2023
-</div>
-<div class="listing-author">
-Marguerite Butler
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="cHJvamVjdCUyMDElMkNwcm9qZWN0cw==" data-listing-date-sort="1675072800000" data-listing-file-modified-sort="1679533777000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1016">
-<div class="thumbnail">
-<p><a href="./projects/2025-01-28-project-1/index.html" class="no-external"></a></p><a href="./projects/2025-01-28-project-1/index.html" class="no-external">
-<!-- img(9CEB782EFEE6)[progressive=false, height=]:projects:projects/2025-01-28-project-1/index.html -->
-</a><p><a href="./projects/2025-01-28-project-1/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/2025-01-28-project-1/index.html" class="no-external">Project 1</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/2025-01-28-project-1/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdCUyMDE='); return false;">
-project 1
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvamVjdHM='); return false;">
-projects
-</div>
-</div>
-<div class="listing-description">
-<a href="./projects/2025-01-28-project-1/index.html" class="no-external">Information for Project 1</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./projects/2025-01-28-project-1/index.html" class="no-external">
-<div class="listing-date">
-Jan 30, 2023
-</div>
-<div class="listing-author">
-Marguerite Butler
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -415,13 +230,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
