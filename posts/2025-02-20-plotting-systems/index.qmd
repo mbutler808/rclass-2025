@@ -63,6 +63,14 @@ The three systems are
 **This course will focus primarily on the base and ggplot2 plotting systems**. Lattice is presented for context.
 :::
 
+If you don't have these already, please install: 
+
+```{r}
+#| eval: false
+install.packages(c("lattice", "ggplot2"))
+```
+
+and then
 
 ## The Base Plotting System
 
@@ -170,7 +178,7 @@ The **lattice plotting system** is ideal for visualization of multivariate data,
 To **use the lattice plotting functions**, you must first load the `lattice` package.
 
 ```{r}
-require(lattice)
+library(lattice)
 ```
 
 With the lattice system, **plots are created with a single function call**, such as `xyplot()` or `bwplot()`, and the plot is delivered in a predefined format. 
@@ -235,7 +243,7 @@ install.packages("ggplot2")
 and then load it into R.
 
 ```{r}
-require(ggplot2)
+library(ggplot2)
 ```
 
 Superficially, the `ggplot2` functions are similar to `lattice`, but the system is generally easier and more intuitive to use once you learn the syntax.

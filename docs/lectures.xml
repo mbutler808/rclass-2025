@@ -2880,8 +2880,8 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">y</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  0.800720278 -1.554502240  0.002381058 -0.287112114 -1.242811300
-[6] -0.367265644  0.102938079 -0.271202295</code></pre>
+<pre><code>[1]  0.59456770 -0.38035896  0.58909589  1.15282890  0.04731711 -0.55153941
+[7] -1.15865591 -0.67623257</code></pre>
 </div>
 <div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
@@ -3090,9 +3090,9 @@ font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># coerce to character</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0.800720277575902"   "-1.55450224005991"   "0.00238105774321548"
-[4] "-0.287112113948535"  "-1.24281129998248"   "-0.36726564375794"  
-[7] "0.102938079051935"   "-0.271202294852716" </code></pre>
+<pre><code>[1] "0.594567699062284"  "-0.380358964417646" "0.589095888435205" 
+[4] "1.15282890309149"   "0.0473171050369479" "-0.551539405915159"
+[7] "-1.15865590675758"  "-0.676232566224384"</code></pre>
 </div>
 </div>
 <p>Note that when values are quoted, they are of type character.</p>
@@ -3328,15 +3328,15 @@ length (arg 1)</code></pre>
 background-color: null;
 font-style: inherit;">xy</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     x            y
-[1,] 1  0.800720278
-[2,] 5 -1.554502240
-[3,] 7  0.002381058
-[4,] 2 -0.287112114
-[5,] 6 -1.242811300
-[6,] 1 -0.367265644
-[7,] 5  0.102938079
-[8,] 7 -0.271202295</code></pre>
+<pre><code>     x           y
+[1,] 1  0.59456770
+[2,] 5 -0.38035896
+[3,] 7  0.58909589
+[4,] 2  1.15282890
+[5,] 6  0.04731711
+[6,] 1 -0.55153941
+[7,] 5 -1.15865591
+[8,] 7 -0.67623257</code></pre>
 </div>
 <div class="sourceCode" id="cb64" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
@@ -3729,7 +3729,7 @@ font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">]</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3229887</code></pre>
+<pre><code>[1] -0.8255827</code></pre>
 </div>
 </div>
 </section><section id="lists" class="level3"><h3 class="anchored" data-anchor-id="lists">Lists</h3>
@@ -3917,7 +3917,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <pre><code>List of 4
  $ species: chr [1:3] "a" "b" "c"
  $ x      : num [1:3] 1 2 4
- $ y      : num [1:3] 0.323 1.837 -0.815
+ $ y      : num [1:3] -0.826 1.369 -0.602
  $ z      : int [1:2, 1:3] 1 2 3 4 5 6
   ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
   ..- attr(*, "dimnames")=List of 2
@@ -5959,8 +5959,8 @@ font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ButlerPapers.bib" "evolution.csl"    "index.qmd"        "index.rmarkdown" 
-[5] "my-refs.bib"     </code></pre>
+<pre><code>[1] "ButlerPapers.bib" "evolution.csl"    "index.html"       "index.qmd"       
+[5] "index.rmarkdown"  "my-refs.bib"     </code></pre>
 </div>
 </div>
 <p>If you open up the <code>my-refs.bib</code> file, you will see</p>
@@ -7042,192 +7042,6 @@ Tip
   <category>programming</category>
   <guid>https://mbutler808.github.io/posts/2025-01-28-intro-quarto/</guid>
   <pubDate>Tue, 28 Jan 2025 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Reproducible Research</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</link>
-  <description><![CDATA[ <blockquote class="blockquote">
-<p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
-</blockquote>
-<section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
-<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Read ahead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
-<ol type="1">
-<li>
-<a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
-<li>
-<a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
-</ol>
-</div>
-</div>
-</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
-<li><a href="http://users.stat.umn.edu/~geyer/repro.pdf" class="uri">http://users.stat.umn.edu/~geyer/repro.pdf</a></li>
-<li><a href="https://rdpeng.github.io/Biostat776" class="uri">https://rdpeng.github.io/Biostat776</a></li>
-<li>
-<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
-</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Know the difference between replication and reproducibility</li>
-<li>Identify valid reasons why replication and/or reproducibility is not always possible</li>
-<li>Identify the type of reproducibility</li>
-<li>Identify key components to enable reproducible data analyses</li>
-</ul>
-</div>
-</div>
-</section><section id="introduction" class="level1"><h1>Introduction</h1>
-<p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
-<p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
-<p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
-<ul>
-<li><a href="https://www.science.org/toc/science/334/6060" class="uri">https://www.science.org/toc/science/334/6060</a></li>
-</ul>
-<p>Take for example a recent study by the <a href="https://doi.org/10.1073/pnas.2203150119">Crowdsourced Replication Initiative (2022)</a>. It was a massive effort by 166 coauthors published in PNAS to test repeatability:</p>
-<ul>
-<li>73 research teams from around the world analyzed the <strong>same social science data</strong>.</li>
-<li>They investigated the <strong>same hypothesis</strong>: that more immigration will reduce public support for government provision of social policies.</li>
-<li>Together they fit 1261 statistical models and came to widely varying concluisons.</li>
-<li>A meta-analysis of the results by the PIs could not explain the variation in results. Even after accounting for the choices made by the research teams in designing their statistical tests, 95% of the total variation remained unexplained.</li>
-<li>The authors claim that “a hidden universe of uncertainty remains.”</li>
-</ul>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/reproducible_study.png" class="img-fluid figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
-<p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
-</section><section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1"><h1>Some of the issues from a statisticianʻs perspective</h1>
-<p>Greyer provides nine ideas worth considering:</p>
-<ol type="1">
-<li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
-<ol type="a">
-<li>mathematical or computational error,</li>
-<li>statistical procedures inappropriate for the data, or</li>
-<li>statistical procedures that do not lead to the inferences claimed.</li>
-</ol>
-</li>
-<li>Good computing practices — version control, well thought out testing, code reviews, literate programming — are essential to correct computing.</li>
-<li>Failure to do all calculations from raw data to conclusions (every number or figure shown in a paper) in a way that is fully reproducible and available in a permanent public repository is, by itself, a questionable research practice.</li>
-<li>Failure to do statistics as if it could have been pre-registered is a questionable research practice.</li>
-<li>Journals that use P &lt; 0.05 as a criterion of publication are not scientific journals (publishing only one side of a story is as unscientific as it is possible to be).</li>
-<li>Statistics should be adequately described, at least in the supplementary material.</li>
-<li>Scientific papers whose conclusions depend on nontrivial statistics should have statistical referees, and those referees should be heeded.</li>
-<li>Not all errors are describable by statistics. There is also what physicists call <em>systematic error</em> that is the same in every replication of an experiment. Physicists regularly attempt to quantify this. Others should too.</li>
-</ol>
-<p>A reasonable ideal for reproducible research today - Research should be reproducible. Anything in a scientific paper should be reproducible by the reader. - Whatever may have been the case in low tech days, this ideal has long gone. Much scientific research in recent years is too complicated and the published details to scanty for anyone to reproduce it. - The lack of detail is not entirely the author’s fault. Journals have severe page pressure and no room for full explanations. - For many years, the only hope of reproducibility is old-fashioned person-to-person contact. Write the authors, ask for data, code, whatever. Some authors help, some don’t. If the authors are not cooperative, tough. - Even cooperative authors may be unable to help. If too much time has gone by and their archiving was not systematic enough and if their software was unportable, there may be no way to recreate the analysis. - Fortunately, the internet comes to the rescue. No page pressure there! - Nowadays, many scientific papers also point to supplementary materials on the internet. Data, computer programs, whatever should be there, permanently. Ideally with a permanent Document Identifier or DOI. There are complaints that many Supplmentary Materials are incomprehensible, but that can be improved with practices of reproducible reserach.</p>
-<p>Therefore, at the very least scientists should use in their statistical programming - version control, - software testing, - code reviews, - literate programming, and - all data and code available in a permanent public repository.</p>
-<p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
-<ul>
-<li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
-</ul></section><section id="recommendations" class="level1"><h1>Recommendations</h1>
-<p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
-<section id="authors-and-readers" class="level3"><h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
-<p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
-<p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
-<ul>
-<li>Publishing data and code today is not necessarily a trivial task. Although there are a number of resources available now, that were not available even five years ago, it is still a bit of a challenge to get things out on the web (or at least distributed widely).</li>
-<li>Resources like <a href="https://github.com">GitHub</a>, <a href="https://kipoi.org">kipoi</a>, and <a href="http://rpubs.com">RPubs</a> and various data repositories have made a big difference, but there is still a ways to go with respect to building up the public reproducibility infrastructure.</li>
-</ul>
-<p>Furthermore, <strong>even when data and code are available</strong>, readers often have to download the data, download the code, and then they have to piece everything together, usually by hand. It’s <strong>not always an easy task to put the data and code together</strong>.</p>
-<ul>
-<li>Readers may not have the same computational resources that the original authors did.</li>
-<li>If the original authors used an enormous computing cluster, for example, to do their analysis, the readers may not have that same enormous computing cluster at their disposal. It may be difficult for readers to reproduce the same results.</li>
-</ul>
-<p>Generally, the <strong>toolbox for doing reproducible research is small</strong>, although <strong>it’s definitely growing</strong>.</p>
-<ul>
-<li>In practice, authors often just throw things up on the web. There are journals and supplementary materials, but they are famously disorganized.</li>
-<li>There are only a few central databases that authors can take advantage of to post their data and make it available. So if you are working in a field that has a central database that everyone uses, that is great. If you are not, then you have to assemble your own resources.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Summary
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>The process of conducting and disseminating research can be depicted as a “data science pipeline”</p></li>
-<li><p>Readers and consumers of data science research are typically not privy to the details of the data science pipeline</p></li>
-<li><p>One view of reproducibility is that it gives research consumers partial access to the raw pipeline elements.</p></li>
-</ul>
-</div>
-</div>
-</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
-<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
-<p>Here are some post-lecture questions to help you think about the material discussed.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Why can replication be difficult to achieve? Why is reproducibility a reasonable minimum standard when replication is not possible?</p></li>
-<li><p>What is needed to reproduce the results of a data analysis?</p></li>
-</ol>
-</div>
-</div>
-</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>
-<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
-</ul>
-</div>
-</div>
-
-
-</section></section> ]]></description>
-  <category>module 1</category>
-  <category>week 2</category>
-  <category>R</category>
-  <category>reproducibility</category>
-  <guid>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</guid>
-  <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Introduction to git/GitHub</title>
@@ -8515,11 +8329,32 @@ Important
 <p><strong>This course will focus primarily on the base and ggplot2 plotting systems</strong>. Lattice is presented for context.</p>
 </div>
 </div>
+<p>If you don’t have these already, please install:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lattice"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggplot2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>and then</p>
 <section id="the-base-plotting-system" class="level2"><h2 class="anchored" data-anchor-id="the-base-plotting-system">The Base Plotting System</h2>
 <p>The <strong>base plotting system</strong> is the original plotting system for R. The basic model is sometimes <strong>referred to as the “artist’s palette” model</strong>, because you start with a blank canvas and add to it, element by element.</p>
 <p>We begin with an R plotting function that <em>creates a new plot window</em> <strong>typically the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function</strong>, and we can add <em>annotations</em> to the plot with functions such as (<code>text</code>, <code>lines</code>, <code>points</code>, <code>axis</code>).</p>
 <p>If you get an error</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Error</span> in plot.xy<span class="er" style="color: #AD0000;
 background-color: null;
@@ -8540,7 +8375,7 @@ font-weight: bold;
 font-style: inherit;">)</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">:</span> </span>
-<span id="cb1-2">  <span class="ex" style="color: null;
+<span id="cb2-2">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">plot.new</span> has not been called yet</span></code></pre></div>
 <p>It is probably because you tried to add an annotation before you created a plot first.</p>
@@ -8559,7 +8394,7 @@ Example
 <div class="callout-body-container callout-body">
 <p>We might look at a simple scatterplot and then decide to add a linear regression line or a smoother to it to highlight the trends.</p>
 <div class="cell">
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -8612,7 +8447,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="480"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="480"></p>
 <figcaption>Scatterplot with loess curve</figcaption></figure>
 </div>
 </div>
@@ -8627,7 +8462,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </ul>
 <p>Next, we use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to draw the points on the scatterplot and then use the <code>main</code> argument to add a main title to the plot.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -8684,7 +8519,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="480"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
 <figcaption>Scatterplot with loess curve</figcaption></figure>
 </div>
 </div>
@@ -8705,7 +8540,7 @@ Example
 <div class="callout-body-container callout-body">
 <p>Another typical base plot for a linear regression is constructed with the following code. Here we are using <em>formula representation</em>. Instead of <code>plot(x,y)</code> we use <code>plot(y~x)</code> which is read “plot y as a function of x”. These styles are equivalent, but formula is in the style of regression models.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -8741,11 +8576,11 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
 <figcaption>Base plot with title</figcaption></figure>
 </div>
 </div>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">## Fit a linear model and save it</span></span>
 <span><span class="va" style="color: #111111;
@@ -8776,7 +8611,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>We can add annotations as before. This time, to add the regression line to the plot, we use the <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function which adds straight lines, specified by slope and intercept.</p>
 <div class="cell">
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -8911,7 +8746,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -8923,19 +8758,16 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The <strong>lattice plotting system</strong> is ideal for visualization of multivariate data, and is implemented in the <code>lattice</code> R package which comes with every installation of R (although it is not loaded by default).</p>
 <p>To <strong>use the lattice plotting functions</strong>, you must first load the <code>lattice</code> package.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;"><a href="https://lattice.r-forge.r-project.org/">lattice</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: lattice</code></pre>
-</div>
 </div>
 <p>With the lattice system, <strong>plots are created with a single function call</strong>, such as <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> or <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">bwplot()</a></code>, and the plot is delivered in a predefined format.</p>
 <p>There is <strong>no real distinction between functions that create or initiate plots</strong> and <strong>functions that annotate plots</strong> because it all happens at once.</p>
@@ -9033,7 +8865,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="768"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="768"></p>
 <figcaption>Lattice plot</figcaption></figure>
 </div>
 </div>
@@ -9094,16 +8926,13 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggplot2</code></pre>
-</div>
 </div>
 <p>Superficially, the <code>ggplot2</code> functions are similar to <code>lattice</code>, but the system is generally easier and more intuitive to use once you learn the syntax.</p>
 <p>The defaults used in <code>ggplot2</code> make many choices for you, but you can still customize plots.</p>
@@ -9120,7 +8949,7 @@ Example
 <p>A typical plot with the <code>ggplot2</code> package looks like the code below.</p>
 <p>Note the use of the pipe operator <code>%&gt;%</code> from the <code>magrittr</code> package in the tidyverse, which sends the dataframe <code>mpg</code> as input into the function ggplot. People love the pipe operator because you can just pass output along from one function to the next (as long as the function is written for piping). All of the tidyverse allows piping, and some base R functions do as well.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
@@ -9172,7 +9001,775 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption>ggplot2 plot</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>In <code>ggplot</code>, elements of the plot are specified as <strong>aesthetics</strong>, and layers can be added onto the plot with <code>+ anotherfunction()</code>. Try running the first part, and then running the whole thing together. Then try adding <code>+ geom_smooth()</code></p>
+<p>There are additional functions in <code>ggplot2</code> that allow you to make arbitrarily sophisticated plots.</p>
+<p>We will discuss more about this in the next lecture.</p>
+
+
+</section></section> ]]></description>
+  <category>module 3</category>
+  <category>week 5</category>
+  <category>plotting</category>
+  <category>ggplot2</category>
+  <category>lattice</category>
+  <category>data visualization</category>
+  <guid>https://mbutler808.github.io/posts/2025-02-20-plotting-systems/</guid>
+  <pubDate>Tue, 20 Feb 2024 10:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
+.html}</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-02-20-plotting-systems/</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<p>The data may not contain the answer. And, if you torture the data long enough, it will tell you anything. —<em>John W. Tukey</em></p>
+</blockquote>
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<p>#✏️</p>
+<section id="addtional-resources" class="level1"><h1>Addtional Resources</h1>
+<section id="excellent-references" class="level3"><h3 class="anchored" data-anchor-id="excellent-references">Excellent references</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+For more details see
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><a href="https://r4ds.had.co.nz/data-visualisation" class="uri">https://r4ds.had.co.nz/data-visualisation</a></li>
+<li>Paul Murrell (2011). <em>R Graphics</em>, CRC Press.</li>
+<li>Hadley Wickham (2009). <em>ggplot2</em>, Springer.</li>
+<li>Deepayan Sarkar (2008). <em>Lattice: Multivariate Data Visualization with R</em>, Springer.</li>
+</ol>
+</div>
+</div>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776/lecture-plotting-systems" class="uri">https://rdpeng.github.io/Biostat776/lecture-plotting-systems</a></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to identify and describe the three plotting systems in R</li>
+<li>Be able to implement simple plots in each</li>
+</ul>
+</div>
+</div>
+</section></section><section id="overview" class="level1"><h1>Overview</h1>
+<p>There are <strong>three different plotting systems in R</strong> and they each have different characteristics and modes of operation.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The three systems are</p>
+<ol type="1">
+<li>The base plotting system</li>
+<li>The lattice system</li>
+<li>The ggplot2 system</li>
+</ol>
+<p><strong>This course will focus primarily on the base and ggplot2 plotting systems</strong>. Lattice is presented for context.</p>
+</div>
+</div>
+<p>If you don’t have these already, please install:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lattice"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggplot2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>and then</p>
+<section id="the-base-plotting-system" class="level2"><h2 class="anchored" data-anchor-id="the-base-plotting-system">The Base Plotting System</h2>
+<p>The <strong>base plotting system</strong> is the original plotting system for R. The basic model is sometimes <strong>referred to as the “artist’s palette” model</strong>, because you start with a blank canvas and add to it, element by element.</p>
+<p>We begin with an R plotting function that <em>creates a new plot window</em> <strong>typically the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function</strong>, and we can add <em>annotations</em> to the plot with functions such as (<code>text</code>, <code>lines</code>, <code>points</code>, <code>axis</code>).</p>
+<p>If you get an error</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Error</span> in plot.xy<span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">xy.coords</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">x,</span> y<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">,</span> type = type, ...<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">:</span> </span>
+<span id="cb2-2">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">plot.new</span> has not been called yet</span></code></pre></div>
+<p>It is probably because you tried to add an annotation before you created a plot first.</p>
+<p>The base plotting system is <strong>often the most convenient plotting system</strong> to because it mirrors the cartesian coordinate (X,Y) syntax that we sometimes think of when building plots and analyzing data.</p>
+<p>It is also the most customizablbe because there are many options that users can specify. See the help page for <code><a href="https://rdrr.io/r/graphics/plot.default.html">?plot.default</a></code> and <code><a href="https://rdrr.io/r/graphics/par.html">?par</a></code> for graphical parameters that once can set. It does take some learning, but it is possible to make multi-figure plots while precisely controlling their placement, margins, and any annotations including points, lines, text etc.</p>
+<p>The plot system is also very useful at the very beginning of a data analysis When we donʻt precisely know what we want to plot. We can start by “throwing some data on the page” and then slowly modifying or adding more information to it as our thought process evolves.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We might look at a simple scatterplot and then decide to add a linear regression line or a smoother to it to highlight the trends.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/scatter.smooth.html">loess.smooth</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Scatterplot with loess curve</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>In the code above:</p>
+<ul>
+<li>The <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function creates the initial plot and draws the points on the canvas.</li>
+<li>The <code>lines</code> function is used to annotate or add to the plot (in this case it adds a loess smoother to the scatterplot).</li>
+<li>R has many other types of <a href="https://blog.revolutionanalytics.com/2015/09/interpolation-and-smoothing-functions-in-base-r.html">smoothing functions</a> as well.</li>
+</ul>
+<p>Next, we use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to draw the points on the scatterplot and then use the <code>main</code> argument to add a main title to the plot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span>, main <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my plot"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/scatter.smooth.html">loess.smooth</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Scatterplot with loess curve</figcaption></figure>
+</div>
+</div>
+</div>
+<p>One downside with constructing base plots is that <strong>annotations can only be added</strong>. If your annotations are crashing, or you run out of room, etc., you will have to rerun the code starting from plot().</p>
+<p>And while the base plotting system is nice in that it gives you the flexibility to specify these kinds of details to painstaking accuracy, <strong>sometimes it would be nice if the system could just figure it out for you</strong>. Thatʻs where <code>lattice</code> and <code>ggplot2</code> have contributed.</p>
+<p>Another downside of the customizability of the base plotting system is that it is <strong>difficult to describe or translate a plot to others because there is no clear graphical language or grammar</strong>. In other words, you cannot paint the format of one onto another plot, unless you design the code (maybe by using the same variable names, etc.) to do it yourself.</p>
+<p>The only real way to describe what you have done in a base plot is to just list the series of commands/functions that you have executed, which is not a particularly compact way of communicating things. The <code>ggplot2</code> package has developed a grammar of graphics that make transferring formats easy.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Another typical base plot for a linear regression is constructed with the following code. Here we are using <em>formula representation</em>. Instead of <code>plot(x,y)</code> we use <code>plot(y~x)</code> which is read “plot y as a function of x”. These styles are equivalent, but formula is in the style of regression models.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Create the plot / draw canvas</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">speed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Base plot with title</figcaption></figure>
+</div>
+</div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Fit a linear model and save it</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">speed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>We can add annotations as before. This time, to add the regression line to the plot, we use the <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function which adds straight lines, specified by slope and intercept.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">speed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Add annotations</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/title.html">title</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Linear model of speed vs. stopping distance"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span>, col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"slope ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, digits<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"intercept ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, digits<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using <code><a href="https://rdrr.io/r/graphics/text.html">text()</a></code> we added the slope and intercept from the linear model fit. That information is returned by the <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> function. We used <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> to make it prettier (8 decimal places is not necessary!)</p>
+</div>
+</div>
+</section><section id="the-lattice-system" class="level2"><h2 class="anchored" data-anchor-id="the-lattice-system">The Lattice System</h2>
+<p>The <strong>lattice plotting system</strong> is ideal for visualization of multivariate data, and is implemented in the <code>lattice</code> R package which comes with every installation of R (although it is not loaded by default).</p>
+<p>To <strong>use the lattice plotting functions</strong>, you must first load the <code>lattice</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://lattice.r-forge.r-project.org/">lattice</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>With the lattice system, <strong>plots are created with a single function call</strong>, such as <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> or <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">bwplot()</a></code>, and the plot is delivered in a predefined format.</p>
+<p>There is <strong>no real distinction between functions that create or initiate plots</strong> and <strong>functions that annotate plots</strong> because it all happens at once.</p>
+<p>Lattice plots tend to be <strong>most useful for conditioning types of plots</strong>, i.e.&nbsp;looking at how <code>y</code> changes with <code>x</code> across levels of <code>z</code>.</p>
+<ul>
+<li>e.g.&nbsp;these types of plots are useful for looking at multi-dimensional data and often allow you to squeeze a lot of information into a single window or page.</li>
+</ul>
+<p>Another aspect of lattice that makes it different from base plotting is that <strong>things like margins and spacing are set automatically</strong>. The downside is that it is not very customizable.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here is a lattice plot that looks at the relationship between life expectancy and income and how that relationship varies by region in the United States.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state.x77</span>, region <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state.region</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Population Income Illiteracy Life.Exp Murder HS.Grad Frost   Area
+Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
+Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432
+Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417
+Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
+California      21198   5114        1.1    71.71   10.3    62.6    20 156361
+Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766
+           region
+Alabama     South
+Alaska       West
+Arizona      West
+Arkansas    South
+California   West
+Colorado     West</code></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Life.Exp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Income</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">region</span>, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state</span>, layout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Lattice plot</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>You can see that the entire plot was generated by the call to <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> and all of the data for the plot were specified to come from the <code>state</code> data frame.</p>
+<p>The <strong>layout</strong> specifies four panels —one for each region— <strong>within each panel is a scatterplot</strong> of life expectancy and income. Note that in this case, layout is columns, rows. Try changing the numbers or leaving out the layout argument and see what happens.</p>
+<p>The notion of <em>panels</em> comes up a lot with lattice plots because you typically have many panels in a lattice plot (each panel typically represents a <em>factor level</em>, like “region”).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Downsides with the lattice system</p>
+<ul>
+<li>It can sometimes be very <strong>awkward to specify an entire plot</strong> in a single function call (you end up with functions with many many arguments).</li>
+<li>
+<strong>Annotation in panels in plots is not especially intuitive</strong> and can be difficult to explain. In particular, the use of custom panel functions and subscripts can be difficult to wield and requires a lot of trial and error.</li>
+</ul>
+</div>
+</div>
+</section><section id="the-ggplot2-system" class="level2"><h2 class="anchored" data-anchor-id="the-ggplot2-system">The ggplot2 System</h2>
+<p>The <strong>ggplot2 plotting system</strong> attempts to split the difference between base and lattice in a number of ways.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Taking cues from lattice, the ggplot2 system automatically deals with spacings, text, titles but also allows you to annotate by “adding” to a plot, with annotations added in layers.</p>
+</div>
+</div>
+<p>The ggplot2 system is implemented in the <code>ggplot2</code> package (part of the <code>tidyverse</code> package), which is available from CRAN (it does not come with R).</p>
+<p>You can install it from CRAN via</p>
+<div class="cell">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggplot2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>and then load it into R.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Superficially, the <code>ggplot2</code> functions are similar to <code>lattice</code>, but the system is generally easier and more intuitive to use once you learn the syntax.</p>
+<p>The defaults used in <code>ggplot2</code> make many choices for you, but you can still customize plots.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A typical plot with the <code>ggplot2</code> package looks like the code below.</p>
+<p>Note the use of the pipe operator <code>%&gt;%</code> from the <code>magrittr</code> package in the tidyverse, which sends the dataframe <code>mpg</code> as input into the function ggplot. People love the pipe operator because you can just pass output along from one function to the next (as long as the function is written for piping). All of the tidyverse allows piping, and some base R functions do as well.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">displ</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hwy</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="576"></p>
 <figcaption>ggplot2 plot</figcaption></figure>
 </div>
 </div>
