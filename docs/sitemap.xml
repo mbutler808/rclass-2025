@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mbutler808.github.io/schedule.html</loc>
-    <lastmod>2025-02-18T01:22:30.927Z</lastmod>
+    <lastmod>2025-02-25T05:00:48.301Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/syllabus.html</loc>
@@ -37,16 +37,24 @@
     <lastmod>2025-02-18T01:24:35.757Z</lastmod>
   </url>
   <url>
-    <loc>https://mbutler808.github.io/posts/2025-02-13-data/index.html</loc>
-    <lastmod>2025-02-18T01:23:49.914Z</lastmod>
+    <loc>https://mbutler808.github.io/posts/2025-02-25-ggplot2/index.html</loc>
+    <lastmod>2025-02-25T05:08:35.914Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mbutler808.github.io/posts/2025-01-16-your-computer-filesystems/index.html</loc>
+    <lastmod>2025-01-17T02:06:55.368Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mbutler808.github.io/posts/2025-02-27-dplyr/index.html</loc>
+    <lastmod>2025-02-25T04:55:31.126Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2025-02-04-reading-data/index.html</loc>
     <lastmod>2025-02-05T07:36:45.680Z</lastmod>
   </url>
   <url>
-    <loc>https://mbutler808.github.io/posts/2025-01-16-your-computer-filesystems/index.html</loc>
-    <lastmod>2025-01-17T02:06:55.368Z</lastmod>
+    <loc>https://mbutler808.github.io/posts/2025-02-13-data/index.html</loc>
+    <lastmod>2025-02-18T01:23:49.914Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2025-01-30-reference-management/index.html</loc>
@@ -62,7 +70,7 @@
   </url>
   <url>
     <loc>https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index.html</loc>
-    <lastmod>2025-02-18T02:07:52.074Z</lastmod>
+    <lastmod>2025-02-18T02:09:54.529Z</lastmod>
   </url>
   <url>
     <loc>https://mbutler808.github.io/projects/2023-03-22-oral-presentation/index.html</loc>

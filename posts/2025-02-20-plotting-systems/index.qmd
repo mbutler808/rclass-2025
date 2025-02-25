@@ -70,8 +70,6 @@ If you don't have these already, please install:
 install.packages(c("lattice", "ggplot2"))
 ```
 
-and then
-
 ## The Base Plotting System
 
 The **base plotting system** is the original plotting system for R. The basic model is sometimes **referred to as the "artist's palette" model**, because you start with a blank canvas and add to it, element by element. 

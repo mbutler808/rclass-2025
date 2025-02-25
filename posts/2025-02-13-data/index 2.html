@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2025-02-13">
+<meta name="description" content="All about data and how it is represented in R">
+<title>Types of Data – ZOOL710 Data Science in R for Biologists 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2c128a76c5dbb243be50ea3089ffe19d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mbutler808"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mbutler808"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Types of Data</h1>
+                  <div>
+        <div class="description">
+          All about data and how it is represented in R
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">module 2</div>
+                <div class="quarto-category">week 4</div>
+                <div class="quarto-category">data</div>
+                <div class="quarto-category">data structures</div>
+                <div class="quarto-category">objects</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://butlerlab.org">Marguerite Butler</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              School of Life Sciences, University of Hawaii
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 13, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li>
+<a href="#pre-lecture-materials" id="toc-pre-lecture-materials" class="nav-link" data-scroll-target="#pre-lecture-materials">Pre-lecture materials</a>
+  <ul class="collapse">
+<li><a href="#watch" id="toc-watch" class="nav-link" data-scroll-target="#watch">Watch</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  </ul>
+</li>
+  <li><a href="#what-is-data-anyway" id="toc-what-is-data-anyway" class="nav-link" data-scroll-target="#what-is-data-anyway">What is data anyway?</a></li>
+  <li><a href="#types-of-variables" id="toc-types-of-variables" class="nav-link" data-scroll-target="#types-of-variables">Types of Variables</a></li>
+  <li>
+<a href="#analysis-approaches-and-their-relationship-to-data" id="toc-analysis-approaches-and-their-relationship-to-data" class="nav-link" data-scroll-target="#analysis-approaches-and-their-relationship-to-data">Analysis approaches and their relationship to data</a>
+  <ul class="collapse">
+<li><a href="#when-we-want-to-know-the-strength-of-the-quantitative-relationship" id="toc-when-we-want-to-know-the-strength-of-the-quantitative-relationship" class="nav-link" data-scroll-target="#when-we-want-to-know-the-strength-of-the-quantitative-relationship">When we want to know the strength of the quantitative relationship</a></li>
+  <li><a href="#when-we-want-to-know-about-grouping" id="toc-when-we-want-to-know-about-grouping" class="nav-link" data-scroll-target="#when-we-want-to-know-about-grouping">When we want to know about grouping</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#data-types-in-r" id="toc-data-types-in-r" class="nav-link" data-scroll-target="#data-types-in-r">Data types in R</a>
+  <ul class="collapse">
+<li><a href="#basic-data-types" id="toc-basic-data-types" class="nav-link" data-scroll-target="#basic-data-types">Basic data types</a></li>
+  <li>
+<a href="#derived-data-types" id="toc-derived-data-types" class="nav-link" data-scroll-target="#derived-data-types">Derived data types</a>
+  <ul class="collapse">
+<li><a href="#there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" id="toc-there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" class="nav-link" data-scroll-target="#there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object">There are several functions that can show you the data type of an R object</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#data-structures-in-r" id="toc-data-structures-in-r" class="nav-link" data-scroll-target="#data-structures-in-r">Data structures in R</a>
+  <ul class="collapse">
+<li><a href="#other-derived-data-types" id="toc-other-derived-data-types" class="nav-link" data-scroll-target="#other-derived-data-types">Other derived data types</a></li>
+  </ul>
+</li>
+  <li><a href="#attributes-of-objects" id="toc-attributes-of-objects" class="nav-link" data-scroll-target="#attributes-of-objects">Attributes of Objects</a></li>
+  <li>
+<a href="#helpful-functions-for-creating-objects" id="toc-helpful-functions-for-creating-objects" class="nav-link" data-scroll-target="#helpful-functions-for-creating-objects">Helpful functions for creating objects</a>
+  <ul class="collapse">
+<li><a href="#for-sequences" id="toc-for-sequences" class="nav-link" data-scroll-target="#for-sequences">For sequences</a></li>
+  <li><a href="#creating-or-coercing-objects-to-different-class" id="toc-creating-or-coercing-objects-to-different-class" class="nav-link" data-scroll-target="#creating-or-coercing-objects-to-different-class">Creating or Coercing objects to different class</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
+  <ul class="collapse">
+<li><a href="#various-ways-to-create-vectors" id="toc-various-ways-to-create-vectors" class="nav-link" data-scroll-target="#various-ways-to-create-vectors">Various ways to create vectors:</a></li>
+  <li><a href="#factors-are-categorical-data" id="toc-factors-are-categorical-data" class="nav-link" data-scroll-target="#factors-are-categorical-data">Factors are categorical data</a></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames">Data Frames</a></li>
+  <li><a href="#lists" id="toc-lists" class="nav-link" data-scroll-target="#lists">Lists</a></li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><!-- Add interesting quote --><!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 --><p>✏️</p>
+<section id="overview" class="level1"><h1>Overview</h1>
+<p>We will discuss different types of data, how they are represented in R, and how data type influences the types of data analyses we may employ.</p>
+<p>A practical benefit of understanding how R handles data is that a major source of error for novice R programmers is <em>trying to use functions but providing the wrong type or class of data than what the function was written for</em>. This is very confusing if you donʻt understand about objects in R, but very clear and easy to fix if you do!</p>
+</section><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="watch" class="level3"><h3 class="anchored" data-anchor-id="watch">Watch</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Watch
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by watching:</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/wzPRpyoNaa8?start=350" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+</section><section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://andreashandel.github.io/MADAcourse/Data_Types.html" class="uri">https://andreashandel.github.io/MADAcourse/Data_Types.html</a></li>
+<li><a href="https://r-coder.com/data-types-r/#Raw_data_type_in_R" class="uri">https://r-coder.com/data-types-r/#Raw_data_type_in_R</a></li>
+<li>
+<a href="https://www.stat.auckland.ac.nz/~paul/ItDT/HTML/node76.html" class="uri">https://www.stat.auckland.ac.nz/~paul/ItDT/HTML/node76.html</a> # Learning objectives</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand different types of data and how they are represented computationally</li>
+<li>Understand that different data types require different analysis approaches</li>
+<li>Recognize different base <strong>data types</strong> in R and know how to work with them</li>
+<li>Recognize the base <strong>data structures</strong> or <strong>objects</strong> in R and how to use them to do what you want</li>
+</ul>
+</div>
+</div>
+</section></section><section id="what-is-data-anyway" class="level1"><h1>What is data anyway?</h1>
+<p>Merriam Webster defines <strong>data</strong> as <em>factual information (such as <strong>measurements</strong> or <strong>statistics</strong>) used as a basis for <strong>reasoning</strong>, <strong>discussion</strong>, or <strong>calculation</strong>.</em></p>
+<p>From a practicing scientistsʻ point of view, data is anything <strong>measureable</strong> or <strong>scorable</strong> that could provide <strong>information</strong> regarding a phenomenon of interest.</p>
+<p>Ideally, data:</p>
+<ul>
+<li>are <strong>repeatable</strong> (at least within statistical error).<br>
+</li>
+<li>contain more <strong>signal</strong> than <strong>noise</strong>.</li>
+</ul>
+<p>For example, if we are studying how morphology changes with body size, we could take measurements such as <em>body length</em>, <em>head length</em>, <em>arm length</em>, and <em>leg length</em> on a sample of <em>individuals</em>. These measurements would provide linear, <strong>continuous data</strong> that would inform our study of size and scaling. If we also expected males and females to differ, then <em>sex</em> would be a <strong>categorical variable</strong>.</p>
+<ul>
+<li>It is important to <em>define the variables</em> so that the measurements are <em>repeatable</em> by other scientists collecting data on the same or similar samples.<br>
+</li>
+<li>The <em>variables</em> chosen are expected to be related to the phenomenon of interest (here, scaling).<br>
+</li>
+<li>The <em>individuals</em> are replicates from the same sample population, meaning that they should be equally embody or be influenced by the phenomenon we are studying. In other words, they form a homogenous sample. In the example of sexual dimorphism, we potentially have different groups within our sample. This can be taken account of in analyses using our <em>categorical grouping variable</em> <em>sex</em>.</li>
+</ul>
+<p>Data have many forms such as images, sound, video, text, or any combination. Today we also have access to large volume datastreams from remote sensing, social media, or from all the various -omics. The kind of data, and how messy it is, determines the amount of processing that needs to be done before analysis.</p>
+<p>At some point your data will most likely be arranged into spreadsheets, with observations as rows and variables as columns. <strong>In this course, we will focus on the data source that you are most likely to encounter in your analyses, the “(messy) spreadsheet” type, containing bits of information collected on individuals.</strong> Please do feel free to play around with other data types on your own, e.g.&nbsp;for your course project.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../images/i-have-data_3.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Weʻve all been here. Source: timoelliott.com
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p><a href="https://timoelliott.com/blog/cartoons/analytics-cartoons">Source: timoelliott.com</a></p>
+</section><section id="types-of-variables" class="level1"><h1>Types of Variables</h1>
+<p>Variables are the conceptual elements of the data. Variables are typically categorized by the nature of how they can vary (i.e., quantitative, qualitative, ordinal), because these differences dictate different analytical approaches and statistical methods.</p>
+<p><strong>Quantitative:</strong> This data type, also called <em>metric</em> data, represents variation in magnitude and generally allows one to do certain mathematical operations, e.g., subtraction or addition. The most common variations include:</p>
+<ul>
+<li>
+<em><strong>Continuous</strong></em>: Can take on any numerical value. Examples include mass, length, distance, age, etc.</li>
+<li>
+<em><strong>Discrete</strong></em>: Can only take countable (integer) values, e.g., the number of offspring an indivdiual produces.</li>
+<li>
+<em><strong>Fraction/Proportion</strong></em>: A continuous ratio of two values, with the numerator being a part to the whole which is represented by the demoninator. Thus these variables take on values between 0 and 1.</li>
+<li>
+<em><strong>Ratios</strong></em>: A continuous ratio of any two values. Data measured on a ratio scale have all the properties of continuous data.</li>
+</ul>
+<p><strong>Qualitative:</strong> Generally speaking, qualitative data indicate <em>categories</em> which have no intrinsic numeric value or natural order. Therefore it would not make sense to apply arithmetic to qualitative data such as color, sex, or family group, etc. You may see the term <em>nominal</em> (definition: “pertaining to names”) data applied to categorial data in the statistical literature. Major types of <strong>qualitative</strong> data include:</p>
+<ul>
+<li>
+<em><strong>Categorical</strong></em>: e.g., flower color, continent of origin, social status, disease state, etc.</li>
+<li>
+<em><strong>Descriptive</strong></em>: e.g., free text data from field observations.</li>
+</ul>
+<p><strong>Ordinal:</strong> Related to categorical data, this type differs in that they can be ranked, at least qualitatively.</p>
+<p>For example, while body condition may be a qualitative assessment, “obese” clearly indicates greater fat stores than “well-conditioned”, which is greater than “emaciated”. Thus, ordinal data fall between being strictly quantitative or strictly qualitative. In some cases, if there are numerous categories, you can begin to think of them as approaching continuous data, although one important difference is that there is no clear numerical value that you can assign to the different categories (i.e., it is unclear whether the difference between obese and well-conditioned is the same as the difference between well-conditioned and emaciated). It may make sense to apply rank order statistics to ordinal data, but it would not make sense to add, subtract, or multiply these categories.</p>
+</section><section id="analysis-approaches-and-their-relationship-to-data" class="level1"><h1>Analysis approaches and their relationship to data</h1>
+<p>It may be obvious that data type will dictate the types of analyses one can do. It might be less obvious that the <strong>question of interest</strong> and whether there is a <em>quantitative or ordinal outcome</em> also drive our analyitical approach.</p>
+<section id="when-we-want-to-know-the-strength-of-the-quantitative-relationship" class="level3"><h3 class="anchored" data-anchor-id="when-we-want-to-know-the-strength-of-the-quantitative-relationship">When we want to know the strength of the quantitative relationship</h3>
+<p>Methods for <strong>quantitative responses</strong> (or outcomes) that address questions such as “<em>how much does leg length increase with body size?</em>”? In other words, “<em>how much does variable Y change with each increment of change in variable X</em>?” These are usually referred to as <strong>regression approaches</strong>.</p>
+<p>There are many subtypes of regression such as linear regression for continuous outcomes, and Poisson regression for discrete outcomes.</p>
+<ul>
+<li>
+<strong><em>Linear regression</em></strong> predicts a continuous response, such as body size.</li>
+<li>
+<strong><em>Poisson regression</em></strong> predicts a count or discrete response, such as population size.</li>
+</ul>
+<p>Both types of regression can be based independent variables that are continuous, discrete, or categorical (or some combination). They differ in the underlying distribution of the modeled response variable, often a normal distribution for linear regression, and a Poisson distribution for the Poisson regression.</p>
+</section><section id="when-we-want-to-know-about-grouping" class="level3"><h3 class="anchored" data-anchor-id="when-we-want-to-know-about-grouping">When we want to know about grouping</h3>
+<p>Methods that recover <strong>categorical responses</strong>, in other words, categorizing observations based on the analysis of data, are usually referred to as <strong>classification approaches.</strong> These methods are useful for looking for order in nature, such as whether different species can be grouped into “ecomorphs” based on their morphology, or to predict the type of behavioral response (e.g., “attack” or “flee”) based on responses to different stimuli.</p>
+<p>It is possible to obtain an ordinal response as well, using <a href="https://en.wikipedia.org/wiki/Ordinal_regression"><strong>ordinal regression</strong></a>. Alternatively, the the response can be treated as unordered categorical or as continuous (depending on how you code them, i.e., in R as a factor or numeric).</p>
+<p>There are no hard and fast rules regarding when it is appropriate to treat an ordinal variable as fully quantitative. It should, however, at least be explained or justified. You can always treat it as categorical, but then you lose some information on the ranking of the variable.</p>
+<p>To add to the confusion, these classification methods are often based on regression, with the decision to classify based on one category or another dependent on comparing distances or probabilities based on regression results.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Recently, there has been a lot of interest in AI and machine learning. This is often just a fancy way of renaming <strong><em>discriminant function analysis</em></strong> and <strong><em>cluster analysis</em></strong>. When you see <em>supervised</em> learning in the literature, it refers to cases when we have the categories predefined, and often we have a training dataset with data on individuals of each category to use to train the classification algorithm before we use it to predict grouping (i.e., <em>discriminant function analysis</em>). When we donʻt have the categories <em>a priori</em>, and the algorithms determine the categories and their number, these analysis methods are usually referred to as <em>clustering approaches</em> and are also called <em>unsupervised</em> learning methods.</p>
+<p>We will return to and apply some of those methods later in the course.</p>
+</section></section><section id="data-types-in-r" class="level1"><h1>Data types in R</h1>
+<p>Now that we have a basic understanding of the conceptual landscape of data, letʻs breifly discuss how these different types of data are represented in and handled by R.</p>
+<p>If you would like a gentle video walk through/demonstration of data types, now would be a good time to check out the <em>Types</em> section of the RStudio <a href="https://rstudio.cloud/learn/primers/1.2">programming basic primer</a>. For more details and examples see <a href="https://rafalab.github.io/dsbook/r-basics.html">chapter 3 of IDS</a>.</p>
+<section id="basic-data-types" class="level2"><h2 class="anchored" data-anchor-id="basic-data-types">Basic data types</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+R has six basic (atomic) types of data:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Atomic Type</th>
+<th style="text-align: left;">Short Description</th>
+<th style="text-align: left;">Size in bytes</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<strong>string</strong> (or character)</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">1 (per character)</td>
+</tr>
+<tr class="even">
+<td><strong>integer</strong></td>
+<td style="text-align: left;">countable numbers</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="odd">
+<td><strong>real</strong></td>
+<td style="text-align: left;">real numbers</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td><strong>logical</strong></td>
+<td style="text-align: left;">TRUE or FALSE</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="odd">
+<td><strong>complex</strong></td>
+<td style="text-align: left;">numbers with imaginary component</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td><strong>raw</strong></td>
+<td style="text-align: left;">raw bytes</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>All other data types are derived from the atomic types</strong></em></p>
+</div>
+</div>
+<p>Note: Most computers use 64-bit operating systems these days, so the sizes above are for 64-bit software.</p>
+<p>For a quick tour of the data types, see <a href="https://r-coder.com/data-types-r" class="uri">https://r-coder.com/data-types-r</a></p>
+<p><strong>String/character:</strong> Character values are alphanumeric values (plus whitespace, punctuation, etc.). A string is a collection of characters, in other words “text”.</p>
+<ul>
+<li>strings can be pasted together using the <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code> function.</li>
+<li>R has powerful tools for <strong>string manipulation</strong>, including searching, replacing, and customized partial matching (with or without replacement) using <strong>wildcards</strong> and perl-like <a href="https://github.com/rstudio/cheatsheets/blob/master/regex.pdf"><strong>regular expressions</strong> (or <strong>regex</strong>)</a> using base functions such as
+<ul>
+<li><code><a href="https://rdrr.io/r/base/grep.html">grep()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/grep.html">sub()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/substr.html">substr()</a></code></li>
+</ul>
+</li>
+<li>There are also packages specific for string manipulation including the <a href="https://stringr.tidyverse.org/"><code>stringr</code> package</a> which is part of the tidyverse.</li>
+</ul>
+<p>It is very likely that you will need to work with strings at some point during a data analysis, even if it is only to find specific values, clean up variable names, etc.</p>
+<p>These problems can be quite the headache! But instead of editing them by hand and possibly making an error, it is better to do this with code. It also makes it easier to keep a record of the original data and all of the changes made to it, improving the reproducibility of your analysis.</p>
+<p>There is a learning curve to using these tools, especially <strong>regex</strong> syntax, but they are very powerful and well worth your time.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Good sources for practice manipulating strings:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>For beginners: Review <a href="https://r4ds.had.co.nz/strings.html">the <em>Strings</em> chapter (14) of R4DS</a>, and do the exercises.</li>
+<li><a href="https://rafalab.github.io/dsbook/string-processing.html">The <em>string processing</em> chapter (25) of IDS</a></li>
+<li>
+<a href="https://stat545.com/character-vectors.html">the <em>Character Vectors</em> chapter in the STAT 545 book</a> by <a href="https://jennybryan.org/">Jenny Bryan</a>
+</li>
+</ul>
+<p><strong>Decide which one is right for your level and work through some examples. I think youʻll agree that it is worth your time.</strong></p>
+</div>
+</div>
+<p><strong>Numeric (double or integer):</strong> Variables of type <code>numeric</code> in R are either integers or double precision (representing real numbers).</p>
+<ul>
+<li>Integers and real values are different, but in practice most R users donʻt pay attention to this distinction. Integer values tend to be coerced (converted) to real values if any mathematical operations are done to them.</li>
+<li>If an integer is explicity needed, you can create them using functions such as <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code>.</li>
+<li>Note that when you type an integer value, e.g.&nbsp;<code>x &lt;- 2</code>, into R, this is considered numeric by default.</li>
+<li>If you want to make sure a value is treated as integer, add an <code>L</code>, e.g.&nbsp;<code>x &lt;- 2L</code>.</li>
+</ul>
+<p><strong>Logical:</strong> Logical variables are binary and can take on only two values, <code>TRUE</code> or <code>FALSE</code> (which are <em>reserved words</em> that only take on these meanings in R).</p>
+<ul>
+<li>In R, logical values are treated as <strong>integers</strong>, and interpreted as 1 for <code>TRUE</code> and 0 for <code>FALSE</code>. It is possible to <code>sum(TRUE)</code> or a vector of logicals, for example.<br>
+</li>
+<li>R also understands <code>T</code>, <code>True</code>, and <code>true</code> for <code>TRUE</code>, and the corresponding representations for <code>FALSE</code>.</li>
+<li>Importantly, logical comparisons are used for <strong>indexing</strong>. You will use logical comparisons when cleaning and checking your data, or running analyses, e.g., if you want to see if your variable <code>x</code> is greater than 5, then the R command <code>x &gt; 5</code> will return either TRUE or FALSE, based on the value of <code>x</code>.</li>
+<li>
+<em>Note: reserved words are understood as constants and should not be “quoted”</em>.</li>
+</ul></section><section id="derived-data-types" class="level2"><h2 class="anchored" data-anchor-id="derived-data-types">Derived data types</h2>
+<p>R also allows derived data types called <strong>classes</strong> that are built up from atomic data types. There are R base classes as well as new classes that can be defined as needed by programmers (maybe you?).</p>
+<p><strong>Factors:</strong> Are Rʻs class for categorical variables.</p>
+<ul>
+<li>
+<strong>Factors</strong> have <strong>names</strong> and <strong>values</strong>.</li>
+<li>For example, a <strong>size</strong> factor may have <code>names</code> (or <code>levels</code>) of <code>small</code>, <code>medium</code>. and <code>large</code> with values 0,1,2. Here, the values simply indicate the different categories, with the names being the human-friendly labels for the values.<br>
+</li>
+<li>Factors can be ordered/ordinal or not.</li>
+<li>Factors could be numeric values, e.g., the number of offspring.</li>
+<li>Or it could be a factor coding for 3 types of habitat (unordered),</li>
+<li>Or 3 levels of life history stage (ordered).</li>
+<li>An excellent package to work with factors is the <a href="https://forcats.tidyverse.org/"><code>forcats</code> package</a>.</li>
+</ul>
+<p>For more about factors, work through the <a href="https://r4ds.had.co.nz/factors.html"><em>Factors</em> chapter of R4DS</a>, and do the exercises.</p>
+<p><strong>Date/time:</strong> Dates in base R are of the class <code>Date</code> (and are called <code>POSIX</code> variables). The <a href="https://lubridate.tidyverse.org/"><code>lubridate</code> package</a> is a tidyverse package to work with dates, which many people find easier. There are other packages as well.</p>
+<p>Additional resources are the <a href="https://r4ds.had.co.nz/dates-and-times.html"><em>Dates and times</em> chapter of R4DS</a> and the <a href="https://rafalab.github.io/dsbook/parsing-dates-and-times.html"><em>Parsing Dates and Times</em> chapter of IDS</a>.</p>
+<p><strong>Programmer-defined classes</strong> Many packages define their own classes. For example class <code>phylo</code> is used to represent phylogenetic trees in the <code>ape</code> package.</p>
+<section id="there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object" class="level3"><h3 class="anchored" data-anchor-id="there-are-several-functions-that-can-show-you-the-data-type-of-an-r-object">There are several functions that can show you the data type of an R object</h3>
+<p>such as <code><a href="https://rdrr.io/r/base/typeof.html">typeof()</a></code>, <code><a href="https://rdrr.io/r/base/mode.html">mode()</a></code>, <code><a href="https://rdrr.io/r/base/mode.html">storage.mode()</a></code>, <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> and <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>.</p>
+</section></section></section><section id="data-structures-in-r" class="level1"><h1>Data structures in R</h1>
+<p>Data in R are stored in data structures called <strong>objects</strong>.</p>
+<p><strong>Vectors:</strong> vectors are the simplest object, a collection of data elements in a single sequence.</p>
+<ul>
+<li>One way to create vectors is with the <code>concatenate</code> command, <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>.<br>
+</li>
+<li>
+<code>1:3</code> is shorthand for a numeric sequence <code>=c(1,2,3)</code>
+</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">12</span>,<span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span>
+<span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3 12  5</code></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>A single vector can contain only one type</strong> (e.g., all characters or all numeric).</li>
+<li>If you try to mix and match, everything will default to the lowest common denominator, typically a character (anything can be a character).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="st">"dog"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "3"   "1"   "dog"</code></pre>
+</div>
+</div>
+<p>What happened?</p>
+<p><strong>Matrices:</strong> A matrix is a rectangular collection of data elements in rows and columns.</p>
+<ul>
+<li>A matrix can contain only one type.</li>
+<li>Internally, R stores matrices as a long vector, keeping track of where the columm breaks are.</li>
+<li>Matrices are really important for the matrix math used to solve many statistical models.</li>
+</ul>
+<p><strong>Data frames:</strong> A data frame is a rectangular data structure that is designed to store records of individual subjects.</p>
+<ul>
+<li>A data frame has rows and columns.</li>
+<li>Columns are allowed to be of different data types (for example, “character” for the subject names and “numeric” for measured variables for each subject, and “factors” for categories such as sex, etc.).</li>
+<li>Internally, data frames are stored as a list of vectors, one for each column. This allows each column to have a different type.</li>
+<li>Each columm must have the same number of elements or rows, i.e., it must be rectangular.</li>
+<li>Typically, the columms of data frames have names corresponding to variable names.</li>
+</ul>
+<p><strong>Lists:</strong> Lists do not have to be rectangular and are the most flexible data type in R. A list is a vector possibly composed of different structures and of varying length (this is the only type where that is allowed!). &gt; - Lists are commonly used for model fits in statistical functions. For example, you may want to store the model (an expression), the input data (a dataframe), the output coefficients (a vector), - R has many powerful functions that operate on lists.</p>
+<p>Other types of data structures exist; they are often introduced by specific R packages. An important one to know is the <code>tibble</code> which is a type of data frame used in the <code>tidyverse</code>. It is similar, but not exactly like a data frame. You can read more about <code>tibbles</code> <a href="https://tibble.tidyverse.org/">on its package website</a> and in <a href="https://r4ds.had.co.nz/tibbles.html">R4DS chapter 10</a>.</p>
+<section id="other-derived-data-types" class="level2"><h2 class="anchored" data-anchor-id="other-derived-data-types">Other derived data types</h2>
+<p><strong>Timeseries:</strong> A very useful set of tools for times-series analysis in R is the set of packages called <a href="https://tidyverts.org/">the tidyverts</a>. CRAN also has a <a href="https://cran.r-project.org/web/views/TimeSeries.html">Task View for <em>Time Series Analysis</em>.</a> (A <em>Task View</em> on CRAN is a site that tries to combine and summarize various R packages for a specific topic). Another task view that deals with longitudinal/time-series data is the <a href="https://cran.r-project.org/web/views/Survival.html"><em>Survival Analysis</em> Task View</a>.</p>
+<p><strong>Omics:</strong> The <a href="https://www.bioconductor.org/">bioconductor</a> website is your source for (almost) all tools and resources related to omics-type data analyses in R.</p>
+<p><strong>Text:</strong> Working with and analyzing larger sections of text is different from the simple string manipulation discussed above. These days, analysis of text often goes by the term <em>natural language processing</em>. Such text analysis will continue to increase in importance, given the increasing data streams of that type. If you are interested in doing full analyses of text data, the <a href="https://juliasilge.github.io/tidytext/"><code>tidytext</code> R package</a> and the <a href="https://www.tidytextmining.com/">Text mining with R book</a> are great resources. A short introduction to this topic is <a href="https://rafalab.github.io/dsbook/text-mining.html">The <em>text mining</em> chapter (27) of IDS.</a></p>
+<p><strong>Images:</strong> Images are generally converted into multiple matrices of values for different pixels of an image. For instance, one could divide an image into a 100x100 grid of pixels, and assign each pixel a RGB values and intensity. That means one would have 4 matrices of numeric values, each of size 100x100. One would then perform operations on those values. We won’t do anything with images here, there are some R packages for analyzing image data.</p>
+<p><strong>Videos:</strong> Are a time-series of images. Analysis of videos therefore has an extra layer of complexity.</p>
+</section></section><section id="attributes-of-objects" class="level1"><h1>Attributes of Objects</h1>
+<p>Each object in R has certain characteristics called <strong>attributes</strong>. You can think of this as the metadata for R objects. These attributes are what allow functions written by anyone to be reusable by others, so long as the object is of the correct class.</p>
+<p>The common attributes of objects (the most helpful to know are <strong>class, mode, length, dimension</strong>, and <strong>names</strong>:</p>
+<ul>
+<li>
+<code>class</code> Describes the derived type of object, it may be a built-in class or written by a package author or user. Classes are used for methods dispatch.</li>
+<li>
+<code>mode</code> Often describes the atomic type of object. Sometimes called <em>storage mode</em>. Can be the same as the class, if it is an atomic type.</li>
+<li>
+<code>length</code> The number of fundamental elements of a vector.</li>
+<li>
+<code>dimension</code> Rectangular objects such as matrices and data frames have two dimensions, for the numbers of rows and columns (or the length of the vectors and numbers of vectors). 3D and higher dimensional arrays have 3 or more dimensions.</li>
+<li>
+<code>names</code> Names are optional but often useful to apply labels to internal elements of objects. If no names are given, the internal values can be referenced by their position (index).</li>
+</ul></section><section id="helpful-functions-for-creating-objects" class="level1"><h1>Helpful functions for creating objects</h1>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Functions</th>
+<th style="text-align: left;">Actions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>c(n1, n2, n3)</td>
+<td style="text-align: left;">combines elements into an object</td>
+</tr>
+<tr class="even">
+<td>cbind(x, y)</td>
+<td style="text-align: left;">binds objects together by column</td>
+</tr>
+<tr class="odd">
+<td>rbind(x, y)</td>
+<td style="text-align: left;">binds objects together by row</td>
+</tr>
+</tbody>
+</table>
+<section id="for-sequences" class="level2"><h2 class="anchored" data-anchor-id="for-sequences">For sequences</h2>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Functions</th>
+<th style="text-align: left;">Actions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>seq()</td>
+<td style="text-align: left;">generate a sequence of numbers</td>
+</tr>
+<tr class="even">
+<td>1:10</td>
+<td style="text-align: left;">sequence from 1 to 10 by 1</td>
+</tr>
+<tr class="odd">
+<td>rep(x, times)</td>
+<td style="text-align: left;">replicates x</td>
+</tr>
+<tr class="even">
+<td>sample(x, size, replace=FALSE)</td>
+<td style="text-align: left;">sample size elements from x</td>
+</tr>
+<tr class="odd">
+<td>rnorm(n, mean=0, sd=1)</td>
+<td style="text-align: left;">draw n samples from normal distribution</td>
+</tr>
+</tbody>
+</table></section><section id="creating-or-coercing-objects-to-different-class" class="level2"><h2 class="anchored" data-anchor-id="creating-or-coercing-objects-to-different-class">Creating or Coercing objects to different class</h2>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Functions</th>
+<th style="text-align: left;">Actions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>vector()</td>
+<td style="text-align: left;">create a vector</td>
+</tr>
+<tr class="even">
+<td>matrix()</td>
+<td style="text-align: left;">create a matrix</td>
+</tr>
+<tr class="odd">
+<td>data.frame()</td>
+<td style="text-align: left;">create a data frame</td>
+</tr>
+<tr class="even">
+<td>as.vector(x)</td>
+<td style="text-align: left;">coerces x to vector</td>
+</tr>
+<tr class="odd">
+<td>as.matrix(x)</td>
+<td style="text-align: left;">coerces to matrix</td>
+</tr>
+<tr class="even">
+<td>as.data.frame(x)</td>
+<td style="text-align: left;">coerces to data frame</td>
+</tr>
+<tr class="odd">
+<td>as.character(x)</td>
+<td style="text-align: left;">coerces to character</td>
+</tr>
+<tr class="even">
+<td>as.numeric(x)</td>
+<td style="text-align: left;">coerces to numeric</td>
+</tr>
+<tr class="odd">
+<td>factor(x)</td>
+<td style="text-align: left;">creates factor levels for elements of x</td>
+</tr>
+<tr class="even">
+<td>levels()</td>
+<td style="text-align: left;">orders the factor levels as specified</td>
+</tr>
+</tbody>
+</table></section></section><section id="examples" class="level1"><h1>Examples</h1>
+<section id="various-ways-to-create-vectors" class="level3"><h3 class="anchored" data-anchor-id="various-ways-to-create-vectors">Various ways to create vectors:</h3>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>  <span class="co"># numeric</span></span>
+<span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7 2 6</code></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span> <span class="va">x</span>, times<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 5 7 2 6 1 5 7 2 6</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0.70831083  0.02616606  0.76951907  0.49269606  0.17509325  2.23678382
+[7] -0.07900867  0.89378805</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">goodanswer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>  <span class="co"># logical</span></span>
+<span><span class="va">goodanswer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">species</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>    <span class="co"># special stored data object: lower case letters a - d</span></span>
+<span><span class="va">species</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d"</code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>   <span class="co"># A B C  # character</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "B" "C"</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"low"</span>, <span class="st">"high"</span>, <span class="st">"med"</span>, <span class="st">"high"</span><span class="op">)</span>  <span class="co"># character vector</span></span>
+<span><span class="va">treatment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "low"  "low"  "high" "med"  "high"</code></pre>
+</div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">treat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">treatment</span><span class="op">)</span>   <span class="co"># create a factor</span></span>
+<span><span class="va">treat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low  low  high med  high
+Levels: high low med</code></pre>
+</div>
+</div>
+<p>The vector <code>treat</code> has five elements, it is factor with levels of <code>low</code>, <code>med</code>, or <code>high</code>.</p>
+<p>It is simple to do arithmetic on numeric vectors:</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 7 2 6</code></pre>
+</div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">+</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 7 9 4 8</code></pre>
+</div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">^</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1 25 49  4 36</code></pre>
+</div>
+</div>
+<p>Typically the class of a vector is returned as the type of information contained, so that return values of the atomic types “numeric”, “character”, “factor”, or “logical” indicate that the object is a vector:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+</section><section id="factors-are-categorical-data" class="level3"><h3 class="anchored" data-anchor-id="factors-are-categorical-data">Factors are categorical data</h3>
+<p>For example, <code>large</code> and <code>small</code>, or <code>blue</code>, <code>red</code>, and <code>yellow</code>. Factors may be ordered, which means that the order of the categories has meaning (like income categories). By default, factors are unordered. Levels are the categories that the factor can take on.</p>
+<p>You can easily coerce one type to another:</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">treat</span><span class="op">)</span>   <span class="co"># coerce to numeric</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 2 1 3 1</code></pre>
+</div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>  <span class="co"># coerce to character</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "0.708310834684403"   "0.0261660569479235"  "0.769519071353493"  
+[4] "0.49269605923231"    "0.17509324974742"    "2.23678382276967"   
+[7] "-0.0790086663337881" "0.893788053618042"  </code></pre>
+</div>
+</div>
+<p>Note that when values are quoted, they are of type character.</p>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="st">"pony"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<p>However, notice that factors return different values for class and mode:</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">treat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op">(</span><span class="va">treat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p>And sometimes, when doing ordinary manipulations such as coercing to numeric or combining vectors together to create a matrix, we get:</p>
+<div class="cell">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">treat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 2 1 3 1</code></pre>
+</div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">treat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x treat
+[1,] 1     2
+[2,] 5     2
+[3,] 7     1
+[4,] 2     3
+[5,] 6     1</code></pre>
+</div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">treat</span>, <span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is because internally, factors are stored as digits, 1, 2, etc. to the number of categories. The characters that you see are actually labels for the factor categories called “levels”. Look at the help page for factor (<code><a href="https://rdrr.io/r/base/factor.html">?factor</a></code>) and read the entry for levels. If nothing is specified for the order of the levels, then they are numbered alphabetically! This explains the weird behavior. So if you want the order of the levels to be a more logical “low, medium, high”, you can do so by specifying the order of the levels explicitly when you create the factor:</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">treat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">treat</span>, levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"med"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">treat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low  low  high med  high
+Levels: low med high</code></pre>
+</div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">treat</span>,<span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you get frustrated because youʻre trying to treat a factor as a character, itʻs sometimes safer to manipulate factors by coercing to character first before doing anything else.</p>
+<p>Hereʻs another illustration of methods dispatch - The plot function by default accepts arguments in x, y order. If x is a factor as above, the plot assumes a categorial format for the x-axis. However, if you switch the order:</p>
+<div class="cell">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">treat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is treated as a continuous x-axis. This is because methods dispatch for the plot function will be guided by the class of the objects that you supply. With x as a factor, R assumes you want a discrete x-axis, with the x as a continuous variable and y as the factor level, it will plot on the internal codes for the factor levels (if you want a horizontal bar plot use <code>barplot(..., horiz=TRUE)</code>. If you want histograms use <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>.</p>
+<p>If you name a vector, the names are attached to each value:</p>
+<div class="cell">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">treatment</span></span>
+<span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> low  low high  med high 
+   1    5    7    2    6 </code></pre>
+</div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "low"  "low"  "high" "med"  "high"</code></pre>
+</div>
+</div>
+</section><section id="matrices" class="level3"><h3 class="anchored" data-anchor-id="matrices">Matrices</h3>
+<p>Data are often rectangular. For example, you might have height and weight columns for each subject (rows), or you might have a matrix describing the genetic relatedness between each pair of individuals in a family. Whether it is a square or a rectangular matrix, you will have a series of vectors of equal length. In fact, in R you can think of it as a single long vector with breaks at the end of each column.</p>
+<p>Creating a matrix:</p>
+<div class="cell">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>  <span class="co"># column bind</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in cbind(x, y): number of rows of result is not a multiple of vector
+length (arg 1)</code></pre>
+</div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     x           y
+[1,] 1  0.70831083
+[2,] 5  0.02616606
+[3,] 7  0.76951907
+[4,] 2  0.49269606
+[5,] 6  0.17509325
+[6,] 1  2.23678382
+[7,] 5 -0.07900867
+[8,] 7  0.89378805</code></pre>
+</div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, nrow<span class="op">=</span><span class="fl">2</span><span class="op">)</span>  <span class="co">#create a matrix with 2 rows</span></span>
+<span><span class="va">z</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6</code></pre>
+</div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, nrow<span class="op">=</span><span class="fl">2</span>, byrow<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6</code></pre>
+</div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<p>Names applied to a matrix will attach the names to each value. If you want to name the rows and columns of a matrix you must use <code><a href="https://rdrr.io/r/base/colnames.html">rownames()</a></code> or <code><a href="https://rdrr.io/r/base/colnames.html">colnames()</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>  </span>
+<span><span class="va">z</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span><span class="op">[</span><span class="st">"c"</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>c 
+3 </code></pre>
+</div>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span><span class="op">[</span><span class="st">"f"</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>f 
+6 </code></pre>
+</div>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tom"</span>, <span class="st">"dick"</span>, <span class="st">"harry"</span><span class="op">)</span></span>
+<span><span class="va">z</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   1    3     5
+[2,]   2    4     6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+</div>
+<p>Matrices have rows and columns, and are all of the same type whether it is numeric or character. There is a full suite of matrix math facilities in R to operate on numeric matrices.</p>
+<div class="cell">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span><span class="op">+</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   3    5     7
+[2,]   4    6     8</code></pre>
+</div>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span><span class="op">*</span><span class="fl">2</span>  <span class="co"># ordinary element-by-element multiplication</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   2    6    10
+[2,]   4    8    12</code></pre>
+</div>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">z</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">x</span>  <span class="co"># matrix multiplication</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   27
+[2,]   34</code></pre>
+</div>
+</div>
+</section><section id="data-frames" class="level3"><h3 class="anchored" data-anchor-id="data-frames">Data Frames</h3>
+<p>Dataframes are superficially similar to matrices. They are rectangular. However, a major difference is that the vectors that comprise a dataframe can have vectors of different type. For example, one column can contain species names, whereas the other columns might contain numerical data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">species</span> <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">species</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Internally, it is no longer a single vector but actually a list of vectors:</p>
+<div class="cell">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "species" "x"       "y"      </code></pre>
+</div>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 3</code></pre>
+</div>
+</div>
+<p>This is why the length of a dataframe is the number of columns. The names are the names of the columns, etc.</p>
+<p>You can access the columns of dataframes using the <code>$</code> operator, or using brackets, or by index number: and the name of the element, by the index number and double brackets, or by name and double bracket. Or a single value by using indexing on the row and column number separated by a comma. More on this later in the indexing chapter.</p>
+<div class="cell">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span><span class="op">$</span><span class="va">species</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c"</code></pre>
+</div>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species
+1       a
+2       b
+3       c</code></pre>
+</div>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.027375</code></pre>
+</div>
+</div>
+</section><section id="lists" class="level3"><h3 class="anchored" data-anchor-id="lists">Lists</h3>
+<p>Lists are vectors of arbitrary objects. You can string any kind of objects together in a list. Sometimes the objects are identical, such as when you are doing a massive simulation study and each list element may be a simulated dataset in form of a dataframe. Alternatively, each element of a list may contain a different type of object. This is especially useful for model fitting output, for example, where you may want to store the input data in one list element, and in other list elements: the expression for the model, the fitted parameters, and the information criteria. All of these items are logically related, and if you name the list elements you can easily access the information wanted.</p>
+<div class="cell">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mylist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">species</span>,<span class="va">x</span>,<span class="va">y</span>,<span class="va">z</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>Note that lists have no <strong>dimension</strong> (because they are more flexible vectors - kinda like stretchy christmas stockings). However, if you have a matrix or a dataframe within a list those will have vectors. The object within lists have their own attributes.</p>
+<p>You can access the z element of mylist in a number of ways, using the <code>$</code> operator and the name of the element, by the index number and double brackets, or by name and double bracket:</p>
+<div class="cell">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mylist</span><span class="op">$</span><span class="va">z</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tom dick harry
+[1,]   1    3     5
+[2,]   2    4     6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">$</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">[[</span><span class="st">"z"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c" "d" "e" "f"</code></pre>
+</div>
+</div>
+<p>To see the structure of the list object, use <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code></p>
+<div class="cell">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">mylist</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ species: chr [1:3] "a" "b" "c"
+ $ x      : num [1:3] 1 2 4
+ $ y      : num [1:3] -1.03 -1.39 1.72
+ $ z      : int [1:2, 1:3] 1 2 3 4 5 6
+  ..- attr(*, "names")= chr [1:6] "a" "b" "c" "d" ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : NULL
+  .. ..$ : chr [1:3] "tom" "dick" "harry"</code></pre>
+</div>
+</div>
+<p>You can see that there are four elements of <code>mylist</code>, a character vector named <code>species</code>, two numeric vectors named <code>x</code> and <code>y</code>, and a integer matrix called <code>z</code>. Is it starting to make sense?</p>
+
+
+</section></section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>For example, logistic regression (a regression to predict a binary [yes/no] outcome) is used for classification. The underlying model predicts a quantitative outcome (a value between 0 and 1 usually interpreted as a probability), which is then binned to make categorical predictions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/mbutler808\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
