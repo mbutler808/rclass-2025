@@ -2122,17 +2122,14 @@ Key components
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span> </span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggplot2</code></pre>
-</div>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+font-style: inherit;">)</span> </span>
+<span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2152,7 +2149,17 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Another way to send data to the function is through piping. These are both equivalent to the line above:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">iris</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2167,7 +2174,7 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">iris</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2179,7 +2186,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>You have sent data to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> but it is a blank canvas because you have given it no geometry to plot (no points, bars, etc.)</p>
 <p>It is an object, so you can save it to a named variable, say <code>p</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2209,7 +2216,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>To render the plot associated with this object, we simply print the object p.&nbsp;We can do this in interactive mode by simply typing <code>p</code> at the command line or using the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> function. However, in a script, you will want to use the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> function, and typically print it to a pdf device.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2276,7 +2283,7 @@ r &lt;- p + LAYER4</p>
 <p>For <code>geom_point</code> to run properly we need to provide <strong>data</strong> and a <strong>mapping</strong>. We have already connected the object p with the iris data table, and if we add the layer <code>geom_point</code> it defaults to using this data.</p>
 <p>To find out what mappings are expected, jump down to the <strong>Aesthetics section</strong> of the help file <code>geom_point</code> help file. It states that the required aesthetics are in bold. Which arguments are required?</p>
 <div class="cell">
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">?</span><span class="va" style="color: #111111;
 background-color: null;
@@ -2288,7 +2295,7 @@ font-style: inherit;">geom_point</span></span></code></pre></div>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> function, used inside of a <strong>geom</strong> is where the mappings happen, that is where data are connected with graph elements through defining <strong>aesthetic mappings</strong> (you will see this lingo a lot).</p>
 <p>To produce a scatterplot of <code>Petal.Length</code> by <code>Petal.Width</code> we could use:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">iris</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2332,7 +2339,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>We can drop the x = and y = if we wanted to since these are the first and second expected arguments, as seen in the help page.</p>
 <p>Instead of defining our plot from scratch, if we save the object as <code>p</code> we can also add a layer to the <code>p</code> object. The lines below produce the same plot (verify yourself):</p>
 <div class="cell">
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2374,7 +2381,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </section><section id="adding-annotations-more-layers" class="level1"><h1>Adding annotations (more layers)</h1>
 <p>Suppose we wanted to label each point on the plot. First we add numbers to the iris data and remake the ggplot object:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2427,7 +2434,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The <code>geom_label</code> and <code>geom_text</code> functions add text to the plot with and without a rectangle behind the text, respectively.</p>
 <p>Because each point has a label (id), we need an aesthetic mapping to make the connection between points and labels. By reading the help file, we learn that we supply the mapping between point and label through the label argument of aes. So the code looks like this:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2498,7 +2505,7 @@ font-style: inherit;">p</span>  </span></code></pre></div>
 <p>Pay special attention to what goes <strong>inside</strong> and <strong>outside</strong> of the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>.</p>
 <p>Note:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p_test</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2530,7 +2537,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Works, but moving <code>label=id</code>outside of the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> does not:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p_test</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2565,7 +2572,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>In the previous example, we define the mapping <code>aes(Petal.Length, Petal.Width)</code> twice, once in each geometry.</p>
 <p>If the same mapping applies to each component of the plot, we can use a <strong>global aesthetic mapping</strong>. Generally we do this when we define the blank slate ggplot object. Remember that the function ggplot contains an argument that permits us to define aesthetic mappings:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/args.html">args</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2581,7 +2588,7 @@ NULL</code></pre>
 </div>
 <p>If we define a mapping in ggplot, all the geometries that are added as layers will default to this mapping. We redefine p:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2613,7 +2620,7 @@ font-style: inherit;">)</span> </span></code></pre></div>
 </div>
 <p>and then we can simply write the following code to produce the previous plot:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2651,7 +2658,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>We keep the size and nudge_x arguments in geom_point and geom_text, respectively, because we want to only increase the size of points and only nudge the labels. If we put those arguments in aes then they would apply to both plots. Also note that the geom_point function does not need a label argument and therefore ignores that aesthetic.</p>
 <p>If necessary, we can override the global mapping by defining a new mapping within each layer. These local definitions override the global. Here is an example:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2709,7 +2716,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </section><section id="scales" class="level1"><h1>Scales</h1>
 <p>Changing scales is a common task. For example, in morphometrics, we often use a log scale. We can log transform the plot (how it looks without changing the data) through a scales layer. A quick look at the cheat sheet reveals the <strong>scale_x_continuous</strong> function lets us control the behavior of scales. We use them like this:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2773,7 +2780,7 @@ font-style: inherit;">)</span> </span></code></pre></div>
 <p>Because we are in the log-scale now, the nudge must be made smaller.</p>
 <p>This particular transformation is so common that ggplot2 provides the special functions <strong>scale_x_log10</strong> and <strong>scale_y_log10</strong>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2829,7 +2836,7 @@ font-style: inherit;">)</span> </span></code></pre></div>
 </section><section id="labels-and-titles" class="level1"><h1>Labels and titles</h1>
 <p>Similarly, the cheat sheet shows that to change labels and add a title, we use the following functions:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">q</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2917,7 +2924,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </section><section id="color-annotations-by-group" class="level1"><h1>Color annotations by group</h1>
 <p>We can change the color of the points using the <code>col</code> argument in the <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> function. To facilitate demonstration of new features, we will save the log-scaled plot as q and include everything except the points layer:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">q</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2946,7 +2953,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>This, of course, is not what we want. We want to assign color depending on the Species. A nice default behavior of ggplot2 is that if we assign a categorical variable to color, it automatically assigns a different color to each category and also adds a legend.</p>
 <p>Since the choice of color is determined by a feature of each observation, this is an aesthetic mapping. To map each point to a color, we need to use aes. We use the following code:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">q</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2984,7 +2991,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <section id="specifying-custom-colors" class="level3"><h3 class="anchored" data-anchor-id="specifying-custom-colors">Specifying custom colors</h3>
 <p>The values of the colors we wish to use are specified in the scale parameter <strong>scale_color_manual</strong>. For these examples, letʻs go back to the untransformed values:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3041,7 +3048,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>R has hundreds of named colors. You can see the names with the <code><a href="https://rdrr.io/r/grDevices/colors.html">colors()</a></code> function. There is a cool little function in the <strong>easyGgplot2</strong> package that displays the colors. Now we have a lot of fancy colors to play with:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3065,7 +3072,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">easyGgplot2</span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3091,7 +3098,7 @@ a set of aesthetic values to map data values to. The values will be matched in o
 </blockquote>
 <p>Letʻs use some of these fun colors, by creating a vector <code>cols</code> of color names and passing it to the <code>values</code> argument of <code>scale_color_manual</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">cols</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3158,7 +3165,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </section><section id="named-color-vector" class="level3"><h3 class="anchored" data-anchor-id="named-color-vector">Named color vector</h3>
 <p>We can specify the match of colors to specific species by naming the <code>cols</code> vector with the species names. Then the <code>cols</code> vector will have color values, named by the species they represent:</p>
 <div class="cell">
-<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">cols</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3248,7 +3255,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </section><section id="transparency" class="level3"><h3 class="anchored" data-anchor-id="transparency">Transparency</h3>
 <p>The transparency of colors is controlled by the aesthetic <code>alpha</code>, where 1 indicates 100% opacity (or 0 transparency), with smaller decimals indicating more transparency.</p>
 <div class="cell">
-<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3301,7 +3308,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </section><section id="jitter" class="level3"><h3 class="anchored" data-anchor-id="jitter">Jitter</h3>
 <p>Another way of dealing with overlapping points is to add a little random noise to each, called <strong>jitter</strong>. Try using <code>geom_jitter</code> instead of <code>geom_point</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3352,7 +3359,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>If you want to see where the jitter is relative to the true coordinates, you can use both:</p>
 <div class="cell">
-<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3416,7 +3423,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>Facets work great when they are subsets of the same data, but when you have different data or you want to apply different geoms or aesthetics and compare, you need a more general purpose panel system.</p>
 <p>The <code>cowplot</code> package was written for arranging multiple plots. Letʻs compare what it looks like to jitter the black dots vs.&nbsp;jittering the transparent circles:</p>
 <div class="cell">
-<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3427,20 +3434,18 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: cowplot</code></pre>
-</div>
-<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">plot1</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3577,7 +3582,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The labels arguement is to label the plots, for example for publication.</p>
 <p>Another example, suppose we want to explore variation along <code>Sepal.Length</code> by <code>Species</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb39" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">plot1</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3702,7 +3707,7 @@ font-style: inherit;">+</span></span>
 background-color: null;
 font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span>legend.position <span class="op" style="color: #5E5E5E;
+font-style: inherit;">(</span>legend.position.inside <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3716,13 +3721,9 @@ font-style: inherit;">0.8</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
-3.5.0.
-ℹ Please use the `legend.position.inside` argument of `theme()` instead.</code></pre>
-</div>
-<div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3750,7 +3751,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <section id="scatterplot-with-smoother" class="level3"><h3 class="anchored" data-anchor-id="scatterplot-with-smoother">Scatterplot with smoother</h3>
 <p><strong>geom_smooth()</strong> adds a smoothing line but the default is a <strong>loess</strong> smoother, which is flexible and nonparametric but might be too flexible for our purposes.</p>
 <div class="cell">
-<div class="sourceCode" id="cb42" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3804,7 +3805,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>We get a warning because we are not using the <code>label</code> aesthetic (remember it is =id). There is no problem but to stop the annoying warnings, letʻs leave off <code>label</code> until we need it.</p>
 <p>If we want to explain a simple linear trend between the <code>x</code> and <code>y</code> variables, perhaps we’d prefer a linear regression line.</p>
 <div class="cell">
-<div class="sourceCode" id="cb45" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb39" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3884,7 +3885,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Or without the standard error envelope:</p>
 <div class="cell">
-<div class="sourceCode" id="cb47" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3938,7 +3939,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>We can also compute the regression separately and add the line using <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline()</a></code>, similar to the base R <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function. Note: the ab in the name is to remind us we are supplying the intercept (a) and slope (b).</p>
 <div class="cell">
-<div class="sourceCode" id="cb49" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb43" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">lm.fit</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4040,7 +4041,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>Here <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline()</a></code> does not use any information from the data object, only the regression coefficients.</p>
 <p>We can change the line type and color of the lines using arguments. Also, we draw it first so it doesn’t go over our points.</p>
 <div class="cell">
-<div class="sourceCode" id="cb50" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb44" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4129,7 +4130,7 @@ font-style: inherit;">)</span>  </span></code></pre></div>
 <p>We can see that although the three species of iris generally fall along a line, that there are clusters by species. Perhaps separate linear models by group may be a better fit.</p>
 <p>There are two ways that we can do this. The first is to put a grouping aesthetic within the smoother.</p>
 <div class="cell">
-<div class="sourceCode" id="cb51" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb45" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4189,7 +4190,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Another way to do this is to add col (here as a grouping variable) in the global ggplot aesthetic, which will apply to all downstream layers:</p>
 <div class="cell">
-<div class="sourceCode" id="cb53" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb47" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">r</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4278,7 +4279,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p><strong>facet_wrap()</strong> lays the panels out in a ribbon, in sequential order. See the documentation for arguments to control the number of rows or columns, etc.</p>
 <p>The faceting variable (here, Species) is using formula syntax <code>~Species</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb55" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb49" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4341,7 +4342,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p><strong>facet_grid()</strong> is explicity a grid. The syntax <code>. ~ Species</code> facets by column. a</p>
 <div class="cell">
-<div class="sourceCode" id="cb57" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb51" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4406,7 +4407,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>The syntax <code>Species ~ .</code> facets by row. The syntax <code>Y ~ X</code> would facet by rows and columns.</p>
 <div class="cell">
-<div class="sourceCode" id="cb59" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb53" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4474,7 +4475,7 @@ font-style: inherit;">)</span>   </span></code></pre></div>
 <section id="legend" class="level2"><h2 class="anchored" data-anchor-id="legend">Legend</h2>
 <p>For example, we can make changes to the legend title via the <code>scale_color_discrete function()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb61" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb55" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4522,7 +4523,7 @@ font-style: inherit;">)</span> </span></code></pre></div>
 </section><section id="no-legend" class="level2"><h2 class="anchored" data-anchor-id="no-legend">No legend</h2>
 <p>ggplot2 automatically adds a legend that maps color to species. To remove the legend we set the <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> argument <code>show.legend = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb62" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb56" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4576,7 +4577,7 @@ Note
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb63" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb57" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4624,19 +4625,16 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>The style of a ggplot2 graph can be changed using the theme functions. Several themes are included as part of the ggplot2 package.</p>
 <p>Many other themes are added by the package <code>ggthemes</code>. Among those are the <code>theme_economist</code> theme that we used. After installing the package, you can change the style by adding a layer like this:</p>
 <div class="cell">
-<div class="sourceCode" id="cb64" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb58" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;"><a href="https://jrnold.github.io/ggthemes/">ggthemes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggthemes</code></pre>
-</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'ggthemes'</code></pre>
@@ -4646,7 +4644,7 @@ Attaching package: 'ggthemes'</code></pre>
 
     theme_map</code></pre>
 </div>
-<div class="sourceCode" id="cb68" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb61" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4712,20 +4710,17 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p><strong>ggrepel</strong></p>
 <p>The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The package <code>ggrepel</code> includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change <code>geom_text</code> with <code>geom_text_repel</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb69" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb62" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;"><a href="https://ggrepel.slowkow.com/">ggrepel</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggrepel</code></pre>
-</div>
-<div class="sourceCode" id="cb71" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">p</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -4817,7 +4812,7 @@ increasing max.overlaps</code></pre>
 </section></section><section id="putting-it-all-together" class="level1"><h1>Putting it all together</h1>
 <p>Now that we are done testing, we can write one piece of code that produces our desired plot from scratch.</p>
 <div class="cell">
-<div class="sourceCode" id="cb73" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb64" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">iris</span><span class="op" style="color: #5E5E5E;
 background-color: null;

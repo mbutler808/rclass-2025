@@ -101,13 +101,14 @@ Plots are built up in layers, with the typical ordering being
 Weʻll start by loading the ggplot package and using the built-in `iris` dataset. 
 
 ```{r}
-require(ggplot2) 
+library(ggplot2) 
 ggplot(data = iris)
 ```
 
 Another way to send data to the function is through piping. These are both equivalent to the line above:
 
 ```{r eval=F}
+library(magrittr)
 iris |> ggplot()
 iris %>% ggplot()
 ```
@@ -438,7 +439,7 @@ The `cowplot` package was written for arranging multiple plots. Letʻs compare w
 install.packages("cowplot")
 ```
 ```{r}
-require(cowplot)
+library(cowplot)
 
 plot1 <- p + geom_point() +
   scale_color_manual(values=cols) +
@@ -463,7 +464,7 @@ plot1 <- ggplot(iris, aes(x = Species, y = Sepal.Length, fill=Species)) +
 plot2 <- ggplot(iris, aes(x = Sepal.Length, fill = Species, col=Species)) + 
   geom_density(alpha=0.5) +
   scale_color_manual(values=cols, aesthetics="fill") +
-  theme(legend.position = c(0.8, 0.8))
+  theme(legend.position.inside = c(0.8, 0.8))
   
 plot_grid(plot1, plot2, labels="AUTO")
 ```
@@ -632,7 +633,7 @@ The style of a ggplot2 graph can be changed using the theme functions. Several t
 Many other themes are added by the package `ggthemes`. Among those are the `theme_economist` theme that we used. After installing the package, you can change the style by adding a layer like this:
 
 ```{r}
-require(ggthemes)
+library(ggthemes)
 p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
   scale_color_manual(values=cols) + 
   theme_economist()
@@ -644,7 +645,7 @@ __ggrepel__
 The final difference has to do with the position of the labels. In our plot, some of the labels fall on top of each other. The package `ggrepel` includes a geometry that adds labels while ensuring that they don’t fall on top of each other. We simply change `geom_text` with `geom_text_repel`.
 
 ```{r}
-require(ggrepel)
+library(ggrepel)
 p + geom_point(aes(col=Species, size = 3, alpha = 1/2)) +
   scale_color_manual(values=cols) + 
   theme_economist() +
