@@ -1864,16 +1864,16 @@ font-style: inherit;">)</span></span></code></pre></div>
 <pre><code># A tibble: 10 × 16
    name         height  mass hair  skin  eye   birth_year sex   gender homeworld
    &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    
- 1 Arvel Crynyd     NA    NA brown fair  brown         NA male  mascu… &lt;NA&gt;     
- 2 Lando Calri…    177    79 black dark  brown         31 male  mascu… Socorro  
- 3 Han Solo        180    80 brown fair  brown         29 male  mascu… Corellia 
- 4 Sebulba         112    40 none  grey… oran…         NA male  mascu… Malastare
- 5 Raymus Anti…    188    79 brown light brown         NA male  mascu… Alderaan 
- 6 Jocasta Nu      167    NA white fair  blue          NA fema… femin… Coruscant
- 7 Finn             NA    NA black dark  dark          NA male  mascu… &lt;NA&gt;     
- 8 Nien Nunb       160    68 none  grey  black         NA male  mascu… Sullust  
- 9 Gregar Typho    185    85 black dark  brown         NA &lt;NA&gt;  &lt;NA&gt;   Naboo    
-10 Mace Windu      188    84 none  dark  brown         72 male  mascu… Haruun K…
+ 1 BB8              NA    NA none  none  black         NA none  mascu… &lt;NA&gt;     
+ 2 Beru Whites…    165    75 brown light blue          47 fema… femin… Tatooine 
+ 3 Jar Jar Bin…    196    66 none  oran… oran…         52 male  mascu… Naboo    
+ 4 Nien Nunb       160    68 none  grey  black         NA male  mascu… Sullust  
+ 5 Owen Lars       178   120 brow… light blue          52 male  mascu… Tatooine 
+ 6 Tarfful         234   136 brown brown blue          NA male  mascu… Kashyyyk 
+ 7 Wat Tambor      193    48 none  gree… unkn…         NA male  mascu… Skako    
+ 8 R4-P17           96    NA none  silv… red,…         NA none  femin… &lt;NA&gt;     
+ 9 Mas Amedda      196    NA none  blue  blue          NA male  mascu… Champala 
+10 Jek Tono Po…    180   110 brown fair  blue          NA &lt;NA&gt;  &lt;NA&gt;   Bestine …
 # ℹ 6 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
 #   starships &lt;list&gt;, heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;</code></pre>
 </div>

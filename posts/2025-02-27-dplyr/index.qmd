@@ -5,7 +5,7 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Add"
+description: "Crack that whip!"
 date: 2025-02-27
 categories: [module 3, week 7, tidyr, tidyverse, dplyr, tibble, pipe]
 ---
