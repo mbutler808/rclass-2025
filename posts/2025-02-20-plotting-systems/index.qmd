@@ -74,7 +74,7 @@ install.packages(c("lattice", "ggplot2"))
 
 The **base plotting system** is the original plotting system for R. The basic model is sometimes **referred to as the "artist's palette" model**, because you start with a blank canvas and add to it, element by element. 
 
-We begin with an R plotting function that *creates a new plot window* **typically the `plot()` function**, and we can add *annotations* to the plot with functions such as (`text`, `lines`, `points`, `axis`). 
+We begin with an R plotting function that *creates a new plot window* **typically the `plot()` function**, which creates a plot object. We can add *annotations* to the plot object with functions such as (`text`, `lines`, `points`, `axis`). 
 
 If you get an error 
 ```{.bash}
