@@ -199,11 +199,9 @@ skimr::skim(starwars)
 ### Selecting columns with `select()`
 
 ::: callout-tip
-### Example
+### Example: Suppose we wanted to take the first 3 columns only
 
-Suppose we wanted to take the first 3 columns only. There are a few ways to do this.
-
-We could for example use numerical indices:
+There are a few ways to do this. We could use numerical indices:
 
 ```{r}
 names(starwars)[1:3]
@@ -212,8 +210,8 @@ names(starwars)[1:3]
 But we can also use the names directly:
 
 ```{r}
-subset <- select(starwars, c(name, sex:species))
-head(subset)
+dat <- select(starwars, c(name, sex:species))
+head(dat)
 ```
 :::
 
@@ -234,14 +232,14 @@ select( starwars, -(sex:species))
 
 The `select()` function also has several helper functions that allow matching on patterns. So, for example, if you wanted to keep every variable that ends with "color":
 ```{r}
-subset <- select(starwars, ends_with("color"))
-str(subset)
+dat <- select(starwars, ends_with("color"))
+str(dat)
 ```
 
 Or all variables that start with n or m:
 ```{r}
-subset <- select(starwars, starts_with("n") | starts_with("m"))
-str(subset)
+dat <- select(starwars, starts_with("n") | starts_with("m"))
+str(dat)
 ```
 
 You can also use more general __regular expressions__. See the help page (`?select`) for more details.

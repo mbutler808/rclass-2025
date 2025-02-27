@@ -659,12 +659,11 @@ font-style: inherit;">)</span></span></code></pre></div>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Example
+Example: Suppose we wanted to take the first 3 columns only
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Suppose we wanted to take the first 3 columns only. There are a few ways to do this.</p>
-<p>We could for example use numerical indices:</p>
+<p>There are a few ways to do this. We could use numerical indices:</p>
 <div class="cell">
 <div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -693,7 +692,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">subset</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -724,7 +723,7 @@ font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">subset</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -783,7 +782,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">subset</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -808,7 +807,7 @@ font-style: inherit;"><a href="https://rdrr.io/r/utils/str.html">str</a></span><
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">subset</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -822,7 +821,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">subset</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -857,7 +856,7 @@ font-style: inherit;"><a href="https://rdrr.io/r/utils/str.html">str</a></span><
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">subset</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1864,16 +1863,16 @@ font-style: inherit;">)</span></span></code></pre></div>
 <pre><code># A tibble: 10 × 16
    name         height  mass hair  skin  eye   birth_year sex   gender homeworld
    &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    
- 1 BB8              NA    NA none  none  black         NA none  mascu… &lt;NA&gt;     
- 2 Beru Whites…    165    75 brown light blue          47 fema… femin… Tatooine 
- 3 Jar Jar Bin…    196    66 none  oran… oran…         52 male  mascu… Naboo    
- 4 Nien Nunb       160    68 none  grey  black         NA male  mascu… Sullust  
- 5 Owen Lars       178   120 brow… light blue          52 male  mascu… Tatooine 
- 6 Tarfful         234   136 brown brown blue          NA male  mascu… Kashyyyk 
- 7 Wat Tambor      193    48 none  gree… unkn…         NA male  mascu… Skako    
- 8 R4-P17           96    NA none  silv… red,…         NA none  femin… &lt;NA&gt;     
- 9 Mas Amedda      196    NA none  blue  blue          NA male  mascu… Champala 
-10 Jek Tono Po…    180   110 brown fair  blue          NA &lt;NA&gt;  &lt;NA&gt;   Bestine …
+ 1 Eeth Koth       171  NA   black brown brown       NA   male  mascu… Iridonia 
+ 2 Obi-Wan Ken…    182  77   aubu… fair  blue…       57   male  mascu… Stewjon  
+ 3 Taun We         213  NA   none  grey  black       NA   fema… femin… Kamino   
+ 4 Greedo          173  74   &lt;NA&gt;  green black       44   male  mascu… Rodia    
+ 5 Leia Organa     150  49   brown light brown       19   fema… femin… Alderaan 
+ 6 Rey              NA  NA   brown light hazel       NA   fema… femin… &lt;NA&gt;     
+ 7 Boba Fett       183  78.2 black fair  brown       31.5 male  mascu… Kamino   
+ 8 R5-D4            97  32   &lt;NA&gt;  whit… red         NA   none  mascu… Tatooine 
+ 9 Bib Fortuna     180  NA   none  pale  pink        NA   male  mascu… Ryloth   
+10 Ric Olié        183  NA   brown fair  blue        NA   male  mascu… Naboo    
 # ℹ 6 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
 #   starships &lt;list&gt;, heightsize &lt;dbl&gt;, height.quint &lt;fct&gt;</code></pre>
 </div>
