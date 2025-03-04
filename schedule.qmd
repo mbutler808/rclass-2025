@@ -43,14 +43,14 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 |              | Feb 20 | `r emojifont::emoji('bar_chart')` Plotting Systems (Base R) \[[html](posts/2025-02-20-plotting-systems/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-20-plotting-systems/index.qmd)\] |  |     |
 ||||||
 | Week 6       | Feb 25 | `r emojifont::emoji('bar_chart')` Plotting with ggplot2 \[[html](posts/2025-02-25-ggplot2/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-02-25-ggplot2/index.qmd)\]| | |
-|              |  Feb 27 | `r emojifont::emoji('bar_chart')` Tidying data with dplyr \[[html](posts/2025-02-27-dplyr/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-02-27-dplyr/index.qmd)\]|  | |
+|              |  Feb 27 | `r emojifont::emoji('bar_chart')` Tidying data with dplyr \[[html](posts/2025-02-27-dplyr/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-27-dplyr/index.qmd)\]|  | |
 ||||||
 | **Module 4** |         | **Tour of Stats in R and Data Wrangling** |||
 | Week 7 | Mar 3 ||`r emojifont::emoji('fallen_leaf')` Project 1 due||
-|        | Mar 4 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html]\] \[[Qmd]\] | |
-|              | Mar 6  | `r emojifont::emoji('racehorse')`  A tour of some multivariate methods in R \[[html]\] \[[Qmd]\]  | `r emojifont::emoji('seedling')` Project 2 assigned ||
+|        | Mar 4 | `r emojifont::emoji('monkey')` Tidyverse and data wrangling \[[html](posts/2025-02-27-dplyr/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-02-27-dplyr/index.qmd)\] | |
+|              | Mar 6  | `r emojifont::emoji('racehorse')`  A tour of some univariate methods in R \[[html](posts/2025-03-06-univariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-06-univariate/index.qmd)\]  | `r emojifont::emoji('seedling')` Project 2 assigned ||
 ||||||
-| Week 8       | Mar 6 | `r emojifont::emoji('calendar')` A tour of some univariate methods in R \[[html]\] \[[Qmd]\] | | |
+| Week 8       | Mar 11 | `r emojifont::emoji('calendar')` A tour of some multivariate methods in R \[[html](posts/2025-03-11-multivariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-11-multivariate/index.qmd)\] | | |
 |              | Mar 11 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html]\] \[[Qmd]\] | | |
 |              | Mar 13 | `r emojifont::emoji('racehorse')` Reshaping data \[[html]\] \[[Qmd]\] |  | |
 ||||||
