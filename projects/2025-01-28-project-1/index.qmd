@@ -68,7 +68,7 @@ The main document should be a Quarto file, which can be turned into a suitable o
 
 Structure your project similar to the provided template, with data, scripts, results and manuscript in different folders, various R scripts to perform different bits of the analysis, and a final qmd file that pulls everything in and generates the report. 
 
-For all your submissions, you need to provide everything needed (data, code, etc.) to allow a full and automated reproduction of your analysis.
+For all your submissions, you need to provide everything needed (data, code, etc.) to allow a full and automated reproduction of your analysis. Submit the assignment by emailing me a url to your repo. 
 
 
 # Feedback and Assessment
