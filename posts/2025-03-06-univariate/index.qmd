@@ -6,7 +6,7 @@ author:
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Add"
-date: 2026-03-06
+date: 2025-03-06
 categories: [module 4, week 7, univariate, statistics, ggplot2, dplyr]
 ---
 

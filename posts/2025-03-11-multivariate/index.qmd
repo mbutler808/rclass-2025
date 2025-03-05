@@ -248,7 +248,23 @@ The PCA does not at all account for group structure. When we have multiple group
 
 Another reason to do canonical discriminant analysis is to obtain scores as in PCA to do further analysis. It just produces scores accounting for group structure, so it is like a multi-group PCA. For example, I used this technique to produce a multivariate multi-group ordination in my studies of sexual dimorphism amongst multiple species. I allowed each species and sex to be a different group, and then tested to see if ecomorphs clustered together. 
 
-To do this analysis, you need to install the package `candisc`. And produce a multivariate model as in the manova example above. 
+To do this analysis, you need to install the package `candisc`, and any dependencies. 
+
+:::{.callout-tip}
+## Mac Users!!! (PC users can ignore, I think)
+
+`rgl` which is a package that produces a graphical device driver that `candisc` depends on, needs an x11 window (for Mac this is `Xquartz`). You must install it from itʻs own website: 
+
+<https://www.xquartz.org>
+
+Then install `candisc`, and it should work
+:::
+
+```{r, eval=F}
+install.packages("candisc", dependencies=T)
+```
+
+We then produce a multivariate model as in the manova example above. 
 
 ```{r}
 require(candisc)

@@ -1,0 +1,30 @@
+[
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/projects/2023-03-22-project-2-3/index.html",
+      "/projects/2025-01-14-project-0/index.html",
+      "/projects/2023-03-22-oral-presentation/index.html",
+      "/projects/2025-01-28-project-1/index.html"
+    ]
+  },
+  {
+    "listing": "/lectures.html",
+    "items": [
+      "/posts/2025-03-11-multivariate/index.html",
+      "/posts/2025-03-06-univariate/index.html",
+      "/posts/2025-02-27-dplyr/index.html",
+      "/posts/2025-02-25-ggplot2/index.html",
+      "/posts/2025-02-20-plotting-systems/index.html",
+      "/posts/2025-02-18-tidying-exploring-data/index.html",
+      "/posts/2025-02-13-data/index.html",
+      "/posts/2025-02-11-scripts/index.html",
+      "/posts/2025-02-04-reading-data/index.html",
+      "/posts/2025-01-30-reference-management/index.html",
+      "/posts/2025-01-28-intro-quarto/index.html",
+      "/posts/2025-01-21-intro-git-github/index.html",
+      "/posts/2025-01-16-your-computer-filesystems/index.html",
+      "/posts/2025-01-14-the-big-picture/index.html"
+    ]
+  }
+]
