@@ -5,7 +5,7 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Add"
+description: "What regression and ANOVA mean when exploring data"
 date: 2025-03-06
 categories: [module 4, week 7, univariate, statistics, ggplot2, dplyr]
 ---
