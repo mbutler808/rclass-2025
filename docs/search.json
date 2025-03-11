@@ -315,6 +315,13 @@
     "text": "ANCOVA\nThere are many forms of regession and ANOVA. For example, if you want to see if the relationship between Sepal.Length and Sepal.Width differs by species, you woul do an ANCOVA (analysis of covariance):\n\nlm.fit &lt;- with(iris, lm(Sepal.Width ~ Sepal.Length + Species))\nsummary(lm.fit)\n\n\nCall:\nlm(formula = Sepal.Width ~ Sepal.Length + Species)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.95096 -0.16522  0.00171  0.18416  0.72918 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)        1.67650    0.23536   7.123 4.46e-11 ***\nSepal.Length       0.34988    0.04630   7.557 4.19e-12 ***\nSpeciesversicolor -0.98339    0.07207 -13.644  &lt; 2e-16 ***\nSpeciesvirginica  -1.00751    0.09331 -10.798  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.289 on 146 degrees of freedom\nMultiple R-squared:  0.5693,    Adjusted R-squared:  0.5604 \nF-statistic: 64.32 on 3 and 146 DF,  p-value: &lt; 2.2e-16\n\n\nWhich would fit separate Y-intercepts for each species."
   },
   {
+    "objectID": "posts/2025-03-06-univariate/index.html#violin-plots",
+    "href": "posts/2025-03-06-univariate/index.html#violin-plots",
+    "title": "A small review of univariate parametric statistics",
+    "section": "Violin Plots",
+    "text": "Violin Plots\nViolin plots are visually appealing for showing differences in mean (“location”) as well as the distribution of points around them, and are easy to do with ggplot2.\n\nlibrary(ggplot2)\nlibrary(magrittr)\n\np &lt;- iris %&gt;% ggplot(aes(x=Species, y=Sepal.Length))\np + geom_violin()\n\n\n\n\n\n\n\nIf you want to add colors, use the fill aesthetic:\n\np &lt;- iris %&gt;% ggplot(aes(x=Species, y=Sepal.Length, fill=Species))\np + geom_violin()\n\n\n\n\n\n\n\nYou can even overlay points (or add bar plots, etc.):\n\np + geom_point()\n\n\n\n\n\n\n\nNotice that you cannot see 50 points per species. Try geom_jitter(). Now notice that the jitter is really wide. Look up the help page for geom_jitter() and find how to customize the width of the jitter.\nYou can find many more examples of beautiful graphs at https://r-graph-gallery.com"
+  },
+  {
     "objectID": "posts/2025-01-30-reference-management/index.html",
     "href": "posts/2025-01-30-reference-management/index.html",
     "title": "Reference management",

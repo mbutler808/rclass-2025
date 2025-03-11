@@ -185,3 +185,33 @@ summary(lm.fit)
 
 Which would fit separate Y-intercepts for each species. 
 
+## Violin Plots
+
+Violin plots are visually appealing for showing differences in mean ("location") as well as the distribution of points around them, and are easy to do with `ggplot2`. 
+
+```{r}
+library(ggplot2)
+library(magrittr)
+
+p <- iris %>% ggplot(aes(x=Species, y=Sepal.Length))
+p + geom_violin()
+```
+
+If you want to add colors, use the `fill` aesthetic:
+
+```{r}
+p <- iris %>% ggplot(aes(x=Species, y=Sepal.Length, fill=Species))
+p + geom_violin()
+```
+
+You can even overlay points (or add bar plots, etc.):
+
+```{r}
+p + geom_point()
+```
+
+Notice that you cannot see 50 points per species. Try geom_jitter().  Now notice that the jitter is really wide. Look up the help page for geom_jitter() and find how to customize the width of the jitter. 
+
+You can find many more examples of beautiful graphs at <https://r-graph-gallery.com>
+
+
