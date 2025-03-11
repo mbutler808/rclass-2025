@@ -207,7 +207,9 @@ p + geom_violin()
 You can even overlay points (or add bar plots, etc.):
 
 ```{r}
-p + geom_point()
+p + 
+  geom_violin() +
+  geom_point()
 ```
 
 Notice that you cannot see 50 points per species. Try geom_jitter().  Now notice that the jitter is really wide. Look up the help page for geom_jitter() and find how to customize the width of the jitter. 
