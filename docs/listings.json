@@ -11,6 +11,7 @@
   {
     "listing": "/lectures.html",
     "items": [
+      "/posts/2025-03-13-joining-data/index.html",
       "/posts/2025-03-11-multivariate/index.html",
       "/posts/2025-03-06-univariate/index.html",
       "/posts/2025-02-27-dplyr/index.html",

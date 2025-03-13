@@ -51,7 +51,7 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 |              | Mar 6  | `r emojifont::emoji('racehorse')`  A tour of some univariate methods in R \[[html](posts/2025-03-06-univariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-06-univariate/index.qmd)\]  | `r emojifont::emoji('seedling')` Project 2 assigned ||
 ||||||
 | Week 8       | Mar 11 | `r emojifont::emoji('calendar')` A tour of some multivariate methods in R \[[html](posts/2025-03-11-multivariate/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-11-multivariate/index.qmd)\] | | |
-|              | Mar 11 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html]\] \[[Qmd]\] | | |
+|              | Mar 13 | `r emojifont::emoji('racehorse')` Joining a.k.a. merging data \[[html](posts/2025-03-13-joining-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-13-joining-data/index.qmd)\] | | |
 |              | Mar 13 | `r emojifont::emoji('racehorse')` Reshaping data \[[html]\] \[[Qmd]\] |  | |
 ||||||
 | **Module 5** |         | **Programming Elements** | | |

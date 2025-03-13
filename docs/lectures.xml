@@ -10,7 +10,924 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2025</description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Tue, 11 Mar 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 13 Mar 2025 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Joining data with dplyr</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-03-13-joining-data/</link>
+  <description><![CDATA[ <section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+<section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read ahead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li><a href="https://r4ds.had.co.nz/relational-data" class="uri">https://r4ds.had.co.nz/relational-data</a></li>
+<li><a href="https://rafalab.github.io/dsbook/joining-tables" class="uri">https://rafalab.github.io/dsbook/joining-tables</a></li>
+</ol>
+</div>
+</div>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-joining-data-in-r/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-joining-data-in-r/</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776/lecture-joining-data-in-r-basics" class="uri">https://rdpeng.github.io/Biostat776/lecture-joining-data-in-r-basics</a></li>
+<li><a href="https://r4ds.had.co.nz/relational-data" class="uri">https://r4ds.had.co.nz/relational-data</a></li>
+<li><a href="https://rafalab.github.io/dsbook/joining-tables" class="uri">https://rafalab.github.io/dsbook/joining-tables</a></li>
+</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to define relational data and keys</li>
+<li>Be able to define the three types of join functions for relational data</li>
+<li>Be able to implement mutational join functions</li>
+</ul>
+</div>
+</div>
+<section id="new-packages" class="level2"><h2 class="anchored" data-anchor-id="new-packages">New Packages</h2>
+<p>You will have to install if you donʻt already have them:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gapminder"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># a dataset package</span></span></code></pre></div>
+</div>
+</section></section><section id="overview" class="level1"><h1>Overview</h1>
+<p>Last time we talked about tidy data. One common issue is that people sometimes use column names to store data. For example take a look at this built-in dataset that comes with <code>tidyr</code> on <strong>religion and income survey data</strong> with the number of respondents with income range in column name.</p>
+</section><section id="joining-data-a.k.a.-merging" class="level1"><h1>Joining data (a.k.a. Merging)</h1>
+<section id="relational-data" class="level2"><h2 class="anchored" data-anchor-id="relational-data">Relational data</h2>
+<p>Data analyses rarely involve only a single table of data.</p>
+<p>Typically you have many tables of data, and you <strong>must combine the datasets</strong> to answer the questions that you are interested in. Some examples include morphology and ecology data on the same species, or sequence data and metadata.</p>
+<p>Collectively, <strong>multiple tables of data are called relational data</strong> because it is the <em>relations</em>, not just the individual datasets, that are important.</p>
+<p>Relations are <strong>always defined between a pair of tables</strong>. All other relations are built up from this simple idea: the relations of three or more tables are always a property of the relations between each pair.</p>
+<p>Sometimes both elements of a pair can be in the same table! This is needed if, for example, you have a table of people, and each person has a reference to their parents, or if you have nodes in a phylogeny and each is linked to an ancestral node.</p>
+<p>Relational data are combined with <strong>merges or joins</strong>.</p>
+</section><section id="example-with-merge" class="level2"><h2 class="anchored" data-anchor-id="example-with-merge">Example with <code>merge()</code>
+</h2>
+<p>Letʻs use the <code>geospiza</code> data from the <code>geiger</code> package to practice merging with the base R <code><a href="https://rdrr.io/r/base/merge.html">merge()</a></code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geiger</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># load the dataset into the workspace</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>               <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># list the objects in the workspace</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "geospiza"</code></pre>
+</div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$geospiza.tree
+
+Phylogenetic tree with 14 tips and 13 internal nodes.
+
+Tip labels:
+  fuliginosa, fortis, magnirostris, conirostris, scandens, difficilis, ...
+
+Rooted; includes branch length(s).
+
+$geospiza.data
+                wingL  tarsusL  culmenL    beakD   gonysW
+magnirostris 4.404200 3.038950 2.724667 2.823767 2.675983
+conirostris  4.349867 2.984200 2.654400 2.513800 2.360167
+difficilis   4.224067 2.898917 2.277183 2.011100 1.929983
+scandens     4.261222 2.929033 2.621789 2.144700 2.036944
+fortis       4.244008 2.894717 2.407025 2.362658 2.221867
+fuliginosa   4.132957 2.806514 2.094971 1.941157 1.845379
+pallida      4.265425 3.089450 2.430250 2.016350 1.949125
+fusca        3.975393 2.936536 2.051843 1.191264 1.401186
+parvulus     4.131600 2.973060 1.974420 1.873540 1.813340
+pauper       4.232500 3.035900 2.187000 2.073400 1.962100
+Pinaroloxias 4.188600 2.980200 2.311100 1.547500 1.630100
+Platyspiza   4.419686 3.270543 2.331471 2.347471 2.282443
+psittacula   4.235020 3.049120 2.259640 2.230040 2.073940
+
+$phy
+
+Phylogenetic tree with 14 tips and 13 internal nodes.
+
+Tip labels:
+  fuliginosa, fortis, magnirostris, conirostris, scandens, difficilis, ...
+
+Rooted; includes branch length(s).
+
+$dat
+                wingL  tarsusL  culmenL    beakD   gonysW
+magnirostris 4.404200 3.038950 2.724667 2.823767 2.675983
+conirostris  4.349867 2.984200 2.654400 2.513800 2.360167
+difficilis   4.224067 2.898917 2.277183 2.011100 1.929983
+scandens     4.261222 2.929033 2.621789 2.144700 2.036944
+fortis       4.244008 2.894717 2.407025 2.362658 2.221867
+fuliginosa   4.132957 2.806514 2.094971 1.941157 1.845379
+pallida      4.265425 3.089450 2.430250 2.016350 1.949125
+fusca        3.975393 2.936536 2.051843 1.191264 1.401186
+parvulus     4.131600 2.973060 1.974420 1.873540 1.813340
+pauper       4.232500 3.035900 2.187000 2.073400 1.962100
+Pinaroloxias 4.188600 2.980200 2.311100 1.547500 1.630100
+Platyspiza   4.419686 3.270543 2.331471 2.347471 2.282443
+psittacula   4.235020 3.049120 2.259640 2.230040 2.073940</code></pre>
+</div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geospiza</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># save the morphometric data as geo</span></span></code></pre></div>
+</div>
+<p>This is a 5 column dataframe. Letʻs take just the <code>tarsusL</code> data to build our example dataset:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tarsusL</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># geo is a matrix, select tarsusL column</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tarsusL</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecology"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LETTERS</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tarsusL</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Often we will be merging data that donʻt perfectly match. Some parts of the data will be missing, for example we may only have ecology data for the first five species. The question is what do you want the merge behavior to be?</p>
+<p>The default is to drop all observations that are not in BOTH datasets. Here we merge the original <code>geo</code> with only the first five rows of <code>geot</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>                    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># only maches to both datasets are included</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"row.names"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>    </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Row.names        x  tarsusL ecology
+1  conirostris 2.984200 2.984200       B
+2   difficilis 2.898917 2.898917       C
+3       fortis 2.894717 2.894717       E
+4 magnirostris 3.038950 3.038950       A
+5     scandens 2.929033 2.929033       D</code></pre>
+</div>
+</div>
+<p>If we want to keep everything, use the <code>all=T</code> flag:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>                    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># all species in both datasets are included</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"row.names"</span>, all<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>    </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Row.names        x  tarsusL ecology
+1   conirostris 2.984200 2.984200       B
+2    difficilis 2.898917 2.898917       C
+3        fortis 2.894717 2.894717       E
+4    fuliginosa 2.806514       NA    &lt;NA&gt;
+5         fusca 2.936536       NA    &lt;NA&gt;
+6  magnirostris 3.038950 3.038950       A
+7       pallida 3.089450       NA    &lt;NA&gt;
+8      parvulus 2.973060       NA    &lt;NA&gt;
+9        pauper 3.035900       NA    &lt;NA&gt;
+10 Pinaroloxias 2.980200       NA    &lt;NA&gt;
+11   Platyspiza 3.270543       NA    &lt;NA&gt;
+12   psittacula 3.049120       NA    &lt;NA&gt;
+13     scandens 2.929033 2.929033       D</code></pre>
+</div>
+</div>
+<p>There is also <code>all.x</code> which keeps all values of the first data table but drops non-matching rows of the second table, and <code>all.y</code> which keeps all of the second.</p>
+<p>The results of <code>merge</code> are sorted by default on the sort key. To turn it off:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># reverse the species order of geo</span></span>
+<span>                     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># merge on geo first, then geot</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"row.names"</span>, sort<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">F</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Row.names        x  tarsusL ecology
+1       fortis 2.894717 2.894717       E
+2     scandens 2.929033 2.929033       D
+3   difficilis 2.898917 2.898917       C
+4  conirostris 2.984200 2.984200       B
+5 magnirostris 3.038950 3.038950       A</code></pre>
+</div>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>                     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># geot first, then geo</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">geo</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tarsusL"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"row.names"</span>, sort<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">F</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Row.names  tarsusL ecology        y
+1 magnirostris 3.038950       A 3.038950
+2  conirostris 2.984200       B 2.984200
+3   difficilis 2.898917       C 2.898917
+4     scandens 2.929033       D 2.929033
+5       fortis 2.894717       E 2.894717</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>In a <code>merge</code>, the non-key columns are copied over into the new table.</li>
+</ul>
+</div>
+</div>
+<p>Check out the help page for <code><a href="https://rdrr.io/r/base/merge.html">?merge</a></code> for more info.</p>
+</section></section><section id="keys" class="level1"><h1>Keys</h1>
+<p>The <strong>variables used to connect each pair of tables</strong> are called <strong>keys</strong>. A key is a variable (or set of variables) that <strong>uniquely identifies an observation</strong>. In simple cases, a single variable is sufficient to identify an observation.</p>
+<p>In the example above the key was the <strong>species names</strong>, which was contained in the <code>row.names</code> attribute. The key was specified in the merge in the <code>by=</code> argument. A merge or join key is a generic concept that is used in many database operations.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are two types of keys:</p>
+<ul>
+<li>A <strong>primary key</strong> uniquely identifies an observation in its own table.</li>
+<li>A <strong>foreign key</strong> uniquely identifies an observation in another table.</li>
+</ul>
+</div>
+</div>
+<p>Let’s consider an example to help us understand the difference between a <strong>primary key</strong> and <strong>foreign key</strong>.</p>
+<section id="example-of-keys" class="level2"><h2 class="anchored" data-anchor-id="example-of-keys">Example of keys</h2>
+<p>Imagine you are conduct a study and <strong>collecting data on subjects and a health outcome</strong>.</p>
+<p>Often, subjects will <strong>have multiple observations</strong> (a longitudinal study). Similarly, we may record other information, such as the type of housing.</p>
+<section id="the-first-table" class="level3"><h3 class="anchored" data-anchor-id="the-first-table">The first table</h3>
+<p>This code creates a simple table with some made up data about some hypothetical subjects’ outcomes.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">outcomes</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>        id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"b"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"c"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, each <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        visit <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        outcome <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">outcomes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
+  id    visit outcome
+  &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
+1 a         0    2.68
+2 a         1    3.30
+3 a         2    2.83
+4 b         0    1.94
+5 b         1    1.19
+6 b         2    3.03
+7 c         0    3.86
+8 c         1    3.12
+9 c         2    2.15</code></pre>
+</div>
+</div>
+<p>Note that subjects are labeled by a unique identifer in the <code>id</code> column.</p>
+</section><section id="a-second-table" class="level3"><h3 class="anchored" data-anchor-id="a-second-table">A second table</h3>
+<p>Here is some code to create a second table containing data about the hypothetical subjects’ housing type.</p>
+<div class="cell" data-exercise="true">
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">subjects</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>        id <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"b"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"c"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        house <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"detached"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rowhouse"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rowhouse"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">subjects</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  id    house   
+  &lt;chr&gt; &lt;chr&gt;   
+1 a     detached
+2 b     rowhouse
+3 c     rowhouse</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the <strong>primary key</strong> and <strong>foreign key</strong>?</p>
+<ul>
+<li>The <code>outcomes$id</code> is a <strong>primary key</strong> because it uniquely identifies each subject in the <code>outcomes</code> table.</li>
+<li>The <code>subjects$id</code> is a <strong>foreign key</strong> because it appears in the <code>subjects</code> table where it matches each subject to a unique <code>id</code>.</li>
+</ul>
+</div>
+</div>
+</section></section></section><section id="joining-in-dplyr" class="level1"><h1>Joining in <code>dplyr</code>
+</h1>
+<p>In <code>dplyr</code>, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Three important families of joins
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<p><a href="https://r4ds.had.co.nz/relational-data.html#mutating-joins"><strong>Mutating joins</strong></a>: add new variables to one data frame from matching observations in another.</p>
+<ul>
+<li>This is a typical <strong>merge</strong> operation. A mutating join <strong>combines variables from two tables</strong> into a new table. Observations in the two tables are matched by their keys, with the variables from the two tables copied into the new table. It is a mutating join because it adds columns with the merge, and in that way is analogous to the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> function for dataframes.<br>
+</li>
+<li>See Section&nbsp;7 for Table of mutating joins.</li>
+</ul>
+</li>
+<li>
+<p><a href="https://r4ds.had.co.nz/relational-data.html#filtering-joins"><strong>Filtering joins</strong></a>: filter observations from one data frame based on whether or not they match an observation in the other table</p>
+<ul>
+<li>Filtering joins are a way to filter one dataset by observations in another dataset (they are more filter and less join).</li>
+<li>Filtering joins <strong>match observations</strong> by a key, as usual, <strong>but select the observations that match</strong> (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.<br>
+</li>
+<li>Two types: <code>semi_join(x, y)</code> and <code>anti_join(x, y)</code>.</li>
+</ul>
+</li>
+<li>
+<p><a href="https://r4ds.had.co.nz/relational-data.html#set-operations"><strong>Set operations</strong></a>: treat observations as if they were set elements.</p>
+<ul>
+<li>Set operations can be useful when you want to break a single complex filter into simpler pieces. All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:<br>
+</li>
+<li>Examples of set operations: <code>intersect(x, y)</code>, <code>union(x, y)</code>, and <code>setdiff(x, y)</code>.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</section><section id="sec-mutjoins" class="level1"><h1>Types of mutating joins</h1>
+<p>The <code>dplyr</code> package provides a set of <strong>functions for joining two data frames</strong> into a single data frame based on a set of key columns.</p>
+<p>There are several functions in the <code>*_join()</code> family.</p>
+<ul>
+<li>These functions all merge together two data frames</li>
+<li>They differ in how they handle observations that exist in one but not both data frames.</li>
+</ul>
+<p>Here, are the <strong>four functions from this family</strong> that you will likely use the most often:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 87%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">What it includes in merged data frame</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code></td>
+<td style="text-align: left;">Includes all observations in the left data frame, whether or not there is a match in the right data frame</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code></td>
+<td style="text-align: left;">Includes all observations in the right data frame, whether or not there is a match in the left data frame</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code></td>
+<td style="text-align: left;">Includes only observations that are in both data frames</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code></td>
+<td style="text-align: left;">Includes all observations from both data frames</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png" class="img-fluid"></p>
+<p>[<a href="https://r4ds.had.co.nz/relational-data#relational-data">Source from R for Data Science</a>]</p>
+</section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
+<p>Here are some post-lecture questions to help you think about the material discussed.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Using prose, describe how the variables and observations are organised in a tidy dataset versus an non-tidy dataset.</p></li>
+<li><p>What do the extra and fill arguments do in <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code>? Experiment with the various options for the following two toy datasets.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a,b,c"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"d,e,f,g"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h,i,j"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"one"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"two"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"three"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a,b,c"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"d,e"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"f,g,i"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"one"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"two"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"three"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<ol start="3" type="1">
+<li><p>Both <code><a href="https://tidyr.tidyverse.org/reference/unite.html">unite()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> have a remove argument. What does it do? Why would you set it to FALSE?</p></li>
+<li><p>Compare and contrast <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/extract.html">extract()</a></code>. Why are there three variations of separation (by position, by separator, and with groups), but only one <code><a href="https://tidyr.tidyverse.org/reference/unite.html">unite()</a></code>?</p></li>
+</ol>
+</div>
+</div>
+
+
+</section></section> ]]></description>
+  <category>module 3</category>
+  <category>week 7</category>
+  <category>tidyr</category>
+  <category>tidyverse</category>
+  <category>dplyr</category>
+  <category>tibble</category>
+  <category>pipe</category>
+  <guid>https://mbutler808.github.io/posts/2025-03-13-joining-data/</guid>
+  <pubDate>Thu, 13 Mar 2025 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>A small tour of multivariate analysis</title>
   <dc:creator>Marguerite Butler</dc:creator>

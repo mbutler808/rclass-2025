@@ -1,0 +1,284 @@
+---
+title: "Joining data with dplyr"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Combining datasets via merging or joining is a power tool"
+date: 2025-03-13
+categories: [module 3, week 7, tidyr, tidyverse, dplyr, tibble, pipe]
+---
+
+# Pre-lecture materials
+
+### Read ahead
+
+::: callout-note
+## Read ahead
+
+**Before class, you can prepare by reading the following materials:**
+
+1.  <https://r4ds.had.co.nz/relational-data>
+2.  <https://rafalab.github.io/dsbook/joining-tables>
+:::
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-joining-data-in-r/>
+-   <https://rdpeng.github.io/Biostat776/lecture-joining-data-in-r-basics>
+-   <https://r4ds.had.co.nz/relational-data>
+-   <https://rafalab.github.io/dsbook/joining-tables>
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to define relational data and keys
+-   Be able to define the three types of join functions for relational data
+-   Be able to implement mutational join functions
+:::
+
+## New Packages
+
+You will have to install if you donʻt already have them:
+
+```{r}
+#| eval: FALSE
+install.packages("gapminder")  # a dataset package
+```
+
+# Overview
+
+Last time we talked about tidy data. One common issue is that people sometimes use column names to store data. For example take a look at this built-in dataset that comes with `tidyr` on **religion and income survey data** with the number of respondents with income range in column name.
+
+
+# Joining data (a.k.a. Merging)
+
+## Relational data
+
+Data analyses rarely involve only a single table of data.
+
+Typically you have many tables of data, and you **must combine the datasets** to answer the questions that you are interested in.  Some examples include morphology and ecology data on the same species, or sequence data and metadata. 
+
+Collectively, **multiple tables of data are called relational data** because it is the *relations*, not just the individual datasets, that are important.
+
+Relations are **always defined between a pair of tables**. All other relations are built up from this simple idea: the relations of three or more tables are always a property of the relations between each pair.
+
+Sometimes both elements of a pair can be in the same table! This is needed if, for example, you have a table of people, and each person has a reference to their parents, or if you have nodes in a phylogeny and each is linked to an ancestral node.
+
+Relational data are combined with **merges or joins**.
+
+## Example with `merge()`
+
+Letʻs use the `geospiza` data from the `geiger` package to practice merging with the base R `merge()` function.
+
+```{r}
+#| warning: false
+require(geiger)
+data(geospiza)   # load the dataset into the workspace
+ls()               # list the objects in the workspace
+geospiza
+geo <- geospiza$dat  # save the morphometric data as geo
+```
+
+This is a 5 column dataframe. Letʻs take just the `tarsusL` data to build our example dataset:
+
+```{r}
+tarsusL <- geo[,"tarsusL"]  # geo is a matrix, select tarsusL column
+geot <- data.frame(tarsusL, "ecology" = LETTERS[1:length(tarsusL)])
+```
+
+Often we will be merging data that donʻt perfectly match. Some parts of the data will be missing, for example we may only have ecology data for the first five species.  The question is what do you want the merge behavior to be? 
+
+The default is to drop all observations that are not in BOTH datasets. Here we merge the original `geo` with only the first five rows of `geot`: 
+
+```{r}
+                    # only maches to both datasets are included
+merge(x=geo[,"tarsusL"], y=geot[1:5, ], by= "row.names")    
+```
+
+If we want to keep everything, use the `all=T` flag: 
+
+```{r}
+                    # all species in both datasets are included
+merge(x=geo[,"tarsusL"], y=geot[1:5,], by= "row.names", all=T)    
+```
+
+There is also `all.x` which keeps all values of the first data table but drops non-matching rows of the second table, and `all.y` which keeps all of the second. 
+
+
+The results of `merge` are sorted by default on the sort key. To turn it off:
+
+```{r}
+geo <- geo[rev(rownames(geo)), ]   # reverse the species order of geo
+                     # merge on geo first, then geot
+merge(x=geo[,"tarsusL"], y=geot[1:5, ], by= "row.names", sort=F)   
+                     # geot first, then geo
+merge(x=geot[1:5,], y=geo[,"tarsusL"], by= "row.names", sort=F)   
+
+```
+
+::: callout-note
+-   In a `merge`, the non-key columns are copied over into the new table. 
+:::
+
+Check out the help page for `?merge` for more info. 
+
+# Keys
+
+The **variables used to connect each pair of tables** are called **keys**. A key is a variable (or set of variables) that __uniquely identifies an observation__. In simple cases, a single variable is sufficient to identify an observation.
+
+In the example above the key was the __species names__, which was contained in the `row.names` attribute. The key was specified in the merge in the `by=` argument. A merge or join key is a generic concept that is used in many database operations. 
+
+::: callout-tip
+### Note
+
+There are two types of keys:
+
+-   A **primary key** uniquely identifies an observation in its own table.
+-   A **foreign key** uniquely identifies an observation in another table.
+:::
+
+Let's consider an example to help us understand the difference between a **primary key** and **foreign key**.
+
+## Example of keys
+
+Imagine you are conduct a study and **collecting data on subjects and a health outcome**.
+
+Often, subjects will **have multiple observations** (a longitudinal study). Similarly, we may record other information, such as the type of housing.
+
+### The first table
+
+This code creates a simple table with some made up data about some hypothetical subjects' outcomes.
+
+```{r,message=FALSE}
+library(tidyverse)
+
+outcomes <- tibble(
+        id = rep(c("a", "b", "c"), each = 3),
+        visit = rep(0:2, 3),
+        outcome = rnorm(3 * 3, 3)
+)
+
+print(outcomes)
+```
+
+Note that subjects are labeled by a unique identifer in the `id` column.
+
+### A second table
+
+Here is some code to create a second table containing  data about the hypothetical subjects' housing type.
+
+```{r second_table,exercise=TRUE,message=FALSE}
+subjects <- tibble(
+        id = c("a", "b", "c"),
+        house = c("detached", "rowhouse", "rowhouse")
+)
+
+print(subjects)
+```
+
+::: callout-note
+### Question
+
+What is the **primary key** and **foreign key**?
+
+-   The `outcomes$id` is a **primary key** because it uniquely identifies each subject in the `outcomes` table.
+-   The `subjects$id` is a **foreign key** because it appears in the `subjects` table where it matches each subject to a unique `id`.
+:::
+
+
+
+# Joining in `dplyr`
+
+In `dplyr`, merges are called joins (both are used in database science) and introduces a vocabulary that names each of these situations. 
+
+::: callout-tip
+### Three important families of joins
+
+-   [**Mutating joins**](https://r4ds.had.co.nz/relational-data.html#mutating-joins): add new variables to one data frame from matching observations in another.
+
+    -   This is a typical __merge__ operation. A mutating join **combines variables from two tables** into a new table. Observations in the two tables are matched by their keys, with  the variables from the two tables copied into the new table. It is a mutating join because it adds columns with the merge, and in that way is analogous to the `mutate()` function for dataframes.  
+    -   See @sec-mutjoins for Table of mutating joins.
+
+-   [**Filtering joins**](https://r4ds.had.co.nz/relational-data.html#filtering-joins): filter observations from one data frame based on whether or not they match an observation in the other table
+
+    -   Filtering joins are a way to filter one dataset by observations in another dataset (they are more filter and less join). 
+    -   Filtering joins **match observations** by a key, as usual, **but select the observations that match** (not the variables). In other words, this type of join filters observations from one data frame based on whether or not they match an observation in the other.  
+    -   Two types: `semi_join(x, y)` and `anti_join(x, y)`.
+
+-   [**Set operations**](https://r4ds.had.co.nz/relational-data.html#set-operations): treat observations as if they were set elements.
+
+    -   Set operations can be useful when you want to break a single complex filter into simpler pieces. All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:  
+    -   Examples of set operations: `intersect(x, y)`, `union(x, y)`, and `setdiff(x, y)`.
+:::
+
+
+# Types of mutating joins {#sec-mutjoins}
+
+The `dplyr` package provides a set of **functions for joining two data frames** into a single data frame based on a set of key columns.
+
+There are several functions in the `*_join()` family.
+
+-   These functions all merge together two data frames
+-   They differ in how they handle observations that exist in one but not both data frames.
+
+Here, are the **four functions from this family** that you will likely use the most often:
+
+```{r}
+#| echo: false
+#| out-width: '60%'
+#| fig-align: 'center'
+library(knitr)
+join_funcs <- data.frame(func = c("`left_join()`",
+                                  "`right_join()`",
+                                  "`inner_join()`",
+                                  "`full_join()`"),
+                         does = c("Includes all observations in the left data frame, whether or not there is a match in the right data frame",
+                                  "Includes all observations in the right data frame, whether or not there is a match in the left data frame",
+                                  "Includes only observations that are in both data frames",
+                                  "Includes all observations from both data frames"))
+knitr::kable(join_funcs, col.names = c("Function", "What it includes in merged data frame"))
+```
+
+![](https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png)
+
+\[[Source from R for Data Science](https://r4ds.had.co.nz/relational-data#relational-data)\]
+
+
+
+
+# Post-lecture materials
+
+### Final Questions
+
+Here are some post-lecture questions to help you think about the material discussed.
+
+::: callout-note
+### Questions
+
+1.  Using prose, describe how the variables and observations are organised in a tidy dataset versus an non-tidy dataset.
+
+2.  What do the extra and fill arguments do in `separate()`? Experiment with the various options for the following two toy datasets.
+
+```{r, eval=FALSE}
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three"))
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"))
+```
+
+3.  Both `unite()` and `separate()` have a remove argument. What does it do? Why would you set it to FALSE?
+
+4.  Compare and contrast `separate()` and `extract()`. Why are there three variations of separation (by position, by separator, and with groups), but only one `unite()`?
+:::
+
+
+
