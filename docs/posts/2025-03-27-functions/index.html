@@ -464,8 +464,8 @@ $names
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
 
 $eco
- [1] -0.63304339  1.88019912  0.69247124  0.17351381 -0.06021262 -1.99583818
- [7] -0.47746174  1.64469713 -0.24609117  0.12392035</code></pre>
+ [1] -0.176098850  1.088417478 -1.238584528 -1.687912181 -1.843331064
+ [6]  0.858329265  0.771031230  1.480779612 -0.274649439  0.002656778</code></pre>
 </div>
 </div>
 <p>This may seem like a silly example (and it is), but it is kept simple so you can see what’s going on. These default arguments are very useful for making your functions <strong>flexible</strong> so that they can be more <em>generic</em> and <em>reusable</em> for many purposes.</p>
@@ -488,7 +488,7 @@ $eco
 <div class="cell-output cell-output-stdout">
 <pre><code>function (object, ...) 
 UseMethod("summary")
-&lt;bytecode: 0x1469684b0&gt;
+&lt;bytecode: 0x1079796d8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -541,7 +541,7 @@ see '?methods' for accessing help and source code</code></pre>
         c(tt, `NA's` = sum(nas))
     else tt
 }
-&lt;bytecode: 0x146c44be0&gt;
+&lt;bytecode: 0x107c4def8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -656,7 +656,21 @@ see '?methods' for accessing help and source code</code></pre>
 </section><section id="the-problem" class="level3"><h3 class="anchored" data-anchor-id="the-problem">The problem</h3>
 <p>You recall from Molecular Biology class that coding regions are marked with a start codon <code>ATG</code> and one of three stop codons: <em>amber</em> <code>TAG</code>, <em>ochre</em> <code>TAA</code>, and <em>opal</em> or <em>umber</em> <code>TGA</code>.</p>
 <p>A script template is provided for you in the <a href="https://github.com/mbutler808/rclassdata"><code>rclassdata</code> repo</a> called <code>Find_gene/find_gene_starter.R</code>.</p>
-<p>Complete the script to accomplish the following: 1. Make up a random DNA sequence using lower case letters for the base pairs. 2. Save your random sequence in file called <code>yourname_dna.csv</code> 3. How to you find the start codon? Brainstorm. After figuring out the coding mechanics, turn this into a function. 4. How do you find the stop codons? Brainstorm. 5. Start and stop codons must be in the same frame. Write a function that tells us which frame each codon is in. Find all start and stop codons – manually check that they are actually correct. 6. Of the start and stop codons, which ones are in frames 1, 2, and 3? (because start and stop codons must be in the same frame to define an open reading frame). How can we do this? Brainstorm. 7. Find all start and stop codons in the reverse direction. Think about an easy way to do this with the machinery you already have. First make the reverse complement of your DNA. 8. For each of the six frames (3 forward and 3 reverse), find all of the possible open reading frames (from start to first stop codon, subsequent ones can be ignored). 9. Which one is the longest ORF? Print this result to the screen. Tell us which frame it’s in, and the start position, stop position, and it’s sequence. 10. Write output to a text file <code>yourname_orf.txt</code> using the <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> function which prints the following information for each open reading frame on separate lines: orf number, start position, stop position, and the sequence ( <code>orf1 start:xx stop:xx sequence:atgaggtc.....taa</code>). <em>Make sure you include the complete stop codon (all 3 base pairs) in the output</em> so you can check that it worked. 11. Save your script as <code>yourname_find_gene.R</code>. Make sure you clear your workspace, test it the code, clean it up and comment it before turning it in. Also save your data <code>yourname_dna.csv</code>, and output <code>yourname_orf.txt</code>.</p>
+<p>Complete the script to accomplish the following:</p>
+<ol type="1">
+<li>Make up a random DNA sequence using lower case letters for the base pairs.</li>
+<li>Save your random sequence in file called <code>yourname_dna.csv</code>
+</li>
+<li>How to you find the start codon? Brainstorm. After figuring out the coding mechanics, turn this into a function.</li>
+<li>How do you find the stop codons? Brainstorm.</li>
+<li>Start and stop codons must be in the same frame. Write a function that tells us which frame each codon is in. Find all start and stop codons – manually check that they are actually correct.</li>
+<li>Of the start and stop codons, which ones are in frames 1, 2, and 3? (because start and stop codons must be in the same frame to define an open reading frame). How can we do this? Brainstorm.</li>
+<li>Find all start and stop codons in the reverse direction. Think about an easy way to do this with the machinery you already have. First make the reverse complement of your DNA.</li>
+<li>For each of the six frames (3 forward and 3 reverse), find all of the possible open reading frames (from start to first stop codon, subsequent ones can be ignored).</li>
+<li>Which one is the longest ORF? Print this result to the screen. Tell us which frame it’s in, and the start position, stop position, and it’s sequence.</li>
+<li>Write output to a text file <code>yourname_orf.txt</code> using the <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> function which prints the following information for each open reading frame on separate lines: orf number, start position, stop position, and the sequence ( <code>orf1 start:xx stop:xx sequence:atgaggtc.....taa</code>). <em>Make sure you include the complete stop codon (all 3 base pairs) in the output</em> so you can check that it worked.</li>
+<li>Save your script as <code>yourname_find_gene.R</code>. Make sure you clear your workspace, test it the code, clean it up and comment it before turning it in. Also save your data <code>yourname_dna.csv</code>, and output <code>yourname_orf.txt</code>.</li>
+</ol>
 
 
 </section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

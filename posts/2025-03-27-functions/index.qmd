@@ -319,9 +319,10 @@ Make up random DNA sequence data. Make a vector of 500  base pairs sampled at ra
 
 You recall from Molecular Biology class that coding regions are marked with a start codon `ATG` and one of three stop codons: _amber_ `TAG`, _ochre_ `TAA`, and _opal_ or _umber_ `TGA`. 
 
-A script template is provided for you in the [`rclassdata` repo](https://github.com/mbutler808/rclassdata) called `Find_gene/find_gene_starter.R`.
+A script template is provided for you in the [`rclassdata` repo](https://github.com/mbutler808/rclassdata) called `Find_gene/find_gene_starter.R`. 
 
 Complete the script to accomplish the following: 
+
 1. Make up a random DNA sequence using lower case letters for the base pairs.
 2. Save your random sequence in file called `yourname_dna.csv`
 3. How to you find the start codon? Brainstorm. After figuring out the coding mechanics, turn this into a function.
