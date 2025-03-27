@@ -1,0 +1,287 @@
+---
+title: "Reshaping data with dplyr"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Add"
+date: 2023-03-09
+categories: [module 4, week 8, tidyr, tidyverse, dplyr, tibble]
+---
+
+# Pre-lecture materials
+
+### Read ahead
+
+::: callout-note
+## Read ahead
+
+**Before class, you can prepare by reading the following materials:**
+
+1.  <https://r4ds.had.co.nz/tidy-data>
+2.  [tidyr cheat sheet from RStudio](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+:::
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-08-tidy-data-and-the-tidyverse/>
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to transform wide data into long data
+-   Be able to separate character columns into multiple columns
+-   Be able to unite/separate multiple character columns into one column
+:::
+
+# Overview
+
+Common data table reshaping tasks include reshaping your matrices or dataframes manually, or converting between __short-wide__ to __tall-thin__ formats. 
+
+# Manual reshaping
+
+Recall from our discussion on data objects that internally, R objects are stored as one huge vector. The various shapes of objects are simply created by R knowing where to break the vector into rows and columns. So it is very easy to reshape matrices:
+
+```{r}
+vv <- 1:10  # a vector
+mm <- matrix( vv, nrow=2)  # a matrix
+mm
+dim(mm) <- NULL
+mm <- matrix( vv, nrow=2, byrow=T)  # a matrix, but cells are now filled by row
+mm
+dim(mm) <- NULL
+mm  # vector is now n a different order because the collapse occurred by column
+```
+
+Load the geospiza data: 
+
+```{r}
+require(geiger)
+data(geospiza)   # load the dataset into the workspace
+geo <- geospiza$dat  # save the morphometric data as geo
+```
+
+Other means of "collapsing" dataframes are:
+
+```{r}
+unlist(geo)   # produces a vector from the dataframe
+            # the atomic type of a dataframe is a list
+unclass(geo)  # removes the class attribute, turning the dataframe into a 
+            # series of vectors  plus any names attributes, same as setting 
+            # class(geo) <- NULL
+c(geo)  # similar to unclass but without the attributes            
+```
+
+# An example of "untidy" data
+
+People often make tables in short-wide format that end up not being tidy data. When people use column names to store data, it is no longer tidy. For example take a look at this built-in dataset that comes with `tidyr` on **religion and income survey data** with the number of respondents with income range in column name.
+
+```{r}
+library(tidyr)
+relig_income
+```
+
+Take a second to look at this data. In this case the variables are religion (a proper vector), income bracket (in the column names), and the number of respts, which is the third variable, is presented inside the table.
+onden
+Converting this data to tidy format would give us
+
+```{r, message=FALSE}
+library(tidyverse)
+
+relig_income %>%
+  pivot_longer(-religion, names_to = "income", values_to = "respondents") 
+```
+
+Now we have each variable along the columns and each row corresponds to one observation (or category, here a combination of religion and income bracket). 
+
+# Reshaping data with `dplyr`
+
+### `pivot_longer()`
+
+The `tidyr` package includes functions to transfer a data frame between *long* and *wide*.
+
+-   **Wide format** data has different attributes or variables describing an observation _placed in separate columns_.
+-   **Long format** data tends to have different attributes encoded as _levels_ of a single variable, followed by another column that contains _the values_ of the observation at those different levels.
+
+
+The **key problem** with the tidyness of the original data is that the income variables are not in their own columns, but rather are embedded in the structure of the columns, making it hard to manipuate the income variables.
+
+To **fix this**, you can use the `pivot_longer()` function to **gather values spread across several columns into a single column**, here with the column names gathered into an `income` column.
+
+
+### Mutate to convert character to factor
+
+```{r}
+# Gather everything EXCEPT religion to tidy data
+relig_income %>%
+  pivot_longer(-religion, names_to = "income", values_to = "respondents") %>%
+  mutate(religion = factor(religion), income = factor(income))
+```
+
+
+::: callout-tip
+### Note
+-  When gathering, exclude any columns that you do not want "gathered" (`religion` in this case) by including the column names with a the __minus sign__ in the `pivot_longer()` function.
+-  Even if your data is in a tidy format, `pivot_longer()` is occasionally useful for pulling data together to take advantage of faceting, or plotting separate plots based on a grouping variable. 
+:::
+
+### `pivot_wider()`
+
+The `pivot_wider()` function is the opposite function. It is useful for creating summary tables for reports, but generally less commonly needed to tidy data. 
+
+You use the `summarize()` function in `dplyr` to summarize the total number of respondents per income category.
+
+```{r}
+relig_income %>%
+  pivot_longer(-religion, names_to = "income", values_to = "respondents") %>%
+  mutate(religion = factor(religion), income = factor(income)) %>% 
+  group_by(income) %>% 
+  summarize(total_respondents = sum(respondents)) 
+```
+
+`pivot_wider()` can be flexibly used in combination with __pivot_longer__ to make a nicer table to print.
+
+Notice in this example how `pivot_wider()` has been used at the **very end of the code sequence** to convert the summarized data into a shape that **offers a better tabular presentation for a report**.
+
+```{r}
+relig_income %>%
+  pivot_longer(-religion, names_to = "income", values_to = "respondents") %>%
+  mutate(religion = factor(religion), income = factor(income)) %>% 
+  group_by(income) %>% 
+  summarize(total_respondents = sum(respondents)) %>%
+
+  pivot_wider(names_from = "income", 
+              values_from = "total_respondents") %>%
+  knitr::kable()
+```
+
+
+
+::: callout-tip
+### Note
+
+-  In the `pivot_wider()` call, you first specify the name of the column to use for the new column names (`income` in this example) and then specify the column to use for the cell values (`total_respondents` here).
+-  Long format is often (but not always) the shape we need for tidy data. The important thing, however, is to __think carefully about the shape you need for your analysis__. 
+:::
+
+::: callout-tip
+### Example of `pivot_longer()`
+
+Let's try another dataset. This data contain an excerpt of the [Gapminder data](https://cran.r-project.org/web/packages/gapminder/README.html#gapminder) on life expectancy, GDP per capita, and population by country.
+
+```{r}
+library(gapminder)
+gapminder
+```
+
+If we wanted to make `lifeExp`, `pop` and `gdpPercap` (all measurements that we observe) go from a wide table into a long table, what would we do?
+
+```{r}
+# try it yourself
+
+```
+:::
+
+::: callout-tip
+### Example
+
+One more! Try using `pivot_longer()` to convert the the following data that contains simulated revenues for three companies by quarter for years 2006 to 2009.
+
+Afterward, use `group_by()` and `summarize()` to calculate the average revenue for each company across all years and all quarters.
+
+**Bonus**: Calculate a mean revenue for each company AND each year (averaged across all 4 quarters).
+
+```{r, set.seed(123)}
+df <- tibble(
+  "company" = rep(1:3, each=4), 
+  "year"  = rep(2006:2009, 3),
+  "Q1"    = sample(x = 0:100, size = 12),
+  "Q2"    = sample(x = 0:100, size = 12),
+  "Q3"    = sample(x = 0:100, size = 12),
+  "Q4"    = sample(x = 0:100, size = 12),
+)
+df
+```
+
+```{r}
+# try it yourself 
+
+```
+:::
+
+### `separate()` and `unite()` cells within columns of data
+
+Still in the`tidyr` package:
+
+-   `unite()`: paste contents of two or more columns into a single column
+-   `separate()`: split contents of a column into two or more columns
+
+First, we combine the first three columns into one new column using `unite()`. This function is similar to `newvar <- paste(A,B,C, sep="_")`
+
+```{r}
+names(gapminder)
+
+gapminder %>% 
+  unite(col="country_continent_year", 
+        country:year, 
+        sep="_")
+```
+
+Next, we show how to separate the columns into three separate columns using `separate()` using the `col`, `into` and `sep` arguments. Note that this works by finding the delimiter, and relies on order of the information. 
+
+```{r}
+gapminder %>% 
+  unite(col="country_continent_year", 
+        country:year, 
+        sep="_") %>% 
+  separate(col="country_continent_year", 
+           into=c("country", "continent", "year"), 
+           sep="_")
+```
+
+
+
+# Post-lecture materials
+
+### Final Questions
+
+Here are some post-lecture questions to help you think about the material discussed.
+
+::: callout-note
+### Questions
+
+1.  Using prose, describe how the variables and observations are organised in a tidy dataset versus an non-tidy dataset.
+
+2.  What do the extra and fill arguments do in `separate()`? Experiment with the various options for the following two toy datasets.
+
+```{r, eval=FALSE}
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three"))
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"))
+```
+
+3.  Both `unite()` and `separate()` have a remove argument. What does it do? Why would you set it to FALSE?
+
+4.  Compare and contrast `separate()` and `extract()`. Why are there three variations of separation (by position, by separator, and with groups), but only one `unite()`?
+:::
+
+### Solution for gapminder example
+
+```{r}
+gapminder %>% 
+  pivot_longer(-c(country, continent, year), names_to = "metrics", values_to = "values")
+```
+
+We stacked the three variables `lifeExp`, `pop`, and `gdpPercap` so now the table is a little thinner and three times as long. 
+
+Why did we have to make the non-gathered variables into a vector? 
+

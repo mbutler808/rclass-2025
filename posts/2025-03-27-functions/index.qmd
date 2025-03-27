@@ -1,0 +1,339 @@
+---
+title: "Writing your own functions"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "and all about functions in R"
+date: 2025-03-27
+categories: [module 4, week 8, programming, functions, methods, scope]
+---
+
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Understand the components of a function
+-   Be able to write your own functions
+-   Understand the scope of variables within functions
+-   Understand methods dispatch 
+-   Have a better understanding of how packages work
+:::
+
+# Overview
+
+We've learned how to write good scripts and debug at the console. You may have noticed that you sometimes have to do the same things over and over again. And you find yourself cutting and pasting bits of code and making minor changes to it. This is a situation where writing your own _function_ is a big help. 
+
+Functions help in several ways. Once you perfect a bit of code, they help achieve these goals of good programming by writing code that is:
+
+-  Reusable and Generic  
+-  Modular  
+-  Easy to Maintain  
+
+When do you want to write a function? Any time you find yourself cutting and pasting bits of your code (more than once or twice). Think ahead to making your function _reusable_. 
+
+# Functions are wrappers for code that you want to reuse
+
+Functions are just bits of code that you want to reuse. You can even build up your own function library in a script like `myfunctions.R` which you can source with every script you write. So in this way, you can save yourself a lot of trouble by designing and maintaining a __tight__ function library. 
+
+A function is very easy to define. You need a name for your function, some arguments (the input), a valid R statement (i.e., some code to run), and output to return. You then put it together in this following format:
+
+
+```{r  eval=F}
+my_function_name <- function( argument )  statement
+```
+
+The only things that are actually required are the name of your function, and the word `function` followed by parentheses. Arguments are optional (well so are the statements, but what would be the point of that?). 
+
+Here is a very simple function to calculate the square of a value:
+
+```{r}
+mysq <- function( x ) {   # function name is mysq
+  x*x      # the function will return the square of x
+}
+```
+
+Once you run the function definition through the console, your function will be stored in RAM. Then you can then use your function in the normal way that you use functions:
+```{r}
+mysq(2)
+```
+
+You can have multiple lines of R code to run, and you can even have functions within functions.The output from the function (the return value) is the last value computed. It is often best practice to explicitly use the `return` function as in the code below. 
+
+```{r}
+mysq <- function( x ) {
+  plot( x, x*x, ylab="Square of x")   # plot x and x*x on the y axis
+  return (x*x)    # return the square of x
+  }
+  
+mysq(1:10)  
+```
+
+# Arguments
+
+Generally speaking, arguments are included in functions because you might want to change them. Things that stay the same are usually hard-coded into the function. But what if you want to change it sometimes but not others?In our little example, what if you wanted to be able to change the label on the y-axis sometimes, but most of the time  you wanted it to just say "Square of x"? 
+
+```{r}
+mysq <- function( x, yylab="Square of x" ) {   # default argument for the y-label
+
+  plot( x, x*x, ylab=yylab) 
+  return (x*x)    
+
+  }
+  
+mysq(1:10, yylab="X times X") 
+```
+
+What happens if you just run the following: 
+```{r}
+mysq(1:10)
+```
+
+These arguments with default values are therefore _optional_. Because they will run just fine even if you don't put anything for them. Whenever I write functions, I try to make as many default arguments as I can so that I can run them with minimal brain power. When you look at it 6 months later, you don't want to have to reconstruct _why you wrote it in the first place just to make it go_. 
+
+Another cute trick is that if you don't want to have anything as your default value, but you still want to have the option to change it, set the default to `NULL`. 
+```{r}
+mysq <- function( x, yylab=NULL) {   # default arg is no value for the y-label, 
+
+  plot( x, x*x, ylab=yylab) # but you can specify it if you want to.
+  return (x*x)    
+
+  }
+  
+mysq(1:10, yylab="X times X") 
+```
+
+# Order of arguments  
+
+You may have noticed that you can run a function with or without naming the arguments. For example (here I have supressed printing the figure in quarto):
+```{r }
+#| fig.show="hide"
+mysq(2)
+mysq(x=2)
+```
+work just the same. 
+
+The reason is that R will assume that if you don't name the arguments, they are _in the same order_ as in the function definition. Therefore, 
+
+```{r}
+#| fig.show="hide"
+mysq( c(1, 3, 5, 7), "Squares of prime numbers")
+mysq( yylab = "Squares of prime numbers", x=c(1, 3, 5, 7))
+```
+Are the same. Another way to put this, if you don't want to worry about the order that the arguments are defined in, _always use_ the `names=`.
+
+
+# Arbitrary numbers of arguments  
+
+R is very flexible with its arguments. You can also have an arbitrary number of arguments by adding `...` This is often used to pass additional arguments to `plot()`, such as below: 
+```{r}
+myfun <- function(x, y,  ...) {
+  plot(x, y, ...)
+  }
+
+# optional args color and line plot are passed to plot()
+myfun( 1:10, sqrt(1:10), col="red", type="l")   
+```
+
+Note: We did not create arguments for color or type in `myfun`, but these are arguments for `plot`, so the `...` in the function definition is like the expandable suitcase that allows us to pass anything through.  This is for the `plot()` function, which has many optional arguments, but it can be used for anything.  
+
+```{r}
+myfun( 1:10, sqrt(1:10), cex=3)   # optional arg for point size passed to plot()
+```
+
+Another common place where variable numbers of arguments comes up is in database queries, where you may want to run a search on a number of terms. 
+```{r}
+query <- function( ... ) {
+  paste( ... )
+  }
+
+query( "cat", "dog", "rabbit")  
+```
+
+Or any situation where you are just not sure how many inputs you will have. For example, you could have a list builder (this is a real function! no joke):
+```{r}
+addlist <- function( ... ) {
+  list( ... )
+  }
+
+metadat <- addlist ( dataset = "myeco", date="Jan 20, 2023")
+metadat
+dat <- addlist (ind=1:10, names=letters[1:10], eco=rnorm(10) )  
+dat
+```
+
+This may seem like a silly example (and it is), but it is kept simple so you can see what's going on. These default arguments are very useful for making your functions __flexible__ so that they can be more _generic_ and _reusable_ for many purposes. 
+
+# Return value  
+
+As you have seen in the examples, R will return the last value computed (by default) or whatever you specify in the `return()` function. One thing that is a little peculiar to R is that you can only return __one__ and __only one__ object. So what do you do if you have several pieces of information you want returned? Use a list:
+
+```{r}
+mysq <- function( x, yylab="Square of x" ) {   # default argument for the y-label
+
+  plot( x, x*x, ylab=yylab)
+  output <- list( input=x, output=x*x )   
+  return (output)     
+
+  }
+```
+
+This is in fact what many model-fitting packages do. They return a list with the inputs, any fitted parameters, and model fit statistics, as well as characteristics of the objects such as names and factor levels, etc. 
+
+# Looking inside R: functions that are inside packages  
+
+If you want to look at how any particular function in R is written -- you can! R is open-source. You just type the name of the function with no parentheses:
+
+```{r}
+summary
+```
+
+You can see that it is a generic function, and that it uses different `methods` depending on the `class` of the object. 
+
+Here are all the methods that are defined for `summary`:
+
+```{r}
+methods('summary')
+```
+
+Here's how we find out what's inside `summary.factor` for example:
+```{r}
+summary.factor
+```
+
+Note: __Internal__ functions are _hidden_ inside the namespace of a package -- the programmer has chosen to not make it available to the global environment. To find these, use `getAnywhere('functionname')`  ha!
+
+
+# Scope  
+
+It is important to know that when you write a function, everything that happens inside the function is local in scope. It's like a big family secret -- 
+
+> everything that is said in the family stays in the family. 
+
+If you try to go talking about it to the outside world, no one will know what you are talking about. For example, suppose you wrote a function with some internal variables like this:
+
+```{r}
+myfunc <- function( fattony, littlejimmy) {
+
+  canolis <- fattony*2 + littlejimmy
+  return(canolis)
+}
+
+myfunc( 5, 4 )
+```
+If we try type the following on the command line, we will get an error `... object 'canolis' not found`. 
+```{r eval=F}
+canolis
+```
+
+Even though you ran the function, you can't _ask R how many canolis you need_ because _what's created in the function stays in the function_. When the function is over, poof! It's gone. That's because the objects used within the function are _local in scope_ and not available to the global environment. 
+
+Of course, global variables are available to use inside of functions, just as family members are aware of what's going on in the outside world. So for example, it is perfectly valid to use `pi` or anything you've defined previously in the global environment inside a function:
+
+```{r}
+myfunc <- function( fattony, littlejimmy) {
+
+  canolis <- fattony*pi + littlejimmy+littlebit
+  return( round(canolis) )
+}
+
+littlebit <- 1
+myfunc( 5, 4 )
+```
+
+The code above worked because `littlebit` was defined prior to running our function. But you can see that it's often a good idea to actually pass into a function anything that is needed to make it go. 
+
+So you may be wondering why it works this way? Well in general, in most advanced programming languages, 
+
+> the objects within functions are local in scope. This is to make it easier to program.  
+
+If there is a clean separation between what goes on inside a function and what is outside of it, then you can write functions without worrying about every possibility regarding what could happen. You only have to worry about what is happening inside your little function. That's what helps to make it modular and extensible -- so your functions can play nice with other codes. 
+
+# Search Paths and Environment
+
+Remember what we were saying about functions in R are objects? So if we look at our workspace, our functions should be there:
+
+```{r}
+ls()
+```
+And sure enough they are! As well as all of our data frames, lists, and other objects that we created.  Now I should note that it is possible to write a function in R __with the same name__ as a built-in function in R. For example, if for some crazy reason, we wanted to redefine the `mean` function, we can!
+
+```{r}
+mean <- function(...) {
+  return ("dirty harry")
+  }
+  
+mean( 1:10 )
+```
+
+What happened? Well we wrote our own function for `mean`. Why is R only returning our new function, an not the built-in one? 
+
+> Well, any object that we create (including our own functions) are in the __Global Environment__. 
+
+Whereas functions in packages are in their further down the search path. R knows where things are by the order that they are attached. The global environment is first (containing any user-created objects), followed by attached packages:
+
+```{r}
+search()
+```
+
+The function `mean()` is in the `base` package, which is all the way at the end.  So when we type `mean()` R will first look to see if there is any function by that name in our global environment, then in any of the other attached packages before finally finding it in `base`. Needless to say, it's very confusing (and potentially dangerous!) to name objects by the same name as R key words or built-in functions. Don't do it!
+
+If you need to get rid of the custom build mean function, just type `rm(mean)` at the console. 
+```{r}
+rm(mean)
+mean(1:10)
+```
+
+Whew! Or just shut down and restart R. It's a clean slate after that! (Don't worry, you can't break R ;). 
+
+# Exercises 
+
+1.  Write your own function for calculating a mean of a vector, using only the `sum()` and the `length()` functions. The input should be a vector, and the output is the mean. 
+2.  Write your own function for calculating the standard error. You can use the `sd()`, `sqrt()`, and the `length()` functions. The input should be a vector of values. 
+3.  Go back to some of the class data Iʻve given you. Write a function that will read in the irradiance data, trim it to wavelengths between 300 and 750 nm, and plot the data. Then use that function to read in files for the different directions:  `up`,  `for` (forward),  `left`, and  `right`:    `20070725\_01upirr.txt`, `20070725\_01forirr.txt`, `20070725\_01leftirr.txt`, `20070725\_01rightirr.txt`.  Your function should take as input just the file name. Write a script that defines the function and then calls the function four times, once for each file. 
+4. Now take the function you just made, and add optional arguments for the cut off values 300 and 750. You may want to trim the data to different values.  Try trimming it to different values and see what happens using your new function.
+
+## Longer exercise: Find All Open Reading Frames. 
+
+We want to write a script that will find potential coding regions in a given DNA sequence. To make sure it will work on any sequence, we will simulate random DNA.
+
+Coding regions begin with a start codon and end with a stop codon. Furthermore, since DNA is read in __triplets__, in order to define a coding region the __start codon__ and the __stop codon__ must be in the _same frame_ to be an __open reading frame__. For example, there are three related sequences below that are written by triplets in frame 1, frame 2, and frame 3.  All of the sequences contain a start codon `ATG` in frame 1, and stop codons `TAA` in frames 1, 2, and 3, respectively. You can see that when the DNA is read in triplets, only the first has an open reading frame because start and stop are in the same frame:
+
+
+1. Frame 1: `...A ATG TCT AAA ATG GGT TAA GCC...`
+2. Frame 2: `...AA TGT CTA AAA TGG GTT TAA CC...`
+3. Frame 3: `...AAT GTC TAA AAT GGG TTA TAA C...`
+
+In order to find a potential gene, we want to find the longest open reading frame. To do this, we need to find all open reading frames in the six frames (3 forward and 3 reverse). 
+
+### The data
+
+Make up random DNA sequence data. Make a vector of 500  base pairs sampled at random. In this _DNA data_ we want to find all possible coding regions. We are going to assume that there are no introns. 
+
+### The problem 
+
+You recall from Molecular Biology class that coding regions are marked with a start codon `ATG` and one of three stop codons: _amber_ `TAG`, _ochre_ `TAA`, and _opal_ or _umber_ `TGA`. 
+
+A script template is provided for you in the [`rclassdata` repo](https://github.com/mbutler808/rclassdata) called `Find_gene/find_gene_starter.R`.
+
+Complete the script to accomplish the following: 
+1. Make up a random DNA sequence using lower case letters for the base pairs.
+2. Save your random sequence in file called `yourname_dna.csv`
+3. How to you find the start codon? Brainstorm. After figuring out the coding mechanics, turn this into a function.
+4. How do you find the stop codons? Brainstorm.
+5. Start and stop codons must be in the same frame. Write a function that tells us which frame each codon is in. Find all start and stop codons -- manually check that they are actually correct.
+6. Of the start and stop codons, which ones are in frames 1, 2, and 3? (because start and stop codons must be in the same frame to define an open reading frame). How can we do this? Brainstorm.
+7. Find all start and stop codons in the reverse direction. Think about an easy way to do this with the machinery you already have. First make the reverse complement of your DNA.
+8. For each of the six frames (3 forward and 3 reverse), find all of the possible open reading frames (from start to first stop codon, subsequent ones can be ignored). 
+9. Which one is the longest ORF? Print this result to the screen. Tell us which frame it's in, and the start position, stop position, and it's sequence.
+10. Write output to a text file `yourname_orf.txt` using the `cat()` function which prints the following information for each open reading frame on separate lines: orf number, start position, stop position, and the sequence (
+`orf1 start:xx stop:xx sequence:atgaggtc.....taa`).  _Make sure you include the complete stop codon (all 3 base pairs) in the output_ so you can check that it worked.
+11. Save your script as `yourname_find_gene.R`. Make sure you clear your workspace, test it the code, clean it up and comment it before turning it in. Also save your data `yourname_dna.csv`, and output `yourname_orf.txt`.
+
+
+
