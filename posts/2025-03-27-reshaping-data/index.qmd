@@ -5,8 +5,8 @@ author:
     url: https://butlerlab.org
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
-description: "Add"
-date: 2023-03-09
+description: "Simple tools that really help get your data into the right shape"
+date: 2025-04-01
 categories: [module 4, week 8, tidyr, tidyverse, dplyr, tibble]
 ---
 
@@ -36,7 +36,7 @@ Material for this lecture was borrowed and adopted from
 
 **At the end of this lesson you will:**
 
--   Be able to transform wide data into long data
+-   Be able to transform short-wide data into long-thin data
 -   Be able to separate character columns into multiple columns
 -   Be able to unite/separate multiple character columns into one column
 :::

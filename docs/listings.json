@@ -11,6 +11,7 @@
   {
     "listing": "/lectures.html",
     "items": [
+      "/posts/2025-03-27-reshaping-data/index.html",
       "/posts/2025-03-27-functions/index.html",
       "/posts/2025-03-13-joining-data/index.html",
       "/posts/2025-03-11-multivariate/index.html",
@@ -25,8 +26,7 @@
       "/posts/2025-01-28-intro-quarto/index.html",
       "/posts/2025-01-21-intro-git-github/index.html",
       "/posts/2025-01-16-your-computer-filesystems/index.html",
-      "/posts/2025-01-14-the-big-picture/index.html",
-      "/posts/2025-03-27-reshaping-data/index.html"
+      "/posts/2025-01-14-the-big-picture/index.html"
     ]
   }
 ]

@@ -5,8 +5,8 @@
 <meta name="generator" content="quarto-1.6.40">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Marguerite Butler">
-<meta name="dcterms.date" content="2023-03-09">
-<meta name="description" content="Add">
+<meta name="dcterms.date" content="2025-04-01">
+<meta name="description" content="Simple tools that really help get your data into the right shape">
 <title>Reshaping data with dplyr – ZOOL710 Data Science in R for Biologists 2025</title>
 <style>
 code{white-space: pre-wrap;}
@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Reshaping data with dplyr</h1>
                   <div>
         <div class="description">
-          Add
+          Simple tools that really help get your data into the right shape
         </div>
       </div>
                           <div class="quarto-categories">
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 9, 2023</p>
+        <p class="date">April 1, 2025</p>
       </div>
     </div>
     
@@ -293,7 +293,7 @@ Learning objectives
 <div class="callout-body-container callout-body">
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
-<li>Be able to transform wide data into long data</li>
+<li>Be able to transform short-wide data into long-thin data</li>
 <li>Be able to separate character columns into multiple columns</li>
 <li>Be able to unite/separate multiple character columns into one column</li>
 </ul>
@@ -660,18 +660,18 @@ Example
 <pre><code># A tibble: 12 × 6
    company  year    Q1    Q2    Q3    Q4
      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
- 1       1  2006    10    77    19    37
- 2       1  2007    48    35    89    44
- 3       1  2008    20    19    55    67
- 4       1  2009     0    81    20    29
- 5       2  2006    26    72    96    45
- 6       2  2007    31    16    23    11
- 7       2  2008    84    38    71    68
- 8       2  2009    59    58    93    75
- 9       3  2006    52    73    84    24
-10       3  2007     7   100    14     7
-11       3  2008    71    68    37    51
-12       3  2009     9    15    30    99</code></pre>
+ 1       1  2006    24    82    70    75
+ 2       1  2007    28    66    15    72
+ 3       1  2008    37    78    93    63
+ 4       1  2009    50    76     8    84
+ 5       2  2006    98    93    39    39
+ 6       2  2007    55    64    32    22
+ 7       2  2008    17    48    73    78
+ 8       2  2009    96    97    47    10
+ 9       3  2006    33    37    18    71
+10       3  2007    42    87    98    40
+11       3  2008    81    71   100    47
+12       3  2009     6    22    14    73</code></pre>
 </div>
 </div>
 <div class="cell">
