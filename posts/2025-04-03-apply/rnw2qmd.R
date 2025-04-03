@@ -1,0 +1,30 @@
+file <- "ApplyFunctions.Rnw"
+mdsr::Rnw2Rmd(file, "apply.qmd")
+
+file <- "apply.qmd"
+
+x <- readLines(file)             # read the lines 
+x <- gsub("(\\\\code\\{)([^\\}]+)(\\})", "`\\2`", x)
+
+
+lines <- x[grepl("\\\\code\\{", x)]       # select lines that start with Akaike 
+
+y <- lines[1]
+
+
+
+y <- gsub("(\\\\code\\{)([^\\}]+)(\\})", "`\\2`", y)
+
+
+lines <- d[grepl("\\code{", d, fixed=T)]       # select lines that start with Akaike 
+
+gsub(".*?([0-9]+.[0-9]+).*", "\\1", lines)
+
+gsub("(.*?)\\code{(.*)}(.*)", "\\1`\\2`\\3", lines, fixed=T)
+
+
+lines <- gsub("\\code{", "`", lines, fixed=T)
+lines <- gsub("}", "`", lines)
+
+
+x <- gsub("(\\\\chapter\\{)([^\\}]+)(\\})", "# \\2", x)

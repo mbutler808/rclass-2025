@@ -1,0 +1,273 @@
+---
+title: "Vectorization with Apply Functions"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Apply functions can help with vectorization and scaling up"
+date: 2023-03-23
+categories: [module 5, week 10, apply, lists, for loops, programming]
+---
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Recognize the different types of apply functions
+-   Be able to use apply functions to perform operations on objects
+-   Be introduced to writing functions for apply functions
+-   Have gained another skill in modular programming
+:::
+
+# Overview
+
+Repeated execution on a number of objects is a common task you will have to do. For example, when you want a bootstrap confidence interval on something youʻve estimated, you will run the analysis once, on the original data, and on 100 or 1000 samples of simulated data. 
+
+When you know how many times you want to repeat execution, two common methods are to use `for loops` and `apply` functions. `apply()` functions are special functions that operate on lists, and come in different flavors depending on the type of object you want returned. 
+
+
+# Vectorized computations
+
+Many functions in R are already vectorized in that they will perform the same computation on the entire object (rather than element by element). Basic arithmetic on vectors is a good example. 
+
+```{r }
+x <- 1:5
+y <- 10
+z <- x + y
+z 
+```
+
+The two vectors, x and y, are added together in parallel because vector arithmetic is vectorized.  This allows you to write code that is natural, fast, and easy to read. 
+
+If R were not vectorized (as in Fortran and C), you would have to code operations element by element like so:
+
+```{r}
+z <- numeric(length(x))
+
+for(i in seq_along(x)) {  # seq_along(x) same as 1:length(x) 
+      z[i] <- x[i] + y
+}
+z
+```
+
+Imagine if you had to do this each time you wanted to do anything to any objects!  It would take a lot longer to get anything done.  _Vectorization makes coding much more natural._ 
+
+When you do find operations that are not vectorized, you can use `apply` functions (below).  But before we get into that, letʻs build up our example with a loop. 
+
+# Loops
+
+`for` loops are straightforward to understand, and are a general feature of every programming language. They are necessary at times, for example when you need the results of the previous iteration for the current one. But they are usually slower in R and sometimes not very elegant (making the code harder to understand). For example, think of a very simple function that calculates the square of a number:
+
+```{r }
+square <- function( x ) {
+  return (x*x)
+  }
+```
+
+If you wanted to apply it to the vector 1:10, using a for loop, it would look like this:
+
+```{r }
+xx <- vector(length=10)   ## create a container for output
+
+for ( i in 1:10 ) {       ## step through i from 1 to 10
+  xx[i] <- square( i )    ## run square function for each i
+}
+
+xx  
+```    
+
+This runs the `square()` function 10 times, once for each value of `i` from 1 to 10. Importantly, notice that it works by going through `i` one element at a time.  
+
+
+# Apply Functions
+
+Another way to repeatedly execute code is via the `apply()` functions. `apply` functions are unique to R, and in some situations can operate on an entire object at once, which can make them fast. This is called **vectorization**. 
+
+Letʻs try `sapply()`:
+
+```{r }
+sapply( 1:10, square ) 
+```
+
+There are several different _flavors_ of apply functions, but they all have similar forms:
+
+```{r eval=F}
+sapply( X, FUN, ...)
+```
+
+Where `X` is an object, and `FUN` is a function. The function is applied to each element of `X`, often simultaneously (whether this happens simultaneously or not depends on whether the function written with vectorization in mind, you have to just try). 
+
+## `sapply` and `lapply`
+
+Another common type is `lapply`, which operates on list objects and returns a list.  `sapply` (`s` for simplify) is almost identical to `lapply`, but tries to make prettier output by returning a vector or a matrix if possible (instead of a list):
+
+```{r }
+sapply( 1:5, square ) 
+lapply( 1:5, square )
+```
+
+- There is also `apply()` which works on matrices or arrays, and has an index argument for whether it should apply the function over rows or columns.  
+
+- `tapply` to apply the function across a grouping index or treatments. 
+
+- `mapply` to apply to multiple lists simultaneously.
+
+- `outer` which applies the function to an outer product of two arrays, and more. 
+
+- `aggregate` is actually a user-friendly wrapper for `tapply`, used to apply a function across groups. 
+
+All of the `apply` functions work in the same way. Donʻt get overwhelmed - I mainly use `sapply` or `lapply`, and `aggregate`, and occasionally `apply` if I need to work over rows.  Thatʻs all you need to remember, consult the help page when you need. 
+
+# Example of calculating summary statistics using aggregate and merge
+
+Letʻs calculate the mean and standard error of sexual size dimorphism (log(male size/female size)) in _Anolis_ lizards, and make a nice table:
+
+The data are included in the GitHub repo for this course. There are 23 species, with each species belonging to one of five ecomorph groups. We can aggregate by mean over ecomorph groups:
+
+```{r}
+anolis <- read.csv("https://raw.githubusercontent.com/mbutler808/rclass/main/data/anolisSSD.csv")
+
+aggregate(anolis$logSSD, by=list(anolis$ecomorph), mean)
+```
+
+Calculate the mean and the sd by ecomorph group, and this time save them:
+
+```{r}
+anolis.mean <- aggregate(anolis$logSSD, by=list(anolis$ecomorph), mean)
+anolis.sd <- aggregate(anolis$logSSD, by=list(anolis$ecomorph), sd)
+anolis.sd
+```
+
+Give the results of aggregate meaningful column names:
+
+```{r}
+names(anolis.mean)   # check that this is what we want to modify
+
+names(anolis.mean) <- c("ecomorph", "mean")
+names(anolis.sd) <- c("ecomorph", "sd")
+```
+While we’re at it, let’s get the sample size so that we can calculate the standard error, which is the standard deviation divided by the square root of the sample size.
+
+```{r}
+
+anolis.N <- aggregate(anolis$logSSD, by=list(anolis$ecomorph), length)
+names(anolis.N) <- c("ecomorph", "N")
+```
+
+To put the columns together, use `merge()`. Here there is only one matching column (ecomorph), so the `by=` is optional, but itʻs good practice:
+
+```{r}
+out <- merge(anolis.mean, anolis.sd, by="ecomorph")
+out <- merge(out, anolis.N, by="ecomorph")
+```
+
+Merging works two by two so we have to do it a second time to add the `N`. There are also options for `by.x=` and `by.y=` in case your columns have different names in the two objects – you can tell R which two columns to match.
+
+Now itʻs easy to add the standard error, and we can use the `print()` function to reduce the number of digits displayed:
+
+```{r}
+out$se <- out$sd / sqrt(out$N)
+print(out, digits=2)
+```
+
+Or rearrange for our paper format:
+```{r}
+out <- out[c("ecomorph", "N", "mean", "se")]
+print(out, digits=2)
+```
+
+We can save it for later as well:
+
+```{r eval=F}
+write.csv(out, "anolis.summary.csv", row.names=FALSE)
+saveRDS(out, "anolis.summmary.rds")
+```
+# Additional Arguments to `apply` functions
+
+If the function needs additional arguments, you just provide them separated by commas: 
+
+```{r eval=F}
+sapply( X, FUN, arg1, arg2, ...)
+```
+
+For example, letʻs say we wanted to sample with replacement from the vector `1:5`. To do it once, we would do:
+
+```{r }
+sample(5, replace=T)
+```
+
+To do it 4 times, you could do: 
+
+```{r }
+sapply( c(5, 5, 5, 5), sample, replace=T)
+```
+
+`sapply` took the vector of fives and created a sample for each one. 
+
+# Using homemade functions
+
+Sometimes the function that you want to run inside of an apply function is more complicated and requires many lines. Suppose you wanted to run several functions or have many lines of code.  You have two choices.  First, you can write a function definition and then pass it to an apply function:
+
+```{r eval=F}
+myfunction <- function (file, y=NULL, z=NULL) {
+  xx <- read.csv(file)
+  plot(xx, ...) 
+  zz <- some_other_function (x,y,z)
+  ... 
+  return (out)
+  }
+sapply(  list_of_filenames ,  myfunction, y=blah1, z=blah2) 
+```
+
+Alternatively you could  define the function within the apply function:
+
+```{r eval=F}
+sapply( input, function(x) {
+  ...lines_of_code... 
+  })
+```
+
+Where `x` is a single element of the `input` object, so if `input` is a vector, `x` would be one element of the vector.  But if `input` is a list, it would be the first list element, etc. Apply functions work really nicely with lists, and many times they handle dataframes nicely as well.   
+
+To return to one of our first examples, to code the `square` function inside of the `sapply` it would simply be:
+```{r }
+sapply ( 1:10, function(x)  x*x )
+```
+ Where `{}` around `{x*x}` are optional here because itʻs only one line.  This is much cleaner and more elegant than:
+ 
+```{r }
+xx <- vector(length=10)   ## create a container for output
+
+for ( i in 1:10 ) {       ## step through i`s from 1 to 10
+  xx[i] <- square( i )    ## run square function for each i
+  }
+
+xx  
+```    
+
+Furthermore, itʻs often easier to understand assigning the output object, because the entire object is returned, not filled element by element:
+
+```{r }
+xx <- sapply ( 1:10, function(x)  x*x )
+```
+
+This is another advantage of thinking of the manipulation on the whole object rather than pieces of it. 
+
+
+## Exercises
+
+1.  Perform the following computation using an apply function.
+```{r }
+mylist <- vector("list")   ## creates a null (empty) list
+for (i in 1:4) {
+   mylist[i] <- list(data.frame(x=rnorm(3), y=rnorm(3)))  
+}
+```
+2. Plot `x` as a function of `y` for each dataframe using an apply function. 
+3.  Using an apply function, compute an anova on `x ~ y` on each dataframe, and save the anova output (there should be 4 of them) to a list or dataframe. 
+4.  Write a for loop that finds the sum of the sequence of integers from 1 to 100, then accomplish the same computation with an apply function.
+

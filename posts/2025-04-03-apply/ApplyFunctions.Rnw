@@ -1,0 +1,164 @@
+\documentclass[letterpaper]{article}
+\SweaveOpts{eps=FALSE}
+\SweaveOpts{keep.source=TRUE}
+
+\usepackage{paralist}
+\usepackage{amsmath}
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[colorlinks=true,urlcolor=blue, citecolor=red]{hyperref}
+\usepackage{fullpage}
+\newcommand{\degree}{\ensuremath{^\circ}}
+
+%\setlength{\textwidth}{7.25in}
+%\setlength{\textheight}{8.75in}
+%\setlength{\evensidemargin}{-.5in}
+%\setlength{\oddsidemargin}{-.5in}
+%\setlength{\topmargin}{-.35in}
+%\setlength{\parskip}{.1in}
+%\setlength{\parindent}{0.0in}
+
+\newcommand{\code}{\texttt}
+
+\title{Scaling up with Apply Functions}
+\author{Marguerite A. Butler}
+
+\begin{document}
+\maketitle
+
+%\chapter{Lists and For Loops}
+
+\section{Apply Functions}
+
+\code{for} loops are straightforward to understand, but they are usually slower in R and sometimes not very elegant. Another way to repeatedly execute code is via the \code{apply()} functions. \code{apply} functions are unique to R, and in some situations can operate on an entire object at once, which can make them fast. This is called \textbf{vectorization}. For example, think of a very simple function that calculates the square of a number:
+
+<<>>=
+square <- function( x ) {
+  return (x*x)
+  }
+@
+
+If you wanted to apply it to the vector 1:10, using a for loop, it would look like this:
+
+<<>>=
+xx <- vector(length=10)   ## create a container for output
+for ( i in 1:10 ) {       ## step through i`s from 1 to 10
+  xx[i] <- square( i )    ## run square function for each i
+  }
+xx  
+@    
+
+This runs the \code{square()} function 10 times, once for each value of \code{i} from 1 to 10. Importantly, notice that it works by going through \code{i} one element at a time.  
+
+Alternatively we can use an \code{apply} function, let`s try \code{sapply()}:
+
+<<>>=
+sapply( 1:10, square ) 
+@
+
+There are several different ``flavors" of apply functions, but they all have similar forms:
+
+<<eval=F>>=
+sapply( X, FUN, ...)
+@
+
+Where \code{X} is an object, and \code{FUN} is a function. The function is applied to each element of \code{X}, often simultaneously (whether this happens simultaneously or not depends on whether the function written with vectorization in mind, you have to just try). 
+
+Another common type is \code{lapply}, which operates on list objects and returns a list.  \code{sapply} (`s` for simplify) is almost identical to \code{lapply}, but tries to make prettier output by returning a vector or a matrix if possible (instead of a list):
+
+<<>>=
+sapply( 1:5, square ) 
+lapply( 1:5, square )
+@
+
+There is also \code{apply()} which works on matrices or arrays, and has an index argument for whether it should apply the function over rows or columns etc., \code{tapply} to apply the function across a grouping index or treatments,  \code{mapply} to apply to multiple lists simultaneously, \code{outer} which applies the function to an outer product of two arrays, and more. \code{aggregate} is actually a user-friendly wrapper for \code{tapply}. All of the \code{apply} functions work in the same way. Don`t get overwhelmed - I mainly use \code{sapply} or \code{lapply}, and \code{aggregate}, and occasionally \code{apply} if I need to work over rows.  That`s all you need to remember, consult the help page when you need. 
+
+\subsection{Additional Arguments}
+
+If the function needs additional arguments, you just provide them separated by commas: 
+
+<<eval=F>>=
+sapply( X, FUN, arg1, arg2, ...)
+@
+
+For example, let`s say we wanted to sample with replacement from the vector \code{1:5}. To do it once, we would do:
+
+<<>>=
+sample(5, replace=T)
+@
+
+To do it 4 times, you could do: 
+
+<<>>=
+sapply( c(5, 5, 5, 5), sample, replace=T)
+@
+
+\code{sapply} took the vector of fives and created a sample for each one. 
+
+\subsection{Using homemade functions}
+
+Sometimes the function that you want to run inside of an apply function is more complicated and requires many lines. Suppose you wanted to run several functions or have many lines of code.  You have two choices.  First, you can write a function definition and then pass it to an apply function:
+
+<<eval=F>>=
+myfunction <- function (file, y=NULL, z=NULL) {
+  xx <- read.csv(file)
+  plot(xx, ...) 
+  zz <- some_other_function (x,y,z)
+  ... 
+  return (out)
+  }
+sapply(  list_of_filenames ,  myfunction, y=blah1, z=blah2) 
+@
+
+Alternatively you could  define the function within the apply function:
+
+<<eval=F>>=
+sapply( input, function(x) {
+  ...lines_of_code... 
+  })
+@
+
+Where \code{x} is a single element of the \code{input} object, so if \code{input} is a vector, \code{x} would be one element of the vector.  But if \code{input} is a list, it would be the first list element, etc. Apply functions work really nicely with lists, and many times they handle dataframes nicely as well.   
+
+To return to one of our first examples, to code the \code{square} function inside of the \code{sapply} it would simply be:
+<<>>=
+sapply ( 1:10, function(x)  x*x )
+@
+ Where \code{\{\}} around \code{{x*x}} are optional here because it`s only one line.  This is much cleaner and more elegant than:
+ 
+<<>>=
+xx <- vector(length=10)   ## create a container for output
+for ( i in 1:10 ) {       ## step through i`s from 1 to 10
+  xx[i] <- square( i )    ## run square function for each i
+  }
+xx  
+@    
+
+Furthermore, it`s often easier to understand assigning the output object, because the entire object is returned, not filled element by element:
+
+<<>>=
+xx <- sapply ( 1:10, function(x)  x*x )
+@
+
+This is another advantage of thinking of the manipulation on the whole object rather than pieces of it. 
+
+
+\section{Exercises}
+\begin{enumerate}
+\item Perform the following computation using an apply function.
+<<>>=
+mylist <- vector("list")   ## creates a null (empty) list
+for (i in 1:4) {
+   mylist[i] <- list(data.frame(x=rnorm(3), y=rnorm(3)))  
+}
+@
+\item Plot x as a function of y for each dataframe using an apply function. 
+\item Using an apply function, compute an anova on \code{x $\sim$ y} on each dataframe, and save the anova output (there should be 4 of them) to a list or dataframe. 
+\item Write a for loop that finds the sum of the sequence of integers from 1 to 100, then accomplish the same computation with an apply function.
+
+\end{enumerate}
+
+\end{document}

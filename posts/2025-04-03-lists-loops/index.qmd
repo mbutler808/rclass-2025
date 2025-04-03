@@ -1,0 +1,195 @@
+---
+title: "Lists and For-Loops"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Donʻt get frustrated, learn a few simple rules about lists. Then you can massively scale."
+date: 2023-03-23
+categories: [module 5, week 10, lists, for loops, programming]
+---
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Understand the special features of lists
+-   Be able to access list elements and write to lists
+-   Be able to construct a for loop for repeated computation
+-   Have gained another skill in modular programming
+:::
+
+# Overview
+
+We've been introduced to _lists_, but here we will gain a better understanding of some of their special features and how to use them to write more powerful code. Lists and counted loops (for loops) work really well together when you want to scale up to __repeated computation__. 
+
+Lists are commonly returned from functions because functions can only return one object. Any collection of objects can be put together into a single list. 
+Functions (and any other R element) can be used together with for loops to improve modularity and readabilty. 
+
+R also has special functions that operate along lists, called `apply()` functions, which we will learn about in the next lesson. 
+
+
+
+# Lists
+
+Lists in R are vectors like any other vector, but more flexible in that elements of a list can have different data types. This has at least three consequences. 
+
+-  First any operation that you can perform on a vector can also be done on a list. 
+-  Second, any types of objects can be organized together into a list, which are very convenient for things like model fits, where you may want to store the model formula, the data, the coefficients, any likelihood values, and any other relevant information together into one data object. 
+-  Third, you can use lists as containers for containers, which can be nested indefinitely. 
+
+The elements of lists can be __named__, either upon creation, or using the `names()` function. Naming list elements is always a good idea because it gives you another way of accessing their elements:
+```{r echo=F}
+options(width=50)
+```
+
+```{r }
+applicant <- list(fullname="Mickey Mouse", address="123 Main St.",  state="CA")
+applicant
+names(applicant) <- c("fullname", "address", "state")
+applicant
+```
+
+We can also use all of the standard functions that work on vectors, such as the combine function:
+
+```{r }
+applicant <- c(applicant, list(scores=matrix(1:10, nrow=2)))
+applicant
+```
+
+If we had multiple applicants, we could put them all together in a list of lists. 
+
+
+## Accessing list elements
+
+::: {.callout-tip}
+# A lot of people get tripped up working with lists, but the same rules apply to lists as other objects. 
+There are just a couple of additional things:
+
+-    The double bracket, and  
+-   The heirarchy of objects.  
+
+Once you understand that, itʻs simply applying the rules. 
+:::
+
+__List elements__ can be accessed with the usual operators for vectors:
+
+- __$__ If the list is named
+- __[ ]__ By number or name of the list element with single brackets. Returns a list. Can use a vector of indices or names.
+- __[[ ]]__ By number or name with double brackets. Returns the element inside the list slot. Must be a single index or name. 
+
+__By name__
+This is why itʻs a good idea to name list elements.
+
+```{r }
+applicant$fullname
+applicant[1]   ## returns a list of length one
+applicant[[1]]  ## returns the object within applicant[1]
+```
+
+__Single brackets return lists__. 
+We can select multiple elements within single brackets:
+
+```{r }
+applicant[1:2]
+applicant[c("fullname", "address")]  
+```
+
+__Double brackets return the element within the list slot__. 
+But we can only select one:
+```{r }
+applicant[[1]]
+applicant[["fullname"]]
+```
+```{r echo=TRUE, eval=FALSE}
+applicant[[1:2]]  ## cannot subset [[]] with more than one index
+```
+```{r echo=FALSE, eval=TRUE, results="asis"}
+try_out <- try(applicant[[1:2]]) 
+cat(try_out)
+```
+
+__Exclusion index (drops the `state` slot)__:
+```{r }
+applicant[-3]
+```
+
+__Accessing elements inside an object within a list__:
+Here we want to access elements of a matrix which is in a list. 
+
+```{r }
+applicant[4]
+applicant[[4]][2,1]  # Take the scores matrix, and grab row 2, column 1.
+applicant[[4]][,3]  # Take the scores matrix, and grab all of column 3.
+```
+
+# For loops 
+
+Because of the flexibility of lists, they are useful containers for the output of loops or other repeated operations on data. What is a loop you may ask? It is a set of code that you want to execute repeatedly.  For example, you may have a large number of datasets that you want to perform the same set of operations on. 
+
+The easiest type of loop to understand is the `for` loop. It is a __counted loop__, or repeated a fixed number of times. You may be familiar with for loops (or for-next loops) from other computing languages. In R the for loop operates over a vector, once for each element of the vector. The syntax is:
+
+```{r eval=F}
+for (var in seq) expr
+```
+
+Where `var` is a variable which takes on values of the vector `seq` and evaluates a block of code `expr`. The loop is evaluated once for each value of `seq`.  If we need `expr` to span more than one line, we can do this by enclosing the loop with `{}` (even if itʻs only one line itʻs often nice for readability).
+```{r }
+for (i in 1:3) { 
+   print(paste("This is a for loop", i))
+}   
+```
+
+It is traditional to use `i`, `j`, or `k` as the variable to remember that itʻs a counting index, but it is often convenient to use names that are meaningful to understand the code. For example, in the context of our earlier example, it might be helpful to iterate over each applicant in our applicant list:
+
+```{r eval=F}
+for (applicant in applicant_list) expr
+```
+
+### Saving loop output to lists 
+
+Often we want to save the result or output of the code to a list. But we donʻt want to create a list with each iteration of the loop, we just want to fill the list element or add on to the list. So in order to do this, we need to create the list **outside** of the loop and then modify it **inside** the loop. 
+
+One strategy is to fill the list element by element using the counter `i` (note that we donʻt have to tell R how long the list is when we create it. We can just make an empty list, R will just keep adding to `mylist`): 
+```{r }
+mylist <- vector("list")   ## creates a null (empty) list
+mylist
+for (i in 1:4) {
+   mylist[i] <- list(data.frame(x=rnorm(3), y=rnorm(3)))  ## why does this have to be a list object?
+}
+mylist
+```
+
+This code does the same thing, but uses the `c()` function to add on to `mylist` (what happens when you add on to a null list?):
+
+```{r }
+mylist <- vector("list")   ## creates a null (empty) list
+for (i in 1:4) {
+   mylist <- c(mylist, list(data.frame(x=rnorm(3), y=rnorm(3))))
+}
+mylist
+```
+
+### Reshaping lists
+
+You often want to reshape list output in scientific programming. For example, you may fit models many times on many permutations of your data, for example, and you want to flatten your list and make a dataframe.  When you know that your output is regular, it is often convenient to use the `unlist()` function.  Unlist will also work on dataframes, because you know, dataframes are lists of vectors all of the same length.
+
+```{r }
+lm.out <- lm( mylist[[1]]$x  ~ mylist[[1]]$y )  ## calculate a linear regression on dataframe 1 x as a function of y
+aov.out <- anova(lm.out)   ## run anova, save to aov.out
+aov.out
+unlist(aov.out)
+```
+
+
+### Exercises
+
+
+1.  Take mylist above and name its elements (the dataframes).  
+2.  Write another `for` loop to return the maximum value of x and y in each dataframe. How can you make the code flexible to make it work if mylist has a different length?
+3.  Write a `for` loop to loop over `mylist`. Within this loop, for each dataset compute an anova on `x ~ y`, `unlist` the anova output, and add as a row to a final dataframe. 
+

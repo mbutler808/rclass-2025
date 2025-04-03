@@ -1537,7 +1537,7 @@ font-style: inherit;">)</span>  </span></code></pre></div>
 </div>
 </div>
 </section><section id="arguments" class="level1"><h1>Arguments</h1>
-<p>Generally speaking, arguments are included in functions because you might want to change them. Things that stay the same are usually hard-coded into the function. But what if you want to change it sometimes but not others?In our little example, what if you wanted to be able to change the label on the y-axis sometimes, but most of the time you wanted it to just say “Square of x”?</p>
+<p>Generally speaking, arguments are included in functions <em>because you might want to change them</em>. Things that stay the same are usually hard-coded into the function. But what if you want to change it sometimes but not others? In our little example, what if you wanted to be able to change the label on the y-axis sometimes, but most of the time you wanted it to just say “Square of x”?</p>
 <div class="cell">
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
@@ -2125,8 +2125,8 @@ $names
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
 
 $eco
- [1] -0.176098850  1.088417478 -1.238584528 -1.687912181 -1.843331064
- [6]  0.858329265  0.771031230  1.480779612 -0.274649439  0.002656778</code></pre>
+ [1] -0.4175118  0.2806929 -1.6166494  0.6159554  0.5214225 -1.8357956
+ [7]  0.7308066  0.3611064  0.4230064  0.7919911</code></pre>
 </div>
 </div>
 <p>This may seem like a silly example (and it is), but it is kept simple so you can see what’s going on. These default arguments are very useful for making your functions <strong>flexible</strong> so that they can be more <em>generic</em> and <em>reusable</em> for many purposes.</p>
@@ -2225,7 +2225,7 @@ font-style: inherit;">summary</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (object, ...) 
 UseMethod("summary")
-&lt;bytecode: 0x1079796d8&gt;
+&lt;bytecode: 0x10a095120&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -2288,7 +2288,7 @@ font-style: inherit;">summary.factor</span></span></code></pre></div>
         c(tt, `NA's` = sum(nas))
     else tt
 }
-&lt;bytecode: 0x107c4def8&gt;
+&lt;bytecode: 0x10a368940&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -13254,7 +13254,7 @@ Learning objectives
 <p>At some point your data will most likely be arranged into spreadsheets, with observations as rows and variables as columns. <strong>In this course, we will focus on the data source that you are most likely to encounter in your analyses, the “(messy) spreadsheet” type, containing bits of information collected on individuals.</strong> Please do feel free to play around with other data types on your own, e.g.&nbsp;for your course project.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*." data-fig-align="center">
+<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://mbutler808.github.io/images/i-have-data_3.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
 </div>
@@ -19116,6 +19116,2134 @@ Tip
   <category>introduction</category>
   <guid>https://mbutler808.github.io/posts/2025-01-14-the-big-picture/</guid>
   <pubDate>Tue, 14 Jan 2025 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Lists and For-Loops</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-04-03-lists-loops/</link>
+  <description><![CDATA[ <section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand the special features of lists</li>
+<li>Be able to access list elements and write to lists</li>
+<li>Be able to construct a for loop for repeated computation</li>
+<li>Have gained another skill in modular programming</li>
+</ul>
+</div>
+</div>
+</section><section id="overview" class="level1"><h1>Overview</h1>
+<p>We’ve been introduced to <em>lists</em>, but here we will gain a better understanding of some of their special features and how to use them to write more powerful code. Lists and counted loops (for loops) work really well together when you want to scale up to <strong>repeated computation</strong>.</p>
+<p>Lists are commonly returned from functions because functions can only return one object. Any collection of objects can be put together into a single list. Functions (and any other R element) can be used together with for loops to improve modularity and readabilty.</p>
+<p>R also has special functions that operate along lists, called <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> functions, which we will learn about in the next lesson.</p>
+</section><section id="lists" class="level1"><h1>Lists</h1>
+<p>Lists in R are vectors like any other vector, but more flexible in that elements of a list can have different data types. This has at least three consequences.</p>
+<ul>
+<li>First any operation that you can perform on a vector can also be done on a list.</li>
+<li>Second, any types of objects can be organized together into a list, which are very convenient for things like model fits, where you may want to store the model formula, the data, the coefficients, any likelihood values, and any other relevant information together into one data object.</li>
+<li>Third, you can use lists as containers for containers, which can be nested indefinitely.</li>
+</ul>
+<p>The elements of lists can be <strong>named</strong>, either upon creation, or using the <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> function. Naming list elements is always a good idea because it gives you another way of accessing their elements:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fullname<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Mickey Mouse"</span>, address<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"123 Main St."</span>,  state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CA"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$state
+[1] "CA"</code></pre>
+</div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fullname"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"address"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"state"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$state
+[1] "CA"</code></pre>
+</div>
+</div>
+<p>We can also use all of the standard functions that work on vectors, such as the combine function:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>scores<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, nrow<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$state
+[1] "CA"
+
+$scores
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+</div>
+<p>If we had multiple applicants, we could put them all together in a list of lists.</p>
+<section id="accessing-list-elements" class="level2"><h2 class="anchored" data-anchor-id="accessing-list-elements">Accessing list elements</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A lot of people get tripped up working with lists, but the same rules apply to lists as other objects.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are just a couple of additional things:</p>
+<ul>
+<li>The double bracket, and<br>
+</li>
+<li>The heirarchy of objects.</li>
+</ul>
+<p>Once you understand that, itʻs simply applying the rules.</p>
+</div>
+</div>
+<p><strong>List elements</strong> can be accessed with the usual operators for vectors:</p>
+<ul>
+<li>
+<strong>$</strong> If the list is named</li>
+<li>
+<strong>[ ]</strong> By number or name of the list element with single brackets. Returns a list. Can use a vector of indices or names.</li>
+<li>
+<strong>[[ ]]</strong> By number or name with double brackets. Returns the element inside the list slot. Must be a single index or name.</li>
+</ul>
+<p><strong>By name</strong> This is why itʻs a good idea to name list elements.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fullname</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## returns a list of length one</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"</code></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## returns the object within applicant[1]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+</div>
+<p><strong>Single brackets return lists</strong>. We can select multiple elements within single brackets:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."</code></pre>
+</div>
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fullname"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"address"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."</code></pre>
+</div>
+</div>
+<p><strong>Double brackets return the element within the list slot</strong>. But we can only select one:</p>
+<div class="cell">
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fullname"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mickey Mouse"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## cannot subset [[]] with more than one index</span></span></code></pre></div>
+</div>
+<p>Error in applicant[[1:2]] : subscript out of bounds Error in applicant[[1:2]] : subscript out of bounds</p>
+<p><strong>Exclusion index (drops the <code>state</code> slot)</strong>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fullname
+[1] "Mickey Mouse"
+
+$address
+[1] "123 Main St."
+
+$scores
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+</div>
+<p><strong>Accessing elements inside an object within a list</strong>: Here we want to access elements of a matrix which is in a list.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$scores
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10</code></pre>
+</div>
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Take the scores matrix, and grab row 2, column 1.</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Take the scores matrix, and grab all of column 3.</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 6</code></pre>
+</div>
+</div>
+</section></section><section id="for-loops" class="level1"><h1>For loops</h1>
+<p>Because of the flexibility of lists, they are useful containers for the output of loops or other repeated operations on data. What is a loop you may ask? It is a set of code that you want to execute repeatedly. For example, you may have a large number of datasets that you want to perform the same set of operations on.</p>
+<p>The easiest type of loop to understand is the <code>for</code> loop. It is a <strong>counted loop</strong>, or repeated a fixed number of times. You may be familiar with for loops (or for-next loops) from other computing languages. In R the for loop operates over a vector, once for each element of the vector. The syntax is:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">var</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">seq</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">expr</span></span></code></pre></div>
+</div>
+<p>Where <code>var</code> is a variable which takes on values of the vector <code>seq</code> and evaluates a block of code <code>expr</code>. The loop is evaluated once for each value of <code>seq</code>. If we need <code>expr</code> to span more than one line, we can do this by enclosing the loop with <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> (even if itʻs only one line itʻs often nice for readability).</p>
+<div class="cell">
+<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span> </span>
+<span>   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"This is a for loop"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span>   </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "This is a for loop 1"
+[1] "This is a for loop 2"
+[1] "This is a for loop 3"</code></pre>
+</div>
+</div>
+<p>It is traditional to use <code>i</code>, <code>j</code>, or <code>k</code> as the variable to remember that itʻs a counting index, but it is often convenient to use names that are meaningful to understand the code. For example, in the context of our earlier example, it might be helpful to iterate over each applicant in our applicant list:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">applicant_list</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">expr</span></span></code></pre></div>
+</div>
+<section id="saving-loop-output-to-lists" class="level3"><h3 class="anchored" data-anchor-id="saving-loop-output-to-lists">Saving loop output to lists</h3>
+<p>Often we want to save the result or output of the code to a list. But we donʻt want to create a list with each iteration of the loop, we just want to fill the list element or add on to the list. So in order to do this, we need to create the list <strong>outside</strong> of the loop and then modify it <strong>inside</strong> the loop.</p>
+<p>One strategy is to fill the list element by element using the counter <code>i</code> (note that we donʻt have to tell R how long the list is when we create it. We can just make an empty list, R will just keep adding to <code>mylist</code>):</p>
+<div class="cell">
+<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"list"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## creates a null (empty) list</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code><a href="https://rdrr.io/r/base/list.html">list()</a></code></pre>
+</div>
+<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>   <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## why does this have to be a list object?</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+           x          y
+1 -1.4319246 -0.1192095
+2  0.7885131 -0.2882510
+3  0.7441072 -0.6056006
+
+[[2]]
+           x          y
+1  0.5409702  1.8584056
+2 -0.8535816 -1.2616722
+3  0.6901304  0.7617937
+
+[[3]]
+           x         y
+1 -1.9350376 1.8402302
+2 -1.2084056 1.5424662
+3 -0.3872564 0.2472333
+
+[[4]]
+           x          y
+1 -1.2216472 -1.4767356
+2 -0.4153479  1.3251050
+3 -2.3603284  0.3588753</code></pre>
+</div>
+</div>
+<p>This code does the same thing, but uses the <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function to add on to <code>mylist</code> (what happens when you add on to a null list?):</p>
+<div class="cell">
+<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"list"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## creates a null (empty) list</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>   <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+           x          y
+1 -0.7744459  1.2064958
+2  0.2173879 -0.2388781
+3  1.2802159  0.9492322
+
+[[2]]
+           x          y
+1 -2.1181680 -2.1185646
+2 -0.5182270 -0.3483859
+3  0.9262279 -1.7833182
+
+[[3]]
+           x          y
+1  0.5352311  0.4556621
+2 -1.5331743 -0.3776869
+3  0.4324104 -1.7545733
+
+[[4]]
+           x          y
+1  1.0976580  0.4121682
+2  1.4122866 -1.6854920
+3 -0.5545062 -1.1513154</code></pre>
+</div>
+</div>
+</section><section id="reshaping-lists" class="level3"><h3 class="anchored" data-anchor-id="reshaping-lists">Reshaping lists</h3>
+<p>You often want to reshape list output in scientific programming. For example, you may fit models many times on many permutations of your data, for example, and you want to flatten your list and make a dataframe. When you know that your output is regular, it is often convenient to use the <code><a href="https://rdrr.io/r/base/unlist.html">unlist()</a></code> function. Unlist will also work on dataframes, because you know, dataframes are lists of vectors all of the same length.</p>
+<div class="cell">
+<div class="sourceCode" id="cb40" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.out</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## calculate a linear regression on dataframe 1 x as a function of y</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">aov.out</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## run anova, save to aov.out</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">aov.out</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mylist[[1]]$x
+              Df  Sum Sq Mean Sq F value Pr(&gt;F)
+mylist[[1]]$y  1 0.04571 0.04571  0.0221  0.906
+Residuals      1 2.06594 2.06594               </code></pre>
+</div>
+<div class="sourceCode" id="cb42" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">aov.out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Df1        Df2    Sum Sq1    Sum Sq2 
+1.00000000 1.00000000 0.04571343 2.06594403 
+  Mean Sq1   Mean Sq2   F value1   F value2 
+0.04571343 2.06594403 0.02212714         NA 
+   Pr(&gt;F)1    Pr(&gt;F)2 
+0.90599092         NA </code></pre>
+</div>
+</div>
+</section><section id="exercises" class="level3"><h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
+<ol type="1">
+<li>Take mylist above and name its elements (the dataframes).<br>
+</li>
+<li>Write another <code>for</code> loop to return the maximum value of x and y in each dataframe. How can you make the code flexible to make it work if mylist has a different length?</li>
+<li>Write a <code>for</code> loop to loop over <code>mylist</code>. Within this loop, for each dataset compute an anova on <code>x ~ y</code>, <code>unlist</code> the anova output, and add as a row to a final dataframe.</li>
+</ol>
+
+
+</section></section> ]]></description>
+  <category>module 5</category>
+  <category>week 10</category>
+  <category>lists</category>
+  <category>for loops</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2025-04-03-lists-loops/</guid>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Vectorization with Apply Functions</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-04-03-apply/</link>
+  <description><![CDATA[ <section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Recognize the different types of apply functions</li>
+<li>Be able to use apply functions to perform operations on objects</li>
+<li>Be introduced to writing functions for apply functions</li>
+<li>Have gained another skill in modular programming</li>
+</ul>
+</div>
+</div>
+</section><section id="overview" class="level1"><h1>Overview</h1>
+<p>Repeated execution on a number of objects is a common task you will have to do. For example, when you want a bootstrap confidence interval on something youʻve estimated, you will run the analysis once, on the original data, and on 100 or 1000 samples of simulated data.</p>
+<p>When you know how many times you want to repeat execution, two common methods are to use <code>for loops</code> and <code>apply</code> functions. <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> functions are special functions that operate on lists, and come in different flavors depending on the type of object you want returned.</p>
+</section><section id="vectorized-computations" class="level1"><h1>Vectorized computations</h1>
+<p>Many functions in R are already vectorized in that they will perform the same computation on the entire object (rather than element by element). Basic arithmetic on vectors is a good example.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span> </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11 12 13 14 15</code></pre>
+</div>
+</div>
+<p>The two vectors, x and y, are added together in parallel because vector arithmetic is vectorized. This allows you to write code that is natural, fast, and easy to read.</p>
+<p>If R were not vectorized (as in Fortran and C), you would have to code operations element by element like so:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># seq_along(x) same as 1:length(x) </span></span>
+<span>      <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11 12 13 14 15</code></pre>
+</div>
+</div>
+<p>Imagine if you had to do this each time you wanted to do anything to any objects! It would take a lot longer to get anything done. <em>Vectorization makes coding much more natural.</em></p>
+<p>When you do find operations that are not vectorized, you can use <code>apply</code> functions (below). But before we get into that, letʻs build up our example with a loop.</p>
+</section><section id="loops" class="level1"><h1>Loops</h1>
+<p><code>for</code> loops are straightforward to understand, and are a general feature of every programming language. They are necessary at times, for example when you need the results of the previous iteration for the current one. But they are usually slower in R and sometimes not very elegant (making the code harder to understand). For example, think of a very simple function that calculates the square of a number:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">square</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+<p>If you wanted to apply it to the vector 1:10, using a for loop, it would look like this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>length<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## create a container for output</span></span>
+<span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## step through i from 1 to 10</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">square</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## run square function for each i</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span>  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>This runs the <code>square()</code> function 10 times, once for each value of <code>i</code> from 1 to 10. Importantly, notice that it works by going through <code>i</code> one element at a time.</p>
+</section><section id="apply-functions" class="level1"><h1>Apply Functions</h1>
+<p>Another way to repeatedly execute code is via the <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> functions. <code>apply</code> functions are unique to R, and in some situations can operate on an entire object at once, which can make them fast. This is called <strong>vectorization</strong>.</p>
+<p>Letʻs try <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">square</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>There are several different <em>flavors</em> of apply functions, but they all have similar forms:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">X</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">FUN</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">...</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Where <code>X</code> is an object, and <code>FUN</code> is a function. The function is applied to each element of <code>X</code>, often simultaneously (whether this happens simultaneously or not depends on whether the function written with vectorization in mind, you have to just try).</p>
+<section id="sapply-and-lapply" class="level2"><h2 class="anchored" data-anchor-id="sapply-and-lapply">
+<code>sapply</code> and <code>lapply</code>
+</h2>
+<p>Another common type is <code>lapply</code>, which operates on list objects and returns a list. <code>sapply</code> (<code>s</code> for simplify) is almost identical to <code>lapply</code>, but tries to make prettier output by returning a vector or a matrix if possible (instead of a list):</p>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">square</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  4  9 16 25</code></pre>
+</div>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">square</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 4
+
+[[3]]
+[1] 9
+
+[[4]]
+[1] 16
+
+[[5]]
+[1] 25</code></pre>
+</div>
+</div>
+<ul>
+<li><p>There is also <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> which works on matrices or arrays, and has an index argument for whether it should apply the function over rows or columns.</p></li>
+<li><p><code>tapply</code> to apply the function across a grouping index or treatments.</p></li>
+<li><p><code>mapply</code> to apply to multiple lists simultaneously.</p></li>
+<li><p><code>outer</code> which applies the function to an outer product of two arrays, and more.</p></li>
+<li><p><code>aggregate</code> is actually a user-friendly wrapper for <code>tapply</code>, used to apply a function across groups.</p></li>
+</ul>
+<p>All of the <code>apply</code> functions work in the same way. Donʻt get overwhelmed - I mainly use <code>sapply</code> or <code>lapply</code>, and <code>aggregate</code>, and occasionally <code>apply</code> if I need to work over rows. Thatʻs all you need to remember, consult the help page when you need.</p>
+</section></section><section id="example-of-calculating-summary-statistics-using-aggregate-and-merge" class="level1"><h1>Example of calculating summary statistics using aggregate and merge</h1>
+<p>Letʻs calculate the mean and standard error of sexual size dimorphism (log(male size/female size)) in <em>Anolis</em> lizards, and make a nice table:</p>
+<p>The data are included in the GitHub repo for this course. There are 23 species, with each species belonging to one of five ecomorph groups. We can aggregate by mean over ecomorph groups:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://raw.githubusercontent.com/mbutler808/rclass/main/data/anolisSSD.csv"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">logSSD</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ecomorph</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mean</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Group.1         x
+1  crown-giant 0.1391750
+2   grass-bush 0.1437525
+3        trunk 0.1467167
+4  trunk-crown 0.2626575
+5 trunk-ground 0.3339650
+6         twig 0.0848450</code></pre>
+</div>
+</div>
+<p>Calculate the mean and the sd by ecomorph group, and this time save them:</p>
+<div class="cell">
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.mean</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">logSSD</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ecomorph</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mean</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.sd</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">logSSD</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ecomorph</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sd</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.sd</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Group.1          x
+1  crown-giant 0.09909567
+2   grass-bush 0.06924584
+3        trunk 0.02136480
+4  trunk-crown 0.09968872
+5 trunk-ground 0.06966130
+6         twig 0.07107131</code></pre>
+</div>
+</div>
+<p>Give the results of aggregate meaningful column names:</p>
+<div class="cell">
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.mean</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># check that this is what we want to modify</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Group.1" "x"      </code></pre>
+</div>
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.mean</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecomorph"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.sd</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecomorph"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sd"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>While we’re at it, let’s get the sample size so that we can calculate the standard error, which is the standard deviation divided by the square root of the sample size.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.N</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">logSSD</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ecomorph</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">length</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.N</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecomorph"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"N"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>To put the columns together, use <code><a href="https://rdrr.io/r/base/merge.html">merge()</a></code>. Here there is only one matching column (ecomorph), so the <code>by=</code> is optional, but itʻs good practice:</p>
+<div class="cell">
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.mean</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.sd</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecomorph"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">anolis.N</span>, by<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecomorph"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Merging works two by two so we have to do it a second time to add the <code>N</code>. There are also options for <code>by.x=</code> and <code>by.y=</code> in case your columns have different names in the two objects – you can tell R which two columns to match.</p>
+<p>Now itʻs easy to add the standard error, and we can use the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> function to reduce the number of digits displayed:</p>
+<div class="cell">
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">se</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sd</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">N</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span>, digits<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ecomorph  mean    sd N    se
+1  crown-giant 0.139 0.099 4 0.050
+2   grass-bush 0.144 0.069 4 0.035
+3        trunk 0.147 0.021 3 0.012
+4  trunk-crown 0.263 0.100 4 0.050
+5 trunk-ground 0.334 0.070 4 0.035
+6         twig 0.085 0.071 4 0.036</code></pre>
+</div>
+</div>
+<p>Or rearrange for our paper format:</p>
+<div class="cell">
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecomorph"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"N"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"se"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span>, digits<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ecomorph N  mean    se
+1  crown-giant 4 0.139 0.050
+2   grass-bush 4 0.144 0.035
+3        trunk 3 0.147 0.012
+4  trunk-crown 4 0.263 0.050
+5 trunk-ground 4 0.334 0.035
+6         twig 4 0.085 0.036</code></pre>
+</div>
+</div>
+<p>We can save it for later as well:</p>
+<div class="cell">
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"anolis.summary.csv"</span>, row.names<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"anolis.summmary.rds"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</section><section id="additional-arguments-to-apply-functions" class="level1"><h1>Additional Arguments to <code>apply</code> functions</h1>
+<p>If the function needs additional arguments, you just provide them separated by commas:</p>
+<div class="cell">
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">X</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">FUN</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">arg1</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">arg2</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">...</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>For example, letʻs say we wanted to sample with replacement from the vector <code>1:5</code>. To do it once, we would do:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, replace<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 1 3 1</code></pre>
+</div>
+</div>
+<p>To do it 4 times, you could do:</p>
+<div class="cell">
+<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span>, replace<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    4    3    4    5
+[2,]    5    3    1    5
+[3,]    3    1    3    1
+[4,]    1    5    2    3
+[5,]    4    4    4    5</code></pre>
+</div>
+</div>
+<p><code>sapply</code> took the vector of fives and created a sample for each one.</p>
+</section><section id="using-homemade-functions" class="level1"><h1>Using homemade functions</h1>
+<p>Sometimes the function that you want to run inside of an apply function is more complicated and requires many lines. Suppose you wanted to run several functions or have many lines of code. You have two choices. First, you can write a function definition and then pass it to an apply function:</p>
+<div class="cell">
+<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">myfunction</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">...</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">zz</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">some_other_function</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">z</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">...</span> </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">out</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">list_of_filenames</span> ,  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">myfunction</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">blah1</span>, z<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">blah2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span></code></pre></div>
+</div>
+<p>Alternatively you could define the function within the apply function:</p>
+<div class="cell">
+<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">...lines_of_code...</span> </span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Where <code>x</code> is a single element of the <code>input</code> object, so if <code>input</code> is a vector, <code>x</code> would be one element of the vector. But if <code>input</code> is a list, it would be the first list element, etc. Apply functions work really nicely with lists, and many times they handle dataframes nicely as well.</p>
+<p>To return to one of our first examples, to code the <code>square</code> function inside of the <code>sapply</code> it would simply be:</p>
+<div class="cell">
+<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>Where <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> around <code>{x*x}</code> are optional here because itʻs only one line. This is much cleaner and more elegant than:</p>
+<div class="cell">
+<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>length<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## create a container for output</span></span>
+<span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## step through i`s from 1 to 10</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">square</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## run square function for each i</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span>  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
+</div>
+</div>
+<p>Furthermore, itʻs often easier to understand assigning the output object, because the entire object is returned, not filled element by element:</p>
+<div class="cell">
+<div class="sourceCode" id="cb40" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">xx</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>This is another advantage of thinking of the manipulation on the whole object rather than pieces of it.</p>
+<section id="exercises" class="level2"><h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<ol type="1">
+<li>Perform the following computation using an apply function.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"list"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## creates a null (empty) list</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>   <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mylist</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  </span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Plot <code>x</code> as a function of <code>y</code> for each dataframe using an apply function.</li>
+<li>Using an apply function, compute an anova on <code>x ~ y</code> on each dataframe, and save the anova output (there should be 4 of them) to a list or dataframe.</li>
+<li>Write a for loop that finds the sum of the sequence of integers from 1 to 100, then accomplish the same computation with an apply function.</li>
+</ol>
+
+
+</section></section> ]]></description>
+  <category>module 5</category>
+  <category>week 10</category>
+  <category>apply</category>
+  <category>lists</category>
+  <category>for loops</category>
+  <category>programming</category>
+  <guid>https://mbutler808.github.io/posts/2025-04-03-apply/</guid>
+  <pubDate>Thu, 23 Mar 2023 10:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

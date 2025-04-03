@@ -76,7 +76,7 @@ mysq(1:10)
 
 # Arguments
 
-Generally speaking, arguments are included in functions because you might want to change them. Things that stay the same are usually hard-coded into the function. But what if you want to change it sometimes but not others?In our little example, what if you wanted to be able to change the label on the y-axis sometimes, but most of the time  you wanted it to just say "Square of x"? 
+Generally speaking, arguments are included in functions _because you might want to change them_. Things that stay the same are usually hard-coded into the function. But what if you want to change it sometimes but not others? In our little example, what if you wanted to be able to change the label on the y-axis sometimes, but most of the time  you wanted it to just say "Square of x"? 
 
 ```{r}
 mysq <- function( x, yylab="Square of x" ) {   # default argument for the y-label
