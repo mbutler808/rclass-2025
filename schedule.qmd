@@ -63,13 +63,13 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 |              | Mar 27   | `r emojifont::emoji('mushroom')` Functions \[[html](posts/2025-03-27-functions/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-27-functions/index.qmd)\] | `r emojifont::emoji('fallen_leaf')` | |
 ||||||
-|            | Apr 1  | `r emojifont::emoji('mushroom')` Reshaping Data \[[html](posts/2025-03-27-reshaping-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-27-reshaping-data/index.qmd)\] | | |
+|            | Apr 3  | `r emojifont::emoji('mushroom')` Reshaping Data \[[html](posts/2025-03-27-reshaping-data/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-03-27-reshaping-data/index.qmd)\] | `r emojifont::emoji('fallen_leaf')` Project 2 due Apr 4 | |
 ||||||
-|              | Apr 3  | `r emojifont::emoji('cactus')` Lists and For Loops \[[html](posts/2025-04-03-lists-loops/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-03-lists-loops/index.qmd)\] | `r emojifont::emoji('fallen_leaf')` | |
+| Week 11    | Apr 8  | `r emojifont::emoji('cactus')` Lists and For Loops \[[html](posts/2025-04-03-lists-loops/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-03-lists-loops/index.qmd)\] | | |
 ||||||
-|              | Apr 3   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2025-04-03-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-03-apply/index.qmd)\]|   | |
+|              | Apr 8   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2025-04-03-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-03-apply/index.qmd)\]|   | |
 ||||||
-| Week 11      | Apr 8   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html]\] \[[Qmd]\]|||
+|       | Apr 8   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html]\] \[[Qmd]\]|||
 ||||||
 | **Module 6** |         | **Intro to Morphometrics** | | |
 ||||||
