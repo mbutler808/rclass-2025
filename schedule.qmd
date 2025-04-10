@@ -67,9 +67,9 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 | Week 11    | Apr 8  | `r emojifont::emoji('cactus')` Lists and For Loops \[[html](posts/2025-04-03-lists-loops/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-03-lists-loops/index.qmd)\] | | |
 ||||||
-|              | Apr 8   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2025-04-03-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-03-apply/index.qmd)\]|   | |
+|              | Apr 10   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2025-04-10-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-10-apply/index.qmd)\]|   | |
 ||||||
-|       | Apr 8   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html]\] \[[Qmd]\]|||
+|       | Apr 10   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html](posts/2025-04-10-program-flow/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-10-program-flow/index.qmd)\]|||
 ||||||
 | **Module 6** |         | **Intro to Morphometrics** | | |
 ||||||

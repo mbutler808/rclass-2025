@@ -1,0 +1,344 @@
+---
+title: "Program Flow"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Control the flow of your program using programming control statements"
+date: 2025-04-10
+categories: [module 5, week 11, control structures, if else, (do) while, programming]
+---
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-22-control-structures>
+
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to use commonly used control structures including `if`, `while`, `repeat`, and `for`
+-   Be able to skip an iteration of a loop using `next`
+-   Be able to exit a loop immediately using `break`
+:::
+
+# Overview
+
+**R** is not only a collection of functions for data analysis and matrix math, but also a fully-featured programming language with all of the usual __conditional statements__. 
+
+There are times when we want to go beyond simply a linear step through the code, but to make execution conditional, in order to __control the flow of execution of the code__. 
+
+A basic conditional statement:
+
+![](../../images/ProgramFlow_decision_point.png)
+
+# When conditional statements are needed:
+
+Anytime in the code where decisions need to be made:
+
+-  **Optimzation**: A common task is to decide when to exit out of a loop. For example when we are approximatig a solution and we donʻt know how many iterations it will take to get "close enough" to the true solution. In this case, we would want to repeat until we reach the condition then stop and return the answer. 
+
+-  **Flexibility**: Depending on a value, you may want to execute different code. For example, if we are writing a function with multiple options. The function will do the same general computation but we may want to provide different options depending on the users needs. We can add optional arguments. If the user changes them, the function will execude the extra option. 
+
+# Program Flow
+
+The flow of execution can be diagrammed in a flowchart, and is really helpful for seeing the logical structure of the project. It also encourages __modularity__ and __reusablility__ of your code. 
+
+_A flowchart can be really helpful for visualizing your computations_, and in particular where a function or loop would be helpful, or where variables need to be updated or sent to output. For example for computing the sum using a loop: 
+
+![](../../images/ProgramFlow_flowchart.png)
+
+The different types of actions are represented by shapes, with the direction of flow indicated by arrows connecting the shapes:
+
+-  __Executable statement__: rectangle  
+-  __Input/ Output__: usually a trapezoid (or a torn page, old-timey)
+-  __Conditional statement__ - a decision point: diamond
+-  __Start/End/connection to another subroutine__: circle
+
+Imagine if you were to flowchart this code below. Anytime you find yourself cutting and pasting code, it is a clue that you should consider a loop or a function. 
+
+![](../../images/ProgramFlowForLoops_repeated1.png)
+
+>
+> _You_ should __code it only once__, make the _computer_ repeat!
+>
+
+![](../../images/ProgramFlowForLoops_repeated2.png)
+
+
+
+# Conditional statements include: 
+
+-   `if` and `else`: testing a condition and acting on it
+
+-   `ifelse`: a variant of `if` and `else` in one line
+
+-   `switch`: a convenience conditional for multiple executable options
+
+-   `for`: execute a loop a fixed number of times
+
+-   `while`: repeat a loop *while* a condition is true
+
+-   `repeat`: execute an infinite loop (must `break` out of it to stop)
+
+-   `break`: break the execution of a loop
+
+-   `next`: skip an interation of a loop
+
+
+## `if`-`else`
+
+`if`-`else` is the most commonly used conditional statement in programming. If a condition is true, a statement is executed:
+
+![](../../images/ProgramFlow_ifelse.png)
+
+`if`-`else` comes in many flavors: 
+
+### Just `if`
+
+If the condition is `TRUE`, execution happens. If `FALSE`, nothing happens:
+
+``` r
+if(<condition>) {
+        ## do something
+} 
+## Continue with rest of code
+```
+
+### `if`-`else`
+
+If-else allows for a different action when the condition is false:
+
+``` r
+if(<condition>) {
+        ## do something
+} 
+else {
+        ## do something else
+}
+```
+
+`if` and `else` can be daisy-chained:  
+
+### `if`-`else` `if`-`else` `if`-`else` etc.
+
+You can have a series of tests, which will stop and execute the statement at the condition that is `TRUE`. (Everything following will be ignored):
+
+``` r
+if(<condition1>) {
+        ## do something
+} else if(<condition2>)  { 
+        ## do something different
+} else if(<condition2>) {
+        ## do something different
+} else { 
+        ## do this if none of the above is true
+}        
+```
+
+#### __Example__:  Draw a random value between zero and 10, then test for values greater than 3. 
+
+```{r}
+x <- runif(n=1, min=0, max=10)  
+x
+
+if(x > 6) {
+    y <- 10
+  } else if (x > 3){
+    y <- 5
+  } else { y <- 0 }
+x
+y
+```
+
+With the if-else structure we can test multiple conditions on the same variable. Here, three ranges of values for x. 
+Of course, the `else` conditional is not necessary. You could just have a string of ifs:
+
+``` r
+if(<condition1>) {
+
+}
+
+if(<condition2>) {
+
+}
+```
+
+As long as your logic is sound (and you have them in the right order), you could be OK.  
+
+::: callout-tip
+### Note-TESTING
+
+NOTE it is always important to ___TEST your code against several datasets for which you can verify the answers___. Be sure to try cases where your code might get tripped up. Anticipating the errors will have you a lot of headache. 
+:::
+
+
+## `while` Loops
+
+**`while` loops** begin by **testing a condition**.
+
+-  If it is `TRUE`, then they execute the code contained within the loop.  
+-  If `FALSE` the loop is exited (no execution).
+
+
+![](../../images/ProgramFlow_while.png)
+
+
+### Example: 
+
+```{r}
+count <- 0
+while(count < 10) {
+        print(count)
+        count <- count + 1
+}
+```
+
+`while` loops can potentially result in infinite loops if not written properly. **Use with care!**
+
+Sometimes there will be more than one condition in the test.
+
+```{r}
+z <- 5
+set.seed(1)
+
+while(z >= 3 && z <= 10) {
+        coin <- rbinom(1, 1, 0.5)
+        
+        if(coin == 1) {  ## random walk
+                z <- z + 1
+        } else {
+                z <- z - 1
+        } 
+}
+print(z)
+```
+
+::: callout-tip
+### Pro-tip
+
+`&` is the logical __and__ - both conditions must be true in order to return `TRUE`
+
+`|` is the logical __or__ - only one condition must be true in order to return `TRUE`
+
+What's the difference between using one `&` or two `&&` (or one `|` vs. `||`)?
+
+If you use only one `&`, these are __vectorized__ operations, meaning they will evaluate the _logical conditional on the vector_, and can **return a vector**, like this:
+
+```{r}
+-2:2
+((-2:2) >= 0) & ((-2:2) <= 0)
+```
+
+If you use two `&&`, then these are operations on single values.
+
+
+```{r}
+2 >= 0
+(2 >= 0) && (-2 <= 0)
+(-2 >= 0) && (-2 <= 0)
+```
+:::
+
+## `repeat` Loops
+
+**`repeat` initiates an infinite loop** right from the start. These are **not commonly used** in statistical or data analysis applications, but they do have their uses.
+
+::: callout-tip
+### IMPORTANT (READ THIS AND DON'T FORGET... I'M SERIOUS... YOU WANT TO REMEMBER THIS.. FOR REALZ PLZ REMEMBER THIS)
+
+The only way to exit a `repeat` loop is to call `break`.
+:::
+
+One possible paradigm might be in an iterative algorithm where you may be searching for a solution and you do not want to stop until you are close enough to the solution.
+
+In this kind of situation, you often don't know in advance how many iterations it's going to take to get "close enough" to the solution.
+
+```{r}
+#| eval: false
+x0 <- 1
+tol <- 1e-8
+
+repeat {
+        x1 <- computeEstimate()
+        
+        if(abs(x1 - x0) < tol) {  ## Close enough?
+                break
+        } else {
+                x0 <- x1
+        } 
+}
+```
+
+::: callout-tip
+### Note
+
+The above code will not run if the `computeEstimate()` function is not defined (I just made it up for the purposes of this demonstration).
+:::
+
+::: callout-tip
+### Pro-tip
+
+The loop above is a bit **dangerous** because there is no guarantee it will stop.
+
+You could get in a situation where the values of `x0` and `x1` oscillate back and forth and never converge.
+
+Better to set a hard limit on the number of iterations by using a `for` loop and then report whether convergence was achieved or not.
+:::
+
+## `next`, `break`
+
+`next` is used to skip an iteration of a loop.
+
+```{r,eval=FALSE,prompt=FALSE}
+for(i in 1:100) {
+        if(i <= 20) {
+                ## Skip the first 20 iterations
+                next                 
+        }
+        ## Do something here
+}
+```
+
+`break` is used to exit a loop immediately, regardless of what iteration the loop may be on.
+
+```{r,eval=FALSE,prompt=FALSE}
+for(i in 1:100) {
+      print(i)
+
+      if(i > 20) {
+              ## Stop loop after 20 iterations
+              break  
+      }   
+}
+```
+
+### Another example
+
+Both flowcharts and pseudocode can help to diagram the logic and modularity of the code:
+
+![](../../images/ProgramFlow_flowchart_pseudocode.png)
+
+
+# Summary
+
+-   Control structures like `if`, `while`, and `for` allow you to control the flow of an R program
+-   Infinite loops should generally be avoided, even if (you believe) they are theoretically correct.
+-   Control structures mentioned here are primarily useful for writing programs; for command-line interactive work, the "apply" functions are more useful.
+-    Flow charts and pseudocode can help you diagram the logic of your program. 
+
+
+# Exercise
+
+Letʻs write a program to calculate the square root of a number, following the Fortran Coloring Book:
+
+![](../../images/sqrtN_flowchart.png)
+
+
