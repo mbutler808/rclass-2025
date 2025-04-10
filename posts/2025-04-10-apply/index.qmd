@@ -6,7 +6,7 @@ author:
     affiliation: School of Life Sciences, University of Hawaii
     affiliation_url: https://manoa.hawaii.edu/lifesciences/
 description: "Apply functions can help with vectorization and scaling up"
-date: 2025-04-03
+date: 2025-04-10
 categories: [module 5, week 10, apply, lists, for loops, programming]
 ---
 
