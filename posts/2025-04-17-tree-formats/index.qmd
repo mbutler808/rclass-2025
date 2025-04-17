@@ -39,6 +39,21 @@ References for this Material:
 # R packages you will need
 - `ape`
 - `ouch`
+- `phylobase`
+- `treeio`
+- `ggtree`
+- and `BiocManager` from the Bioconductor project
+To install treeio and ggtree: 
+
+```{r}
+#| eval: FALSE
+## You will probably have to install BiocManager 
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+## BiocManager::install("BiocUpgrade") ## you may need this
+BiocManager::install("treeio")
+BiocManager::install("ggtree")
+```
 :::
 
 # Tree vocabulary

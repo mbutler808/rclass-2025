@@ -2333,7 +2333,76 @@ R packages you will need
 <ul>
 <li><code>ape</code></li>
 <li><code>ouch</code></li>
+<li><code>phylobase</code></li>
+<li><code>treeio</code></li>
+<li><code>ggtree</code></li>
+<li>and <code>BiocManager</code> from the Bioconductor project To install treeio and ggtree:</li>
 </ul>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## You will probably have to install BiocManager </span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BiocManager"</span>, quietly<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BiocManager"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## BiocManager::install("BiocUpgrade") ## you may need this</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">BiocManager</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://bioconductor.github.io/BiocManager/reference/install.html">install</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"treeio"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">BiocManager</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://bioconductor.github.io/BiocManager/reference/install.html">install</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggtree"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
 </section><section id="tree-vocabulary" class="level1"><h1>Tree vocabulary</h1>
@@ -2365,7 +2434,7 @@ R packages you will need
 <figcaption>Photo from the Newick restaurant <a href="https://www.newicks.com">home page</a></figcaption></figure>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
@@ -2578,47 +2647,47 @@ Figure&nbsp;1: A simple tree
 <strong>TREES</strong>: The trees block contains one or more phylogenetic trees in newick format.</li>
 </ul>
 <p>For example <a href="https://en.wikipedia.org/wiki/Nexus_file">From Wikipedia</a>:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#NEXUS</span></span>
-<span id="cb2-2"><span class="ex" style="color: null;
+<span id="cb3-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Begin</span> TAXA<span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-3">  <span class="ex" style="color: null;
+<span id="cb3-3">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Dimensions</span> ntax=4<span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-4">  <span class="ex" style="color: null;
+<span id="cb3-4">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">TaxLabels</span> SpaceDog SpaceCat SpaceOrc SpaceElf<span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-5"><span class="ex" style="color: null;
+<span id="cb3-5"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">End</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-6"></span>
-<span id="cb2-7"><span class="ex" style="color: null;
+<span id="cb3-6"></span>
+<span id="cb3-7"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Begin</span> data<span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-8">  <span class="ex" style="color: null;
+<span id="cb3-8">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Dimensions</span> nchar=15<span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-9">  <span class="ex" style="color: null;
+<span id="cb3-9">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Format</span> datatype=dna missing=<span class="pp" style="color: #AD0000;
 background-color: null;
@@ -2626,10 +2695,10 @@ font-style: inherit;">?</span> gap=- matchchar=.<span class="kw" style="color: #
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-10">  <span class="ex" style="color: null;
+<span id="cb3-10">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Matrix</span></span>
-<span id="cb2-11">    <span class="bu" style="color: null;
+<span id="cb3-11">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">[</span> When a position <span class="er" style="color: #AD0000;
 background-color: null;
@@ -2638,38 +2707,38 @@ background-color: null;
 font-style: inherit;">a</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"matchchar"</span>, it means that it is the same as the first entry at the same position. ]</span>
-<span id="cb2-12">    <span class="ex" style="color: null;
+<span id="cb3-12">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">SpaceDog</span>   atgctagctagctcg</span>
-<span id="cb2-13">    <span class="ex" style="color: null;
+<span id="cb3-13">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">SpaceCat</span>   ......<span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">??</span>...-.a.</span>
-<span id="cb2-14">    <span class="ex" style="color: null;
+<span id="cb3-14">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">SpaceOrc</span>   ...t.......-.g. [ same as atgttagctag-tgg ]</span>
-<span id="cb2-15">    <span class="ex" style="color: null;
+<span id="cb3-15">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">SpaceElf</span>   ...t.......-.a.           </span>
-<span id="cb2-16">  <span class="kw" style="color: #003B4F;
+<span id="cb3-16">  <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-17"><span class="ex" style="color: null;
+<span id="cb3-17"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">End</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-18"></span>
-<span id="cb2-19"><span class="ex" style="color: null;
+<span id="cb3-18"></span>
+<span id="cb3-19"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">BEGIN</span> TREES<span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">;</span></span>
-<span id="cb2-20">  <span class="ex" style="color: null;
+<span id="cb3-20">  <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Tree</span> tree1 = <span class="er" style="color: #AD0000;
 background-color: null;
@@ -2687,7 +2756,7 @@ font-style: inherit;">,SpaceOrc,SpaceElf</span><span class="kw" style="color: #0
 background-color: null;
 font-weight: bold;
 font-style: inherit;">));</span></span>
-<span id="cb2-21"><span class="ex" style="color: null;
+<span id="cb3-21"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">END</span><span class="kw" style="color: #003B4F;
 background-color: null;
@@ -2698,7 +2767,7 @@ font-style: inherit;">;</span> </span></code></pre></div>
 <p>The <a href="http://ape-package.ird.fr"><code>ape</code> package</a> <span class="citation" data-cites="Paradis:2019">(Paradis and Schliep 2019)</span> uses a different representation of trees. It uses R <code>structures</code>, <code>lists</code>, <code>matrices</code>, and <code>vectors</code> to store a tree. Each node in the tree receives a number. For example, here is the tree from before in <code>ape</code> format.</p>
 <p>Here is <code>simpletree</code> with the node numbers printed. It is printed with the following commands:</p>
 <div class="cell" data-caption="A simple tree with ape's numbering of nodes included">
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2735,7 +2804,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>For a tree with <strong>N tips</strong>, the tips have <strong>numbers 1…N</strong> and the <strong>nodes</strong> have <strong>numbers greater than N</strong> (this is in contrast to how this was done in early (&lt;1.9) versions of <code>ape</code>). These numbers are used to store information about the tree’s structure.</p>
 <p>To do this, a matrix is created, with height corresponding to the number of internal and terminal nodes and width 2. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is</p>
 <div class="cell">
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2760,7 +2829,7 @@ font-style: inherit;">edge</span></span></code></pre></div>
 </div>
 <p>This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is</p>
 <div class="cell">
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2773,7 +2842,7 @@ font-style: inherit;">tip.label</span></span></code></pre></div>
 </div>
 <p>It’s possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional <code>node.label</code> is used. If branch lengths are known, they are included as the numeric vector <code>edge.length</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2786,7 +2855,7 @@ font-style: inherit;">edge.length</span></span></code></pre></div>
 </div>
 <p>Finally, there are a few other elements (<code>Nnode</code>, the number of internal nodes; <code>class=phylo</code>) to set the class. To dump the the internal representation of phylo tree to screen, you can use <code><a href="https://rdrr.io/r/base/class.html">unclass()</a></code> which strips the class attribute (the S4 analog is <code>attributes</code>):</p>
 <div class="cell">
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2853,7 +2922,7 @@ $edge.length
 </ul>
 <p>For example, our example tree, when converted to ouchtree format, is</p>
 <div class="cell">
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2869,7 +2938,7 @@ font-style: inherit;">nodes</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13"</code></pre>
 </div>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2885,7 +2954,7 @@ font-style: inherit;">ancestors</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] NA  "3" "1" "6" "6" "1" "2" "2" "3" "4" "4" "5" "5"</code></pre>
 </div>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2902,7 +2971,7 @@ font-style: inherit;">times</span></span></code></pre></div>
 <pre><code> [1] 0.0000000 0.8333333 0.6666667 0.8333333 0.8333333 0.5000000 1.0000000
  [8] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000</code></pre>
 </div>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2921,7 +2990,7 @@ font-style: inherit;">nodelabels</span></span></code></pre></div>
 </div>
 <p>One other element of <code>ouchtree</code>, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we’ll be discussing in the course.</p>
 <div class="cell">
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2947,7 +3016,7 @@ font-style: inherit;">branch.times</span></span></code></pre></div>
 </div>
 <p>The entire content of the <code>simpletreeouch</code> object can be dumped to screen using the following command (not executed here to save paper):</p>
 <div class="cell">
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2963,7 +3032,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>In <code>ape</code> the node numbering is implied by the order of rows in the <code>$egde</code> matrix. Letʻs make a simple example, a tree with three tips:</p>
 <p>Remember in the edge matrix, the first column is the ancestral node (parent), and the second column is the node number.</p>
 <div class="cell">
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">tree</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2990,7 +3059,7 @@ font-style: inherit;">edge</span></span></code></pre></div>
 [3,]    5    2
 [4,]    4    3</code></pre>
 </div>
-<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3025,7 +3094,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3035,7 +3104,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <code>treedata</code> (<code>ggtree</code>) node numbers and order</h3>
 <p>In the <code>treedata</code> object used by <code>ggtree</code>, <code>treeio</code>, and <code>tidytree</code>, the node numbers are the same (referring to the same nodes and ancestors), but the order that they are stored in is different. <em>(Also note that <code>ggtree</code> plots trees ladderized by default)</em>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
@@ -3081,13 +3150,13 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1   0.565167960    t1
-2      5    2   0.154076297    t3
-3      4    3   0.003918995    t2
+1      5    1     0.1859978    t2
+2      5    2     0.5956352    t1
+3      4    3     0.2516685    t3
 4      4    4            NA  &lt;NA&gt;
-5      4    5   0.804209999  &lt;NA&gt;</code></pre>
+5      4    5     0.2594244  &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html">ggtree</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3132,14 +3201,14 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Compare <code>tree$edge</code> vs <code>treedata</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3153,7 +3222,7 @@ font-style: inherit;">edge</span></span></code></pre></div>
 [3,]    5    2
 [4,]    4    3</code></pre>
 </div>
-<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">td</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3166,11 +3235,11 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1   0.565167960    t1
-2      5    2   0.154076297    t3
-3      4    3   0.003918995    t2
+1      5    1     0.1859978    t2
+2      5    2     0.5956352    t1
+3      4    3     0.2516685    t3
 4      4    4            NA  &lt;NA&gt;
-5      4    5   0.804209999  &lt;NA&gt;</code></pre>
+5      4    5     0.2594244  &lt;NA&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">

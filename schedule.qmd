@@ -69,20 +69,12 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 |              | Apr 10   | `r emojifont::emoji('cactus')` Apply Functions \[[html](posts/2025-04-10-apply/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-10-apply/index.qmd)\]|   | |
 ||||||
-|       | Apr 10   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html](posts/2025-04-10-program-flow/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-10-program-flow/index.qmd)\]|||
-||||||
-| **Module 6** |         | **Intro to Morphometrics** | | |
-||||||
-|              | Apr 3   | `r emojifont::emoji('straight_ruler')` Intro to Morphometrics \[[html]\] \[[Qmd]\]|||
-||||||
-|  Week 12     | Apr 8  | `r emojifont::emoji('triangular_ruler')` Landmark-based Morphometrics |||
-||||||
-|              | Apr 10  | `r emojifont::emoji('skull')` 3D Morphometrics |`r emojifont::emoji('chestnut')` Project 3 data check due||
+|       | Apr 15   | `r emojifont::emoji('ferris_wheel')` Program Flow  \[[html](posts/2025-04-10-program-flow/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-10-program-flow/index.qmd)\]|||
 ||||||
 | **Module 7** |         | **Phylogenetic Trees** | | |
 ||||||
-| Week 13      | Apr 15 | `r emojifont::emoji('seedling')` Trees as Data Objects |  | |
-|              | Apr 17  | `r emojifont::emoji('palm_tree')` Reading and writing trees, ape, ggtree, treeio |||
+| Week 13      | Apr 17 | `r emojifont::emoji('seedling')` Trees as Data Objects \[[html](posts/2025-04-17-tree-formats/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-17-tree-formats/index.qmd)\]|  | |
+|              | Apr 23  | `r emojifont::emoji('palm_tree')` Reading and writing trees, ape, ggtree, treeio \[[html](posts/2025-04-23-ggtree/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-23-ggtree/index.qmd)\]|||
 ||||||
 | Week 14      | Apr 22 | `r emojifont::emoji('deciduous_tree')` Reshaping Trees |||
 ||||||
