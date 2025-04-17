@@ -41,6 +41,9 @@ References for this Material:
 - `ggtree`
 - `tidytree`
 - `treeio`
+- `TDbook`
+- `ggplot2`
+- `ouch`
 :::
 
 # Overview
@@ -62,6 +65,7 @@ require(ape)
 require(ggtree)
 require(treeio)
 ```
+
 
 
 ```{r}

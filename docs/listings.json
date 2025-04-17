@@ -11,6 +11,8 @@
   {
     "listing": "/lectures.html",
     "items": [
+      "/posts/2025-04-23-ggtree/index.html",
+      "/posts/2025-04-17-tree-formats/index.html",
       "/posts/2025-04-10-apply/index.html",
       "/posts/2025-04-10-program-flow/index.html",
       "/posts/2025-04-03-lists-loops/index.html",
