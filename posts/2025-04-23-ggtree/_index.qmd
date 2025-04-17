@@ -1,0 +1,110 @@
+`geom_facet()` and `facet_plot()` are general methods to link graphical layers to a tree. 
+
+`facet_plot()` requires an input dataframe. 
+
+Internally these functions reorder the input data based on the tree structure so that you donʻt have to worry about the order of the rows. 
+
+Multiple layers can be added to the same dataset.  Also different datasets can be added to the same figure. 
+
+A table of the __geom layers__ taht work with `geom_facet` is [provided here](https://yulab-smu.top/treedata-book/figures-and-tables.html#tab:facet-geom).
+
+
+## The %+>% operator for ggtree objects
+
+The %+>% operator is used to add data (`dataframe`, `tibble`) to a `ggtree` object:
+
+```{.bash}
+my_ggtree <- my_ggtree %<+% new_data
+```
+
+The result is a combined object that can be used for plotting, but it does not modify the original `treedata` object (which is a different object from the `ggtree` object). The `full_join()` function can be used to combine a tree with data to produce a new `treedata` object. 
+
+
+## Example of the %+>% operator to add data to a ggtree object. 
+
+The package `TDbook` is the data accompanyment to Yuʻs [Tree Data book](https://yulab-smu.top/treedata-book/index.html). It is available on CRAN so you can install it with the usual `install.packages("TDbook")` function call.
+
+```{r}
+require(ggtree)
+require(TDbook)
+
+# load `tree_boots`, `df_tip_data`, and `df_inode_data` from 'TDbook'
+```
+
+
+```{r}
+p <- ggtree(tree_boots) %<+% df_tip_data + xlim(-.1, 4)
+p2 <- p + geom_tiplab(offset = .6, hjust = .5) +
+    geom_tippoint(aes(shape = trophic_habit, color = trophic_habit, 
+                size = mass_in_kg)) + 
+    theme(legend.position = "right") + 
+    scale_size_continuous(range = c(3, 10))
+
+p2 %<+% df_inode_data + 
+    geom_label(aes(label = vernacularName.y, fill = posterior)) + 
+    scale_fill_gradientn(colors = RColorBrewer::brewer.pal(3, "YlGnBu"))
+```
+
+### Explore `df_info`
+
+
+`df_info` A dataframe containing sampling info for the tips of the tree. 386 rows and 6 variables, with the first column being taxa labels (`id`).
+
+`df_alleles` The allele table with original raw data to be processed to SNP data. It is a table of nucleotides with 386 rows x 385 variables. The first row contains tips labels. Column names are non-sense. The rownames (exept for the first one) contains the snp position along the genome. 
+
+
+
+
+```{r}
+## load `tree_nwk`, `df_info`, `df_alleles`, and `df_bar_data` from 'TDbook'
+tree <- tree_nwk
+snps <- df_alleles
+snps_strainCols <- snps[1,] 
+snps<-snps[-1,] # drop strain names
+colnames(snps) <- snps_strainCols
+
+gapChar <- "?"
+snp <- t(snps)  # not rectangular!
+lsnp <- apply(snp, 1, function(x) {
+        x != snp[1,] & x != gapChar & snp[1,] != gapChar
+    })  # different from row 1, not missing
+lsnp <- as.data.frame(lsnp) 
+lsnp$pos <- as.numeric(rownames(lsnp))  # position from rownames
+lsnp <- tidyr::gather(lsnp, name, value, -pos)  
+snp_data <- lsnp[lsnp$value, c("name", "pos")]. # only TRUEs
+```
+
+`snp_data` A dataframe containing SNP position data. 6482 x 2. The first column contains taxa labels coresponding to the tips of the tree  (`name`).  There are multiple rows per taxon, the second colum is the position `pos` of the snp in the genome. This is used as the x-variable in the plot. 
+
+In the dataframe `snp_data` the rows are ordered by position along the sequence (the x-dimension of this data), but the first column is the strain (taxon) name which matches the tips in the phylogenetic tree. 
+
+```{r}
+## visualize the tree 
+p <- ggtree(tree) 
+
+## attach the sampling information data set 
+## and add symbols colored by location
+p <- p %<+% df_info + geom_tippoint(aes(color=location))
+p
+```
+
+### Add SNP and Trait plots aligned to the tree
+
+Use `geom_facet` with reference to the respective dataframes/tibbles to add plots alignted to the tree. For the SNP plot, we will use `geom_point` which allows x-y plotting, with x-coordinate determined by `pos` and the y-coordinate aligned with the taxon.  The symbol is the vertical line `|`.  
+
+```{r}
+## visualize SNP and Trait data using dot and bar charts,
+## and align them based on tree structure
+p1 <- p + geom_facet(panel = "SNP", data = snp_data, geom = geom_point, 
+               mapping=aes(x = pos, color = location), shape = '|') 
+p1
+```
+
+`df_bar_data` is some simulated data with an `id` column specifying the taxon names, and a `dummy_bar_value` containing some data. 
+
+```{r}
+p1 + geom_facet(panel = "Trait", data = df_bar_data, geom = geom_col, 
+                aes(x = dummy_bar_value, color = location, 
+                fill = location), orientation = 'y', width = .6) +
+    theme_tree2(legend.position=c(.05, .85))
+```

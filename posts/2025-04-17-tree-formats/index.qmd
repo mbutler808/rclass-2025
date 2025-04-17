@@ -1,0 +1,334 @@
+---
+title: "All about trees"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Getting trees in to R and understanding their formats"
+date: 2025-04-17
+categories: [module 7, week 13, phylogenetic trees, nexus, fasta, newick, beast, iqtree]
+bibliography: ../refs.bib
+---
+
+### Acknowledgements
+
+References for this Material:
+
+- This was adapted from the chapter "All about trees" written by Brian OʻMeara from the manual "Getting started in R for Phylogenetics" by Marguerite A. Butler, Brian C. O’Meara, Jason Pienaar, Michael Alfaro, Graham Slater, and Todd Oakley
+
+
+# Learning objectives
+
+::: callout-note
+# Learning Objectives
+
+**At the end of this lesson you will:**
+
+-  Understand information content of phylogenetically structured data
+-  Understand particular R tree formats in ape, phylobase, and ouch
+-  Be able to hand-make trees
+-  Be able to import trees from nexus, newick, and other major formats in use today
+-  Be able to convert trees  from one format to another
+-   Be able to perform basic tree manipulations
+
+:::
+
+
+:::{.callout-note}
+# R packages you will need
+- `ape`
+- `ouch`
+:::
+
+# Tree vocabulary
+
+In nature, a tree is a large perennial woody plant. It has roots, a main trunk, branches, and leaves.
+In graph theory, a tree is a network where there is only one path between any two nodes (in other words, a network with no loops or cycles).
+
+In phylogenetics, we use ideas and terminology from both graph theory and nature: 
+
+- **Terminal taxa** are also known as **leaves**, **terminals**, **OTU**s ("**Operational Taxonomic Units**"), **tips**, or simply **taxa**. 
+- **Branches** are also called **edges** or __internodes__. 
+- **Internal** nodes (places where two or more branches connect) are also known as __vertices__ and sometimes simply **nodes** (technically, leaves are also nodes). 
+- A **rooted** tree has one node designated as the **root**, and all other nodes are descended from this root. Traditionally, the root node has at least two descendants; it may also have a subtending branch (an ancestral branch).
+- An **unrooted** tree has no root designated, making the oldest ancestor ambiguous.  
+- A tree where every internal node has two and only two descendants is known as a **binary** or **bifurcating** tree. 
+- A tree where at least one internal node has more than two descendants is said to be **multifurcating**; such a node is a **polytomy**. 
+- Trees in phylogenetics generally represent either **species trees** (a history of the splitting of interbreeding populations) or **gene trees** (a history of the coalescence of gene copies). In both cases, it is generally believed that the true process is bifurcating, so that each split results in two descendants. Thus, polytomies on trees are generally taken as representing _uncertainty in the relationships_. However in the case of adaptive radiations, and other __rapidly speciating processes__, the true process may be approaching multifurcation.
+-  __Branches__ may have **lengths**; these lengths may correspond to _time_, _amount of change_ (e.g., mutations) in some set of characters, _number of speciation events_, or some other measure. 
+-  A tree where all __branch lengths__ from root to tips are equal is known as an **ultrametric** tree. 
+-  A tree without branch lengths is known as a **topology**. 
+-  A **monophyletic clade** is an ancestor and all its descendants. 
+-  Any **edge** or __branch__ corresponds to a **bipartition**: _a division of the tree into two parts connected by that edge_ (if a root were inserted on the edge, then each of those parts would be a clade).
+
+# Newick format
+
+A very basic tree format is __Newick__ (`.tree`), named after the [seafood restaurant](https://www.newicks.com) in New Hampshire where it was formalized in 1986 by James Archie, William H. E. Day, Joseph Felsenstein, Wayne Maddison, Christopher Meacham, F. James Rohlf, and David Swofford - the second meeting was at the restaurant; it is also called New Hampshire format for that reason). It is widely used in graph theory as well. It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree (drawn brute-force):
+
+![Photo from the Newick restaurant [home page](https://www.newicks.com)](http://www.newicks.com/Web2014/Ed7.1.jpg)
+
+```{r}
+#| label: fig-simpletree
+#| fig-cap: "A simple tree"
+#| warning: false
+require(ape)
+require(ouch)
+require(phylobase)
+# simpletree <- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")
+
+simpletree<-structure(list(
+    edge = matrix(
+      c(8, 9, 10, 10, 9, 11, 11, 8, 12, 12, 13, 13, 
+        9, 10, 1, 2, 11, 3, 4, 12, 5, 13, 6, 7),
+      nrow=12L), 
+    tip.label = c("A", "B", "C", "D", "E", "F", "G"), 
+    Nnode = 6L
+  ), 
+    class = "phylo")
+plot(simpletree,no.margin=TRUE)
+```
+
+Taxa G and F form a __clade__, as do G, F, and E, as do A and B, and so forth. Thus, to create a Newick string, just go down the tree, nesting as you go:
+
+__(G,F)__
+
+__((G,F),E)__
+
+other side:
+
+__(A,B)__
+
+__(C,D)__
+
+__((A,B),(C,D))__
+
+all together:
+
+__(((G,F),E),((A,B),(C,D)))__
+
+And that's it (it will be clearer in the lecture)
+If a tree has branch lengths, these are entered following the descendant clade. For example, if the branch leading to G has length 1.0, we would write `G:1.0` rather than just `G`. If the tree is ultrametric, and the branch below the common ancestor of G and F is of length `1.1`, and the branch below that of length `3.5`, we could write (note: a semicolon `;` ends the newick string):
+
+`((G:1.0,F:1.0):1.1,E:2.1):3.5;`
+
+One aspect of the Newick (and most tree) representation is that there are many ways of representing the same tree. At every node, one can rotate the descendant branches (switching the left and right positions) and get the same tree (for example, imagine switching the G and E labels). Thus, the Newick strings
+
+__((G,F),E)__
+
+and
+
+__((F,G),E)__
+
+describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. While Newick strings are compact and easy to understand, they also don't lend themselves to easy _tree traversal_ (moving up or down the tree). In most analysis software that performs computations along trees, some other representation is used.
+
+
+# NEXUS 
+
+The NEXUS format (`*.nex` or `*.nxs`) is widely used in bioinformatics. Many phylogenetics programs use nexus format including $PAUP^*$, MrBayes, Mesquite, MacClade, etc., and many more can read nexus.  
+
+One of the key features is that it is very _extensible_ with information in __blocks__. We will only be concerned with blocks of DNA sequence data, but any type of information can be added.  This flexibilityy, however, can be a curse when you encounter new extensions to the format that your code did not anticipate. However, for the most part we will be using packages that read in nexus so you can reasonable hope that someone has dealt with the headache for you. 
+
+Nexus files are often used as inputs to phylogenetic programs. In that case, they typically only have a TAXA block and a DATA block. In our IQTREE2 example we also had a partition file in nexus format. But they can also return the output of the phylogenetic reconstruction, in that case they will have a TREES block as well. 
+
+### Nexus syntax:
+
+A NEXUS file begins with `#NEXUS` on the first line. 
+
+__Blocks__ of information follow, tyically on multiple lines, enclosed by a __BEGIN blockname;__ and __END;__ (Key words are case-insensitive).
+
+Comments are enclosed by square brackets `[comments]`
+
+Typical blocks:
+
+-  __TAXA__: The taxa block contains the names of the taxa.
+-  __DATA__: The data block contains a data matrix (we will use DNA sequences).
+-  __TREES__: The trees block contains one or more phylogenetic trees in newick format.
+
+For example [From Wikipedia](https://en.wikipedia.org/wiki/Nexus_file):
+
+```{.bash}
+#NEXUS
+Begin TAXA;
+  Dimensions ntax=4;
+  TaxLabels SpaceDog SpaceCat SpaceOrc SpaceElf;
+End;
+
+Begin data;
+  Dimensions nchar=15;
+  Format datatype=dna missing=? gap=- matchchar=.;
+  Matrix
+    [ When a position is a "matchchar", it means that it is the same as the first entry at the same position. ]
+    SpaceDog   atgctagctagctcg
+    SpaceCat   ......??...-.a.
+    SpaceOrc   ...t.......-.g. [ same as atgttagctag-tgg ]
+    SpaceElf   ...t.......-.a.           
+  ;
+End;
+
+BEGIN TREES;
+  Tree tree1 = (((SpaceDog,SpaceCat),SpaceOrc,SpaceElf));
+END; 
+```  
+
+
+# `phylo` (`ape` 5.0 or above)
+
+The [`ape` package](http://ape-package.ird.fr) [@Paradis:2019] uses a different representation of trees. It uses R `structures`, `lists`, `matrices`, and `vectors` to store a tree. Each node in the tree receives a number. For example, here is the tree from before in `ape` format. 
+
+Here is `simpletree` with the node numbers printed. It is printed with the following commands:
+
+```{r label=simpletreeplotnodelabels,include=TRUE}
+#| caption: A simple tree with ape's numbering of nodes included
+plot(simpletree,no.margin=TRUE)
+nodelabels()
+tiplabels()
+```
+
+For a tree with __N tips__, the tips have __numbers 1...N__ and the __nodes__ have __numbers greater than N__ (this is in contrast to how this was done in early (<1.9) versions of `ape`). These numbers  are used to store information about the tree's structure. 
+
+To do this, a matrix is created, with height corresponding to the number of internal and terminal nodes and width 2. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is
+```{r }
+simpletree$edge
+```
+This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is
+```{r }
+simpletree$tip.label
+```
+It's possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional `node.label` is used.
+If branch lengths are known, they are included as the numeric vector `edge.length`.
+```{r include=FALSE,echo=FALSE}
+simpletreebrlen<-compute.brlen(simpletree)
+simpletreebrlen$edge.length<-3*simpletreebrlen$edge.length
+simpletree<-simpletreebrlen
+```
+```{r }
+simpletree$edge.length
+```
+Finally, there are a few other elements (`Nnode`, the number of internal nodes; `class=phylo`) to set the class. To dump the the internal representation of phylo tree to screen, you can use `unclass()` which strips the class attribute (the S4 analog is `attributes`): 
+```{r }
+unclass(simpletree)
+```
+`phylo` trees are S3 objects. We'll be learning more about them later, but an important thing to know is that you directly access any element of them by using the `$` operator (as was done above). Optional elements, or even elements of your own devising, can be added to them, too, using the same operator.
+
+# ouchtree (`ouch` version 2.0 or above)
+
+`OUCH` [@Butler:2004,@King:2022] uses a different tree structure than does `ape`. First, `OUCH`'s is an S4 class, rather than S3. There are several differences between them, which you'll learn later. There are two main distinctions that will be important now. It helps to have a metaphor: think of a car. The S3 representation of a car is all the parts, neatly disassembled and laid out. The S4 representation of a car is a closed box. With S3, you can look at and manipulate any part of the car directly and manipulate it (using the `$` operator). You could check the amount of gas in the tank by directly accessing the gas. With S4, you should use a method, if one exists, to access and manipulate elements. For example, you could check the gas in the tank using the fuel gauge, if the fuel gauge method exists and works properly. S3 objects can be built up piecemeal, and there aren't built-in checks to make sure that everything is correct: if you forget to add a wheel element to the S3 char, you won't know there's a problem until some function tries to access it and fails. S4 objects are instantiated once, when you pass them all the initialization info they need (they often have defaults, and often have internal consistency checks).
+`OUCH` uses the `ouchtree` class as a basic tree class, then derives other classes from this for storing information on analyses. 
+The `ouchtree` class is:
+
+`setClass(`
+
+`  'ouchtree',`
+
+`  representation=representation(`
+
+`    nnodes = 'integer',`
+
+`    nodes = 'character',`
+
+`    ancestors = 'character',`
+
+`    nodelabels = 'character',`
+
+`    times = 'numeric',`
+
+`    root = 'integer',`
+
+`    nterm = 'integer',`
+
+`    term = 'integer',`
+
+`    anc.numbers = 'integer',`
+
+`    lineages = 'list',`
+
+`    epochs = 'list',`
+
+`    branch.times = 'matrix',`
+
+`    depth = 'numeric'`
+
+`  )`
+
+`)`
+
+At first glance, it looks like creating a new `ouchtree` object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor function for a new `ouchtree` is just the function
+
+`ouchtree(nodes, ancestors, times, labels = as.character(nodes))`
+
+__The `ouchtree` function only has four arguments__, one of them optional. Using the function and these elements, all the other elements of the class are initialized.
+
+- The first element is `nodes`, a character vector of node ids (including internal nodes). Unlike `ape`, the leaves do not need to have smaller ids than internal nodes. 
+- The second argument is `ancestors`, a character vector of node ids of the ancestors for the nodes in the `nodes` vector. The `nodes` and `ancestors` vectors almost correspond to the second and first columns of the `ape` `edge` matrix, respectively, with the exception that `ouchtree` includes the root node with an ancestor of `NA`. 
+- The third element, `times`, represents the height of each node from the root. Remember that `ape`'s `edge.length` vector has the length of the branch subtending each node; instead, `ouchtree` has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in `ouchtree` (with height 0) but not in ape. 
+- The fourth argument, `labels`, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of `<NA>`.
+
+```{r include=FALSE,echo=FALSE}
+simpletreeouch<-ape2ouch(tree=simpletree)
+```
+For example, our example tree, when converted to ouchtree format, is
+```{r }
+attributes(simpletreeouch)$nodes
+attributes(simpletreeouch)$ancestors
+attributes(simpletreeouch)$times
+attributes(simpletreeouch)$nodelabels
+```
+One other element of `ouchtree`, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we'll be discussing in the course.
+
+```{r }
+attributes(simpletreeouch)$branch.times
+```
+
+The entire content of the `simpletreeouch` object can be dumped to screen using the following command (not executed here to save paper):
+```{r eval=F}
+attributes(simpletreeouch)
+```
+
+# A note about node numbering
+
+### `phylo` (`ape`) node numbers and order
+
+In `ape` the node numbering is implied by the order of rows in the `$egde` matrix. Letʻs make a simple example, a tree with three tips:
+
+Remember in the edge matrix, the first column is the ancestral node (parent), and the second column is the node number.
+
+```{r}
+tree <- rtree(3)
+tree$edge
+plot(tree)
+nodelabels()
+tiplabels(adj=c(2))
+```
+The nodes are listed in a rightward tree traversal order. 
+
+### `treedata` (`ggtree`) node numbers and order
+
+In the `treedata` object used by `ggtree`, `treeio`, and `tidytree`, the node numbers are the same (referring to the same nodes and ancestors), but the order that they are stored in is different. _(Also note that `ggtree` plots trees ladderized by default)_.
+
+```{r}
+#| warning: FALSE
+library(treeio)
+library(ggtree)
+td <- as.treedata(tree)
+td %>% as_tibble %>% as.data.frame
+ggtree(td) + 
+     geom_tiplab(hjust=-1) +
+     geom_label(aes(label=node))
+```
+
+Compare `tree$edge` vs `treedata`:
+```{r}
+tree$edge
+td %>% as_tibble %>% as.data.frame
+```
+
+::: callout-warning
+# Combining `phylo` with data and other tree formats
+
+-  **It is important** when combining `phylo` and `treedata` objects to always **match by `node`** (or when only tips are involved, **by `label`**).  
+
+-  If one simply pastes matrices together (e.g., `cbind`), the information will be connected to the wrong node! 
+
+Weʻll cover this in more detail in the next section.
+:::

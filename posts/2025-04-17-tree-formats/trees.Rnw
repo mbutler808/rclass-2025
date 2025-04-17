@@ -1,0 +1,304 @@
+\SweaveOpts{eps=FALSE}
+\SweaveOpts{keep.source=TRUE}
+
+\chapter{All about trees by Brian O'Meara}
+<<include=FALSE,echo=FALSE>>=
+require(ape)
+require(ouch)
+require(phylobase)
+simpletree<-structure(list(
+		edge = structure(
+			c(8, 9, 10, 10, 9, 11, 11, 8, 12, 12, 13, 13, 9, 10, 1, 2, 11, 3, 4, 12, 5, 13, 6, 7),
+			.Dim = c(12L, 2L)
+		), 
+		tip.label = c("A", "B", "C", "D", "E", "F", "G"), 
+		Nnode = 6L
+	), 
+	.Names = c("edge", "tip.label", "Nnode"),
+	class = "phylo")
+save(simpletree, file="Rdata/simpletree.rda")
+@
+
+Goals:
+\begin{itemize}
+\item Study the information content of phylogenetically structured data
+\item Learn about particular tree formats in ape, phylobase, and ouch
+\item Learn how to hand-make trees
+\item Learn how to import trees from nexus and newick formats
+\item Learn tree conversion from one format to another
+\end{itemize}
+Concepts:
+\begin{itemize}
+\item file access
+\item classes
+\item coercion
+\end{itemize}
+
+
+\section{Tree objects}
+In nature, a tree is a large perennial woody plant. It has roots, a main trunk, branches, and leaves.
+In graph theory, a tree is a network where there is only one path between any two nodes (in other words, a network with no cycles).
+In phylogenetics, we use ideas and terminology from both graph theory and nature. \textbf{Terminal taxa} are also known as \textbf{leaves}, \textbf{terminals}, \textbf{OTU}s ("\textbf{Operational Taxonomic Units}"), \textbf{tips}, or simply \textbf{taxa}. \textbf{Branches} are also called \textbf{edges}. \textbf{Internal} nodes (places where two or more branches connect) are also known as vertices and sometimes simply \textbf{nodes} (technically, leaves are also nodes). A \textbf{rooted} tree has one node designated as the \textbf{root}, and all other nodes are descended from this root. An \textbf{unrooted} tree has no root designated. Traditionally, the root node has at least two descendants; it may also have a subtending branch. A tree where every internal node has two and only two descendants is known as a \textbf{binary} or \textbf{bifurcating} tree. A tree where at least one internal node has more than two descendants is said to be \textbf{multifurcating}; such a node is a \textbf{polytomy}. Trees in phylogenetics generally represent either \textbf{species trees} (a history of the splitting of interbreeding populations) or \textbf{gene trees} (a history of the coalescence of gene copies). In both cases, it is generally believed that the true process is bifurcating, so that each split results in two descendants. Thus, polytomies on trees are generally taken as representing uncertainty in the relationships. Branches may have \textbf{lengths}; these lengths may correspond to time, amount of change in some set of characters, number of speciation events, or some other measure. A tree where all branch lengths from root to tips are equal is known as an \textbf{ultrametric} tree. A tree without branch lengths is known as a \textbf{topology}. A \textbf{clade} is an ancestor and all its descendants. Any \textbf{edge} corresponds to a \textbf{bipartition}: a division of the tree into two parts connected by that edge (if a root were inserted on the edge, then each of those parts would be a clade).
+\subsection{Newick}
+A very basic tree description is Newick (named after the seafood restaurant in New Hampshire where it was formalized; it is also called New Hampshire format for that reason). It is simply a string. Each nesting on the tree corresponds to a parenthetical statement. For example, for this tree:
+<<label=simpletreeplot,include=FALSE,echo=FALSE, fig=T>>=
+plot(simpletree,no.margin=TRUE)
+@
+\begin{figure}[h]
+\begin{center}
+<<label=fig1,fig=TRUE,echo=FALSE>>=
+<<simpletreeplot>>
+@
+\caption{A simple tree}
+\label{fig:one}
+\end{center}
+\end{figure}
+Taxa G and F form a clade, as do G, F, and E, as do A and B, and so forth. Thus, to create a Newick string, just go down the tree, nesting as you go:
+
+(G,F)
+
+((G,F),E)
+
+other side:
+
+(A,B)
+
+(C,D)
+
+((A,B),(C,D))
+
+all together:
+
+(((G,F),E),((A,B),(C,D)))
+
+And that's it (it will be clearer in the lecture)
+If a tree has branch lengths, these are entered following the descendant clade. For example, if the branch leading to G has length 1.0, we would write G:1.0 rather than just G. If the tree is ultrametric, and the branch below the common ancestor of G and F is of length 1.1, and the branch below that of length 3.5, we could write
+
+((G:1.0,F:1.0):1.1,E:2.1):3.5
+
+And so forth.
+One problem with Newick representation is that there are many ways of representing the same tree. At every node, one can rotate the descendant branches (switching the left and right positions) and get the same tree (for example, imagine switching the G and E labels). Thus, the Newick strings
+
+((G,F),E)
+
+and
+
+((F,G),E)
+
+describe the same trees, though it might not be easy to tell at first glance. This is generally an issue for any tree representation. Newick strings also don't lend themselves to easy tree traversal (moving up or down the tree). In most software, some other representation is used.
+\subsection{phylo (ape 1.9 or above)}
+The \verb@ape@ package \citep{Paradis2004} uses a different representation of trees. It uses R \verb@structures@, \verb@lists@, \verb@matrices@, and \verb@vectors@ to store a tree. Each node in the tree receives a number. For example, here is the tree from before in \code{ape} format. First let's clear any old workspace, load our libraries, and load our tree called "\code{simpletree}" from "\code{Rdata/simpletree.rda}". 
+<<eval=F>>=
+rm(ls=list())
+require(ape)
+require(ouch)
+require(phylobase)
+load("Rdata/simpletree.rda")
+@
+Here is \code{simpletree} with the node numbers printed. It is printed with the following commands:
+<<label=simpletreeplotnodelabels,include=TRUE>>=
+plot(simpletree,no.margin=TRUE)
+nodelabels()
+tiplabels()
+@
+
+\begin{figure}[h]
+\begin{center}
+<<label=fig2,fig=TRUE,echo=TRUE>>=
+<<simpletreeplotnodelabels>>
+@
+\caption{A simple tree with ape's numbering of nodes included}
+\label{fig:two}
+\end{center}
+\end{figure}
+
+For a tree with N tips, the tips have numbers 1...N and the nodes have numbers greater than N (this is in contrast to how this was done in earlier (<1.9) versions of \verb@ape@). These numbers  are used to store information about the tree's structure. To do this, a matrix is created, with height corresponding to the number of internal and terminal nodes and width 2. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is
+<<>>=
+simpletree$edge
+@
+This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is
+<<>>=
+simpletree$tip.label
+@
+It's possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled "Aves"). If so, an optional \verb@node.label@ is used.
+If branch lengths are known, they are included as the numeric vector \verb@edge.length@.
+<<include=FALSE,echo=FALSE>>=
+simpletreebrlen<-compute.brlen(simpletree)
+simpletreebrlen$edge.length<-3*simpletreebrlen$edge.length
+simpletree<-simpletreebrlen
+@
+<<>>=
+simpletree$edge.length
+@
+Finally, there are a few other elements (\verb@Nnode@, the number of internal nodes; \verb@class=phylo@) to give more information. To see what the internal representation of a tree is, you can use \verb@unclass@ (the S4 analog is \verb@attributes@): 
+<<>>=
+unclass(simpletree)
+@
+\verb@phylo@ trees are S3 objects. We'll be learning more about them later in the week, but an important thing to know is that you directly access any element of them by using the \verb@$@ operator (as was done above). Optional elements, or even elements of your own devising, can be added to them, too, using the same operator.
+\subsection{ouchtree}
+\verb@OUCH@ (the most recent version) uses a different tree structure than does \verb@ape@. First, \verb@OUCH@'s is an S4 class, rather than S3. There are several differences between them, which you'll learn later. There are two main distinctions that will be important now. It helps to have a metaphor: think of a car. The S3 representation of a car is all the parts, neatly disassembled and laid out. The S4 representation of a car is a closed box. With S3, you can look at and manipulate any part of the car directly and manipulate it (using the \verb@$@ operator). You could check the amount of gas in the tank by directly accessing the gas. With S4, you should use a method, if one exists, to access and manipulate elements. For example, you could check the gas in the tank using the fuel gauge, if the fuel gauge method exists and works properly. S3 objects can be built up piecemeal, and there aren't built-in checks to make sure that everything is correct: if you forget to add a wheel element to the S3 char, you won't know there's a problem until some function tries to access it and fails. S4 objects are instantiated once, when you pass them all the initialization info they need (they often have defaults, and often have internal consistency checks).
+\verb@OUCH@ uses the \verb@ouchtree@ class as a basic tree class, then derives other classes from this for storing information on analyses. 
+The \verb@ouchtree@ class is:
+
+\verb@setClass(@
+
+\verb@  'ouchtree',@
+
+\verb@  representation=representation(@
+
+\verb@    nnodes = 'integer',@
+
+\verb@    nodes = 'character',@
+
+\verb@    ancestors = 'character',@
+
+\verb@    nodelabels = 'character',@
+
+\verb@    times = 'numeric',@
+
+\verb@    root = 'integer',@
+
+\verb@    nterm = 'integer',@
+
+\verb@    term = 'integer',@
+
+\verb@    anc.numbers = 'integer',@
+
+\verb@    lineages = 'list',@
+
+\verb@    epochs = 'list',@
+
+\verb@    branch.times = 'matrix',@
+
+\verb@    depth = 'numeric'@
+
+\verb@  )@
+
+\verb@)@
+
+At first glance, it looks like creating a new \verb@ouchtree@ object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor for a new \verb@ouchtree@ is just the function
+
+\verb@ouchtree(nodes, ancestors, times, labels = as.character(nodes))@
+
+This function only has four arguments, one of them optional. Using the function and these elements, all the other elements of the class are initialized.
+The first element is \verb@nodes@, a character vector of node ids (including internal nodes). Unlike \verb@ape@, the leaves do not need to have smaller ids than internal nodes. The second argument is \verb@ancestors@, a character vector of node ids of the ancestors for the nodes in the \verb@nodes@ vector. The \verb@nodes@ and \verb@ancestors@ vectors almost correspond to the second and first columns of the \verb@ape@ \verb@edge@ matrix, respectively, with the exception that \verb@ouchtree@ includes the root node with an ancestor of \verb@NA@. The third element, \verb@times@, represents the height of each node from the root. Remember that \verb@ape@'s \verb@edge.length@ vector has the length of the branch subtending each node; instead, \verb@ouchtree@ has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in \verb@ouchtree@ (with height 0) but not in ape. The fourth argument, \verb@labels@, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of \verb@<NA>@.
+<<include=FALSE,echo=FALSE>>=
+simpletreeouch<-ape2ouch(tree=simpletree)
+@
+For example, our example tree, when converted to ouchtree format, is
+<<>>=
+attributes(simpletreeouch)$nodes
+attributes(simpletreeouch)$ancestors
+attributes(simpletreeouch)$times
+attributes(simpletreeouch)$nodelabels
+@
+One other element of \verb@ouchtree@, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we'll be discussing in the course.
+
+<<>>=
+attributes(simpletreeouch)$branch.times
+@
+
+The entire content of the \verb@simpletreeouch@ object can be dumped to screen using the following command (not executed here to save paper):
+<<eval=F>>=
+attributes(simpletreeouch)
+@
+
+\subsection{phylo4 (phylobase)}
+\verb@Phylobase@ is a new package for phylogenetic trees and datasets, started in December 2007 at a NESCent-sponsored hackathon. Its development is ongoing, so some of its function names and class elements may change. We'll be discussing it more later in the course. It has two main classes: \verb@phylo4@ and \verb@phylo4d@. The first is just a tree class, the second includes a tree and data. Its tree class is closely (and intentionally) based on \verb@ape@'s \verb@phylo@ object: it has an \verb@edge@ matrix, \verb@edge.length@ vector, \verb@tip.label@ vector, \verb@node.label@ vector (not optional), and \verb@Nnode@ variable. It also has  an \verb@edge.label@ vector, which is distinct from the \verb@node.label@ and \verb@tip.label@ vectors (i.e., may have different names) and an element, \verb@root.edge@ that can specify where the root is (or \verb@NA@ if the tree is unrooted). \verb@phylo4d@ is derived from the \verb@phylo4@ class (a concept common in S4 and in object-oriented languages, like C++) and thus has all the elements of \verb@phylo4@, plus elements \verb@tipdata@, \verb@nodedata@, \verb@edgedata@ for storing \verb@data.frame@s of data (typically, this will just be data at tips, such as nucleotide sequences, but internal nodes could have reconstructed sequences and their might be data for edges, too, such as estimated changes on the tree).
+The constructor for a \verb@phylo4@ object is 
+
+\code{phylo4(edge, edge.length = NULL, tip.label = NULL, node.label = NULL, 
+edge.label = NULL, root.edge = NULL, ...)}
+
+
+The only required argument is edge (a \verb@phylo@-style edge matrix). For everything else, there are default constructors that will create names and other needed information.
+
+The entire content of the \verb@simpletree@ object in \verb@phylo4@ are
+<<>>=
+attributes(as(simpletree,"phylo4"))
+@
+\section{Getting trees into R}
+There are ways to use R to estimate phylogenetic trees given a set of taxa with characters. For more information on this, see \citet{Paradis:2006}. In many cases, however, there will be trees saved in an existing file, saved as a result of an analysis in programs such as PAUP or MrBayes. This section will discuss getting those trees into R. Note there may be additional ways to load trees not discussed here. For example \verb@apTreeshape@ can load trees directly from \url{http://www.treebase.org} if you know the appropriate study number; as these trees lack branch lengths, they are generally unsuitable for the sort of analyses we will be doing in this course.
+\subsection{Using \code{ape}}
+\verb@Ape@ can read Newick trees by using the function:
+
+\code{read.tree(file = "", text = NULL, tree.names = NULL, skip = 0, comment.char = "\#", ...)}
+
+There are three main ways to use this function:
+
+\verb@read.tree()@: Gets interactive input of a Newick string from the user
+
+\verb@read.tree(text="((A,B),C);")@: Inputs a Newick tree string directly. Note that the tree string needs to end with a semicolon
+
+\verb@read.tree(file="mytree.txt")@: Inputs one or more Newick strings from a file.
+
+See the documentation for the (little-used) other arguments.
+
+The other way ape can get trees is from NEXUS files. NEXUS is a standard (see Maddison et al. 1997) used in many phylogenetics programs like PAUP, MrBayes, MacClade, and Mesquite and can contain blocks with trees, characters, batch commands for programs, and more. \verb@Ape@ can get trees (and only trees) from such files using the command
+
+\verb@read.nexus(file, tree.names = NULL)@ 
+
+Ape treats all trees as rooted and ignores tree weights (which can be output by PAUP and MrBayes). 
+One gotcha associated with \verb@ape@'s tree input functions is that if the file has one tree, the returned item is a tree object, but if it contains more than one tree, a list of trees is returned. These two kinds of objects must be used differently in R.
+\subsection{Using phylobase}
+One of the key features of \verb@phylobase@ is the ability to load trees and data directly from NEXUS files. To get trees, the function is 
+
+\verb@readNexus(fileToRead, simplify = TRUE)@
+
+This works as you'd expect. If \verb@simplify=TRUE@, the default, it works as \verb@ape@'s input functions do, returning a single object if there is one tree in the file and a list of objects if there are multiple trees. If \verb@simplify=FALSE@, it always returns a list, even if there is just one element. This way, the type of the returned item is constant regardless of the number of trees. For data alone, the same function is used, but with the \verb@type="data"@ option set:
+
+\verb@readNexus(fileToRead, simplify=TRUE,  type="data", char.all = FALSE, @
+\verb@	polymorphic.convert = TRUE, levels.uniform = TRUE)@
+
+and coercion to a \verb@data.frame@ can be done with:
+
+\verb@as(phylo4dobject, "data.frame")@
+%check to make sure this works
+
+(readNexus has features to convert categorical data to factors, DNA data to strings, continuous data to an appropriate data.frame, and more -- see documentation).
+
+\verb@readNexus(fileToRead, char.all=FALSE, @
+\verb@	polymorphic.convert=TRUE, levels.uniform=TRUE)@
+
+loads data and trees into one \verb@phylo4d@ object.  The function will check to see if data and trees are both included in the NEXUS file, and read both into a \verb@phylo4d@ object if both are present. 
+Note that the names of these functions may change in the future to make capitalization more consistent with the rest of \verb@phylobase@.
+
+\section{Going from one format to another}
+The R packages \verb@ape@, \verb@phylobase@, \verb@ouch@, \verb@geiger@, \verb@apTreeshape@, \verb@picante@, \verb@laser@, \verb@phangorn@, \verb@PhySim@, \verb@ade4@, \verb@PHYLOGR@, and others all use trees (see \url{http://www.r-phylo.org}). Unfortunately, they often use different tree formats, sometimes within the same package! [For example, if the format has changed and not all functions have been updated to use the new version]. There are ways to convert between formats. Some use functions of the type you've come to expect: \verb@output<-in2out(input)@. Others use coercion: \verb@output<-as(input, "output class name")@. This has the advantage of being much more standardized (no need to wonder whether the function is 'in2out' or 'in.to.out' or 'convertIn2Out') and generally simpler to use. 
+\begin{table}[htdp]
+\caption{The input object is always called "object"}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+from & to & command & package   \\ \hline
+phylo & phylo4 & \verb@as(object, "phylo4")@ & phylobase \\
+phylo4 & phylo & \verb@as(object, "phylo")@ & phylobase  \\
+phylo4d & phylo & \verb@as(object, "phylo")@ & phylobase \\ \hline
+phylo4 & phylo4d & \verb@as(object, "phylo4d")@ & phylobase \\
+phylo4d & phylo4 & \verb@as(object, "phylo4d")@ & phylobase \\ \hline
+phylo4d & phylog (ade4)& \verb@as(object, "phylog")@ & phylobase \\ \hline
+hclust & phylo & \verb@as.phylo(object, ...)@ & ape \\
+phylo & hclust & \verb@as.hclust(object, ...)@ & ape \\ \hline
+phylog (ade4) & phylo &\verb@as.phylo(object, ...)@ & ape \\ \hline
+old phylo & phylo &\verb@old2new.phylo(object)@ &ape\\
+phylo & old phylo &\verb@new2old.phylo(object)@ &ape\\ \hline
+phylo & treeshape & \verb@as.treeshape(object, model, p, ...)@ & apTreeshape \\
+treeshape & phylo & \verb@as.phylo(object, ...)@ & apTreeshape\\ \hline
+phylo & ouchtree & \verb@ape2ouch(object, ...)@ & ouch \\ 
+phylo & earlier ouch format &\verb@ape2ouch(object, data, ...)@ & geiger\\
+\hline
+\end{tabular}
+\end{center}
+\label{Tree conversions}
+\end{table}%
+One thing to note is that there are two \verb@ape2ouch@ functions. The one in \verb@geiger@ converts a \verb@phylo@ object and data to the \verb@data.frame@ that earlier versions of \verb@ouch@ used. The one in the lastest version of \verb@ouch@ converts just a \verb@phylo@ object to an \verb@ouchtree@ object. 
+
+\section{Exercises}
+\begin{enumerate}
+\item Take \code{simpletree} in ape's phylo format and set all branch lengths equal to 1.0, plot to verify.
+\item Convert \code{simpletree} to phylobase's phylo4 format. Which packages do you need in order to do this? Plot with the display nodes option (show.node=T).
+\item Convert to ouch. Plot with displaying nodes (node.names=T). Convert to data frame representation. 
+\item Assign node labels to your tree object. What is the easiest way to do that?
+\subitem Try assigning the same value for the node label to more than one node in the tree (not the tips). 
+\subitem Try assigning unique node labels. Do both work? Are there problems?
+\end{enumerate}
