@@ -2341,7 +2341,7 @@ R packages you will need
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">## You will probably have to install BiocManager </span></span>
+font-style: inherit;">## Install BiocManager in order to install ggtree and treeio</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -3150,11 +3150,11 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1     0.1859978    t2
-2      5    2     0.5956352    t1
-3      4    3     0.2516685    t3
+1      5    1    0.14932941    t1
+2      5    2    0.01920589    t3
+3      4    3    0.49228495    t2
 4      4    4            NA  &lt;NA&gt;
-5      4    5     0.2594244  &lt;NA&gt;</code></pre>
+5      4    5    0.60677426  &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3235,11 +3235,11 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1     0.1859978    t2
-2      5    2     0.5956352    t1
-3      4    3     0.2516685    t3
+1      5    1    0.14932941    t1
+2      5    2    0.01920589    t3
+3      4    3    0.49228495    t2
 4      4    4            NA  &lt;NA&gt;
-5      4    5     0.2594244  &lt;NA&gt;</code></pre>
+5      4    5    0.60677426  &lt;NA&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -19599,7 +19599,7 @@ Learning objectives
 <p>At some point your data will most likely be arranged into spreadsheets, with observations as rows and variables as columns. <strong>In this course, we will focus on the data source that you are most likely to encounter in your analyses, the “(messy) spreadsheet” type, containing bits of information collected on individuals.</strong> Please do feel free to play around with other data types on your own, e.g.&nbsp;for your course project.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
+<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://mbutler808.github.io/images/i-have-data_3.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
 </div>

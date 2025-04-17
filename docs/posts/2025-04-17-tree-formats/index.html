@@ -341,7 +341,7 @@ R packages you will need
 <li>and <code>BiocManager</code> from the Bioconductor project To install treeio and ggtree:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## You will probably have to install BiocManager </span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Install BiocManager in order to install ggtree and treeio</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="co">## BiocManager::install("BiocUpgrade") ## you may need this</span></span>
@@ -642,11 +642,11 @@ $edge.length
 <span><span class="va">td</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">as_tibble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">as.data.frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1     0.1859978    t2
-2      5    2     0.5956352    t1
-3      4    3     0.2516685    t3
+1      5    1    0.14932941    t1
+2      5    2    0.01920589    t3
+3      4    3    0.49228495    t2
 4      4    4            NA  &lt;NA&gt;
-5      4    5     0.2594244  &lt;NA&gt;</code></pre>
+5      4    5    0.60677426  &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html">ggtree</a></span><span class="op">(</span><span class="va">td</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>     <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_tiplab.html">geom_tiplab</a></span><span class="op">(</span>hjust<span class="op">=</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
@@ -671,11 +671,11 @@ $edge.length
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">td</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">as_tibble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">as.data.frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1     0.1859978    t2
-2      5    2     0.5956352    t1
-3      4    3     0.2516685    t3
+1      5    1    0.14932941    t1
+2      5    2    0.01920589    t3
+3      4    3    0.49228495    t2
 4      4    4            NA  &lt;NA&gt;
-5      4    5     0.2594244  &lt;NA&gt;</code></pre>
+5      4    5    0.60677426  &lt;NA&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">

@@ -47,7 +47,7 @@ To install treeio and ggtree:
 
 ```{r}
 #| eval: FALSE
-## You will probably have to install BiocManager 
+## Install BiocManager in order to install ggtree and treeio
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
 ## BiocManager::install("BiocUpgrade") ## you may need this
