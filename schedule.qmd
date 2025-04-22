@@ -74,7 +74,7 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 | **Module 7** |         | **Phylogenetic Trees** | | |
 ||||||
 | Week 13      | Apr 17 | `r emojifont::emoji('seedling')` Trees as Data Objects \[[html](posts/2025-04-17-tree-formats/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-17-tree-formats/index.qmd)\]|  | |
-|              | Apr 23  | `r emojifont::emoji('palm_tree')` Reading and writing trees, ape, ggtree, treeio \[[html](posts/2025-04-23-ggtree/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-23-ggtree/index.qmd)\]|||
+|              | Apr 22  | `r emojifont::emoji('palm_tree')` Reading and writing trees, ape, ggtree, treeio \[[html](posts/2025-04-22-ggtree/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-22-ggtree/index.qmd)\]|||
 ||||||
 | Week 14      | Apr 22 | `r emojifont::emoji('deciduous_tree')` Reshaping Trees |||
 ||||||

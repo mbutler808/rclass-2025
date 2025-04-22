@@ -10,18 +10,18 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2025</description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Wed, 23 Apr 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 22 Apr 2025 10:00:00 GMT</lastBuildDate>
 <item>
   <title>The ggtree-verse</title>
   <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-04-23-ggtree/</link>
+  <link>https://mbutler808.github.io/posts/2025-04-22-ggtree/</link>
   <description><![CDATA[ <section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>References for this Material:</p>
 <ul>
 <li>Treedata book by Guangchuang Yu <span class="citation" data-cites="Yu:2022">(Yu 2022)</span> <a href="https://yulab-smu.top/treedata-book/" class="uri">https://yulab-smu.top/treedata-book/</a>
 </li>
 <li><a href="https://bioconnector.github.io/workshops/r-ggtree.html" class="uri">https://bioconnector.github.io/workshops/r-ggtree.html</a></li>
-</ul></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+</ul></section><section id="learning-objectivesx" class="level1"><h1>Learning objectivesx</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -141,7 +141,7 @@ background-color: null;
 font-style: inherit;"># ape plotting function</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -161,7 +161,7 @@ background-color: null;
 font-style: inherit;"># ggtree plotting function</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -212,8 +212,9 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "_index.qmd"         "anolis.SSD.raw.csv" "bigtree.nex"       
  [4] "ggtree_functions.R" "ggtree.R"           "inclass.R"         
- [7] "index_files"        "index.qmd"          "index.rmarkdown"   
-[10] "tree.nex"           "tree.tree"         </code></pre>
+ [7] "index 2.html"       "index 3.html"       "index_files"       
+[10] "index_files 2"      "index_files 3"      "index.qmd"         
+[13] "index.rmarkdown"    "tree.nex"           "tree.tree"         </code></pre>
 </div>
 </div>
 <p>Take a look at these files. They should be in nexus and newick formats, respectively.</p>
@@ -313,7 +314,7 @@ font-style: inherit;"># to phylo</span></span></code></pre></div>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t6, t19, t15, t16, t2, t18, ...
+  t12, t7, t9, t19, t2, t15, ...
 
 Rooted; includes branch length(s).</code></pre>
 </div>
@@ -336,7 +337,7 @@ font-style: inherit;"># to treedata</span></span></code></pre></div>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t6, t19, t15, t16, t2, t18, ...
+  t12, t7, t9, t19, t2, t15, ...
 
 Rooted; includes branch length(s).</code></pre>
 </div>
@@ -370,16 +371,16 @@ font-style: inherit;"># to tibble</span></span></code></pre></div>
 # via as.treedata or as.phylo
    parent  node branch.length label
     &lt;int&gt; &lt;int&gt;         &lt;dbl&gt; &lt;chr&gt;
- 1     21     1        0.211  t6   
- 2     25     2        0.0205 t19  
- 3     25     3        0.493  t15  
- 4     26     4        0.359  t16  
- 5     26     5        0.363  t2   
- 6     27     6        0.616  t18  
- 7     27     7        0.287  t13  
- 8     31     8        0.540  t14  
- 9     32     9        0.202  t10  
-10     34    10        0.0719 t9   
+ 1     28     1        0.126  t12  
+ 2     28     2        0.858  t7   
+ 3     27     3        0.739  t9   
+ 4     29     4        0.777  t19  
+ 5     29     5        0.678  t2   
+ 6     25     6        0.505  t15  
+ 7     31     7        0.0796 t13  
+ 8     31     8        0.298  t4   
+ 9     32     9        0.918  t16  
+10     32    10        0.186  t6   
 # ℹ 29 more rows</code></pre>
 </div>
 </div>
@@ -405,7 +406,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -444,8 +445,8 @@ font-style: inherit;">p</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "t17" "t5"  "t12" "t1"  "t9"  "t10" "t14" "t11" "t20" "t8"  "t3"  "t4" 
-[13] "t7"  "t2"  "t16" "t15" "t19" "t13" "t18" "t6" </code></pre>
+<pre><code> [1] "t7"  "t12" "t9"  "t2"  "t19" "t15" "t6"  "t16" "t4"  "t13" "t1"  "t11"
+[13] "t14" "t17" "t5"  "t8"  "t3"  "t10" "t18" "t20"</code></pre>
 </div>
 <div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
@@ -556,26 +557,26 @@ background-color: null;
 font-style: inherit;">dat</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   label     size    habitat
-1    t17 12.86105  grassland
-2     t5 31.25774     forest
-3    t12 21.43777  grassland
-4     t1 17.61510  grassland
-5     t9 21.89762     forest
-6    t10 18.52082     desert
-7    t14 30.01839  grassland
-8    t11 23.58696  grassland
-9    t20 23.90757 intertidal
-10    t8 24.53455     desert
-11    t3 21.79389     desert
-12    t4 19.42923  grassland
-13    t7 21.90441     desert
-14    t2 27.65435     desert
-15   t16 14.96855 intertidal
-16   t15 24.14979     forest
-17   t19 12.13357  grassland
-18   t13 28.80982     forest
-19   t18 19.61751     desert
-20    t6 17.84677 intertidal</code></pre>
+1     t7 27.31979  grassland
+2    t12 17.49969 intertidal
+3     t9 25.84548 intertidal
+4     t2 18.95584  grassland
+5    t19 12.70653  grassland
+6    t15 26.57089 intertidal
+7     t6 24.52070  grassland
+8    t16 16.90068 intertidal
+9     t4 14.76381     desert
+10   t13 18.01091     forest
+11    t1 13.15498     desert
+12   t11 15.87049     forest
+13   t14 22.16129  grassland
+14   t17 29.33694 intertidal
+15    t5 17.23589     desert
+16    t8 19.64449  grassland
+17    t3 18.13256 intertidal
+18   t10 16.09163  grassland
+19   t18 15.60060     forest
+20   t20 28.37008     desert</code></pre>
 </div>
 </div>
 <p>See our ggtree as a treedata object:</p>
@@ -599,45 +600,45 @@ background-color: null;
 font-style: inherit;">as.data.frame</span>  </span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   parent node branch.length label
-1      21    1   0.211462186    t6
-2      25    2   0.020523685   t19
-3      25    3   0.492876891   t15
-4      26    4   0.358771561   t16
-5      26    5   0.362600771    t2
-6      27    6   0.616498912   t18
-7      27    7   0.286937086   t13
-8      31    8   0.539667591   t14
-9      32    9   0.201774493   t10
-10     34   10   0.071909918    t9
-11     34   11   0.548395909    t1
-12     35   12   0.781278409   t12
-13     36   13   0.834200829    t5
-14     36   14   0.865846023   t17
-15     30   15   0.591518627   t11
-16     29   16   0.317440855   t20
-17     37   17   0.241390239    t7
-18     38   18   0.517082721    t4
-19     39   19   0.385656054    t3
-20     39   20   0.519972739    t8
+1      28    1    0.12604366   t12
+2      28    2    0.85758925    t7
+3      27    3    0.73859272    t9
+4      29    4    0.77725659   t19
+5      29    5    0.67810274    t2
+6      25    6    0.50529245   t15
+7      31    7    0.07960503   t13
+8      31    8    0.29836242    t4
+9      32    9    0.91839353   t16
+10     32   10    0.18644255    t6
+11     23   11    0.34923135    t1
+12     34   12    0.14742050   t14
+13     34   13    0.69041944   t11
+14     33   14    0.08418970   t17
+15     36   15    0.48554606   t20
+16     36   16    0.21289598   t18
+17     38   17    0.64849655   t10
+18     38   18    0.87546294    t3
+19     39   19    0.36946746    t8
+20     39   20    0.09897118    t5
 21     21   21            NA  &lt;NA&gt;
-22     21   22   0.104038035  &lt;NA&gt;
-23     22   23   0.160041574  &lt;NA&gt;
-24     23   24   0.095194947  &lt;NA&gt;
-25     24   25   0.010641325  &lt;NA&gt;
-26     24   26   0.358477827  &lt;NA&gt;
-27     23   27   0.563482889  &lt;NA&gt;
-28     22   28   0.009179101  &lt;NA&gt;
-29     28   29   0.870633200  &lt;NA&gt;
-30     29   30   0.373868619  &lt;NA&gt;
-31     30   31   0.181675595  &lt;NA&gt;
-32     31   32   0.950593904  &lt;NA&gt;
-33     32   33   0.999016533  &lt;NA&gt;
-34     33   34   0.925645936  &lt;NA&gt;
-35     33   35   0.341042848  &lt;NA&gt;
-36     35   36   0.493788643  &lt;NA&gt;
-37     28   37   0.938912940  &lt;NA&gt;
-38     37   38   0.628192976  &lt;NA&gt;
-39     38   39   0.066866069  &lt;NA&gt;</code></pre>
+22     21   22    0.93988578  &lt;NA&gt;
+23     22   23    0.68403471  &lt;NA&gt;
+24     23   24    0.92950240  &lt;NA&gt;
+25     24   25    0.32552795  &lt;NA&gt;
+26     25   26    0.10354338  &lt;NA&gt;
+27     26   27    0.48173284  &lt;NA&gt;
+28     27   28    0.52835976  &lt;NA&gt;
+29     26   29    0.07430939  &lt;NA&gt;
+30     24   30    0.11220974  &lt;NA&gt;
+31     30   31    0.07390028  &lt;NA&gt;
+32     30   32    0.93289393  &lt;NA&gt;
+33     22   33    0.79672138  &lt;NA&gt;
+34     33   34    0.49979389  &lt;NA&gt;
+35     21   35    0.81705673  &lt;NA&gt;
+36     35   36    0.99640114  &lt;NA&gt;
+37     35   37    0.74696515  &lt;NA&gt;
+38     37   38    0.78720907  &lt;NA&gt;
+39     37   39    0.54443343  &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -676,7 +677,7 @@ font-style: inherit;">ttree</span></span></code></pre></div>
 Phylogenetic tree with 20 tips and 19 internal nodes.
 
 Tip labels:
-  t6, t19, t15, t16, t2, t18, ...
+  t12, t7, t9, t19, t2, t15, ...
 
 Rooted; includes branch length(s).
 
@@ -687,16 +688,16 @@ with the following features available:
 # The 'node', 'label' and 'isTip' are from the phylo tree.
     node label isTip  size habitat   
    &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;     
- 1     1 t6    TRUE   17.8 intertidal
- 2     2 t19   TRUE   12.1 grassland 
- 3     3 t15   TRUE   24.1 forest    
- 4     4 t16   TRUE   15.0 intertidal
- 5     5 t2    TRUE   27.7 desert    
- 6     6 t18   TRUE   19.6 desert    
- 7     7 t13   TRUE   28.8 forest    
- 8     8 t14   TRUE   30.0 grassland 
- 9     9 t10   TRUE   18.5 desert    
-10    10 t9    TRUE   21.9 forest    
+ 1     1 t12   TRUE   17.5 intertidal
+ 2     2 t7    TRUE   27.3 grassland 
+ 3     3 t9    TRUE   25.8 intertidal
+ 4     4 t19   TRUE   12.7 grassland 
+ 5     5 t2    TRUE   19.0 grassland 
+ 6     6 t15   TRUE   26.6 intertidal
+ 7     7 t13   TRUE   18.0 forest    
+ 8     8 t4    TRUE   14.8 desert    
+ 9     9 t16   TRUE   16.9 intertidal
+10    10 t6    TRUE   24.5 grassland 
 # ℹ 29 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
@@ -712,45 +713,45 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   parent node branch.length label     size    habitat
-1      21    1   0.211462186    t6 17.84677 intertidal
-2      25    2   0.020523685   t19 12.13357  grassland
-3      25    3   0.492876891   t15 24.14979     forest
-4      26    4   0.358771561   t16 14.96855 intertidal
-5      26    5   0.362600771    t2 27.65435     desert
-6      27    6   0.616498912   t18 19.61751     desert
-7      27    7   0.286937086   t13 28.80982     forest
-8      31    8   0.539667591   t14 30.01839  grassland
-9      32    9   0.201774493   t10 18.52082     desert
-10     34   10   0.071909918    t9 21.89762     forest
-11     34   11   0.548395909    t1 17.61510  grassland
-12     35   12   0.781278409   t12 21.43777  grassland
-13     36   13   0.834200829    t5 31.25774     forest
-14     36   14   0.865846023   t17 12.86105  grassland
-15     30   15   0.591518627   t11 23.58696  grassland
-16     29   16   0.317440855   t20 23.90757 intertidal
-17     37   17   0.241390239    t7 21.90441     desert
-18     38   18   0.517082721    t4 19.42923  grassland
-19     39   19   0.385656054    t3 21.79389     desert
-20     39   20   0.519972739    t8 24.53455     desert
+1      28    1    0.12604366   t12 17.49969 intertidal
+2      28    2    0.85758925    t7 27.31979  grassland
+3      27    3    0.73859272    t9 25.84548 intertidal
+4      29    4    0.77725659   t19 12.70653  grassland
+5      29    5    0.67810274    t2 18.95584  grassland
+6      25    6    0.50529245   t15 26.57089 intertidal
+7      31    7    0.07960503   t13 18.01091     forest
+8      31    8    0.29836242    t4 14.76381     desert
+9      32    9    0.91839353   t16 16.90068 intertidal
+10     32   10    0.18644255    t6 24.52070  grassland
+11     23   11    0.34923135    t1 13.15498     desert
+12     34   12    0.14742050   t14 22.16129  grassland
+13     34   13    0.69041944   t11 15.87049     forest
+14     33   14    0.08418970   t17 29.33694 intertidal
+15     36   15    0.48554606   t20 28.37008     desert
+16     36   16    0.21289598   t18 15.60060     forest
+17     38   17    0.64849655   t10 16.09163  grassland
+18     38   18    0.87546294    t3 18.13256 intertidal
+19     39   19    0.36946746    t8 19.64449  grassland
+20     39   20    0.09897118    t5 17.23589     desert
 21     21   21            NA  &lt;NA&gt;       NA       &lt;NA&gt;
-22     21   22   0.104038035  &lt;NA&gt;       NA       &lt;NA&gt;
-23     22   23   0.160041574  &lt;NA&gt;       NA       &lt;NA&gt;
-24     23   24   0.095194947  &lt;NA&gt;       NA       &lt;NA&gt;
-25     24   25   0.010641325  &lt;NA&gt;       NA       &lt;NA&gt;
-26     24   26   0.358477827  &lt;NA&gt;       NA       &lt;NA&gt;
-27     23   27   0.563482889  &lt;NA&gt;       NA       &lt;NA&gt;
-28     22   28   0.009179101  &lt;NA&gt;       NA       &lt;NA&gt;
-29     28   29   0.870633200  &lt;NA&gt;       NA       &lt;NA&gt;
-30     29   30   0.373868619  &lt;NA&gt;       NA       &lt;NA&gt;
-31     30   31   0.181675595  &lt;NA&gt;       NA       &lt;NA&gt;
-32     31   32   0.950593904  &lt;NA&gt;       NA       &lt;NA&gt;
-33     32   33   0.999016533  &lt;NA&gt;       NA       &lt;NA&gt;
-34     33   34   0.925645936  &lt;NA&gt;       NA       &lt;NA&gt;
-35     33   35   0.341042848  &lt;NA&gt;       NA       &lt;NA&gt;
-36     35   36   0.493788643  &lt;NA&gt;       NA       &lt;NA&gt;
-37     28   37   0.938912940  &lt;NA&gt;       NA       &lt;NA&gt;
-38     37   38   0.628192976  &lt;NA&gt;       NA       &lt;NA&gt;
-39     38   39   0.066866069  &lt;NA&gt;       NA       &lt;NA&gt;</code></pre>
+22     21   22    0.93988578  &lt;NA&gt;       NA       &lt;NA&gt;
+23     22   23    0.68403471  &lt;NA&gt;       NA       &lt;NA&gt;
+24     23   24    0.92950240  &lt;NA&gt;       NA       &lt;NA&gt;
+25     24   25    0.32552795  &lt;NA&gt;       NA       &lt;NA&gt;
+26     25   26    0.10354338  &lt;NA&gt;       NA       &lt;NA&gt;
+27     26   27    0.48173284  &lt;NA&gt;       NA       &lt;NA&gt;
+28     27   28    0.52835976  &lt;NA&gt;       NA       &lt;NA&gt;
+29     26   29    0.07430939  &lt;NA&gt;       NA       &lt;NA&gt;
+30     24   30    0.11220974  &lt;NA&gt;       NA       &lt;NA&gt;
+31     30   31    0.07390028  &lt;NA&gt;       NA       &lt;NA&gt;
+32     30   32    0.93289393  &lt;NA&gt;       NA       &lt;NA&gt;
+33     22   33    0.79672138  &lt;NA&gt;       NA       &lt;NA&gt;
+34     33   34    0.49979389  &lt;NA&gt;       NA       &lt;NA&gt;
+35     21   35    0.81705673  &lt;NA&gt;       NA       &lt;NA&gt;
+36     35   36    0.99640114  &lt;NA&gt;       NA       &lt;NA&gt;
+37     35   37    0.74696515  &lt;NA&gt;       NA       &lt;NA&gt;
+38     37   38    0.78720907  &lt;NA&gt;       NA       &lt;NA&gt;
+39     37   39    0.54443343  &lt;NA&gt;       NA       &lt;NA&gt;</code></pre>
 </div>
 </div>
 <p>And thatʻs what our <code>treedata</code> object looks like flattened out!</p>
@@ -817,7 +818,7 @@ font-style: inherit;">smalltree</span></span></code></pre></div>
 Phylogenetic tree with 10 tips and 9 internal nodes.
 
 Tip labels:
-  t19, t15, t13, t9, t1, t5, ...
+  t7, t9, t19, t15, t13, t1, ...
 
 Rooted; includes branch length(s).
 
@@ -826,18 +827,18 @@ with the following features available:
 
 # The associated data tibble abstraction: 19 × 5
 # The 'node', 'label' and 'isTip' are from the phylo tree.
-    node label isTip  size habitat  
-   &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;    
- 1     1 t19   TRUE   12.1 grassland
- 2     2 t15   TRUE   24.1 forest   
- 3     3 t13   TRUE   28.8 forest   
- 4     4 t9    TRUE   21.9 forest   
- 5     5 t1    TRUE   17.6 grassland
- 6     6 t5    TRUE   31.3 forest   
- 7     7 t17   TRUE   12.9 grassland
- 8     8 t11   TRUE   23.6 grassland
- 9     9 t7    TRUE   21.9 desert   
-10    10 t3    TRUE   21.8 desert   
+    node label isTip  size habitat   
+   &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;     
+ 1     1 t7    TRUE   27.3 grassland 
+ 2     2 t9    TRUE   25.8 intertidal
+ 3     3 t19   TRUE   12.7 grassland 
+ 4     4 t15   TRUE   26.6 intertidal
+ 5     5 t13   TRUE   18.0 forest    
+ 6     6 t1    TRUE   13.2 desert    
+ 7     7 t11   TRUE   15.9 forest    
+ 8     8 t17   TRUE   29.3 intertidal
+ 9     9 t3    TRUE   18.1 intertidal
+10    10 t5    TRUE   17.2 desert    
 # ℹ 9 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
@@ -859,7 +860,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -916,7 +917,7 @@ background-color: null;
 font-style: inherit;"># node numbers</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -977,7 +978,7 @@ background-color: null;
 font-style: inherit;"># node numbers</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1049,7 +1050,7 @@ background-color: null;
 font-style: inherit;"># node numbers</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1129,7 +1130,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1221,7 +1222,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1549,7 +1550,7 @@ background-color: null;
 font-style: inherit;">)</span> </span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1804,7 +1805,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2116,7 +2117,7 @@ background-color: null;
 font-style: inherit;">p</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2183,7 +2184,7 @@ background-color: null;
 font-style: inherit;">p1</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2264,7 +2265,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-23-ggtree/index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-22-ggtree/index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2287,8 +2288,8 @@ Yu, G. 2022. <em>Data Integration, Manipulation and Visualization of Phylogeneti
   <category>phylo</category>
   <category>ggtree</category>
   <category>treedata</category>
-  <guid>https://mbutler808.github.io/posts/2025-04-23-ggtree/</guid>
-  <pubDate>Wed, 23 Apr 2025 10:00:00 GMT</pubDate>
+  <guid>https://mbutler808.github.io/posts/2025-04-22-ggtree/</guid>
+  <pubDate>Tue, 22 Apr 2025 10:00:00 GMT</pubDate>
 </item>
 <item>
   <title>All about trees</title>
@@ -2466,11 +2467,11 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># simpletree &lt;- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")</span></span>
+font-style: inherit;"># tree &lt;- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")</span></span>
 <span></span>
 <span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2595,7 +2596,7 @@ font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span>,no.margin<span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span>,no.margin<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
 background-color: null;
@@ -2603,11 +2604,11 @@ font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<div id="fig-simpletree" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-simpletree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/fig-simpletree-1.png" class="img-fluid figure-img" width="672">
+<div id="fig-tree" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/fig-tree-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simpletree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: A simple tree
 </figcaption></figure>
 </div>
@@ -2765,7 +2766,7 @@ font-style: inherit;">;</span> </span></code></pre></div>
 </section></section><section id="phylo-ape-5.0-or-above" class="level1"><h1>
 <code>phylo</code> (<code>ape</code> 5.0 or above)</h1>
 <p>The <a href="http://ape-package.ird.fr"><code>ape</code> package</a> <span class="citation" data-cites="Paradis:2019">(Paradis and Schliep 2019)</span> uses a different representation of trees. It uses R <code>structures</code>, <code>lists</code>, <code>matrices</code>, and <code>vectors</code> to store a tree. Each node in the tree receives a number. For example, here is the tree from before in <code>ape</code> format.</p>
-<p>Here is <code>simpletree</code> with the node numbers printed. It is printed with the following commands:</p>
+<p>Here is <code>tree</code> with the node numbers printed. It is printed with the following commands:</p>
 <div class="cell" data-caption="A simple tree with ape's numbering of nodes included">
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2773,7 +2774,7 @@ font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span>,no.margin<span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span>,no.margin<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
 background-color: null;
@@ -2796,7 +2797,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/simpletreeplotnodelabels-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/treeplotnodelabels-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2806,7 +2807,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="va" style="color: #111111;
 background-color: null;
@@ -2831,7 +2832,7 @@ font-style: inherit;">edge</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="va" style="color: #111111;
 background-color: null;
@@ -2840,11 +2841,58 @@ font-style: inherit;">tip.label</span></span></code></pre></div>
 <pre><code>[1] "A" "B" "C" "D" "E" "F" "G"</code></pre>
 </div>
 </div>
-<p>It’s possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional <code>node.label</code> is used. If branch lengths are known, they are included as the numeric vector <code>edge.length</code>.</p>
+<p>It’s possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional <code>node.label</code> is used.</p>
+<p>If branch lengths are known, they are included as the numeric vector <code>edge.length</code>. We created <code>tree</code> by hand and didnʻt include nodelabels, so letʻs add some now.</p>
 <div class="cell">
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ape/man/compute.brlen.html">compute.brlen</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">edge.length</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.5000000 0.3333333 0.1666667 0.1666667 0.3333333 0.1666667 0.1666667
+ [8] 0.6666667 0.3333333 0.1666667 0.1666667 0.1666667</code></pre>
+</div>
+</div>
+<p>To make them nice numbers, letʻs multiply by 3:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">edge.length</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">edge.length</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="va" style="color: #111111;
 background-color: null;
@@ -2855,13 +2903,13 @@ font-style: inherit;">edge.length</span></span></code></pre></div>
 </div>
 <p>Finally, there are a few other elements (<code>Nnode</code>, the number of internal nodes; <code>class=phylo</code>) to set the class. To dump the the internal representation of phylo tree to screen, you can use <code><a href="https://rdrr.io/r/base/class.html">unclass()</a></code> which strips the class attribute (the S4 analog is <code>attributes</code>):</p>
 <div class="cell">
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletree</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2911,6 +2959,8 @@ $edge.length
 <p><code>depth = 'numeric'</code></p>
 <p><code>)</code></p>
 <p><code>)</code></p>
+<section id="ouchtree-constructor-ouchtree" class="level2"><h2 class="anchored" data-anchor-id="ouchtree-constructor-ouchtree">Ouchtree constructor <code>ouchtree()</code>
+</h2>
 <p>At first glance, it looks like creating a new <code>ouchtree</code> object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor function for a new <code>ouchtree</code> is just the function</p>
 <p><code>ouchtree(nodes, ancestors, times, labels = as.character(nodes))</code></p>
 <p><strong>The <code>ouchtree</code> function only has four arguments</strong>, one of them optional. Using the function and these elements, all the other elements of the class are initialized.</p>
@@ -2920,15 +2970,49 @@ $edge.length
 <li>The third element, <code>times</code>, represents the height of each node from the root. Remember that <code>ape</code>’s <code>edge.length</code> vector has the length of the branch subtending each node; instead, <code>ouchtree</code> has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in <code>ouchtree</code> (with height 0) but not in ape.</li>
 <li>The fourth argument, <code>labels</code>, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of <code>&lt;NA&gt;</code>.</li>
 </ul>
-<p>For example, our example tree, when converted to ouchtree format, is</p>
+<section id="ape2ouch" class="level3"><h3 class="anchored" data-anchor-id="ape2ouch">ape2ouch()</h3>
+<p>Most often, however, you will already have a tree in Newick or Nexus format, and it is easy to read into <code>ape</code>, then it is simple to convert from <code>phylo</code> format to <code>ouchtree</code> using the <code><a href="https://rdrr.io/pkg/ouch/man/ouchtree.html">ape2ouch()</a></code> function:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/ouchtree.html">ape2ouch</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>tree<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-04-17-tree-formats/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Letʻs look at the structure of ouchtree. Our example tree, when converted to ouchtree format, is</p>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletreeouch</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2938,13 +3022,13 @@ font-style: inherit;">nodes</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13"</code></pre>
 </div>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletreeouch</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2954,13 +3038,13 @@ font-style: inherit;">ancestors</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] NA  "3" "1" "6" "6" "1" "2" "2" "3" "4" "4" "5" "5"</code></pre>
 </div>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletreeouch</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2971,13 +3055,13 @@ font-style: inherit;">times</span></span></code></pre></div>
 <pre><code> [1] 0.0000000 0.8333333 0.6666667 0.8333333 0.8333333 0.5000000 1.0000000
  [8] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000</code></pre>
 </div>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletreeouch</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2990,13 +3074,13 @@ font-style: inherit;">nodelabels</span></span></code></pre></div>
 </div>
 <p>One other element of <code>ouchtree</code>, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we’ll be discussing in the course.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletreeouch</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3014,25 +3098,25 @@ font-style: inherit;">branch.times</span></span></code></pre></div>
 [7,] 0.0000000 0.0000000 0.0000000 0.5000000 0.5000000 0.8333333 1.0000000</code></pre>
 </div>
 </div>
-<p>The entire content of the <code>simpletreeouch</code> object can be dumped to screen using the following command (not executed here to save paper):</p>
+<p>The entire content of the <code>treeouch</code> object can be dumped to screen using the following command (not executed here to save paper):</p>
 <div class="cell">
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">simpletreeouch</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">treeouch</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
-</section><section id="a-note-about-node-numbering" class="level1"><h1>A note about node numbering</h1>
+</section></section></section><section id="a-note-about-node-numbering" class="level1"><h1>A note about node numbering</h1>
 <section id="phylo-ape-node-numbers-and-order" class="level3"><h3 class="anchored" data-anchor-id="phylo-ape-node-numbers-and-order">
 <code>phylo</code> (<code>ape</code>) node numbers and order</h3>
 <p>In <code>ape</code> the node numbering is implied by the order of rows in the <code>$egde</code> matrix. Letʻs make a simple example, a tree with three tips:</p>
 <p>Remember in the edge matrix, the first column is the ancestral node (parent), and the second column is the node number.</p>
 <div class="cell">
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">tree</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3059,7 +3143,7 @@ font-style: inherit;">edge</span></span></code></pre></div>
 [3,]    5    2
 [4,]    4    3</code></pre>
 </div>
-<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3104,7 +3188,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <code>treedata</code> (<code>ggtree</code>) node numbers and order</h3>
 <p>In the <code>treedata</code> object used by <code>ggtree</code>, <code>treeio</code>, and <code>tidytree</code>, the node numbers are the same (referring to the same nodes and ancestors), but the order that they are stored in is different. <em>(Also note that <code>ggtree</code> plots trees ladderized by default)</em>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
@@ -3150,13 +3234,13 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1    0.14932941    t1
-2      5    2    0.01920589    t3
-3      4    3    0.49228495    t2
+1      5    1    0.41767815    t2
+2      5    2    0.58522964    t1
+3      4    3    0.30359001    t3
 4      4    4            NA  &lt;NA&gt;
-5      4    5    0.60677426  &lt;NA&gt;</code></pre>
+5      4    5    0.05964652  &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html">ggtree</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3208,7 +3292,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Compare <code>tree$edge</code> vs <code>treedata</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3222,7 +3306,7 @@ font-style: inherit;">edge</span></span></code></pre></div>
 [3,]    5    2
 [4,]    4    3</code></pre>
 </div>
-<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">td</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3235,11 +3319,11 @@ background-color: null;
 font-style: inherit;">as.data.frame</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  parent node branch.length label
-1      5    1    0.14932941    t1
-2      5    2    0.01920589    t3
-3      4    3    0.49228495    t2
+1      5    1    0.41767815    t2
+2      5    2    0.58522964    t1
+3      4    3    0.30359001    t3
 4      4    4            NA  &lt;NA&gt;
-5      4    5    0.60677426  &lt;NA&gt;</code></pre>
+5      4    5    0.05964652  &lt;NA&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">

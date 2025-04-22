@@ -84,15 +84,15 @@ A very basic tree format is __Newick__ (`.tree`), named after the [seafood resta
 ![Photo from the Newick restaurant [home page](https://www.newicks.com)](http://www.newicks.com/Web2014/Ed7.1.jpg)
 
 ```{r}
-#| label: fig-simpletree
+#| label: fig-tree
 #| fig-cap: "A simple tree"
 #| warning: false
 require(ape)
 require(ouch)
 require(phylobase)
-# simpletree <- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")
+# tree <- rcoal(length(LETTERS[1:7]), rooted = TRUE, tip.label = LETTERS[1:7], br = "coalescent")
 
-simpletree<-structure(list(
+tree<-structure(list(
     edge = matrix(
       c(8, 9, 10, 10, 9, 11, 11, 8, 12, 12, 13, 13, 
         9, 10, 1, 2, 11, 3, 4, 12, 5, 13, 6, 7),
@@ -101,7 +101,7 @@ simpletree<-structure(list(
     Nnode = 6L
   ), 
     class = "phylo")
-plot(simpletree,no.margin=TRUE)
+plot(tree,no.margin=TRUE)
 ```
 
 Taxa G and F form a __clade__, as do G, F, and E, as do A and B, and so forth. Thus, to create a Newick string, just go down the tree, nesting as you go:
@@ -191,11 +191,11 @@ END;
 
 The [`ape` package](http://ape-package.ird.fr) [@Paradis:2019] uses a different representation of trees. It uses R `structures`, `lists`, `matrices`, and `vectors` to store a tree. Each node in the tree receives a number. For example, here is the tree from before in `ape` format. 
 
-Here is `simpletree` with the node numbers printed. It is printed with the following commands:
+Here is `tree` with the node numbers printed. It is printed with the following commands:
 
-```{r label=simpletreeplotnodelabels,include=TRUE}
+```{r label=treeplotnodelabels,include=TRUE}
 #| caption: A simple tree with ape's numbering of nodes included
-plot(simpletree,no.margin=TRUE)
+plot(tree,no.margin=TRUE)
 nodelabels()
 tiplabels()
 ```
@@ -204,25 +204,28 @@ For a tree with __N tips__, the tips have __numbers 1...N__ and the __nodes__ ha
 
 To do this, a matrix is created, with height corresponding to the number of internal and terminal nodes and width 2. The first column of the matrix has the node at the beginning of the branch, the second has the node at the end of the branch. For example, for our simple tree, this matrix is
 ```{r }
-simpletree$edge
+tree$edge
 ```
 This alone is enough for a basic topology. However, it might be nice to know what the taxa actually are, rather than just numbers. To do this, a character vector with as many entries as the number of tips is used. In the example tree, this is
 ```{r }
-simpletree$tip.label
+tree$tip.label
 ```
 It's possible that internal nodes have labels, too (for example, the most recent common ancestor of a set of birds might be labeled Aves). If so, an optional `node.label` is used.
-If branch lengths are known, they are included as the numeric vector `edge.length`.
-```{r include=FALSE,echo=FALSE}
-simpletreebrlen<-compute.brlen(simpletree)
-simpletreebrlen$edge.length<-3*simpletreebrlen$edge.length
-simpletree<-simpletreebrlen
+
+If branch lengths are known, they are included as the numeric vector `edge.length`. We created `tree` by hand and didnʻt include nodelabels, so letʻs add some now. 
+
+```{r}
+tree<-compute.brlen(tree)
+tree$edge.length
 ```
+To make them nice numbers, letʻs multiply by 3:
 ```{r }
-simpletree$edge.length
+tree$edge.length<-3*tree$edge.length
+tree$edge.length
 ```
 Finally, there are a few other elements (`Nnode`, the number of internal nodes; `class=phylo`) to set the class. To dump the the internal representation of phylo tree to screen, you can use `unclass()` which strips the class attribute (the S4 analog is `attributes`): 
 ```{r }
-unclass(simpletree)
+unclass(tree)
 ```
 `phylo` trees are S3 objects. We'll be learning more about them later, but an important thing to know is that you directly access any element of them by using the `$` operator (as was done above). Optional elements, or even elements of your own devising, can be added to them, too, using the same operator.
 
@@ -268,6 +271,9 @@ The `ouchtree` class is:
 
 `)`
 
+
+## Ouchtree constructor `ouchtree()`
+
 At first glance, it looks like creating a new `ouchtree` object will be a lot of work: there are 13 different elements, some of them vectors, built in the class. However, with S4 objects, the beauty of constructors comes into play. The constructor function for a new `ouchtree` is just the function
 
 `ouchtree(nodes, ancestors, times, labels = as.character(nodes))`
@@ -279,25 +285,30 @@ __The `ouchtree` function only has four arguments__, one of them optional. Using
 - The third element, `times`, represents the height of each node from the root. Remember that `ape`'s `edge.length` vector has the length of the branch subtending each node; instead, `ouchtree` has the sum of the lengths of all branches connecting a given node to the root. Again, the root node is included in `ouchtree` (with height 0) but not in ape. 
 - The fourth argument, `labels`, is a vector of labels for both tips and internal nodes. If internal nodes do not have names, they get a label of `<NA>`.
 
-```{r include=FALSE,echo=FALSE}
-simpletreeouch<-ape2ouch(tree=simpletree)
+### ape2ouch()
+
+Most often, however, you will already have a tree in Newick or Nexus format, and it is easy to read into `ape`, then it is simple to convert from `phylo` format to `ouchtree` using the `ape2ouch()` function:
+
+```{r}
+treeouch<-ape2ouch(tree=tree)
+plot(treeouch)
 ```
-For example, our example tree, when converted to ouchtree format, is
+Letʻs look at the structure of ouchtree. Our example tree, when converted to ouchtree format, is
 ```{r }
-attributes(simpletreeouch)$nodes
-attributes(simpletreeouch)$ancestors
-attributes(simpletreeouch)$times
-attributes(simpletreeouch)$nodelabels
+attributes(treeouch)$nodes
+attributes(treeouch)$ancestors
+attributes(treeouch)$times
+attributes(treeouch)$nodelabels
 ```
 One other element of `ouchtree`, created on initialization, is a matrix showing shared amount of time on a tree between two tips (which may be the same tip). This, multiplied by a rate parameter, becomes a variance-covariance matrix under a Brownian motion model, which we'll be discussing in the course.
 
 ```{r }
-attributes(simpletreeouch)$branch.times
+attributes(treeouch)$branch.times
 ```
 
-The entire content of the `simpletreeouch` object can be dumped to screen using the following command (not executed here to save paper):
+The entire content of the `treeouch` object can be dumped to screen using the following command (not executed here to save paper):
 ```{r eval=F}
-attributes(simpletreeouch)
+attributes(treeouch)
 ```
 
 # A note about node numbering
