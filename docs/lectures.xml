@@ -17302,6 +17302,772 @@ font-style: inherit;">)</span> </span></code></pre></div>
   <pubDate>Tue, 25 Feb 2025 10:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Plotting Systems</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-02-20-plotting-systems/</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<p>The data may not contain the answer. And, if you torture the data long enough, it will tell you anything. —<em>John W. Tukey</em></p>
+</blockquote>
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+<p>#✏️</p>
+<section id="addtional-resources" class="level1"><h1>Addtional Resources</h1>
+<section id="excellent-references" class="level3"><h3 class="anchored" data-anchor-id="excellent-references">Excellent references</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+For more details see
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><a href="https://r4ds.had.co.nz/data-visualisation" class="uri">https://r4ds.had.co.nz/data-visualisation</a></li>
+<li>Paul Murrell (2011). <em>R Graphics</em>, CRC Press.</li>
+<li>Hadley Wickham (2009). <em>ggplot2</em>, Springer.</li>
+<li>Deepayan Sarkar (2008). <em>Lattice: Multivariate Data Visualization with R</em>, Springer.</li>
+</ol>
+</div>
+</div>
+</section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776/lecture-plotting-systems" class="uri">https://rdpeng.github.io/Biostat776/lecture-plotting-systems</a></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Be able to identify and describe the three plotting systems in R</li>
+<li>Be able to implement simple plots in each</li>
+</ul>
+</div>
+</div>
+</section></section><section id="overview" class="level1"><h1>Overview</h1>
+<p>There are <strong>three different plotting systems in R</strong> and they each have different characteristics and modes of operation.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The three systems are</p>
+<ol type="1">
+<li>The base plotting system</li>
+<li>The lattice system</li>
+<li>The ggplot2 system</li>
+</ol>
+<p><strong>This course will focus primarily on the base and ggplot2 plotting systems</strong>. Lattice is presented for context.</p>
+</div>
+</div>
+<p>If you don’t have these already, please install:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lattice"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggplot2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<section id="the-base-plotting-system" class="level2"><h2 class="anchored" data-anchor-id="the-base-plotting-system">The Base Plotting System</h2>
+<p>The <strong>base plotting system</strong> is the original plotting system for R. The basic model is sometimes <strong>referred to as the “artist’s palette” model</strong>, because you start with a blank canvas and add to it, element by element.</p>
+<p>We begin with an R plotting function that <em>creates a new plot window</em> <strong>typically the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function</strong>, which creates a plot object. We can add <em>annotations</em> to the plot object with functions such as (<code>text</code>, <code>lines</code>, <code>points</code>, <code>axis</code>).</p>
+<p>If you get an error</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Error</span> in plot.xy<span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">xy.coords</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">x,</span> y<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">,</span> type = type, ...<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">:</span> </span>
+<span id="cb2-2">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">plot.new</span> has not been called yet</span></code></pre></div>
+<p>It is probably because you tried to add an annotation before you created a plot first.</p>
+<p>The base plotting system is <strong>often the most convenient plotting system</strong> to because it mirrors the cartesian coordinate (X,Y) syntax that we sometimes think of when building plots and analyzing data.</p>
+<p>It is also the most customizablbe because there are many options that users can specify. See the help page for <code><a href="https://rdrr.io/r/graphics/plot.default.html">?plot.default</a></code> and <code><a href="https://rdrr.io/r/graphics/par.html">?par</a></code> for graphical parameters that once can set. It does take some learning, but it is possible to make multi-figure plots while precisely controlling their placement, margins, and any annotations including points, lines, text etc.</p>
+<p>The plot system is also very useful at the very beginning of a data analysis When we donʻt precisely know what we want to plot. We can start by “throwing some data on the page” and then slowly modifying or adding more information to it as our thought process evolves.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We might look at a simple scatterplot and then decide to add a linear regression line or a smoother to it to highlight the trends.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/scatter.smooth.html">loess.smooth</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Scatterplot with loess curve</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>In the code above:</p>
+<ul>
+<li>The <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function creates the initial plot and draws the points on the canvas.</li>
+<li>The <code>lines</code> function is used to annotate or add to the plot (in this case it adds a loess smoother to the scatterplot).</li>
+<li>R has many other types of <a href="https://blog.revolutionanalytics.com/2015/09/interpolation-and-smoothing-functions-in-base-r.html">smoothing functions</a> as well.</li>
+</ul>
+<p>Next, we use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to draw the points on the scatterplot and then use the <code>main</code> argument to add a main title to the plot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">airquality</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span>, main <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my plot"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/scatter.smooth.html">loess.smooth</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Temp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Ozone</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Scatterplot with loess curve</figcaption></figure>
+</div>
+</div>
+</div>
+<p>One downside with constructing base plots is that <strong>annotations can only be added</strong>. If your annotations are crashing, or you run out of room, etc., you will have to rerun the code starting from plot().</p>
+<p>And while the base plotting system is nice in that it gives you the flexibility to specify these kinds of details to painstaking accuracy, <strong>sometimes it would be nice if the system could just figure it out for you</strong>. Thatʻs where <code>lattice</code> and <code>ggplot2</code> have contributed.</p>
+<p>Another downside of the customizability of the base plotting system is that it is <strong>difficult to describe or translate a plot to others because there is no clear graphical language or grammar</strong>. In other words, you cannot paint the format of one onto another plot, unless you design the code (maybe by using the same variable names, etc.) to do it yourself.</p>
+<p>The only real way to describe what you have done in a base plot is to just list the series of commands/functions that you have executed, which is not a particularly compact way of communicating things. The <code>ggplot2</code> package has developed a grammar of graphics that make transferring formats easy.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Another typical base plot for a linear regression is constructed with the following code. Here we are using <em>formula representation</em>. Instead of <code>plot(x,y)</code> we use <code>plot(y~x)</code> which is read “plot y as a function of x”. These styles are equivalent, but formula is in the style of regression models.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Create the plot / draw canvas</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">speed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Base plot with title</figcaption></figure>
+</div>
+</div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Fit a linear model and save it</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">speed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>We can add annotations as before. This time, to add the regression line to the plot, we use the <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> function which adds straight lines, specified by slope and intercept.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cars</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dist</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">speed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## Add annotations</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/title.html">title</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Linear model of speed vs. stopping distance"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span>, col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"slope ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, digits<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"intercept ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lm.fit</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, digits<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using <code><a href="https://rdrr.io/r/graphics/text.html">text()</a></code> we added the slope and intercept from the linear model fit. That information is returned by the <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> function. We used <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> to make it prettier (8 decimal places is not necessary!)</p>
+</div>
+</div>
+</section><section id="the-lattice-system" class="level2"><h2 class="anchored" data-anchor-id="the-lattice-system">The Lattice System</h2>
+<p>The <strong>lattice plotting system</strong> is ideal for visualization of multivariate data, and is implemented in the <code>lattice</code> R package which comes with every installation of R (although it is not loaded by default).</p>
+<p>To <strong>use the lattice plotting functions</strong>, you must first load the <code>lattice</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://lattice.r-forge.r-project.org/">lattice</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>With the lattice system, <strong>plots are created with a single function call</strong>, such as <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> or <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">bwplot()</a></code>, and the plot is delivered in a predefined format.</p>
+<p>There is <strong>no real distinction between functions that create or initiate plots</strong> and <strong>functions that annotate plots</strong> because it all happens at once.</p>
+<p>Lattice plots tend to be <strong>most useful for conditioning types of plots</strong>, i.e.&nbsp;looking at how <code>y</code> changes with <code>x</code> across levels of <code>z</code>.</p>
+<ul>
+<li>e.g.&nbsp;these types of plots are useful for looking at multi-dimensional data and often allow you to squeeze a lot of information into a single window or page.</li>
+</ul>
+<p>Another aspect of lattice that makes it different from base plotting is that <strong>things like margins and spacing are set automatically</strong>. The downside is that it is not very customizable.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here is a lattice plot that looks at the relationship between life expectancy and income and how that relationship varies by region in the United States.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state.x77</span>, region <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state.region</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Population Income Illiteracy Life.Exp Murder HS.Grad Frost   Area
+Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
+Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432
+Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417
+Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
+California      21198   5114        1.1    71.71   10.3    62.6    20 156361
+Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766
+           region
+Alabama     South
+Alaska       West
+Arizona      West
+Arkansas    South
+California   West
+Colorado     West</code></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Life.Exp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Income</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">region</span>, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">state</span>, layout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Lattice plot</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>You can see that the entire plot was generated by the call to <code><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">xyplot()</a></code> and all of the data for the plot were specified to come from the <code>state</code> data frame.</p>
+<p>The <strong>layout</strong> specifies four panels —one for each region— <strong>within each panel is a scatterplot</strong> of life expectancy and income. Note that in this case, layout is columns, rows. Try changing the numbers or leaving out the layout argument and see what happens.</p>
+<p>The notion of <em>panels</em> comes up a lot with lattice plots because you typically have many panels in a lattice plot (each panel typically represents a <em>factor level</em>, like “region”).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Downsides with the lattice system</p>
+<ul>
+<li>It can sometimes be very <strong>awkward to specify an entire plot</strong> in a single function call (you end up with functions with many many arguments).</li>
+<li>
+<strong>Annotation in panels in plots is not especially intuitive</strong> and can be difficult to explain. In particular, the use of custom panel functions and subscripts can be difficult to wield and requires a lot of trial and error.</li>
+</ul>
+</div>
+</div>
+</section><section id="the-ggplot2-system" class="level2"><h2 class="anchored" data-anchor-id="the-ggplot2-system">The ggplot2 System</h2>
+<p>The <strong>ggplot2 plotting system</strong> attempts to split the difference between base and lattice in a number of ways.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Taking cues from lattice, the ggplot2 system automatically deals with spacings, text, titles but also allows you to annotate by “adding” to a plot, with annotations added in layers.</p>
+</div>
+</div>
+<p>The ggplot2 system is implemented in the <code>ggplot2</code> package (part of the <code>tidyverse</code> package), which is available from CRAN (it does not come with R).</p>
+<p>You can install it from CRAN via</p>
+<div class="cell">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ggplot2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>and then load it into R.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Superficially, the <code>ggplot2</code> functions are similar to <code>lattice</code>, but the system is generally easier and more intuitive to use once you learn the syntax.</p>
+<p>The defaults used in <code>ggplot2</code> make many choices for you, but you can still customize plots.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A typical plot with the <code>ggplot2</code> package looks like the code below.</p>
+<p>Note the use of the pipe operator <code>%&gt;%</code> from the <code>magrittr</code> package in the tidyverse, which sends the dataframe <code>mpg</code> as input into the function ggplot. People love the pipe operator because you can just pass output along from one function to the next (as long as the function is written for piping). All of the tidyverse allows piping, and some base R functions do as well.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">displ</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hwy</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-20-plotting-systems/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption>ggplot2 plot</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>In <code>ggplot</code>, elements of the plot are specified as <strong>aesthetics</strong>, and layers can be added onto the plot with <code>+ anotherfunction()</code>. Try running the first part, and then running the whole thing together. Then try adding <code>+ geom_smooth()</code></p>
+<p>There are additional functions in <code>ggplot2</code> that allow you to make arbitrarily sophisticated plots.</p>
+<p>We will discuss more about this in the next lecture.</p>
+
+
+</section></section> ]]></description>
+  <category>module 3</category>
+  <category>week 5</category>
+  <category>plotting</category>
+  <category>ggplot2</category>
+  <category>lattice</category>
+  <category>data visualization</category>
+  <guid>https://mbutler808.github.io/posts/2025-02-20-plotting-systems/</guid>
+  <pubDate>Thu, 20 Feb 2025 10:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Tidying and Exploring Data</title>
   <dc:creator>Marguerite Butler</dc:creator>
   <link>https://mbutler808.github.io/posts/2025-02-18-tidying-exploring-data/</link>
@@ -24334,551 +25100,13 @@ Tip
   <pubDate>Tue, 28 Jan 2025 10:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Introduction to git/GitHub</title>
+  <title>Reproducible Research</title>
   <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-01-21-intro-git-github/</link>
-  <description><![CDATA[ <!-- Add interesting quote --><section id="lecture-materials" class="level1"><h1>Lecture materials</h1>
-<div id="nte-info" class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note&nbsp;1: Helpful references for this lecture
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>
-<a href="https://happygitwithr.com">Happy Git with R</a> from Jenny Bryan</li>
-<li>
-<a href="https://rafalab.github.io/dsbook/git.html">Chapter on git and GitHub in <code>dsbook</code></a> from Rafael Irizarry</li>
-<li>
-<a href="https://andreashandel.github.io/MADAcourse">GitHub introduction in module 1</a> from Andreas Handel</li>
-<li>Either before or after Tuesday’s class, please watch the podcast <em>GitHub my Computer and me</em>. You can stop at ~11:15:</li>
-</ol>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2MjsHnNMp7o" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-</div>
-<section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022/" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022/</a></li>
-<li><a href="https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html" class="uri">https://andreashandel.github.io/MADAcourse/Tools_Github_Introduction.html</a></li>
-</ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Last time, you should have created and set up a GitHub account.</p>
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Know what Git and GitHub are.</li>
-<li>Know why one might want to use them.</li>
-<li>Have created a repo and executed basic push/pull commands.</li>
-</ul>
-</div>
-</div>
-</section><section id="introduction-to-gitgithub" class="level1"><h1>Introduction to git/GitHub</h1>
-<p>This document gives a brief explanation of GitHub and how we will use it for this course.</p>
-<section id="git" class="level2"><h2 class="anchored" data-anchor-id="git">git</h2>
-<p><strong>Git</strong> is software that implements what is called a <em>version control system</em> for a repository of files (also known as a <em>repo</em>). The main idea is that as you (and your collaborators) work on a project, the git software tracks, and records any changes made by anyone.</p>
-<p><strong>GitHub</strong> is an online server and user interface that provides powerful tools for distribution of your repository, bug tracking, collaboration, and also allows you to create easy websites for each repository.</p>
-<p><strong>Git</strong> and <strong>GitHub</strong> together provide an organized way to track your projects, and all of the tools you will need in this course are free.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/A-Solo-work-with-DIY-version-control-via-filename-B-Collaborative-work-with-DIY_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Figure 1. Whether working solo (A) or collaborating in a group (B) version tracking by naming files is a mess when you want to retrace the steps of the analysis (C). Git and GitHub track all changes and the complete branching tree of the project (D). The commit history is a powerful tool to retrace the development of the project or can be used to roll back to any prior version.</figcaption></figure>
-</div>
-</div>
-</div>
-<p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
-<p>It is very well suited for collaborative work, as it was developed by Linus Torvalds (in about 10 days of coding!) for collaborative software development of the Linux kernel <a href="https://www.linuxfoundation.org/blog/blog/10-years-of-git-an-interview-with-git-creator-linus-torvalds">pretty interesting interview with Torvalds</a>. What it did really well was <em>distributed control</em>, and allowing everyone to have their <em>own copy of the repository</em>.</p>
-<p><em>Git</em>/<em>GitHub</em> is now the dominant version control system with <em>GitHub</em> hosting over 200 million repositories worldwide! It is used very broadly for all kinds of repos now including data science projects, book projects, courses, and anything that needs collaborative management of mostly text files.</p>
-<p>Another great and fun read about Git/GitHub and why it is a great tool for data analysis is in this article by <a href="https://peerj.com/preprints/3159/">Jenny Bryan</a>.</p>
-</section><section id="what-to-not-use-gitgithub-for" class="level2"><h2 class="anchored" data-anchor-id="what-to-not-use-gitgithub-for">What to (not) use Git/GitHub for</h2>
-<p><strong>GitHub is ideal if</strong> you have a project with (possibly many) smallish files, and most of those files are text files (such as R code, LaTeX, Quarto/(R)Markdown, etc.) and different people work on different parts of the project.</p>
-<p><strong>GitHub is less useful if</strong> you have a lot of non-text files (e.g.&nbsp;Word or PowerPoint) and different team members might want to edit the same document at the same time. In that instance, a solution like Google Docs, Word+Dropbox, Word+Onedrive, etc. might be better.</p>
-<p><strong>GitHub also has a problem with <em>large files</em></strong>. Anything above around 50MB can lead to very slow syncing and sometimes outright failure. Unfortunately, once GitHub has choked on a large file, it can be quite tricky to fix the repository to work again. <em>This is because the ENTIRE history is saved, including the addition of the huge file.</em> Therefore keep large (&gt;50MB) files out of your GitHub repositories. If you have to work with such files, try to reduce them first before placing into the GitHub repository. Or as alternative, place those files in another sync service (e.g.&nbsp;Dropbox, OneDrive, GoogleDrive) and load them from there.</p>
-<p><strong>Finally, if you have <em>data</em></strong>, you need to be careful since by default, GitHub repositories are public. You can set the repository to private, but you need to be careful that you don’t accidentally expose confidential data to the public. It is in general not a good idea to have confidential data on GitHub. First anonymize your data (ensure that it is not at risk of identifiability), then you can place it in a private repository. If you put it in a public repo, be very careful!! (And you may need IRB approval, check with your institutional research office.)</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Git/GitHub has version control features like a turbo-charged version of “track changes” but more rigorous, powerful, and scaled up to multiple files</li>
-<li>Great for solo or collaborative work</li>
-<li>Saves the entire history of every change made</li>
-<li>Allows for multiple verisions or “branches” to be developed and later merged</li>
-<li>GitHub allows distributed collaboration (potentially among complete strangers) and has greatly promoted open-source software development, collaboration, distribution, and bug/issue tracking for users to get help</li>
-<li>GitHub allows <em>webpages</em> for your projects or repositories</li>
-</ul>
-</div>
-</div>
-<p>Note that other interfaces to <em>Git</em> exist, e.g., <em>Bitbucket</em>, but <em>GitHub</em> is the most widely used one.</p>
-</section><section id="why-use-gitgithub" class="level2"><h2 class="anchored" data-anchor-id="why-use-gitgithub">Why use git/GitHub?</h2>
-<p>You want to use <em>GitHub</em> to avoid this:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/phdversioncontrol.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>How not to use GitHub <a href="http://phdcomics.com/comics/archive_print.php?comicid=1531">image from PhD Comics</a></figcaption></figure>
-</div>
-</div>
-</div>
-<p>To learn a bit more about Git/GitHub and why you might want to use it, <a href="https://peerj.com/preprints/3159/">read this article by Jenny Bryan</a>.</p>
-<p><strong>Note her explanation of what’s special with the <code>README.md</code> file on GitHub.</strong></p>
-</section><section id="how-to-use-gitgithub" class="level2"><h2 class="anchored" data-anchor-id="how-to-use-gitgithub">How to use Git/GitHub</h2>
-<p>Git/GitHub is fundamentally <strong>based on commands you type into the command line</strong>. Lots of online resources show you how to use the command line. This is the most powerful, and the way I almost always interact with git/GitHub. However, many folks find this the most confusing way to use git/GitHub. Alternatively, there are graphical interfaces.</p>
-<ul>
-<li>
-<a href="https://desktop.github.com/">GitHub itself</a> provides a grapical interface with basic functionality.</li>
-<li>RStudio also has <a href="https://happygitwithr.com/rstudio-git-github.html">Git/GitHub integration</a>. Of course this only works for R project GitHub integration.</li>
-<li>There are also third party GitHub clients with many advanced features, most of which you won’t need initially, but might eventually.</li>
-</ul>
-<p><strong>Note</strong>: As student, you can (and should) upgrade to the Pro version of GitHub for free (i.e.&nbsp;access to unlimited private repositories is one benefit), see the <a href="https://education.github.com/pack">GitHub student developer pack</a> on how to do this.</p>
-</section></section><section id="getting-started-with-git" class="level1"><h1>Getting Started with git</h1>
-<p>One of my favorite resources for getting started with git/GitHub is the Happy Git with R from Jenny Bryan (especially for Rstudio users):</p>
-<ul>
-<li><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></li>
-</ul>
-<p>It is one of the <strong>most comprehensive resources</strong> out there for getting started with git/GitHub. I will encourage all of you to go read through the online book. Some of you may only need to skim it, others will need to spend some time reading through it. Either way, I hope you will agree it is a worthwhile investment to understand the basics as well as to know you can get help.</p>
-<section id="sec-profile" class="level2"><h2 class="anchored" data-anchor-id="sec-profile">Set up your profile in git on your computer</h2>
-<p>Before making changes to your repository, GitHub will want to verify your identity.</p>
-<p>In order for your computer to talk to GitHub smoothly, you will need to set up your <strong>username</strong> and <strong>email</strong> in the <strong>git profile</strong> stored on your computer.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Be sure to match</strong> your GitHub account <code>username</code> and <code>email</code>! Otherwise <em>GitHub</em> wonʻt know who you are</p>
-</div>
-</div>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb1" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> config <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--global</span> user.name <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'GitHubUsername'</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> config <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--global</span> user.email <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'GitHub_email@example.com'</span></span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> config <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--global</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--list</span></span></code></pre></div>
-</div>
-<p>That last line will show all of your current <code>git config</code> settings.</p>
-<p>If you are using Rstudio, easy directions are provided here <a href="https://happygitwithr.com/hello-git.html" class="uri">https://happygitwithr.com/hello-git.html</a></p>
-</section><section id="sec-token" class="level2"><h2 class="anchored" data-anchor-id="sec-token">Set up your Personal Authentication Token on your computer</h2>
-<p>GitHub will also want to check your credentials to authenticate you are really you before writing changes to your repo.</p>
-<p>There are several ways to do this, but the easiest is the protocol for HTTP authentication. You will generate a <em>Personal Access Token</em> for HTTPS from your GitHub account which will be stored on your personal machine.</p>
-<p>I prefer the GithHub command line interface or <code>gh</code> to do this. To install the CLI, follow <a href="https://github.com/cli/cli#installation">the instructions here for your operating system</a>. For Mac users, I suggest that you install <code>homebrew</code>, it is a command-line general software manager for many different software packages.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Storing your Personal Access Token
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>From GitHub: Generate your personal access token <a href="https://happygitwithr.com/https-pat.html#get-a-pat">instructions</a>
-<ol type="a">
-<li>Find the token generator on GitHub under your <em>User Icon &gt; settings &gt; developer settings (left side bar) &gt; Personal access tokens &gt; Tokens (classic) &gt; Generate new Token &gt; classic</em> <strong>note this menu may change</strong>
-</li>
-<li>Select at least these scopes: “admin:org”,“repo”, “user”, “gist”, and “workflow”</li>
-</ol>
-</li>
-<li>From your Command Line: Use <code>gh auth login</code> to store your token and follow the prompts.
-<ol type="a">
-<li>select <code>HTTPS</code> for your preferred protocol</li>
-<li>select <code>Y</code> for authenticate with GitHub credentials</li>
-<li>Alternatively if you want to do this all from the command line you can run the following line (if your token is saved in <code>mytoken.txt</code>):</li>
-</ol>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb2" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">gh</span> auth login <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--with-token</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> mytoken.txt</span></code></pre></div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<p>Many more details are explained nicely here <a href="https://happygitwithr.com/https-pat.html" class="uri">https://happygitwithr.com/https-pat.html</a></p>
-<p>You only have to store your credentials once for each computer (or PAT expiration date), then you can push and pull from GitHub to your heartʻs content. It really is a nice way to do things securely.</p>
-</section><section id="configuring-your-default-git-editor" class="level2"><h2 class="anchored" data-anchor-id="configuring-your-default-git-editor">Configuring your default git editor</h2>
-<p>You may want to set your default git editor to something you know how to use (it will come up when you have a merge conflict).</p>
-<p>For example the nano editor is easy to use on the command line for a Unix shell:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Mac/Linux</strong></pre>
-</div>
-<div class="sourceCode" id="cb3" data-filename="Mac/Linux" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> config <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--global</span> core.editor <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"nano -w"</span></span></code></pre></div>
-</div>
-<p><em>The Carpentries</em> provide a <a href="https://swcarpentry.github.io/git-novice/02-setup/#line-endings">full list of editors</a> by operating system, a great resource.</p>
-</section></section><section id="using-gitgithub-in-our-course" class="level1"><h1>Using git/GitHub in our course</h1>
-<p>In this course, you will use git/GitHub in the following ways:</p>
-<ol type="1">
-<li>Project 0 (optional) - You will create a website introducing yourself to folks in the course and deploy it on GitHub.</li>
-<li>Projects 1-3 - You can practice using git locally (on your compute environment) to track your changes over time and, if you wish (but highly suggested), you can practice pushing your project solutions to a private GitHub repository on your GitHub account (i.e.&nbsp;<code>git add</code>, <code>git commit</code>, <code>git push</code>, <code>git pull</code>, etc).</li>
-</ol>
-<p>Learning these skills will be useful down the road if you ever work collaboratively on a project (i.e.&nbsp;writing code with other people, or suggesting changes or bug fixes to other projects). In this scenario, you will use the skills you have been practicing in your projects to work together as a team in a single GitHub repository.</p>
-</section><section id="clone-a-repo-to-your-local-directory---easy" class="level1"><h1>Clone a repo to your local directory - Easy!</h1>
-<p>Cloning an existing repo from GitHub is easy. Letʻs clone the <strong>rclassdata</strong> repo to our local git folder within your Documents folder. 1. Go to <a href="https://github.com/mbutler808/rclassdata" class="uri">https://github.com/mbutler808/rclassdata</a> and click on the green <strong>&lt;&gt;Code</strong> button and copy the URL.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/github_cloning.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>Cloning from an existing repo</figcaption></figure>
-</div>
-</div>
-</div>
-<ol start="2" type="1">
-<li>In your Terminal, Git-Bash, or CMD prompt, navigate to your git folder (create one in Documents if you donʻt have one already), and clone the repo:</li>
-</ol>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal(Mac/Linux/Git-bash)</strong></pre>
-</div>
-<div class="sourceCode" id="cb4" data-filename="Terminal(Mac/Linux/Git-bash)" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">pwd</span></span>
-<span id="cb4-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># navigate to your git folder</span></span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
-</div>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>CMD(Windows)</strong></pre>
-</div>
-<div class="sourceCode" id="cb5" data-filename="CMD(Windows)" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dir</span></span>
-<span id="cb5-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ~/Documents/git  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># navigate to your git folder</span></span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> clone https://github.com/mbutler808/rclassdata.git</span></code></pre></div>
-</div>
-<p>If you set up your personal access token, it should appear on your computer! If not, go back to Section&nbsp;4.2 and try again.</p>
-</section><section id="make-a-github-repo-started-from-your-local-files" class="level1"><h1>Make a GitHub repo started from your local files</h1>
-<p>Suppose you have some files on your computer and youʻd like to make them into a repo. For this example, weʻre going to make a repo called <strong>test</strong></p>
-<ol type="1">
-<li>Create a folder in your <code>Documents/git</code> directory called <code>test</code> and copy some files there.</li>
-<li>Go to your GitHub account and create a new repository. Click on the small black + on the top right corner</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/git_newrepo.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Create a new repo button</figcaption></figure>
-</div>
-</div>
-</div>
-<ol start="3" type="1">
-<li>Give your new repo a name (“test”) and choose to create a blank repo with no README.md or .gitignore. We can add them later.</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/git_create_new_repo.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>Set up a blank repo</figcaption></figure>
-</div>
-</div>
-</div>
-<ol start="4" type="1">
-<li>You will see the following page giving you helpful hints for linking your GitHub repo with your local repo. We will follow the first set of instructions, slightly modified.</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/github_quicksetup.png" class="img-fluid figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Explantations for each line of code:</p>
-<ul>
-<li>
-<code>echo "# test" &gt;&gt; README.md</code> Write <code># test</code> to <code>README.md</code> which will be created since it doesnʻt already exist</li>
-<li>
-<code>git init</code> Intializes the local repo to set up git tracking (only need to to this once for each repo)</li>
-<li>
-<code>git add .</code> Adds (. = all) our files and commits any changes to the repo</li>
-<li>
-<code>git commit -m "first commit"</code> Commit message</li>
-<li>
-<code>git branch -M main</code> Renames the local branch to main</li>
-<li>
-<code>git remote add origin URL</code> Connect the remote repo (=“origin” on GitHub) to our local repo. Be sure to copy the appropriate URL for your own GitHub repo.</li>
-<li>
-<code>git push -u origin main</code> Push our local changes (in main) up to the remote (to a parallel branch “main” on origin).</li>
-</ul>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb6" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"# test"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;</span> README.md</span>
-<span id="cb6-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> init</span>
-<span id="cb6-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> add .</span>
-<span id="cb6-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"first commit"</span></span>
-<span id="cb6-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> branch <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-M</span> main</span>
-<span id="cb6-6"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> remote add origin https://github.com/mbutler808/test.git</span>
-<span id="cb6-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> push <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-u</span> origin main</span></code></pre></div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-GitHub requires authentication to overwrite your repository (this is a good thing 😃👍)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Did <em>GitHub</em> complain that it doesnʻt know your <strong>username</strong> or <strong>email</strong>?</li>
-</ul>
-<p>This might be because the defaults on your computer donʻt match what you used to register for your GitHub account. Not to worry, just set it to match your GitHub account here: Section&nbsp;4.1</p>
-<ul>
-<li>Did <em>GitHub</em> complain that your <strong>authentication</strong> failed?</li>
-</ul>
-<p>Donʻt worry, just try it again: Section&nbsp;4.2. Nice bonus, you only have to do it once for each computer.</p>
-</div>
-</div>
-<ol start="5" type="1">
-<li>Check your remote repo. The files from your computer should be there!</li>
-<li>Now try pushing up another change. Make some edits to one or more local files.</li>
-<li>Add, Commit, Push:</li>
-</ol>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb7" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> add .</span>
-<span id="cb7-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"made a small change"</span></span>
-<span id="cb7-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> push origin main</span></code></pre></div>
-</div>
-<p>Check your remote repo. Did it go up? Well done! 😍</p>
-<p>Your local files and your GitHub repository files are now synced!</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/With-Git-all-contributors-have-a-copy-of-the-repo-with-all-files-and-the-full-history_W640.jpeg" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Everyone is one with the repo</figcaption></figure>
-</div>
-</div>
-</div>
-<p>[<a href="https://peerj.com/preprints/3159/">Source: Jenny Bryan</a>]</p>
-<ol start="8" type="1">
-<li>The nuclear option</li>
-</ol>
-<p>If you need to start over you can delete and remake your repos. (For example if you canʻt get your local and remote repos to communicate and you canʻt figure out why.)</p>
-<p>Since your GitHub repo is empty and youʻre just getting started, there is really no harm in deleting it and starting over. From your repo on github.com, go to <code>settings</code>, then scrolll all the way down until you reach <code>The Danger Zone</code> where you will find the <code>Delete this repository</code> button.</p>
-<p>If you just want to delete your local git tracking without deleting all of the files you created, you can just delete your local hidden <code>.git</code> directory, leaving the rest of the files and directories in place. From your command line:</p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-NOTE: This will delete your local git history, and is not reversible.
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb8" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rm</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-rf</span> .git</span></code></pre></div>
-</div>
-</div>
-</div>
-</section><section id="a-word-about-merge-conflicts" class="level1"><h1>A word about merge conflicts</h1>
-<p>Sooner or later, you will encounter a merge conflict. That happens if the same file(s) changed both locally and on GitHub.com. That can happen if multiple people work on the same files, or if you work on multiple computers and forget to always push/pull before and after you work on a project. Donʻt get discouraged, this is solvable!</p>
-<p>Sometimes you have to do it manually. Moving the offending files out of your local repository, then doing the merge and after that adding the updates again can help. If you know that one source is the definite one, you can force a push or pull. A more advanced approach is to use branches.</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb9" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> push <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--force</span></span></code></pre></div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>The main danger is that a force push or pull will force git to write over a conflict, and can possibly destroy someone elseʻs work. If youʻre the only one on the repo, then itʻs only your changes that youʻll lose</li>
-<li>Just be aware but donʻt be afraid to practice. You can always revert back.</li>
-<li>See the help page for <a href="https://git-scm.com/docs/git-push">git push</a>. See the -f or –force flag. Itʻs terse computer help, but if you make the effort it will start to make sense.</li>
-<li>Iʻll link a more tutorial type resource later</li>
-</ul>
-</div>
-</div>
-</section><section id="forking-a-repo" class="level1"><h1>Forking a repo</h1>
-<p>When you want to build on someone elseʻs repo, that is a great time to <strong>fork</strong> a repo. This happens when you donʻt have write permission to the repo, but you want provide suggestions (for example if you want to fix a bug). Or if you want to use that repo as a template or a launching off point for your own project.</p>
-<p>After you fork and clone the repo to your computer, you can edit, add, and commit the changes. When you are ready to submit the suggestions to the repo owner, start a <strong>pull request</strong>. They will then read over your suggested edits, and if they approve they can merge the changes into the working repo.</p>
-<p><strong>Forks</strong> are nice because they remain connected to the parent repo in GitHub. So you can seamlessly work on your own private copy and send it back to the original project when you are ready.</p>
-<p><strong>Branches</strong> work in a similar way. The idea is simple. If you have a working repo, you donʻt want to made edits or experimental changes to <strong>main</strong> that may break the functionality. Branches are a way to make a “development branch” where you can work on your ideas in private without breaking anything. When youʻre sure you have everything ironed out and working, you can merge your branch back to <strong>main</strong>, and delete your branch. They are meant to be an ephemeral scratch copy to keep the project clean, organized, and working perfectly.</p>
-</section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
-<p>If you haven’t already done so, please watch the podcast <em>GitHub my Computer and me</em> (see Note&nbsp;1 #4).</p>
-<section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
-<p>Here are some post-lecture questions to help you think about the material discussed.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>What is version control?</p></li>
-<li><p>What is the difference between git and GitHub?</p></li>
-<li><p>What are some benefits and case uses for repositories with version control using git and GitHub?</p></li>
-</ol>
-</div>
-</div>
-</section><section id="additional-resources" class="level3"><h3 class="anchored" data-anchor-id="additional-resources">Additional Resources</h3>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>
-<a href="https://rafalab.github.io/dsbook/git.html">git and GitHub in the <code>dsbook</code></a> by Rafael Irizarry</li>
-</ul>
-</div>
-</div>
-
-
-</section></section> ]]></description>
-  <category>module 1</category>
-  <category>week 2</category>
-  <category>programming</category>
-  <category>version control</category>
-  <category>git</category>
-  <category>GitHub</category>
-  <guid>https://mbutler808.github.io/posts/2025-01-21-intro-git-github/</guid>
-  <pubDate>Tue, 21 Jan 2025 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Introduction to your computerʻs terminal utilities</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-01-16-your-computer-filesystems/</link>
-  <description><![CDATA[ <!-- Add interesting quote --><section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
+  <link>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</link>
+  <description><![CDATA[ <blockquote class="blockquote">
+<p>The shocking assertion will be that most statistics in most scientific papers has errors. —<em>Charles Geyer</em></p>
+</blockquote>
+<section id="pre-lecture-materials" class="level1"><h1>Pre-lecture materials</h1>
 <section id="read-ahead" class="level3"><h3 class="anchored" data-anchor-id="read-ahead">Read ahead</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -24890,13 +25118,23 @@ Read ahead
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>For future lectures, Iʻll give you some reading or podcasts to prepare</strong></p>
+<p><strong>Before class, you can prepare by reading the following materials:</strong></p>
+<ol type="1">
+<li>
+<a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Statistical programming, Small mistakes, big impacts</a> by Simon Schwab and Leonhard Held</li>
+<li>
+<a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Reproducibility and Error</a> by Charles J. Geyer</li>
+</ol>
 </div>
 </div>
 </section><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>Material for this lecture was borrowed and adopted from</p>
 <ul>
-<li><a href="https://academind.com/tutorials/terminal-zsh-basics" class="uri">https://academind.com/tutorials/terminal-zsh-basics</a></li>
+<li><a href="http://users.stat.umn.edu/~geyer/Sweave/" class="uri">http://users.stat.umn.edu/~geyer/Sweave/</a></li>
+<li><a href="http://users.stat.umn.edu/~geyer/repro.pdf" class="uri">http://users.stat.umn.edu/~geyer/repro.pdf</a></li>
+<li><a href="https://rdpeng.github.io/Biostat776" class="uri">https://rdpeng.github.io/Biostat776</a></li>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
 </ul></section></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -24910,361 +25148,79 @@ Learning objectives
 <div class="callout-body-container callout-body">
 <p><strong>At the end of this lesson you will:</strong></p>
 <ul>
-<li>Know the shell used in your computer`s operating system.</li>
-<li>Know basic shell commands and when you might want to use them.</li>
-<li>Know how to traverse your computer`s filesystem, grab input or put output anywhere.</li>
-<li>Understand the difference between relative and absolute file paths.</li>
-<li>Know how to create and manipulate files through the shell.</li>
+<li>Know the difference between replication and reproducibility</li>
+<li>Identify valid reasons why replication and/or reproducibility is not always possible</li>
+<li>Identify the type of reproducibility</li>
+<li>Identify key components to enable reproducible data analyses</li>
 </ul>
 </div>
 </div>
-</section><section id="introduction-to-the-shell" class="level1"><h1>Introduction to the shell</h1>
-<p>This document gives a brief explanation of your computerʻs filesystems and how we will use the command line for this course.</p>
-<section id="the-kernel" class="level2"><h2 class="anchored" data-anchor-id="the-kernel">The kernel</h2>
-<p>The <em>kernel</em> is the part of your computerʻs operating system that loads first once you start up. It is kind of like your computerʻs autonomic nervous system. It recognizes all of the physical hardware attached to it, enables communication between components (and device drivers), and monitors maintenance functions like turning on the fan when it gets hot, manages virtual memory, gives warnings when the hard drive gets full, manages multitasking, and manages security and file permissions. In the mac this is the XNU kernel (“X is not UNIX”), in modern Windows machines it is the Windows NT kernel.</p>
-<div class="cell fig-cap-location-top">
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
+<p>From a young age, we have learned that scientific conclusions should be <strong>reproducible</strong>. After all, isnʻt that what the methods section is for? We are taught to write methods sections so that any scientist could, in theory, repeat the experiment with the idea that if the phenomenon is true, they should obtain comparable results and more often than not should come to the same conclusions.</p>
+<p><em>But how repeatable is modern science?</em> Many experiments are now so complex and so expensive that repeating them is not practical. However, it is even worse than that. As datasets get larger and analyses become ever more complex, there is a growing concern that even given the data, we still cannot necessarily repeat the analysis. This is called <strong>“the reproducbility crisis”</strong>.</p>
+<p>Recently, there has been a lot of discussion of reproducibility in the media and in the scientific literature. The journal <em>Science</em> had a special issue on reproducibility and data replication.</p>
+<ul>
+<li><a href="https://www.science.org/toc/science/334/6060" class="uri">https://www.science.org/toc/science/334/6060</a></li>
+</ul>
+<p>Take for example a recent study by the <a href="https://doi.org/10.1073/pnas.2203150119">Crowdsourced Replication Initiative (2022)</a>. It was a massive effort by 166 coauthors published in PNAS to test repeatability:</p>
+<ul>
+<li>73 research teams from around the world analyzed the <strong>same social science data</strong>.</li>
+<li>They investigated the <strong>same hypothesis</strong>: that more immigration will reduce public support for government provision of social policies.</li>
+<li>Together they fit 1261 statistical models and came to widely varying concluisons.</li>
+<li>A meta-analysis of the results by the PIs could not explain the variation in results. Even after accounting for the choices made by the research teams in designing their statistical tests, 95% of the total variation remained unexplained.</li>
+<li>The authors claim that “a hidden universe of uncertainty remains.”</li>
+</ul>
+<div class="cell">
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://www.linuxandubuntu.com/content/images/wordpress/2019/07/macos-kernel-resources.jpg?ssl=1" class="img-fluid figure-img"></p>
+<figure class="figure"><p><img src="https://mbutler808.github.io/images/reproducible_study.png" class="img-fluid figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>[<a href="https://www.linuxandubuntu.com/home/difference-between-linux-kernel-mac-kernel">Source: Map of MacOS: the heart of everything is called Darwin; and within it, we have separate system utilities (the shell) and the XNU kernel, which is composed in parts by the Mach kernel and by the BSD kernel.</a>]</p>
-</section><section id="the-shell" class="level2"><h2 class="anchored" data-anchor-id="the-shell">The shell</h2>
-<p>The <strong>shell</strong> is another key part of the core operating system (note in the diagram above it is part of the <strong>System Utilities</strong>, and the partner of the kernel). The shell is a software (an app) that allows humans to control the computer. You are already familiar with the <em>GUI</em> interface, or the <em>Graphical User Interface</em>. It is important that you are comfortable using the <em>Command Line Interface</em> as well.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-There are many reasons to be proficient in the shell:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Data analysis increasingly uses many files. The shell provides a simple but very powerful means to do all kinds of operations on files: move, delete, organize, combine, rename, etc.</li>
-<li>Using the shell encourages you to understand your computerʻs filesystem, and helps you to more precisely control input and output to any place along your file paths.</li>
-<li>Shell operations are fast.</li>
-<li>You can use wildcards to control matching or excluding many files.</li>
-<li>The shell can be used to execute (run) software.</li>
-<li>The shell is probably the oldest app, so it is very stable with lasting power.</li>
-<li>It is part of the OS, so when your apps fail or you are having some issues, you would turn to the shell to kill troublesome processes (programs) or diagnose and fix the issues.</li>
-</ul>
-</div>
-</div>
-<p>Macs use the same terminal utilities as UNIX/Linux systems. On the Mac, the command line interface app is called <em>Terminal</em>, which you will find in your <em>Application</em> folder, in the <em>Utilities</em> subfolder (here is a screentshot of our GUI Interface).</p>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/terminal.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>On a PC if you installed <a href="https://happygitwithr.com/install-git">Git For Windows</a>, you can use <em>Git-Bash</em> (a UNIX emulator) and follow the UNIX instructions (this would be my personal preference). Otherwise you use the <em>Command Prompt</em> also known as the <em>Windows Command Processor</em> or <em>CMD</em>. If you used a pre-Windows machine, you would be familiar with MS-DOS. To open CMD:</p>
+<p><a href="https://www.pnas.org/doi/10.1073/pnas.2203150119">Source: Breznau et al., 2022</a></p>
+<p>This should be very disturbing. It was very disturbing to me! <a href="http://users.stat.umn.edu/~geyer/repro-paper.pdf">Greyer</a> notes that the meta-analysis did not investigate how much of the variability of results was due to outright error. He furthermore notes that while the meta-analysis was done in a reproducibly, the original 73 analyses were not. What does he mean?</p>
+</section><section id="some-of-the-issues-from-a-statisticianʻs-perspective" class="level1"><h1>Some of the issues from a statisticianʻs perspective</h1>
+<p>Greyer provides nine ideas worth considering:</p>
 <ol type="1">
-<li>Open the Start Menu and type “command prompt” or</li>
-<li>Press <strong>Win + R</strong> and type “cmd” in the run box or</li>
-<li>Press <strong>Win + X</strong> and select Command Prompt from the menu.</li>
+<li>Most scientific papers that need statistics have conclusions that are not actually supported by the statistical calculations done, because of
+<ol type="a">
+<li>mathematical or computational error,</li>
+<li>statistical procedures inappropriate for the data, or</li>
+<li>statistical procedures that do not lead to the inferences claimed.</li>
 </ol>
-<p>Note: you may see <em>Windows PowerShell</em> or <em>Windows Terminal</em> instead, these are similar apps.</p>
-</section></section><section id="the-working-directory" class="level1"><h1>The Working Directory</h1>
-<p>By default, the working directory on a Mac and UNIX/Linux systems is your home user directory “~”. On a PC the default working directory may look something like a subdirectory of your C drive “C:[Username]".</p>
-<p>This is where you currently are in your computerʻs file structure.</p>
-<p>First, let’s check where we are by listing the files in our current directory. Note that some shell commands differ between different shells (i.e.&nbsp;UNIX vs.&nbsp;PC). Listing the contents of a directory is done with <strong>ls</strong> in UNIX and <strong>dir</strong> in PC:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false">PC</a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span></span></code></pre></div>
-</div>
-<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1">dir</span></code></pre></div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-An important principle of programming is <strong>VERIFICATION</strong>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>
-<strong>Always check that it worked</strong> – at each step!</li>
-<li>You should check the new commands that you are learning against something that you KNOW WORKS.</li>
-<li>Here, since you are familiar with the GUI, as you are doing these new command line operations, keep a GUI window open to verify.</li>
-<li>You should also check on the command line by listing the directory after you add or move files etc.</li>
-</ul>
-</div>
-</div>
-<p>Please make a folder for your work in a convenient place and call it “Rclass”. On a Mac you may want to put it in “Documents”. Start by navigating into your Documents folder or other such folder where you want your Rclass work to be saved. <strong>cd</strong> is for <em>change directory</em>, and the syntax is <strong>cd Foldername</strong>:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> Documents</span></code></pre></div>
-</section><section id="making-a-new-folder-from-the-command-line" class="level1"><h1>Making a new folder from the command Line</h1>
-<p>In both systems, the <strong>mkdir</strong> command for <em>make directory</em> will create a new folder, and <strong>cd</strong> will change directories. :</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false">PC</a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> Rclass</span>
-<span id="cb4-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> Rclass</span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># or dir in PC</span></span></code></pre></div>
-</div>
-<div id="tabset-2-2" class="tab-pane" aria-labelledby="tabset-2-2-tab">
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1">mkdir Rclass</span>
-<span id="cb5-2">cd Rclass</span>
-<span id="cb5-3">dir</span></code></pre></div>
-</div>
-</div>
-</div>
-<p>You have now created the Rclass directory, changed directory again into Rclass, and listed files. (It should be empty.)</p>
-<p>This seems like a lot of trouble, when you can just point and click in the GUI. But the beauty of the shell is its power. We can automate actions, execute code, and use wildcards to do many at once (coming up below).</p>
-<p>Letʻs say you wanted to create files in a new subfolder. <strong>touch</strong> is a command that creates a new (empty) file, or alters the timestamp of existing files.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false">PC</a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" aria-labelledby="tabset-3-1-tab">
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb6-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> shell</span>
-<span id="cb6-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> shell</span>
-<span id="cb6-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">touch</span> dat.txt  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># PC does not have the touch function</span></span></code></pre></div>
-</div>
-<div id="tabset-3-2" class="tab-pane" aria-labelledby="tabset-3-2-tab">
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> shell</span>
-<span id="cb7-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> shell</span>
-<span id="cb7-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">type</span> nul <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> dat.txt  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># for PC use type nul with pipe instead of touch</span></span></code></pre></div>
-</div>
-</div>
-</div>
-<p>Check that you have a subfolder within Rclass that has one file named dat.txt.</p>
-<p>Suppose we wanted to create 10 files. You can so easily in the UNIX shell:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">touch</span> dat<span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">..</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">}</span>.txt  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># for PC type nul &gt; dat1.txt multiple times</span></span></code></pre></div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" aria-controls="tabset-4-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" aria-controls="tabset-4-2" aria-selected="false">PC</a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" aria-labelledby="tabset-4-1-tab">
-<p>To check your files timestamps list files with the -l flag:</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb9-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span></span></code></pre></div>
-<p>The -a flag shows hidden files. You can do both at once:</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-la</span></span></code></pre></div>
-</div>
-<div id="tabset-4-2" class="tab-pane" aria-labelledby="tabset-4-2-tab">
-<p>The <strong>dir</strong> command provides the timestamp as well as other information.</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb11-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dir</span></span></code></pre></div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Create 20 files with the .jpg file extension.</li>
-<li>List your files now.</li>
-<li>Create 2 subdirectories, one called “Data” and one called “Images”</li>
+</li>
+<li>Good computing practices — version control, well thought out testing, code reviews, literate programming — are essential to correct computing.</li>
+<li>Failure to do all calculations from raw data to conclusions (every number or figure shown in a paper) in a way that is fully reproducible and available in a permanent public repository is, by itself, a questionable research practice.</li>
+<li>Failure to do statistics as if it could have been pre-registered is a questionable research practice.</li>
+<li>Journals that use P &lt; 0.05 as a criterion of publication are not scientific journals (publishing only one side of a story is as unscientific as it is possible to be).</li>
+<li>Statistics should be adequately described, at least in the supplementary material.</li>
+<li>Scientific papers whose conclusions depend on nontrivial statistics should have statistical referees, and those referees should be heeded.</li>
+<li>Not all errors are describable by statistics. There is also what physicists call <em>systematic error</em> that is the same in every replication of an experiment. Physicists regularly attempt to quantify this. Others should too.</li>
 </ol>
-</div>
-</div>
-</section><section id="more-useful-commands-move-copy-remove-and-friends" class="level1"><h1>More useful commands: <strong>move</strong> <strong>copy</strong> <strong>remove</strong> and friends</h1>
-<p>Some additional very useful commands are those for moving, copying, and removing (deleting) files. These can operate on your current directory, or you can add the <em>path</em> to your file. For example, to move your file into the Data subdirectory:</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb12-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mv</span> dat1.txt Data/dat1.txt</span>
-<span id="cb12-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span></span>
-<span id="cb12-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> Data</span></code></pre></div>
-<p>Anywhere where you can indicate a filename, you can also add a path to that file.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 25%">
-<col style="width: 33%">
-<col style="width: 18%">
-</colgroup>
-<thead><tr class="header">
-<th>function</th>
-<th>UNIX</th>
-<th>Windows CMD</th>
-<th>example</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>move</td>
-<td>mv filename newlocation</td>
-<td>move filename newlocation</td>
-<td>mv dat1.txt Data</td>
-</tr>
-<tr class="even">
-<td>copy</td>
-<td>cp filename newfilename</td>
-<td>copy filename newfilename</td>
-<td>cp dat1.txt catcat.txt</td>
-</tr>
-<tr class="odd">
-<td>remove</td>
-<td>rm filename</td>
-<td>del filename</td>
-<td>rm dat1.txt</td>
-</tr>
-<tr class="even">
-<td>remove directory</td>
-<td>rmdir Directory</td>
-<td>rmdir Directory</td>
-<td>rmdir Data</td>
-</tr>
-<tr class="odd">
-<td>concatenate (combine)</td>
-<td>cat file1 file2</td>
-<td>cat file1 file2</td>
-<td>cat dat1.txt dat2.txt</td>
-</tr>
-<tr class="even">
-<td>concatenate to new file</td>
-<td>cat file1 file2 &gt; file3</td>
-<td>cat file1 file2 &gt; file3</td>
-<td>cat dat1.txt dat2.txt &gt; alldat.txt</td>
-</tr>
-<tr class="odd">
-<td>list files</td>
-<td>ls</td>
-<td>dir</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>get working directory</td>
-<td>pwd</td>
-<td>cd</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><em>Note: UNIX commands are case-sensitive, Windows commands are not.</em> <em>Apologies in advance for any Windows command errors - Iʻm really not an expert. Please let me know so I can fix it. Thank you!</em></p>
-</section><section id="wildcards" class="level1"><h1>Wildcards</h1>
-<p>You can also select multiple files at once using wildcards. If you want to grab all of the .txt files, for example, you can do:</p>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb13-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cp</span> <span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.txt Data</span>
-<span id="cb13-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># PC: use dir</span></span>
-<span id="cb13-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> Data <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># PC: use dir Data</span></span></code></pre></div>
-<p>And you should have copied <em>all</em> files that end in .txt into Data. You could alternatively used dat* which will select all files that begin with “dat” but can end in anything else. The * will match any characters (zero or more).</p>
-<p>There are a lot of other wildcards that you can use.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Move all of your data files into Data, and all of your image files into Images.</li>
-<li>Remove any straggler files from the top level of shell, if you used the copy command.</li>
-<li>List files from shell, Data, and Images.</li>
-</ol>
-</div>
-</div>
-</section><section id="relative-paths-vs.-absolute-paths" class="level1"><h1>Relative paths vs.&nbsp;Absolute paths</h1>
-<p>In the Mac, there are two important <em>shortcuts</em>:</p>
+<p>A reasonable ideal for reproducible research today - Research should be reproducible. Anything in a scientific paper should be reproducible by the reader. - Whatever may have been the case in low tech days, this ideal has long gone. Much scientific research in recent years is too complicated and the published details to scanty for anyone to reproduce it. - The lack of detail is not entirely the author’s fault. Journals have severe page pressure and no room for full explanations. - For many years, the only hope of reproducibility is old-fashioned person-to-person contact. Write the authors, ask for data, code, whatever. Some authors help, some don’t. If the authors are not cooperative, tough. - Even cooperative authors may be unable to help. If too much time has gone by and their archiving was not systematic enough and if their software was unportable, there may be no way to recreate the analysis. - Fortunately, the internet comes to the rescue. No page pressure there! - Nowadays, many scientific papers also point to supplementary materials on the internet. Data, computer programs, whatever should be there, permanently. Ideally with a permanent Document Identifier or DOI. There are complaints that many Supplmentary Materials are incomprehensible, but that can be improved with practices of reproducible reserach.</p>
+<p>Therefore, at the very least scientists should use in their statistical programming - version control, - software testing, - code reviews, - literate programming, and - all data and code available in a permanent public repository.</p>
+<p>Some journals have specific policies to promote reproducibility in manuscripts that are published in their journals. For example, the Journal of American Statistical Association (JASA) requires authors to submit their code and data to reproduce their analyses and a set of Associate Editors of Reproducibility review those materials as part of the review process:</p>
 <ul>
-<li>“/” : The root directory of your entire computer, indicated by “/”.</li>
-<li>“~” : The root of your user directory, which for me is “marguerite”. From the root directory, it will be “/Users/username”</li>
+<li><a href="https://jasa-acs.github.io/repro-guide" class="uri">https://jasa-acs.github.io/repro-guide</a></li>
+</ul></section><section id="recommendations" class="level1"><h1>Recommendations</h1>
+<p><a href="https://rss.onlinelibrary.wiley.com/doi/epdf/10.1111/1740-9713.01522">Discuss Table 1</a></p>
+<section id="authors-and-readers" class="level3"><h3 class="anchored" data-anchor-id="authors-and-readers">Authors and Readers</h3>
+<p>It is important to realize that there are multiple players when you talk about reproducibility–there are different types of parties that have different types of interests. There are <strong>authors</strong> who produce research and they want to make their research reproducible. There are also <strong>readers</strong> of research and they want to reproduce that work. Everyone needs tools to make their lives easier.</p>
+<p>One current <strong>challenge is that authors of research have to undergo considerable effort to make their results available to a wide audience</strong>.</p>
+<ul>
+<li>Publishing data and code today is not necessarily a trivial task. Although there are a number of resources available now, that were not available even five years ago, it is still a bit of a challenge to get things out on the web (or at least distributed widely).</li>
+<li>Resources like <a href="https://github.com">GitHub</a>, <a href="https://kipoi.org">kipoi</a>, and <a href="http://rpubs.com">RPubs</a> and various data repositories have made a big difference, but there is still a ways to go with respect to building up the public reproducibility infrastructure.</li>
 </ul>
-<p>In PCs, your root user directory in CMD is usually something like:</p>
+<p>Furthermore, <strong>even when data and code are available</strong>, readers often have to download the data, download the code, and then they have to piece everything together, usually by hand. It’s <strong>not always an easy task to put the data and code together</strong>.</p>
 <ul>
-<li>“C:\User\username" : this would be the root of your user Directory</li>
-<li>The root of the C drive is “C:"</li>
+<li>Readers may not have the same computational resources that the original authors did.</li>
+<li>If the original authors used an enormous computing cluster, for example, to do their analysis, the readers may not have that same enormous computing cluster at their disposal. It may be difficult for readers to reproduce the same results.</li>
+</ul>
+<p>Generally, the <strong>toolbox for doing reproducible research is small</strong>, although <strong>it’s definitely growing</strong>.</p>
+<ul>
+<li>In practice, authors often just throw things up on the web. There are journals and supplementary materials, but they are famously disorganized.</li>
+<li>There are only a few central databases that authors can take advantage of to post their data and make it available. So if you are working in a field that has a central database that everyone uses, that is great. If you are not, then you have to assemble your own resources.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -25272,186 +25228,18 @@ Exercise:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note:
+Summary
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>On PCs pay attention to the direction of the slashes when you type <strong>dir</strong> is it “/” or “\” ? When you type your filepaths, be sure to use the right type of slash.</p>
-</div>
-</div>
-<p>Check out what is in these directories:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs">
-<li class="nav-item"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" aria-controls="tabset-5-1" aria-selected="true">Mac/UNIX</a></li>
-<li class="nav-item"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" aria-controls="tabset-5-2" aria-selected="false">PC</a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" aria-labelledby="tabset-5-1-tab">
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb14-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> /</span>
-<span id="cb14-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ~</span></code></pre></div>
-</div>
-<div id="tabset-5-2" class="tab-pane" aria-labelledby="tabset-5-2-tab">
-<p>Shortcuts in Windows are called Windows Environment Path Variables:</p>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb15-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dir</span> %UserProfile%  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># is this C:\\Users\\{username} ?</span></span>
-<span id="cb15-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dir</span> %SystemDrive%   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># is this C: ?</span></span></code></pre></div>
-<p>With the advent of the OneDrive, there is now a parallel user directory in OneDrive that also has Documents, etc.</p>
-<p>Donʻt get confused! “C:" drive is not the”OneDrive”. (the OneDrive is a location on your hard drive, sometimes on C:, sometimes on D:) Windows makes use of a lot of symbolic links to make it easier for the user. These are different directories, sometims on different drives or partitions, but to the user it looks like theyʻre in the same folder). Symbolic links can be generally used in filepaths, but it can be very confusing if you accidentally end up with a circular reference or when you need to find the actual location on the hard drive.</p>
-<p>Use the “\ad” flag with <strong>dir</strong> to see all of the symbolic links too. They call these symbolic links <em>namespace junctions</em>.</p>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb16-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dir</span> %UserProfile% <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\\</span>ad</span></code></pre></div>
-</div>
-</div>
-</div>
-<p>You can use these as shortcuts as starting points for your path to basically write an absolute path. This becomes important when you write a script that may be moved to different locations or shared with different people on different computers.</p>
-<p>For example, “cd ~/Documents” will take you to the Documents folder inside your user directory, regardless of where you are currently because it is an <strong>absolute path</strong>.</p>
-<p>A <strong>relative path</strong> will traverse the file directory <em>relative</em> to where you are currently. For example “Documents” will start at current working directory and look for a subfolder called Documents:</p>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb17-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> Documents  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># relative path, is there a Documents folder here?</span></span></code></pre></div>
-<p>In contrast, an absolute path will start from the very beginning of your root directory and contain the complete path.</p>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb18-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ~/Documents <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># this is an absolute path because ~ = "\Users\marguerite"</span></span></code></pre></div>
-<p>On the Mac, an asbolute path will start with “/” (or a shortcut that contains a starting “/”), whereas on a PC an absolute path will start with “C:”</p>
-</section><section id="navigating-your-file-directories" class="level1"><h1>Navigating your file directories</h1>
-<section id="the-dots" class="level2"><h2 class="anchored" data-anchor-id="the-dots">The dots</h2>
 <ul>
-<li>“.” is the current working directory (where you are currently)</li>
-<li>“..” is the directory one level up</li>
-<li>“./foldername” will take you to the folder one level down, for example “./Data”</li>
+<li><p>The process of conducting and disseminating research can be depicted as a “data science pipeline”</p></li>
+<li><p>Readers and consumers of data science research are typically not privy to the details of the data science pipeline</p></li>
+<li><p>One view of reproducibility is that it gives research consumers partial access to the raw pipeline elements.</p></li>
 </ul>
-<p>You can use these paths to change directories using <em>cd</em> or to list <em>ls</em> the contents of the directories or to make new directories using <em>mkdir</em></p>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb19-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> .</span>
-<span id="cb19-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ./Data</span>
-<span id="cb19-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> ./Data/A</span></code></pre></div>
-<p>Make multiple directories:</p>
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb20-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> ./Data/B ./Data/C</span></code></pre></div>
-<p>List the files one level up or two levels up:</p>
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb21-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ..  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># for PC use dir ..</span></span>
-<span id="cb21-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ../..</span></code></pre></div>
-<p>Up one level, and over to another directory:</p>
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb22-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ../AnotherDirectory</span></code></pre></div>
-<p>You can wander anywhere along your computerʻs file directory! Just add more steps to the path.</p>
-</section></section><section id="executing-software-from-the-command-line" class="level1"><h1>Executing software from the command Line</h1>
-<p>The command line is the OG (original) method for using your computer. You can of course run software from the command line as well, not just UNIX or shell commands. For example, you can run R from a unix shell using:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" aria-controls="tabset-6-1" aria-selected="true">Mac/UNIX</a></li></ul>
-<div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" aria-labelledby="tabset-6-1-tab">
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb23-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">R</span></span></code></pre></div>
 </div>
 </div>
-</div>
-<p>Which will launch R within the console, and look something like this:</p>
-<div class="cell fig-cap-location-top">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/images/R_command.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Invoke help by typing:</p>
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb24-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> help.start<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">()</span></span></code></pre></div>
-<p>And quit with:</p>
-<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb25-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">q()</span></span></code></pre></div>
-<p>Choose “n” when asked if you want to save workspace image.</p>
-</section><section id="piping-commands" class="level1"><h1>Piping commands</h1>
-<p>You can redirect output using <em>&gt;</em> and <em>&lt;</em> with the point indicating the direction. Here is an example. First letʻs put some contents into the files, and check the contents with the command “less” (there is also “more”):</p>
-<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb26-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"A"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> dat1.txt</span>
-<span id="cb26-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">less</span> dat1.txt</span></code></pre></div>
-<p><em>&gt;</em> pipes (or sends) output to the file named “dat1.txt”. If the file doesnʻt exist, it will create it. If it already exists, it will <em>replace</em> the file.</p>
-<p>If you want to add on to the file, use “&gt;&gt;”</p>
-<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb27-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Another letter B"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;</span> dat1.txt</span>
-<span id="cb27-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">less</span> dat1.txt</span></code></pre></div>
-<p>Output to multiple files:</p>
-<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb28-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"c"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span>dat2.txt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span>dat3.txt</span>
-<span id="cb28-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">less</span> dat2.txt</span>
-<span id="cb28-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">less</span> dat3.txt</span></code></pre></div>
-<p>Concatenate (combine) multiple files using <em>cat</em> and send it to file</p>
-<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb29-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> dat1.txt dat2.txt dat3.txt</span>
-<span id="cb29-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> dat1.txt dat2.txt dat3.txt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span>all.txt</span>
-<span id="cb29-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">less</span> all.txt</span></code></pre></div>
-</section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
+</section></section><section id="post-lecture-materials" class="level1"><h1>Post-lecture materials</h1>
 <section id="final-questions" class="level3"><h3 class="anchored" data-anchor-id="final-questions">Final Questions</h3>
 <p>Here are some post-lecture questions to help you think about the material discussed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -25465,43 +25253,8 @@ Questions
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><p>What is a command line interface?</p></li>
-<li><p>How can using the command line help with file organization or reorganization?</p></li>
-<li><p>What is the importance of choosing a good file naming system?</p></li>
-<li><p>What is the difference between a relative path and an absolute path?</p></li>
-</ol>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-For additional practice:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Practice making directories with subdirectories A, B, etc. with several levels A1 A2 etc.</p></li>
-<li><p>Practice moving files between different directories and at different levels.</p></li>
-<li><p>Practice moving junk lying around in your downloads folder into the trash using the command line (or at least putting them into a common folder “opala” folder which you can then manually put into the trash). (FYI on the Mac Trash is in “~/.Trash” so it is a hidden folder)</p></li>
-</ol>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-In Preparation for Next Time:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Install git. Follow instructions at for Mac or PC at [<a href="https://happygitwithr.com/install-git">Happy Git and GitHub for the useR</a>] For Windows install, installation of “Git-Bash” is highly recommended.</p></li>
-<li><p>Create an account at GitHub [<a href="https://happygitwithr.com/github-acct">advice here</a>]</p></li>
+<li><p>Why can replication be difficult to achieve? Why is reproducibility a reasonable minimum standard when replication is not possible?</p></li>
+<li><p>What is needed to reproduce the results of a data analysis?</p></li>
 </ol>
 </div>
 </div>
@@ -25517,10 +25270,8 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><a href="https://academind.com/tutorials/terminal-zsh-basics">A tutorial for zsh on Macs</a></li>
-<li><a href="https://www.educative.io/blog/bash-shell-command-cheat-sheet">Bash shell cheat sheet (mostly works for zsh too)</a></li>
-<li><a href="https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/">A tutorial for CMD on PCs</a></li>
-<li><a href="https://serverspace.us/support/help/windows-cmd-commands-cheat-sheet/">Windows CMD cheat sheet</a></li>
+<li>
+<a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible Research: A Retrospective</a> by Roger Peng and Stephanie Hicks</li>
 </ul>
 </div>
 </div>
@@ -25528,12 +25279,11 @@ Tip
 
 </section></section> ]]></description>
   <category>module 1</category>
-  <category>week 1</category>
-  <category>programming</category>
-  <category>filesystem</category>
-  <category>shell</category>
-  <guid>https://mbutler808.github.io/posts/2025-01-16-your-computer-filesystems/</guid>
-  <pubDate>Thu, 16 Jan 2025 10:00:00 GMT</pubDate>
+  <category>week 2</category>
+  <category>R</category>
+  <category>reproducibility</category>
+  <guid>https://mbutler808.github.io/posts/2025-01-23-reproducible-research/</guid>
+  <pubDate>Thu, 23 Jan 2025 10:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

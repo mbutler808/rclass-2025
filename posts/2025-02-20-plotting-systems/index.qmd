@@ -1,0 +1,276 @@
+---
+title: "Plotting Systems"  
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Showing you base plotting, lattice, and ggplot2"  
+date: 2025-02-20
+categories: [module 3, week 5, plotting, ggplot2, lattice, data visualization]  
+---
+
+> The data may not contain the answer. And, if you torture the data long enough, it will tell you anything. ---*John W. Tukey*
+
+<!-- R emoji aliases:  https://gist.github.com/rxaviers/7360908 -->
+#`r emojifont::emoji('pencil2')`
+
+
+# Addtional Resources
+
+### Excellent references
+
+::: callout-note
+## For more details see
+
+1.  <https://r4ds.had.co.nz/data-visualisation>
+2.  Paul Murrell (2011). *R Graphics*, CRC Press.
+3.  Hadley Wickham (2009). *ggplot2*, Springer.
+4.  Deepayan Sarkar (2008). *Lattice: Multivariate Data Visualization with R*, Springer.
+:::
+
+
+### Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+-   <https://www.stephaniehicks.com/jhustatcomputing2022/posts/2022-09-13-plotting-systems/> 
+-   <https://rdpeng.github.io/Biostat776/lecture-plotting-systems>
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Be able to identify and describe the three plotting systems in R
+-   Be able to implement simple plots in each
+:::
+
+
+# Overview 
+
+There are **three different plotting systems in R** and they each have different characteristics and modes of operation.
+
+::: callout-tip
+### Important
+
+The three systems are
+
+1.  The base plotting system
+2.  The lattice system
+3.  The ggplot2 system
+
+**This course will focus primarily on the base and ggplot2 plotting systems**. Lattice is presented for context.
+:::
+
+If you don't have these already, please install: 
+
+```{r}
+#| eval: false
+install.packages(c("lattice", "ggplot2"))
+```
+
+## The Base Plotting System
+
+The **base plotting system** is the original plotting system for R. The basic model is sometimes **referred to as the "artist's palette" model**, because you start with a blank canvas and add to it, element by element. 
+
+We begin with an R plotting function that *creates a new plot window* **typically the `plot()` function**, which creates a plot object. We can add *annotations* to the plot object with functions such as (`text`, `lines`, `points`, `axis`). 
+
+If you get an error 
+```{.bash}
+Error in plot.xy(xy.coords(x, y), type = type, ...) : 
+  plot.new has not been called yet
+```
+
+It is probably because you tried to add an annotation before you created a plot first. 
+
+The base plotting system is **often the most convenient plotting system** to because it mirrors the cartesian coordinate (X,Y) syntax that we sometimes think of when building plots and analyzing data.
+
+It is also the most customizablbe because there are many options that users can specify. See the help page for `?plot.default` and `?par` for graphical parameters that once can set. It does take some learning, but it is possible to make multi-figure plots while precisely controlling their placement, margins, and any annotations including points, lines, text etc. 
+
+The plot system is also very useful at the very beginning of a data analysis When we donʻt precisely know what we want to plot. We can start by "throwing some data on the page" and then slowly modifying or adding more information to it as our thought process evolves.
+
+::: callout-tip
+### Example
+
+We might look at a simple scatterplot and then decide to add a linear regression line or a smoother to it to highlight the trends.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-cap: "Scatterplot with loess curve"
+data(airquality)
+with(airquality, {
+        plot(Temp, Ozone)
+        lines(loess.smooth(Temp, Ozone))
+})
+```
+:::
+
+In the code above:
+
+-   The `plot()` function creates the initial plot and draws the points on the canvas.
+-   The `lines` function is used to annotate or add to the plot (in this case it adds a loess smoother to the scatterplot). 
+-   R has many other types of [smoothing functions](https://blog.revolutionanalytics.com/2015/09/interpolation-and-smoothing-functions-in-base-r.html) as well. 
+
+
+Next, we use the `plot()` function to draw the points on the scatterplot and then use the `main` argument to add a main title to the plot.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-cap: "Scatterplot with loess curve"
+data(airquality)
+with(airquality, {
+        plot(Temp, Ozone, main = "my plot")
+        lines(loess.smooth(Temp, Ozone))
+})
+```
+
+One downside with constructing base plots is that **annotations can only be added**. If your annotations are crashing, or you run out of room, etc., you will have to rerun the code starting from plot(). 
+
+And while the base plotting system is nice in that it gives you the flexibility to specify these kinds of details to painstaking accuracy, **sometimes it would be nice if the system could just figure it out for you**. Thatʻs where `lattice` and `ggplot2` have contributed. 
+
+Another downside of the customizability of the base plotting system is that it is **difficult to describe or translate a plot to others because there is no clear graphical language or grammar**. In other words, you cannot paint the format of one onto another plot, unless you design the code (maybe by using the same variable names, etc.) to do it yourself. 
+
+The only real way to describe what you have done in a base plot is to just list the series of commands/functions that you have executed, which is not a particularly compact way of communicating things. The `ggplot2` package has developed a grammar of graphics that make transferring formats easy.
+
+::: callout-tip
+### Example
+
+Another typical base plot for a linear regression is constructed with the following code.
+Here we are using *formula representation*. Instead of `plot(x,y)` we use `plot(y~x)` which is read "plot y as a function of x". These styles are equivalent, but formula is in the style of regression models. 
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-cap: "Base plot with title"
+data(cars)
+
+## Create the plot / draw canvas
+with(cars, plot(dist ~ speed))
+
+## Fit a linear model and save it
+lm.fit <- with(cars, lm( dist ~ speed))
+```
+
+We can add annotations as before. This time, to add the regression line to the plot, we use the `abline()` function which adds straight lines, specified by slope and intercept. 
+
+```{r}
+with(cars, plot(dist ~ speed))
+
+## Add annotations
+title("Linear model of speed vs. stopping distance")
+abline(lm.fit, col="red")
+text(7, 120, paste("slope =", round(coef(lm.fit)[2], digits=2)))
+text(7, 110, paste("intercept =", round(coef(lm.fit)[1], digits=2)))
+```
+
+Using `text()` we added the slope and intercept from the linear model fit. That information is returned by the `coef()` function. We used `round()` to make it prettier (8 decimal places is not necessary!)
+:::
+
+## The Lattice System
+
+The **lattice plotting system** is ideal for visualization of multivariate data, and is implemented in the `lattice` R package which comes with every installation of R (although it is not loaded by default).
+
+To **use the lattice plotting functions**, you must first load the `lattice` package.
+
+```{r}
+library(lattice)
+```
+
+With the lattice system, **plots are created with a single function call**, such as `xyplot()` or `bwplot()`, and the plot is delivered in a predefined format. 
+
+There is **no real distinction between functions that create or initiate plots** and **functions that annotate plots** because it all happens at once.
+
+Lattice plots tend to be **most useful for conditioning types of plots**, i.e. looking at how `y` changes with `x` across levels of `z`.
+
+-   e.g. these types of plots are useful for looking at multi-dimensional data and often allow you to squeeze a lot of information into a single window or page.
+
+Another aspect of lattice that makes it different from base plotting is that **things like margins and spacing are set automatically**.  The downside is that it is not very customizable. 
+
+::: callout-tip
+### Example
+
+Here is a lattice plot that looks at the relationship between life expectancy and income and how that relationship varies by region in the United States.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Lattice plot"
+state <- data.frame(state.x77, region = state.region)
+head(state)
+xyplot(Life.Exp ~ Income | region, data = state, layout = c(4, 1))
+```
+:::
+
+You can see that the entire plot was generated by the call to `xyplot()` and all of the data for the plot were specified to come from the `state` data frame.
+
+The **layout** specifies four panels ---one for each region--- **within each panel is a scatterplot** of life expectancy and income. Note that in this case, layout is columns, rows. Try changing the numbers or leaving out the layout argument and see what happens. 
+
+The notion of *panels* comes up a lot with lattice plots because you typically have many panels in a lattice plot (each panel typically represents a *factor level*, like "region").
+
+::: callout-tip
+### Note
+
+Downsides with the lattice system
+
+-   It can sometimes be very **awkward to specify an entire plot** in a single function call (you end up with functions with many many arguments).
+-   **Annotation in panels in plots is not especially intuitive** and can be difficult to explain. In particular, the use of custom panel functions and subscripts can be difficult to wield and requires a lot of trial and error.
+:::
+
+## The ggplot2 System
+
+The **ggplot2 plotting system** attempts to split the difference between base and lattice in a number of ways.
+
+::: callout-tip
+### Note
+
+Taking cues from lattice, the ggplot2 system automatically deals with spacings, text, titles but also allows you to annotate by "adding" to a plot, with annotations added in layers.
+:::
+
+The ggplot2 system is implemented in the `ggplot2` package (part of the `tidyverse` package), which is available from CRAN (it does not come with R).
+
+You can install it from CRAN via
+
+```{r}
+#| eval: false
+install.packages("ggplot2")
+```
+
+and then load it into R.
+
+```{r}
+library(ggplot2)
+```
+
+Superficially, the `ggplot2` functions are similar to `lattice`, but the system is generally easier and more intuitive to use once you learn the syntax.
+
+The defaults used in `ggplot2` make many choices for you, but you can still customize plots.
+
+::: callout-tip
+### Example
+
+A typical plot with the `ggplot2` package looks like the code below. 
+
+Note the use of the pipe operator `%>%` from the `magrittr` package in the tidyverse, which sends the dataframe `mpg` as input into the function ggplot. People love the pipe operator because you can just pass output along from one function to the next (as long as the function is written for piping). All of the tidyverse allows piping, and some base R functions do as well. 
+
+```{r}
+#| message: false
+#| fig-width: 6
+#| fig-height: 5
+#| fig-cap: "ggplot2 plot"
+library(tidyverse)
+data(mpg)
+mpg %>%
+  ggplot(aes(displ, hwy)) + 
+  geom_point()
+```
+:::
+
+In `ggplot`, elements of the plot are specified as **aesthetics**, and layers can be added onto the plot with `+ anotherfunction()`. Try running the first part, and then running the whole thing  together. Then try adding `+ geom_smooth()`
+
+There are additional functions in `ggplot2` that allow you to make arbitrarily sophisticated plots.
+
+We will discuss more about this in the next lecture.
+
