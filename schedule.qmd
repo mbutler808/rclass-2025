@@ -76,15 +76,15 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 | Week 13      | Apr 17 | `r emojifont::emoji('seedling')` Trees as Data Objects \[[html](posts/2025-04-17-tree-formats/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-17-tree-formats/index.qmd)\]|  | |
 |              | Apr 22  | `r emojifont::emoji('palm_tree')` Reading and writing trees, ape, ggtree, treeio \[[html](posts/2025-04-22-ggtree/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-22-ggtree/index.qmd)\]|||
 ||||||
-| Week 14      | Apr 22 | `r emojifont::emoji('deciduous_tree')` Reshaping Trees |||
+| Week 14      | Apr 24 | `r emojifont::emoji('deciduous_tree')` ggtree \[[html](posts/2025-04-22-ggtree/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-22-ggtree/index.qmd)\]| |||
 ||||||
-|              | Apr 24 | `r emojifont::emoji('hibiscus')` Annotating Tree Plots |`r emojifont::emoji('memo')` Project 3 peer review due||
+|              | Apr 24 | `r emojifont::emoji('hibiscus')` Setup for IQtree \[[html](posts/2025-04-24-iqtree-setup/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-04-24-iqtree-setup/index.qmd)\]|`r emojifont::emoji('memo')` Project 3 data check due||
 ||||||
 | **Module 8** |         | **Other Topics** | | |
 ||||||
-| Week 15      | Apr 29  | `r emojifont::emoji('snake')` Parsing Data from any Format |||
+| Week 15      | Apr 29  | `r emojifont::emoji('snake')` Parsing Data from any Format |Project 3 peer review due||
 ||||||
-|              | May 1  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
+|              | May 1  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')`  | |
 ||||||
 |  Week 16     | May 6  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
 ||||||

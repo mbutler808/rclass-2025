@@ -11,6 +11,8 @@
   {
     "listing": "/lectures.html",
     "items": [
+      "/posts/2025-04-29-iqtree-phylogenetics/index.html",
+      "/posts/2025-04-24-iqtree-setup/index.html",
       "/posts/2025-04-22-ggtree/index.html",
       "/posts/2025-04-17-tree-formats/index.html",
       "/posts/2025-04-10-apply/index.html",

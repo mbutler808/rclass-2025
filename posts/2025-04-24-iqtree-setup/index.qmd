@@ -1,0 +1,221 @@
+---
+title: "Setting Up for IQTREE2"
+author:
+  - name: Marguerite Butler
+    url: https://butlerlab.org
+    affiliation: School of Life Sciences, University of Hawaii
+    affiliation_url: https://manoa.hawaii.edu/lifesciences/
+description: "Getting set up for phylogenetic inference using IQTREE2 on your local machine"
+date: 2025-04-24
+categories: [module 7, week 13, iqtree2, phylogenetic inference, command line]
+bibliography: ../refs.bib
+---
+
+### Acknowledgements
+
+References for this Material:
+
+- The Gene Tree species tree tutorial by Minh Bui <http://www.iqtree.org/workshop/molevol2022>
+- Many pages on Stack Overflow
+
+# Learning objectives
+
+::: callout-note
+# Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Understand where user-installed software goes on your computer 
+-   Be able to install software and update the search paths to run from the command line
+-   Run iqtree2 from the command line on your own computer
+
+:::
+
+# Overview
+
+In the next session we will learn how to use [IQTREE2](www.iqtree.org) to infer phylogenetic trees (both species trees and gene trees), and compute several concordance factors. Please follow these instructions to install all of the software and ensure it is in working order before the next class. We will use R to read in and explore the output from IQTREE. 
+
+# Setup iqtree software
+
+-  Download [iqtree version 2.1.2](https://github.com/iqtree/iqtree2/releases/tag/v2.1.2) and install the binary for your platform _following the instructions below_. 
+-  As of this writing, IQTREE2 v2.1.2 is the latest stable release version, the preview versions (e.g., 2.2.2.3) are in beta testing. 
+- If you donʻt want to install IQTREE, try the webserver: <http://iqtree.cibiv.univie.ac.at>
+
+###  Windows users
+
+Move the IQTREE2 directory to `C:\Program Files`, this is where your software applicaiton files are stored.  You can move it using your GUI, or using Git-Bash. Then update your computerʻs search paths so that you can run iqtree2 from the command line from any directory. 
+
+__Using the GUI__, Move this directory to `C:\Program Files`, so the path to the iqtree binary should be `C:\Program Files\iqtree-2.1.2-Windows\bin\iqtree2.exe`. We are writing to Program Files, which is a protected folder so it will ask you to grant Adminstrator priviledges. 
+
+OR - __Using Git-Bash__: 
+
+::: callout-note
+# Installing Git-Bash
+If you need to install Git-Bash, download it from here: <https://gitforwindows.org>
+**Choose these components during installation:**
+
+-  Windows Explorer Integration
+      - Git Bash Here
+      - Git GUI Here
+- Git LFS
+- Associate .git* configuration files with the default text editor
+- Associate .sh files to be run with Bash
+- Add a Git Bash profile to Windows Terminal
+
+:::
+
+To write files to the `C:\Program Files\` directory, you will have to __run Git-Bash as administrator__, so do the following: 
+
+1. Click the Windows Start button and type `Git-Bash`.
+2. You should see several options under `Git-Bash` on the right. Click on "Run as administrator". If you donʻt see the options, click on the little ">" to the right of Git Bash, and this sub menu should appear. Use "Run as administrator".
+3. Execute the bash commands below
+
+#### Using git-bash:
+
+```{.bash filename=Git-bash}
+cd Downloads
+ls
+```
+Check if the directory is there an unzipped. If it is zipped, run:
+
+```{.bash filename=Git-bash}
+unzip iqtree-2.1.2-Windows.zip
+```
+
+Move to files to the application folder. Be sure to use __double quotes__ around the path because of the space.
+
+```{.bash filename=Git-bash}
+mv iqtree-2.1.2-Windows "/C/Program Files/"
+```
+
+Finally, add the path to the binary to the bash search path:
+
+```{.bash filename=Git-bash}
+export PATH=$PATH:"/C/Program Files/iqtree-2.1.2-Windows/bin"
+```
+Now you can just type `iqtree2` from Git-bash and it should run iqtree from any folder. If you type `$PATH` at the command line, you should see the path you just added along with paths to many other software applications that are installed. 
+
+### Mac users
+
+Open a terminal and type `$PATH`. You will see the search paths that your computer looks through when you execute commands. 
+
+```{.bash filename=Terminal}
+$PATH
+```
+You will see the following paths, separated by `:`, along with many others. These are the directories that your computer searches through when you type commands on the command line searching for a match to the software you are executing.
+
+```{.bash filename=Terminal}
+/opt/local/bin:/opt/local/sbin:/usr/local/bin:
+```
+
+If we save (a link to) the binary for IQTREE2 `/opt/local/bin`, then we can execute the command `iqtree2` from any directory without worrying about specifying the path to the applicaiton. 
+
+Check out the directory `/opt/local/`. List the details of the `bin` subdirectory and notice that some of the applicaitons saved there are actually symbolic links 
+
+```{.bash filename=Terminal}
+cd /opt/local/bin
+ls -la
+```
+
+You will see something like this, along with many other binaries:
+```{.bash filename=Terminal}
+lrwxr-xr-x    1 root      wheel        40 Feb  7 09:30 c_rehash -> /opt/local/libexec/openssl3/bin/c_rehash
+-rwxr-xr-x    1 macports  wheel  10425872 Dec 10 22:28 cmake
+```
+
+In the example above, `c_rehash` is a sybmolic link that is pointing to the location of the actual location of the binary which is in the a program directory within the `libexec/` subdirectory of `/opt/local`.  On the other hand, `cmake` is the binary itself. 
+
+Letʻs move the __iqtree2__ directory to `/opt/local/libexec/`. Then you will have to make a symbolic link to iqtree2 in `/opt/local/bin`. Start by downloading the zipped directory. It should automatically unzip. Assuming it downloaded to your Downloads folder, open a terminal and issue the following commands:
+
+```{.bash filename=Terminal}
+cd ~
+ls Downloads
+```
+
+You should see the `iqtree-2.1.2-MacOSX` folder inside of your Downloads folder.  We will now move the iqtree folder to the place where user installed software is saved. You will probably be denied permission to just use `mv folder_from folder_to` because it is in a protected place on your harddrive, so you will have to use `sudo` for __superuser do__, and it will ask for your computer password to confirm.
+
+```{.bash filename=Terminal}
+sudo mv Downloads/iqtree-2.1.2-MacOSX /opt/local/libexec
+```
+
+The directory should now be there:
+
+```{.bash filename=Terminal}
+ls /opt/local/libexec
+```
+
+Now make a symbolic link in the `/opt/local/bin` folder to your iqtree executable:  `ln -s /path/to/original /path/to/link` 
+
+```{.bash filename=Terminal}
+ln -s /opt/local/libexec/iqtree-2.1.2-MacOSX/bin/iqtree2 /opt/local/bin/iqtree2
+```
+
+If you get a permission denied, add "sudo " in front of the line to create a symbolic link. After you do that, you can just run iqtree2 on the command line from directory and it will find the app along your computerʻs searchpath. Now type `iqtree2` on the command line. You should see a message like this with nine examples:
+
+```{.bash filename=Terminal}
+IQ-TREE multicore version 2.1.2 COVID-edition for Mac OS X 64-bit built Oct 22 2020
+Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
+Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Command-line examples (replace 'iqtree2 ...' by actual path to executable):
+
+1. Infer maximum-likelihood tree from a sequence alignment (example.phy)
+   with the best-fit model automatically selected by ModelFinder:
+     iqtree2 -s example.phy
+
+2. Perform ModelFinder without subsequent tree inference:
+     iqtree2 -s example.phy -m MF
+   (use '-m TEST' to resemble jModelTest/ProtTest)
+
+...
+```
+
+## Multiple installations of iqtree2
+
+If you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.2.2.3, (latest pre-release version) you could name that binary `iqtree2.2.2.3` or `iqtree2beta` etc. so as to have one unique name per software application.  
+
+
+# Setup your Tutorial Folder
+
+Make a folder for this exercise `TurtleTutorial` somewhere convenient  (in your `rclass` folder?). 
+
+-  Download these files into it:
+      -  [turtle.fa](http://www.iqtree.org/workshop/data/turtle.fa) : A sequence alignment (in FASTA format) which is a subset of the original dataset used to assess the phylogenetic position of Turtles relative to Crocodiles and Birds [Chiari et al., 2012](https://doi.org/10.1186/1741-7007-10-65).
+      -  [turtle.nex](http://www.iqtree.org/workshop/data/turtle.nex) : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes. 
+
+-  The R script [`concordance.R`](../../code/concordance.R) 
+
+-  The IQTREE shell script [`iqtreerun.sh`](../../code/iqtreerun.R) 
+
+
+# Test your IQTREE installation
+
+From a terminal window, navigate to your `TurtleTutorial` directory and check if iqtree works:
+
+```{.bash filename=Terminal}
+iqtree2
+iqtree2 -s turtle.fa
+```
+
+It should begin running iqtree and you will see messages during execution. 
+
+# R packages you will need
+
+-  Start up R and install any necessary packages that you need to install:
+      - `viridis`
+      - `GGally`
+      - `entropy`
+      - `ggplot2`
+      - `dplyr`
+      - `ggrepel`
+
+You are all set to use __iqtree2__! 
+
+# IQTREE documentation
+
+- [IQTREE quickstart]](http://www.iqtree.org/doc/Quickstart)      
+
+- IQTREE documentation <http://www.iqtree.org/doc/> 
+      
+- Command Line Reference (when you get more familiar with it) <http://www.iqtree.org/doc/Command-Reference>
+

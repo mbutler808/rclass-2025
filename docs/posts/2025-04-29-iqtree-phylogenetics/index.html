@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2025-04-29">
+<meta name="description" content="Maximum Likelihood phylogenetic tree inference and gene-tree species-tree concordance">
+<title>Phylogenetic Inference with IQTREE2 – ZOOL710 Data Science in R for Biologists 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2c128a76c5dbb243be50ea3089ffe19d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mbutler808"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mbutler808"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Phylogenetic Inference with IQTREE2</h1>
+                  <div>
+        <div class="description">
+          Maximum Likelihood phylogenetic tree inference and gene-tree species-tree concordance
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">module 7</div>
+                <div class="quarto-category">week 13</div>
+                <div class="quarto-category">iqtree2</div>
+                <div class="quarto-category">phylogenetic inference</div>
+                <div class="quarto-category">command line</div>
+                <div class="quarto-category">gene concordance</div>
+                <div class="quarto-category">site concordance</div>
+                <div class="quarto-category">gene tree</div>
+                <div class="quarto-category">species tree</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://butlerlab.org">Marguerite Butler</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              School of Life Sciences, University of Hawaii
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 29, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#iqtree-and-ml-phylogenetic-inference-lecture" id="toc-iqtree-and-ml-phylogenetic-inference-lecture" class="nav-link" data-scroll-target="#iqtree-and-ml-phylogenetic-inference-lecture">IQTREE and ML phylogenetic inference lecture</a></li>
+  <li>
+<a href="#infer-the-turtle-phylogeny-with-iqtree" id="toc-infer-the-turtle-phylogeny-with-iqtree" class="nav-link" data-scroll-target="#infer-the-turtle-phylogeny-with-iqtree">Infer the Turtle Phylogeny with IQTREE</a>
+  <ul class="collapse">
+<li><a href="#the-theoretical-problem" id="toc-the-theoretical-problem" class="nav-link" data-scroll-target="#the-theoretical-problem">The theoretical problem</a></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The data</a></li>
+  <li>
+<a href="#species-trees" id="toc-species-trees" class="nav-link" data-scroll-target="#species-trees">Species Trees</a>
+  <ul class="collapse">
+<li><a href="#simplest-phylogeny" id="toc-simplest-phylogeny" class="nav-link" data-scroll-target="#simplest-phylogeny">Simplest phylogeny</a></li>
+  <li><a href="#species-tree-partitioned-by-locus" id="toc-species-tree-partitioned-by-locus" class="nav-link" data-scroll-target="#species-tree-partitioned-by-locus">Species Tree partitioned by locus</a></li>
+  <li><a href="#gene-trees" id="toc-gene-trees" class="nav-link" data-scroll-target="#gene-trees">Gene Trees</a></li>
+  </ul>
+</li>
+  <li><a href="#concordance-factors" id="toc-concordance-factors" class="nav-link" data-scroll-target="#concordance-factors">Concordance factors</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#further-analyses-of-iqtree-outputs" id="toc-further-analyses-of-iqtree-outputs" class="nav-link" data-scroll-target="#further-analyses-of-iqtree-outputs">Further analyses of IQTREE outputs</a>
+  <ul class="collapse">
+<li><a href="#using-concordance-factors-to-understand-your-data" id="toc-using-concordance-factors-to-understand-your-data" class="nav-link" data-scroll-target="#using-concordance-factors-to-understand-your-data">Using concordance factors to understand your data</a></li>
+  </ul>
+</li>
+  <li><a href="#how-concordance-factors-relate-to-each-other-and-to-bootstraps" id="toc-how-concordance-factors-relate-to-each-other-and-to-bootstraps" class="nav-link" data-scroll-target="#how-concordance-factors-relate-to-each-other-and-to-bootstraps">How concordance factors relate to each other and to bootstraps</a></li>
+  <li><a href="#digging-deeper-using-discordance-factors" id="toc-digging-deeper-using-discordance-factors" class="nav-link" data-scroll-target="#digging-deeper-using-discordance-factors">Digging deeper using discordance factors</a></li>
+  <li><a href="#using-concordance-factors-to-test-the-assumptions-of-an-ils-model" id="toc-using-concordance-factors-to-test-the-assumptions-of-an-ils-model" class="nav-link" data-scroll-target="#using-concordance-factors-to-test-the-assumptions-of-an-ils-model">Using concordance factors to test the assumptions of an ILS model</a></li>
+  <li><a href="#internode-certainty" id="toc-internode-certainty" class="nav-link" data-scroll-target="#internode-certainty">Internode certainty</a></li>
+  <li><a href="#iqtree-documentation" id="toc-iqtree-documentation" class="nav-link" data-scroll-target="#iqtree-documentation">IQTREE documentation</a></li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>References for this Material:</p>
+<ul>
+<li><p>The Gene Tree species tree tutorial by Bui Minh <a href="http://www.iqtree.org/workshop/molevol2022" class="uri">http://www.iqtree.org/workshop/molevol2022</a>. Please see for more information.</p></li>
+<li><p>And Rob Lanfearʻs excellent blog post about concordance factors <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a> with R code to help with analysis.</p></li>
+<li><p>See Methods Paper: Bui Quang Minh, Matthew W Hahn, Robert Lanfear New Methods to Calculate Concordance Factors for Phylogenomic Datasets Molecular Biology and Evolution, Volume 37, Issue 9, September 2020, Pages 2727–2733, <a href="https://doi.org/10.1093/molbev/msaa106" class="uri">https://doi.org/10.1093/molbev/msaa106</a></p></li>
+</ul></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>At the end of this lesson you will:</strong></p>
+<ul>
+<li>Understand where user-installed software goes on your computer</li>
+<li>Be able to install software and update the search paths to run from the command line</li>
+<li>Run iqtree2 from the command line on your own computer</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Setup iqtree software
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Instructions for installing IQTREE2 and setup for this lession were provided in the <a href="../2023-04-13-iqtree-setup/index.qmd">previous lesson</a>.</p>
+<section id="setup-your-tutorial-folder" class="level4"><h4 class="anchored" data-anchor-id="setup-your-tutorial-folder">Setup your Tutorial Folder</h4>
+<p>Make a <code>TurtleTutorial</code> folder, add the following files/folders:</p>
+<ul>
+<li>Make an <code>input</code> folder and put these files into it:
+<ul>
+<li>
+<a href="http://www.iqtree.org/workshop/data/turtle.fa">turtle.fa</a> : A sequence alignment (in FASTA format) which is a subset of the original dataset used to assess the phylogenetic position of Turtles relative to Crocodiles and Birds <a href="https://doi.org/10.1186/1741-7007-10-65">Chiari et al., 2012</a>.<br>
+</li>
+<li>
+<a href="http://www.iqtree.org/workshop/data/turtle.nex">turtle.nex</a> : The partition file (in NEXUS format) defining 29 genes, which are a subset of the original dataset of 248 genes.<br>
+</li>
+</ul>
+</li>
+<li>The R script <a href="../../code/concordance.R"><code>concordance.R</code></a>
+</li>
+<li>iqtree shell script: <a href="../../code/iqtreerun.sh"><code>iqtreerun.sh</code></a>
+</li>
+<li>If you donʻt want to setup IQTREE2 and infer the phylogenies yourself, you can clone the repo (or to get the files, clone the repo, delete the out directories, and run the scripts to get the phylogenies yourself) <a href="https://github.com/mbutler808/TurtleTutorial" class="uri">https://github.com/mbutler808/TurtleTutorial</a>
+</li>
+</ul></section><section id="r-packages-you-will-need" class="level4"><h4 class="anchored" data-anchor-id="r-packages-you-will-need">R packages you will need</h4>
+<ul>
+<li><code>viridis</code></li>
+<li><code>GGally</code></li>
+<li><code>entropy</code></li>
+<li><code>ggplot2</code></li>
+<li><code>dplyr</code></li>
+<li><code>ggrepel</code></li>
+</ul></section>
+</div>
+</div>
+</section><section id="overview" class="level1"><h1>Overview</h1>
+<p>When inferring phylogenies from sequence data, it is important to provide support values, usually at the nodes, to indicate how much evidence there is for each split along the phylogeny. The most common and familar are nodal support values - <strong>bootstrap support</strong> in percent for <strong>maximum likelihood trees</strong>, and <strong>posterior probability</strong> for trees inferred by <strong>Bayesian inference</strong>.</p>
+<p>IQTREE2 is software for the inference of phylogenies by <strong>Maximum Likelihood</strong> <span class="citation" data-cites="Minh:2020">(<a href="#ref-Minh:2020" role="doc-biblioref">Minh et al. 2020</a>)</span>. Several additional modules are bundled with IQTREE2. <strong>ModelFinder</strong> searches for the best substition models prior to phylogenetic inference <span class="citation" data-cites="Kalyaanamoorthy:2017">(<a href="#ref-Kalyaanamoorthy:2017" role="doc-biblioref">Kalyaanamoorthy et al. 2017</a>)</span>. ModelFinder can also combine partitions to reduce overparameterization, similar to <strong>PartitionFinder</strong> <span class="citation" data-cites="Lanfear:2016">(<a href="#ref-Lanfear:2016" role="doc-biblioref">Lanfear et al. 2016</a>)</span>.</p>
+<p>There is an increasing recognition that nodal support is not enough. Most phylogenetic analyses are now multi-locus, with data from several to hundred of genes. More studies are discovering that not all of the loci may agree – sometimes certain loci will support one topology whereas others may support an alternative topology. This is called gene-tree species-tree discordance. It can arise by evolutionary mechanisms such as incomplete lineage sorting when you have rapid radiation (short branch lengths in parts of the tree), where ancestral alleles do not have sufficient time to sort themselves out amongst the descendant lineages to reflect the history of cladogenesis, or it can arise by noisy data. Either way, if you have gene-tree species-tree discordance, it will erode support at nodes, or in the worst case, appear to strongly support a spurious evolutionary scenario. We can test for concordance between gene trees and species trees <span class="citation" data-cites="Minh:2020a">(<a href="#ref-Minh:2020a" role="doc-biblioref">Minh, Hahn, and Lanfear 2020</a>)</span></p>
+<p>In this module we will learn how to use <a href="www.iqtree.org">IQTREE2</a> to infer phylogenetic trees (both species trees and gene trees), and compute several concordance factors. Gene concordance and discordance factors, and site concordance and discordance factors (site = position along the DNA sequence). We will use R to read in and explore the output from IQTREE.</p>
+</section><section id="iqtree-and-ml-phylogenetic-inference-lecture" class="level1"><h1>IQTREE and ML phylogenetic inference lecture</h1>
+<p>We will review Bui Quang Minhʻs (<a href="https://bqminh.github.io/people/minh/">Minh Bùi</a>) <a href="https://github.com/simon-ho/SydneyPhyloWorkshop/blob/master/Lecture2_1.IQTREE.pdf">lecture on IQTREE2</a> and how it addresses some issues in maximum likelihood inference of phylogenetics.</p>
+<p>Here is an illustration of phylogenetic inference by Maximum Likelihood (<a href="#fig-ml" class="quarto-xref">Figure&nbsp;1</a>). The likelihood of the tree is calculated given the data (here, the DNA sequence at each position or site). Each site is considered an independent data point, and each variable site provides some information about how closely related the taxa are. The likelihood is an expression of a combined probability across all of the sites, assuming a particular substitution model (the best substitution models are what ModelFinder or PartitionFinder finds). The topology and branch lengths that provide the Maximum Likelihood of the data is the ML tree.</p>
+<div id="fig-ml" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ml-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../images/Site_pattern_frequencies_models.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ml-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Figure: An illustration of phylogenetic inference by Maximum Likelihood. A multiple sequence alignment (here, DNA sequences), and DNA substitution models are used to make evolutionary inferences among the taxa (four species t1 through t4). The data in this alignment (in this case a toy example with 18 sites) is converted to a set of site patterns. The site patterns are shown along with the number of times they occur in alignment. These site patterns are used to calculate the likelihood given the substitution model and a phylogenetic tree (in this case an unrooted four-taxon tree). It is also necessary to assume a substitution model to estimate evolutionary distances for pairs of sequences (distances are the number of substitutions that have occurred since sequences had a common ancestor). The evolutionary distance equation (d12) is based on the simple model proposed by Jukes and Cantor in 1969. The equation transforms the proportion of nucleotide differences between taxa 1 and 2 (p12 = 4/18; the four site patterns that differ between taxa 1 and 2 are indicated with asterisks) into an evolutionary distance (in this case d12=0.2635 substitutions per site).
+</figcaption></figure>
+</div>
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=95686405">Source: By EBraun68 - Own work, CC BY-SA 4.0</a></p>
+</section><section id="infer-the-turtle-phylogeny-with-iqtree" class="level1"><h1>Infer the Turtle Phylogeny with IQTREE</h1>
+<section id="the-theoretical-problem" class="level2"><h2 class="anchored" data-anchor-id="the-theoretical-problem">The theoretical problem</h2>
+<p>The position of turtles among vertebrates has been enigmatic for decades (<a href="#fig-turtle" class="quarto-xref">Figure&nbsp;2</a>). At various times it has been allied more closely with mammals or lizards. It is one of those truly hard biological problems. Even with the development of genomics, the position of turtles with respect to crocodiles and birds remains a hot topic of research as of late.</p>
+<div id="fig-turtle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-turtle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../images/turtle.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-turtle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The changing position of turtles. Image by Jeremy Brown, from IQTREE tutorial
+</figcaption></figure>
+</div>
+<p><a href="http://www.iqtree.org/workshop/molevol2022">Source: Jeremy Brown</a></p>
+<p>Importantly, different groups have gotten different answers even with 100% bootstrap support at the nodes. This highlights a problem that can occur when we have gene trees that conflict with the species tree. This can occur through incomplete lineage sorting (you will see ILS a lot in the literature; <a href="#fig-ils" class="quarto-xref">Figure&nbsp;3</a>), or via hybridization, or other mechanisms.</p>
+<div id="fig-ils" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ils-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../images/Incomplete-Lineage-Sorting.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ils-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Incomplete Lineage Sorting. The species tree (thick gray history) in relation to a gene tree (thin colored history). New lineages arising from murations in the gene are represented by changes in color. Differences in the history of the gene versus the species can occur when the two alleles in the population prior to the split of Dmel are maintained through to the split of Dere and Dyak, leading to maintenance of an ancestral polymorphism and incomplete lineage sorting. The species tree is now incongruent with the gene tree (tree 2). The greater the diversity in the ancestral population and the shorter the time between speciation events, the more likely we are to see gene-tree species tree conflict.
+</figcaption></figure>
+</div>
+<p>Source: <span class="citation" data-cites="Pollard:2006">(<a href="#ref-Pollard:2006" role="doc-biblioref">Pollard et al. 2006</a>)</span></p>
+</section><section id="the-data" class="level2"><h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<p>The original genomic data comes from <span class="citation" data-cites="Chiari:2012">(<a href="#ref-Chiari:2012" role="doc-biblioref">Chiari et al. 2012</a>)</span>. We are analyzing a subset of 29 genes from the original 248 genes, as well as a subset of taxa (to allow faster runs), presented in Bui Minhʻs <a href="http://www.iqtree.org/workshop/molevol2022">tutorial</a>. We will use IQTREE2 to generate the phylogenetic data, and then use R to analyze some of the output. We are just going to do the basics, for more indepth coverage see <a href="http://www.iqtree.org/workshop/molevol2022">Minh Buiʻs tutorial</a>.</p>
+</section><section id="species-trees" class="level2"><h2 class="anchored" data-anchor-id="species-trees">Species Trees</h2>
+<p>A shell script for thes IQTREE commands are in <code>iqtreerun.sh</code></p>
+<section id="simplest-phylogeny" class="level3"><h3 class="anchored" data-anchor-id="simplest-phylogeny">Simplest phylogeny</h3>
+<p><a href="http://www.iqtree.org">IQTREE2</a> is the latest version of the IQTREE software. It runs on the command line, and each run generates a number of output files. To keep organized, it is a good idea to save your iqtree commands as a shell script, and to make input and output directories.</p>
+<p>Mac users open your <code>Terminal</code>, Windows users open your <code>Git-Bash</code>, navigate to your <code>TurtleTutorial</code> folder.</p>
+<p>The simple command below will find the best-fit model using ModelFinder, reconstruct the ML tree, and calculate branch supports using the ultrafast boostrap.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree2</span> <span class="at">-s</span> input/turtle.fa <span class="at">-B</span> 1000 <span class="at">-T</span> AUTO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li>
+<code>-s input/turtle.fa</code> the path to the input alignment in <code>turtle.fa</code>.<br>
+</li>
+<li>
+<code>-B 1000</code> 1000 replicates for the ultrafast bootstrap (Minh et al., 2013).<br>
+</li>
+<li>
+<code>-T AUTO</code> auto select the best number of CPU cores to speed up the analysis.</li>
+</ul>
+<p><strong>Output files (in <code>out</code>):</strong></p>
+<ul>
+<li>
+<code>turtle.fa.iqtree</code> the main report file that is self-readable. You should look at this file to see the computational results. It also contains a textual representation of the final tree.<br>
+</li>
+<li>
+<code>turtle.fa.treefile</code> the ML tree in NEWICK format, which can be visualized in FigTree or any other tree viewer program.<br>
+</li>
+<li>
+<code>turtle.fa.log</code> log file of the entire run (also printed on the screen).<br>
+</li>
+<li>
+<code>turtle.fa.ckp.gz</code> checkpoint file used to resume an interrupted analysis.<br>
+… and a few other files.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Look at the report file <code>turtle.fa.iqtree</code>, and the log file <code>turtle.fa.log</code>.</li>
+<li>What is the best-fit model name? What do you know about this model? (see <a href="http://www.iqtree.org/doc/Substitution-Models">substitution models</a> available in IQ-TREE)</li>
+<li>What are the AIC/AICc/BIC scores of this model and tree?</li>
+<li>Visualise the tree <code>turtle.fa.treefile</code> in a tree viewer software like <a href="http://tree.bio.ed.ac.uk/software/figtree/">FigTree</a> (or read into R with <code>ape</code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>).<br>
+</li>
+<li>What relationship among three trees does this tree support?</li>
+<li>What is the ultrafast bootstrap support (%) for the relevant clade?</li>
+<li>Does this tree agree with the published tree <span class="citation" data-cites="Chiari:2012">(<a href="#ref-Chiari:2012" role="doc-biblioref">Chiari et al. 2012</a>)</span>?</li>
+</ul>
+</div>
+</div>
+</section><section id="species-tree-partitioned-by-locus" class="level3"><h3 class="anchored" data-anchor-id="species-tree-partitioned-by-locus">Species Tree partitioned by locus</h3>
+<p>It is well known that some genes evolve faster than others (for example nuclear protein-coding genes vs.&nbsp;mitochondrial genes vs.&nbsp;non-coding genes). Partitioning by locus allows the rate of substitution for each locus to be scaled to different evolutionary rates for an improved fit of the evolutionary model to the observed DNA sequence data.</p>
+<p>We add a partition file indicating where the loci are in the alighment:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># infer the species tree with 1000 ultrafast bootstraps </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and an edge-linked fully-partitioned model </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree2</span> <span class="at">-s</span> input/turtle.fa <span class="at">-p</span> input/turtle.nex <span class="at">--prefix</span> out/species <span class="at">-B</span> 1000 <span class="at">-nt</span> AUTO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li>
+<code>-p input/turtle.nex</code> the partition file that delimits the partitions in the alighment to specify an edge-linked proportional partition model (Chernomor et al., 2016). There is one set of branch lengths for the phylogeny, but each partition can have proportionally shorter or longer tree length (= same as slower or faster evolutionary rates, respectively).</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Look at the report file <code>turtle.fa.iqtree</code>, and the log file <code>turtle.fa.log</code>.</li>
+<li>What are the AIC/AICc/BIC scores of this model and tree? How does it compare?</li>
+<li>What relationship among three trees does this tree support?</li>
+</ul>
+</div>
+</div>
+</section><section id="gene-trees" class="level3"><h3 class="anchored" data-anchor-id="gene-trees">Gene Trees</h3>
+<p>We will now infer a separate phylogeny for each locus (= gene). It is really easy to compute gene trees in IQTREE. The same inputs are used as for the paritioned model, but we just tell IQTREE to estimate each gene tree separately with a different (<code>-S</code>) flag for the partition file:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># infer single-locus trees  </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree2</span> <span class="at">-s</span> input/turtle.fa <span class="at">-S</span> input/turtle.nex <span class="at">-m</span> TEST <span class="at">--prefix</span> out/loci <span class="at">-B</span> 1000 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li>
+<code>-S input/turtle.nex</code> to infer separate trees for every partition in <code>turtle.nex</code>. All output files are similar to a partition analysis, except that the tree <code>turtle.loci.treefile</code> now contains multiple trees - one for each gene.</li>
+</ul></section></section><section id="concordance-factors" class="level2"><h2 class="anchored" data-anchor-id="concordance-factors">Concordance factors</h2>
+<p>Typcial phylogenetic inference methods essentially imply that gene trees and species tree are one and the same. However, it is well known that gene trees might be discordant (i.e., individual genes may have differet histories). We can actually check with large multilocus datasets (with many loci of sufficient length). Therefore, we now want to quantify the agreement between gene trees and species tree in a so-called concordance factor <span class="citation" data-cites="Minh:2020a">(<a href="#ref-Minh:2020a" role="doc-biblioref">Minh, Hahn, and Lanfear 2020</a>)</span>.</p>
+<p>You can now compute gene concordance factor (gCF) and site concordance factor (sCF) for the tree inferred under the partition model:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># locus modelfinder species tree vs. single-locus trees </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree2</span> <span class="at">-t</span> out/species.treefile <span class="at">--gcf</span> out/loci.treefile <span class="at">-s</span> input/turtle.fa <span class="at">--scf</span> 100 <span class="at">--prefix</span> out/concord </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Run options explained:</strong></p>
+<ul>
+<li>
+<code>-t out/species.treefile</code> to specify the species tree. We use tree under the partitioned model here, but you can of course use the other tree.</li>
+<li>
+<code>--gcf out/loci.treefile</code> to specify a gene-trees file.</li>
+<li>
+<code>--scf 100</code> to draw 100 random quartets when computing sCF.</li>
+</ul>
+<p><strong>Output files (in <code>out</code>):</strong></p>
+<ul>
+<li>
+<code>concord.cf.tree</code>: tree file where branches are annotated with bootstrap/gCF/sCF values.</li>
+<li>
+<code>concord.cf.stat</code>: a table file with various statistics for every branch of the tree.</li>
+</ul>
+<p>Similarly, you can compute gCF and sCF for the tree under different species trees, for example if you generate an unpartitioned model:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree2</span> <span class="at">-t</span> out/unpartitioned.treefile <span class="at">--gcf</span> out/loci.treefile <span class="at">-s</span> input/turtle.fa <span class="at">--scf</span> 100 <span class="at">--prefix</span> out/concord.unpartitioned </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you need to redo any of these analyses, add the <code>-redo</code> flag at the end of the command.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Gene concordance factor (gCF) is the percentage of decisive gene trees concordant with a particular branch of the species tree (0% &lt;= gCF(b) &lt;= 100%). gCF=0% means that branch b does not occur in any gene trees, whereas gCF=100% means that branch b occurs in every gene tree.<br>
+</li>
+<li>Site concordance factor (sCF) is the percentage of decisive (parsimony informative) alignment sites supporting a particular branch of the species tree (~33% &lt;= sCF(b) &lt;= 100%). sCF&lt;33% means that another discordant branch b’ is more supported, whereas sCF=100% means that branch b is supported by all sites.<br>
+</li>
+<li>
+<strong>CAUTION</strong> when gCF ~ 0% or sCF &lt; 33%, even if boostrap supports are ~100%!</li>
+<li>
+<strong>GREAT</strong> when gCF and sCF &gt; 50% (i.e., branch is supported by a majority of genes and sites).</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Visualise <code>concord.cf.tree.nex</code> in FigTree.</li>
+<li>Explore gene concordance factor (gCF), gene discordance factors (gDF1, gDF2, gDFP), site concordance factor (sCF) and site discordance factors (sDF1, sDF2).</li>
+<li>How do gCF and sCF values look compared with bootstrap supports?</li>
+</ul>
+</div>
+</div>
+</section></section><section id="further-analyses-of-iqtree-outputs" class="level1"><h1>Further analyses of IQTREE outputs</h1>
+<p>The code and analysis that follows was borrowed and adapted from Rob Lanfearʻs excellent blog on exploring gene-tree species-tree concordance <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a>. This is an excellent example of how to integrate output from other analysis software with R code.</p>
+<p>An R script for these analyses is in <code>concordance.R</code></p>
+<section id="using-concordance-factors-to-understand-your-data" class="level2"><h2 class="anchored" data-anchor-id="using-concordance-factors-to-understand-your-data">Using concordance factors to understand your data</h2>
+<p>The first step is just to look at the concordance factors on the tree. To do this, load the output tree (concord.cf.tree) in any tree viewer such as Figtree or you can use R. In this tree, each branch label shows bootstrap / gCF / sCF.</p>
+<p>We can also plot the trees using <code>ggtree</code> (but for a first look around I usually use FigTree).</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridis/">viridis</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://strimmerlab.github.io/software/entropy/">entropy</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+logical.return = TRUE, : there is no package called 'entropy'</code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/">ggtree</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://yulab-smu.top/contribution-tree-data/">treeio</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/">tidytree</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://ggrepel.slowkow.com/">ggrepel</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># read the data</span></span>
+<span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"out/concord.cf.stat"</span>, header <span class="op">=</span> <span class="cn">T</span>, comment.char<span class="op">=</span><span class="st">'#'</span><span class="op">)</span></span>
+<span>               </span>
+<span><span class="co"># rename the bootstrap and branchlength columns</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">==</span><span class="st">"Label"</span><span class="op">]</span> <span class="op">=</span> <span class="st">"bootstrap"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">==</span><span class="st">"Length"</span><span class="op">]</span> <span class="op">=</span> <span class="st">"branchlength"</span></span>
+<span></span>
+<span><span class="co"># plot the tree</span></span>
+<span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/treeio/man/read.iqtree.html">read.iqtree</a></span><span class="op">(</span><span class="st">"out/concord.cf.tree"</span><span class="op">)</span>  <span class="co"># read in tree file</span></span>
+<span><span class="va">tib</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="va">d</span><span class="op">$</span><span class="va">node</span> <span class="op">&lt;-</span> <span class="va">d</span><span class="op">$</span><span class="va">ID</span> <span class="op">+</span> <span class="fl">1</span>  <span class="co"># need to +1 to make IQTREE node numbers = ggtree </span></span>
+<span></span>
+<span><span class="co"># merge the tree and data </span></span>
+<span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">tib</span>, <span class="va">d</span>, by <span class="op">=</span> <span class="st">"node"</span><span class="op">)</span>  <span class="co"># combine the tree (tib) and data (d)</span></span>
+<span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidytree/man/as.treedata.html">as.treedata</a></span><span class="op">(</span><span class="va">td</span><span class="op">)</span>       <span class="co"># coerce to treedata format (td)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html">ggtree</a></span><span class="op">(</span><span class="va">td</span><span class="op">)</span> <span class="op">+</span>          <span class="co"># plot tree</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"right"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_tiplab.html">geom_tiplab</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>                         <span class="co"># add tip labels</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_label2.html">geom_label2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">label</span>, subset<span class="op">=</span><span class="op">!</span><span class="va">isTip</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span>  <span class="co"># add node labels </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The turtle clade contains <strong>Chelonoidis</strong> to <strong>Phrynops</strong>. Which clade do turtles group with? This part of the tree immediately illustrates the most important point: bootstraps and concordance factors are giving you very different information about each branch in the tree. Just take a look at how different the three numbers can be!</p>
+</section></section><section id="how-concordance-factors-relate-to-each-other-and-to-bootstraps" class="level1"><h1>How concordance factors relate to each other and to bootstraps</h1>
+<p>More generally, we can look at the links between bootstrap, gCF, and sCF across all nodes of the tree. This is simple to do in R, because IQ-TREE outputs a tab-delimited file that’s easy to read called concord.cf.stat. This file has one row per branch in the tree, and gives a lot of details on the statistics for each branch.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># plot the values</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gCF</span>, y <span class="op">=</span> <span class="va">sCF</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">bootstrap</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_colour_viridis</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows a few important things. First, <em>low bootstrap values (bright colours) coincide with the lowest gCF and sCF values, as expected</em>. You can only get a low bootstrap value when the there’s very limited information on that branch in the alignment. And if there’s very little information, there will be very few sites (and therefore genes) that can support a branch.</p>
+<p><strong>However, it is possible to have low gCF and sCF even with high bootstrap values.</strong> It turns out that <em>bootstrap values max out at 100% pretty quickly</em>, which tends to happen with very large datasets such as provided by Next-Gen sequencing.</p>
+<p>Finally, <strong>sCF values have a minimum of ~30%</strong>, but <strong>gCF values can go all the way to 0%</strong>. This means that an sCF value ~30% is as low as you can possibly get. The range of possible values are simply a reflection of how these statistics are calculated. sCF values are calculated by comparing the three possible resolutions of quartet around a node, so when the data are completely equivocal about these resolutions, we expect an sCF value of 1 out of 3 or 33%. gCF values, on the other hand, are calculated from full gene trees, such that there are many more than 3 possible resolutions around a node, and the gCF value can be as low as 0% if no single gene tree contains a branch that’s present in the reference tree. This can happen when the genes are too short to contain informative sites (and happens more often deeper in the tree), or noisy data – a combination of biology and stochastic error that leads to a lot of gene-tree discordance.</p>
+<p>Sometimes we want to label points. <code>ggrepel()</code> is very helpful for this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># label the points</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gCF</span>, y <span class="op">=</span> <span class="va">sCF</span>, label <span class="op">=</span> <span class="va">ID</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">bootstrap</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_colour_viridis</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="digging-deeper-using-discordance-factors" class="level1"><h1>Digging deeper using discordance factors</h1>
+<p>First we need to find the ID of the problematic node:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># show branches of interest</span></span>
+<span><span class="va">d</span><span class="op">[</span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">ID</span><span class="op">==</span><span class="fl">20</span><span class="op">|</span><span class="va">d</span><span class="op">$</span><span class="va">ID</span><span class="op">==</span><span class="fl">22</span><span class="op">)</span>,<span class="op">]</span>  <span class="co"># these have lower bootstrap support than the others and have low gCF or sCF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ID   gCF gCF_N gDF1 gDF1_N  gDF2 gDF2_N  gDFP gDFP_N gN   sCF sCF_N  sDF1
+4 20 75.00     3 0.00      0 25.00      1  0.00      0  4 38.24 26.35 28.02
+6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 36.13 57.59 22.17
+  sDF1_N  sDF2 sDF2_N     sN bootstrap branchlength node
+4  19.59 33.75  23.71  69.65        51   0.00355984   21
+6  37.78 39.70  72.90 168.27        81   0.01865970   23</code></pre>
+</div>
+</div>
+<p>We can see that the problematic nodes have very short branch lengths, which is consistent with possible incomplete lineage sorting.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># plot the tree with colors to highlight support</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html">ggtree</a></span><span class="op">(</span><span class="va">td</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="va">SH_aLRT</span><span class="op">)</span>, size<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span>          <span class="co"># plot tree</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"right"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_tiplab.html">geom_tiplab</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span>                         <span class="co"># add tip labels</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_label2.html">geom_label2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">label</span>, subset<span class="op">=</span><span class="op">!</span><span class="va">isTip</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add node labels </span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_label2.html">geom_label2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">label</span>, subset<span class="op">=</span> <span class="op">(</span><span class="op">!</span><span class="va">isTip</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">node</span><span class="op">==</span><span class="fl">22</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"black"</span>, fill<span class="op">=</span><span class="st">"yellow"</span><span class="op">)</span> <span class="op">+</span>                  <span class="co"># highlight low bootstrap support </span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html">scale_color_continuous</a></span><span class="op">(</span>low<span class="op">=</span><span class="st">"yellow"</span>, high<span class="op">=</span><span class="st">"purple"</span><span class="op">)</span> <span class="co"># color the branches by bootstrap</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html">ggtree</a></span><span class="op">(</span><span class="va">td</span><span class="op">)</span> <span class="op">+</span>                                      <span class="co"># plot tree</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_tiplab.html">geom_tiplab</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>                               <span class="co"># plot tip labels</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/geom_label2.html">geom_label2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">node</span>, subset<span class="op">=</span> <span class="op">!</span><span class="va">isTip</span><span class="op">)</span><span class="op">)</span>  <span class="co"># plot node numbers </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="using-concordance-factors-to-test-the-assumptions-of-an-ils-model" class="level1"><h1>Using concordance factors to test the assumptions of an ILS model</h1>
+<p>If the discordance among gene trees and sites come from <em>incomplete lineage sorting</em>, different genes should randomly support one or the other of the discordant topologies. Thus, we can make a simple and testable prediction: that the number of gene trees or sites supporting the two discordant topologies should be roughly equal. Both of these ideas have been around for some time (for genes [link to Huson et al &amp; Steel 2005 Recomb] and for sites [link to Greene et al 2010]), and the IQ-TREE output lets us test them very easily.</p>
+<p>The basic idea is that we count up the genes or sites supporting the two discordant topologies, and use a chi-square test to see if they’re significantly different. This requires a number of assumptions to hold (see the papers linked above). A simple way to calculate the probability that the data can reject <strong>equal frequencies</strong> of discordant toplogogies (EFp) for genes (gEFp) and for sites (sEFp). In this case failure to reject the hypothesis of equal frequencies is compatible with ILS.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># first we use a slightly modified chisq function</span></span>
+<span><span class="co"># which behaves nicely when you feed it zeros</span></span>
+<span><span class="va">chisq</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">DF1</span>, <span class="va">DF2</span>, <span class="va">N</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="co"># converts percentages to counts, runs chisq, gets pvalue</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">DF1</span><span class="op">*</span><span class="va">N</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">DF2</span><span class="op">*</span><span class="va">N</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="co"># errors come if you give chisq two zeros</span></span>
+<span>        <span class="co"># but here we're sure that there's no difference</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">1.0</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">e</span> <span class="op">=</span> <span class="va">d</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gEF_p <span class="op">=</span> <span class="fu">chisq</span><span class="op">(</span><span class="va">gDF1</span>, <span class="va">gDF2</span>, <span class="va">gN</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sEF_p <span class="op">=</span> <span class="fu">chisq</span><span class="op">(</span><span class="va">sDF1</span>, <span class="va">sDF2</span>, <span class="va">sN</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>, <span class="op">(</span><span class="va">gEF_p</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">|</span> <span class="va">sEF_p</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ID   gCF gCF_N gDF1 gDF1_N  gDF2 gDF2_N  gDFP gDFP_N gN   sCF sCF_N  sDF1
+6 22 48.28    14 3.45      1 17.24      5 31.03      9 29 36.13 57.59 22.17
+  sDF1_N sDF2 sDF2_N     sN bootstrap branchlength node     gEF_p       sEF_p
+6  37.78 39.7   72.9 168.27        81    0.0186597   23 0.1024704 0.003849915</code></pre>
+</div>
+</div>
+</section><section id="internode-certainty" class="level1"><h1>Internode certainty</h1>
+<p>The last measure to quantify evidence for each branch is the <strong>internode certainty</strong> <span class="citation" data-cites="Salichos:2014">(<a href="#ref-Salichos:2014" role="doc-biblioref">Salichos, Stamatakis, and Rokas 2014</a>)</span>.</p>
+<p>the conflict along a given branch is</p>
+<p>Internode certainty quantifies the degree of certainty for each branch (individual internode). It finds the two most common conflicting bipartitions, and measures the log magnitude of their difference.</p>
+<p>We determine concordance in a clever way using set theory. We can think of each branch as splitting the tree into two subsets of taxa (bipartitions). What is so clever is that we donʻt have to compare the toplogies of the subtrees, just the taxa included. The task then comes down to checking for compatible intersections of the bipartitions. This makes it very easy (=fast) computationally. Hereʻs a figure from the paper by <a href="#fig-internode-conflict" class="quarto-xref">Figure&nbsp;4</a></p>
+<div id="fig-internode-conflict" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-internode-conflict-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../images/internode-conflict.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-internode-conflict-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Compatible and conflicting bipartitions. Bipartition A = {a, b, c, d, e | f, g, h, i, j} is composed of the partitions A1 = {{a, b, c, d, e}} and A2 = {f, g, h, i, j}, where a, b, c, d, e, f, g, h, i, and j are taxa. Bipartition B = {a, b, c | d, e, f, g, h, i, j} is composed of the partitions B1 = {a, b, c} and B2 = {d, e, f, g, h, i, j}, and bipartition C = {a, b, c, d, g | e, f, h, i, j} is composed of the partitions C1 = {a, b, c, d, g} and C2 = {e, f, h, i, j}.
+</figcaption></figure>
+</div>
+<p><span class="citation" data-cites="Salichos:2014">(Source: <a href="#ref-Salichos:2014" role="doc-biblioref">Salichos, Stamatakis, and Rokas 2014</a>)</span></p>
+<p>We check the compatibility of the biparitions by checking the intersections of their each possible set of bipartition pairs.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The definition of compatibility
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Two bipartitions <span class="math inline">\(A=A_1 | A_2\)</span> and <span class="math inline">\(B=B_1 | B_2\)</span> from the same taxon set are <strong>compatible</strong> <em>if and only if</em> at least one of the intersections of the four bipartition pairs (<span class="math inline">\(A_1 \cap B_1\)</span>, <span class="math inline">\(A_1 \cap B_2\)</span>, <span class="math inline">\(A_2 \cap B_1\)</span>, <span class="math inline">\(A_2 \cap B_2\)</span>) is empty (see citations in <span class="citation" data-cites="Salichos:2014">Salichos, Stamatakis, and Rokas (<a href="#ref-Salichos:2014" role="doc-biblioref">2014</a>)</span>).</p>
+</div>
+</div>
+<p>Bipartitions A and B are compatible because one of the intersections of their bipartition pairs (<span class="math inline">\(A_2 \cap B_1\)</span>) is empty.</p>
+<p><span class="math display">\[
+A_2 \cap B_1 =  \{f, g, h, i, j\} \cap \{a, b, c\} = \emptyset
+\]</span></p>
+<p>Bipartitions B and C are also compatible (<span class="math inline">\(B_1 \cap C_2\)</span> is empty).</p>
+<p><span class="math display">\[
+B_1 \cap C_2 =  \{a, b, c\} \cap \{e, f, h, i, j\} = \emptyset
+\]</span></p>
+<p>In contrast, bipartition C conflicts with A (or is incompatible) because none of the four intersections are empty:</p>
+<p><span class="math display">\[
+\begin{aligned}
+A_1 \cap C_1 &amp;=  \{{a, b, c, d, e}\} \cap \{a, b, c, d, g\} = \{a, b, c, d\}  \\
+A_1 \cap C_2 &amp;=  \{{a, b, c, d, e}\} \cap \{e, f, h, i, j\} = \{e\}  \\
+A_2 \cap C_1 &amp;=  \{{f, g, h, i, j}\} \cap \{a, b, c, d, g\} = \{a, b, c, d\}  \\  
+A_2 \cap C_2 &amp;=  \{{f, g, h, i, j}\} \cap \{e, f, h, i, j\} = \{e\}  
+\end{aligned}
+\]</span></p>
+<p>For a given branch, Internode Certainty (IC) values reflect the degree of conflict between the bipartition defining the branch (say X) and the most frequent conflicting biparition (say Y), which we can get by counting the number of concordant genes or sites for each bipartition. IC is then defined by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+IC &amp;= log_2(n) + \sum_{n=1}^2 P(X_n)log_2[P(X_n)] \\
+   &amp;= 1 + P(X)log_2[P(X)] + P(Y)log_2[P(Y)],
+\end{aligned}
+\]</span> where the frequencies of the bipartitons are:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(X) = X/(X + Y), \\  
+P(Y) = Y/(X + Y)
+\end{aligned}
+\]</span> and <span class="math inline">\(P(X) + P(Y) = 1.\)</span></p>
+<p>Therefore, IC values at or close to 1 indicate support for the given branch (i.e., absence of conflict), and IC values at or close to 0 indicate maximum conflict (i.e., equal support for both bipartitions).</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># calculate internode certainty</span></span>
+<span></span>
+<span><span class="va">IC</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">CF</span>, <span class="va">DF1</span>, <span class="va">DF2</span>, <span class="va">N</span><span class="op">)</span><span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="co"># convert to counts</span></span>
+<span>    <span class="va">X</span> <span class="op">=</span> <span class="va">CF</span> <span class="op">*</span> <span class="va">N</span> <span class="op">/</span> <span class="fl">100</span></span>
+<span>    <span class="va">Y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">DF1</span>, <span class="va">DF2</span><span class="op">)</span> <span class="op">*</span> <span class="va">N</span> <span class="op">/</span> <span class="fl">100</span></span>
+<span>        </span>
+<span>    <span class="va">pX</span> <span class="op">=</span> <span class="va">X</span><span class="op">/</span><span class="op">(</span><span class="va">X</span><span class="op">+</span><span class="va">Y</span><span class="op">)</span></span>
+<span>    <span class="va">pY</span> <span class="op">=</span> <span class="va">Y</span><span class="op">/</span><span class="op">(</span><span class="va">X</span><span class="op">+</span><span class="va">Y</span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="va">IC</span> <span class="op">=</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">pX</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">pX</span><span class="op">)</span> <span class="op">+</span></span>
+<span>             <span class="va">pY</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">pY</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">IC</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="va">e</span> <span class="op">=</span> <span class="va">e</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gIC <span class="op">=</span> <span class="fu">IC</span><span class="op">(</span><span class="va">gCF</span>, <span class="va">gDF1</span>, <span class="va">gDF2</span>, <span class="va">gN</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sIC <span class="op">=</span> <span class="fu">IC</span><span class="op">(</span><span class="va">sCF</span>, <span class="va">sDF1</span>, <span class="va">sDF2</span>, <span class="va">sN</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot it</span></span>
+<span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">e</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gCF"</span>, <span class="st">"sCF"</span>, <span class="st">"bootstrap"</span>, <span class="st">"gEF_p"</span>, <span class="st">"sEF_p"</span>, <span class="st">"gIC"</span>, <span class="st">"sIC"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Which nodes have IC near zero?</li>
+<li>How does it correspond to gCF, sCF, and bootstrap support?</li>
+</ul>
+</div>
+</div>
+<p>See Rob Lanfearʻs blog for detailed explanations of the following calculations <a href="http://www.robertlanfear.com/blog/files/concordance_factors.html" class="uri">http://www.robertlanfear.com/blog/files/concordance_factors.html</a>. This is an excellent example of how to integrate output from other analysis software with R code.</p>
+</section><section id="iqtree-documentation" class="level1"><h1>IQTREE documentation</h1>
+<ul>
+<li><p>[IQTREE quickstart]](http://www.iqtree.org/doc/Quickstart)</p></li>
+<li><p>IQTREE documentation <a href="http://www.iqtree.org/doc/" class="uri">http://www.iqtree.org/doc/</a></p></li>
+<li><p>Command Line Reference (when you get more familiar with it) <a href="http://www.iqtree.org/doc/Command-Reference" class="uri">http://www.iqtree.org/doc/Command-Reference</a></p></li>
+</ul>
+
+
+
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Chiari:2012" class="csl-entry" role="listitem">
+Chiari, Ylenia, Vincent Cahais, Nicolas Galtier, and Frédéric Delsuc. 2012. <span>“Phylogenomic Analyses Support the Position of Turtles as the Sister Group of Birds and Crocodiles (Archosauria).”</span> <em>BMC Biology</em> 10 (1): 65. <a href="https://doi.org/10.1186/1741-7007-10-65">https://doi.org/10.1186/1741-7007-10-65</a>.
+</div>
+<div id="ref-Kalyaanamoorthy:2017" class="csl-entry" role="listitem">
+Kalyaanamoorthy, Subha, Bui Quang Minh, Thomas K F Wong, Arndt von Haeseler, and Lars S Jermiin. 2017. <span>“ModelFinder: Fast Model Selection for Accurate Phylogenetic Estimates.”</span> <em>Nature Methods</em> 14 (6): 587–89. <a href="https://doi.org/10.1038/nmeth.4285">https://doi.org/10.1038/nmeth.4285</a>.
+</div>
+<div id="ref-Lanfear:2016" class="csl-entry" role="listitem">
+Lanfear, Robert, Paul B. Frandsen, April M. Wright, Tereza Senfeld, and Brett Calcott. 2016. <span>“<span class="nocase">PartitionFinder 2: New Methods for Selecting Partitioned Models of Evolution for Molecular and Morphological Phylogenetic Analyses</span>.”</span> <em>Molecular Biology and Evolution</em> 34 (3): 772–73. <a href="https://doi.org/10.1093/molbev/msw260">https://doi.org/10.1093/molbev/msw260</a>.
+</div>
+<div id="ref-Minh:2020a" class="csl-entry" role="listitem">
+Minh, Bui Quang, Matthew W Hahn, and Robert Lanfear. 2020. <span>“<span class="nocase">New Methods to Calculate Concordance Factors for Phylogenomic Datasets</span>.”</span> <em>Molecular Biology and Evolution</em> 37 (9): 2727–33. <a href="https://doi.org/10.1093/molbev/msaa106">https://doi.org/10.1093/molbev/msaa106</a>.
+</div>
+<div id="ref-Minh:2020" class="csl-entry" role="listitem">
+Minh, Bui Quang, Heiko A Schmidt, Olga Chernomor, Dominik Schrempf, Michael D Woodhams, Arndt von Haeseler, and Robert Lanfear. 2020. <span>“<span class="nocase">IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era</span>.”</span> <em>Molecular Biology and Evolution</em> 37 (5): 1530–34. <a href="https://doi.org/10.1093/molbev/msaa015">https://doi.org/10.1093/molbev/msaa015</a>.
+</div>
+<div id="ref-Pollard:2006" class="csl-entry" role="listitem">
+Pollard, Daniel A, Venky N Iyer, Alan M Moses, and Michael B Eisen. 2006. <span>“Widespread Discordance of Gene Trees with Species Tree in Drosophila: Evidence for Incomplete Lineage Sorting.”</span> Doi:10.1371/journal.pgen.0020173. <em>PLOS Genetics</em> 2 (10): e173–. <a href="https://doi.org/10.1371/journal.pgen.0020173">https://doi.org/10.1371/journal.pgen.0020173</a>.
+</div>
+<div id="ref-Salichos:2014" class="csl-entry" role="listitem">
+Salichos, Leonidas, Alexandros Stamatakis, and Antonis Rokas. 2014. <span>“<span class="nocase">Novel Information Theory-Based Measures for Quantifying Incongruence among Phylogenetic Trees</span>.”</span> <em>Molecular Biology and Evolution</em> 31 (5): 1261–71. <a href="https://doi.org/10.1093/molbev/msu061">https://doi.org/10.1093/molbev/msu061</a>.
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/mbutler808\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
