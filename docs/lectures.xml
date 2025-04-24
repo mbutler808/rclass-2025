@@ -2001,8 +2001,8 @@ font-style: inherit;">"/C/Program Files/iqtree-2.3.6-Windows/bin"</span></span><
 <p>Now you can just type <code>iqtree2</code> from Git-bash and it should run iqtree from any folder. If you type <code>$PATH</code> at the command line, you should see the path you just added along with paths to many other software applications that are installed.</p>
 </section>
 </section>
-<section id="mac-users" class="level3">
-<h3 class="anchored" data-anchor-id="mac-users">Mac users</h3>
+<section id="mac-users---manual-installation" class="level3">
+<h3 class="anchored" data-anchor-id="mac-users---manual-installation">Mac users - Manual Installation</h3>
 <p>Open a terminal and type <code>$PATH</code>. You will see the search paths that your computer looks through when you execute commands.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">

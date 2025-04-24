@@ -95,7 +95,7 @@ export PATH=$PATH:"/C/Program Files/iqtree-2.3.6-Windows/bin"
 ```
 Now you can just type `iqtree2` from Git-bash and it should run iqtree from any folder. If you type `$PATH` at the command line, you should see the path you just added along with paths to many other software applications that are installed. 
 
-### Mac users
+### Mac users - Manual Installation
 
 Open a terminal and type `$PATH`. You will see the search paths that your computer looks through when you execute commands. 
 
