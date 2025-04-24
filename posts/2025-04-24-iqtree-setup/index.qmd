@@ -37,15 +37,15 @@ In the next session we will learn how to use [IQTREE2](www.iqtree.org) to infer 
 
 # Setup iqtree software
 
--  Download [iqtree version 2.1.2](https://github.com/iqtree/iqtree2/releases/tag/v2.1.2) and install the binary for your platform _following the instructions below_. 
--  As of this writing, IQTREE2 v2.1.2 is the latest stable release version, the preview versions (e.g., 2.2.2.3) are in beta testing. 
-- If you donʻt want to install IQTREE, try the webserver: <http://iqtree.cibiv.univie.ac.at>
+-  Download a recent version of [iqtree e.g., version 2.3.6](https://www.iqtree.org/doc/Quickstart) and install the binary for your platform _using Anaconda or Homebrew (Mac Only) or one of the other options_. 
+-  You can also install manually, but need to do a little extra work to set your search path (see below).
+-  If you donʻt want to install IQTREE, try the webserver: <http://iqtree.cibiv.univie.ac.at>
 
-###  Windows users
+###  Windows users - Manual Installation
 
 Move the IQTREE2 directory to `C:\Program Files`, this is where your software applicaiton files are stored.  You can move it using your GUI, or using Git-Bash. Then update your computerʻs search paths so that you can run iqtree2 from the command line from any directory. 
 
-__Using the GUI__, Move this directory to `C:\Program Files`, so the path to the iqtree binary should be `C:\Program Files\iqtree-2.1.2-Windows\bin\iqtree2.exe`. We are writing to Program Files, which is a protected folder so it will ask you to grant Adminstrator priviledges. 
+__Using the GUI__, Move this directory to `C:\Program Files`, so the path to the iqtree binary should be `C:\Program Files\iqtree-2.3.6-Windows\bin\iqtree2.exe`. We are writing to Program Files, which is a protected folder so it will ask you to grant Adminstrator priviledges. 
 
 OR - __Using Git-Bash__: 
 
@@ -76,22 +76,22 @@ To write files to the `C:\Program Files\` directory, you will have to __run Git-
 cd Downloads
 ls
 ```
-Check if the directory is there an unzipped. If it is zipped, run:
+Check if the directory is there an unzipped. If it is zipped, run (or whatever version number you downloaded):
 
 ```{.bash filename=Git-bash}
-unzip iqtree-2.1.2-Windows.zip
+unzip iqtree-2.3.6-Windows.zip
 ```
 
 Move to files to the application folder. Be sure to use __double quotes__ around the path because of the space.
 
 ```{.bash filename=Git-bash}
-mv iqtree-2.1.2-Windows "/C/Program Files/"
+mv iqtree-2.3.6-Windows "/C/Program Files/"
 ```
 
-Finally, add the path to the binary to the bash search path:
+Finally, add the path to the binary to the bash search path (make it match the version number exactly):
 
 ```{.bash filename=Git-bash}
-export PATH=$PATH:"/C/Program Files/iqtree-2.1.2-Windows/bin"
+export PATH=$PATH:"/C/Program Files/iqtree-2.3.6-Windows/bin"
 ```
 Now you can just type `iqtree2` from Git-bash and it should run iqtree from any folder. If you type `$PATH` at the command line, you should see the path you just added along with paths to many other software applications that are installed. 
 
@@ -102,7 +102,7 @@ Open a terminal and type `$PATH`. You will see the search paths that your comput
 ```{.bash filename=Terminal}
 $PATH
 ```
-You will see the following paths, separated by `:`, along with many others. These are the directories that your computer searches through when you type commands on the command line searching for a match to the software you are executing.
+You will see one or more of the following paths, separated by `:`, along with many others. These are the directories that your computer searches through when you type commands on the command line searching for a match to the software you are executing.  
 
 ```{.bash filename=Terminal}
 /opt/local/bin:/opt/local/sbin:/usr/local/bin:
@@ -110,10 +110,16 @@ You will see the following paths, separated by `:`, along with many others. Thes
 
 If we save (a link to) the binary for IQTREE2 `/opt/local/bin`, then we can execute the command `iqtree2` from any directory without worrying about specifying the path to the applicaiton. 
 
-Check out the directory `/opt/local/`. List the details of the `bin` subdirectory and notice that some of the applicaitons saved there are actually symbolic links 
+On my previous laptop, softare I installed myself was in `/opt/local/`. On my new computer running Sonoma, user installed software is in `usr/local/bin` (bin for binaries).  You can figure it out by checking the directories of each - `/opt/local/` and `/usr/local/`. List the details of the `bin` subdirectory and notice that some of the applicaitons saved there are actually symbolic links 
 
 ```{.bash filename=Terminal}
 cd /opt/local/bin
+ls -la
+```
+or 
+
+```{.bash filename=Terminal}
+cd /usr/local/bin
 ls -la
 ```
 
@@ -125,17 +131,17 @@ lrwxr-xr-x    1 root      wheel        40 Feb  7 09:30 c_rehash -> /opt/local/li
 
 In the example above, `c_rehash` is a sybmolic link that is pointing to the location of the actual location of the binary which is in the a program directory within the `libexec/` subdirectory of `/opt/local`.  On the other hand, `cmake` is the binary itself. 
 
-Letʻs move the __iqtree2__ directory to `/opt/local/libexec/`. Then you will have to make a symbolic link to iqtree2 in `/opt/local/bin`. Start by downloading the zipped directory. It should automatically unzip. Assuming it downloaded to your Downloads folder, open a terminal and issue the following commands:
+Letʻs move the __iqtree2__ directory to `/usr/local/`. Then you will have to make a symbolic link to iqtree2 in `/opt/local/bin`. Start by downloading the zipped directory. It should automatically unzip. Assuming it downloaded to your Downloads folder, open a terminal and issue the following commands:
 
 ```{.bash filename=Terminal}
 cd ~
 ls Downloads
 ```
 
-You should see the `iqtree-2.1.2-MacOSX` folder inside of your Downloads folder.  We will now move the iqtree folder to the place where user installed software is saved. You will probably be denied permission to just use `mv folder_from folder_to` because it is in a protected place on your harddrive, so you will have to use `sudo` for __superuser do__, and it will ask for your computer password to confirm.
+You should see the `iqtree-2.3.6-MacOSX` folder inside of your Downloads folder.  We will now move the iqtree folder to the place where user installed software is saved. You will probably be denied permission to just use `mv folder_from folder_to` because it is in a protected place on your harddrive, so you will have to use `sudo` for __superuser do__, and it will ask for your computer password to confirm.
 
 ```{.bash filename=Terminal}
-sudo mv Downloads/iqtree-2.1.2-MacOSX /opt/local/libexec
+sudo mv Downloads/iqtree-2.3.6-MacOSX /opt/local/libexec
 ```
 
 The directory should now be there:
@@ -147,15 +153,15 @@ ls /opt/local/libexec
 Now make a symbolic link in the `/opt/local/bin` folder to your iqtree executable:  `ln -s /path/to/original /path/to/link` 
 
 ```{.bash filename=Terminal}
-ln -s /opt/local/libexec/iqtree-2.1.2-MacOSX/bin/iqtree2 /opt/local/bin/iqtree2
+ln -s /usr/local/iqtree-2.3.6-MacOSX/bin/iqtree2 /usr/local/bin/iqtree2
 ```
 
 If you get a permission denied, add "sudo " in front of the line to create a symbolic link. After you do that, you can just run iqtree2 on the command line from directory and it will find the app along your computerʻs searchpath. Now type `iqtree2` on the command line. You should see a message like this with nine examples:
 
 ```{.bash filename=Terminal}
-IQ-TREE multicore version 2.1.2 COVID-edition for Mac OS X 64-bit built Oct 22 2020
-Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
-Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+IQ-TREE multicore version 2.3.6 for MacOS ARM 64-bit built Jul 30 2024
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,
+Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong
 
 Command-line examples (replace 'iqtree2 ...' by actual path to executable):
 
@@ -172,7 +178,7 @@ Command-line examples (replace 'iqtree2 ...' by actual path to executable):
 
 ## Multiple installations of iqtree2
 
-If you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.2.2.3, (latest pre-release version) you could name that binary `iqtree2.2.2.3` or `iqtree2beta` etc. so as to have one unique name per software application.  
+If you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.4.0, (latest pre-release version) you could name that binary `iqtree2.4.0` or `iqtree2beta` etc. so as to have one unique name per software application.  
 
 
 # Setup your Tutorial Folder

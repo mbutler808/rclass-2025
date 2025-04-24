@@ -508,7 +508,7 @@
     "href": "posts/2025-04-24-iqtree-setup/index.html#multiple-installations-of-iqtree2",
     "title": "Setting Up for IQTREE2",
     "section": "Multiple installations of iqtree2",
-    "text": "Multiple installations of iqtree2\nIf you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.2.2.3, (latest pre-release version) you could name that binary iqtree2.2.2.3 or iqtree2beta etc. so as to have one unique name per software application."
+    "text": "Multiple installations of iqtree2\nIf you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.4.0, (latest pre-release version) you could name that binary iqtree2.4.0 or iqtree2beta etc. so as to have one unique name per software application."
   },
   {
     "objectID": "posts/2025-01-30-reference-management/index.html",

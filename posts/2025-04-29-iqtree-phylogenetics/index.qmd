@@ -41,7 +41,7 @@ Molecular Biology and Evolution, Volume 37, Issue 9, September 2020, Pages 2727â
 :::{.callout-note}
 # Setup iqtree software
 
-Instructions for installing IQTREE2 and setup for this lession were provided in the [previous lesson](../2023-04-13-iqtree-setup/index.qmd). 
+Instructions for installing IQTREE2 and setup for this lession were provided in the [previous lesson](../2025-04-24-iqtree-setup/index.qmd). 
 
 #### Setup your Tutorial Folder
 

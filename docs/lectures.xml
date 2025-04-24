@@ -50,7 +50,7 @@ Setup iqtree software
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Instructions for installing IQTREE2 and setup for this lession were provided in the <a href="../2023-04-13-iqtree-setup/index.qmd">previous lesson</a>.</p>
+<p>Instructions for installing IQTREE2 and setup for this lession were provided in the <a href="../../posts/2025-04-24-iqtree-setup/index.html">previous lesson</a>.</p>
 <section id="setup-your-tutorial-folder" class="level4"><h4 class="anchored" data-anchor-id="setup-your-tutorial-folder">Setup your Tutorial Folder</h4>
 <p>Make a <code>TurtleTutorial</code> folder, add the following files/folders:</p>
 <ul>
@@ -1909,14 +1909,14 @@ Learning objectives
 <section id="setup-iqtree-software" class="level1">
 <h1>Setup iqtree software</h1>
 <ul>
-<li>Download <a href="https://github.com/iqtree/iqtree2/releases/tag/v2.1.2">iqtree version 2.1.2</a> and install the binary for your platform <em>following the instructions below</em>.</li>
-<li>As of this writing, IQTREE2 v2.1.2 is the latest stable release version, the preview versions (e.g., 2.2.2.3) are in beta testing.</li>
+<li>Download a recent version of <a href="https://www.iqtree.org/doc/Quickstart">iqtree e.g., version 2.3.6</a> and install the binary for your platform <em>using Anaconda or Homebrew (Mac Only) or one of the other options</em>.</li>
+<li>You can also install manually, but need to do a little extra work to set your search path (see below).</li>
 <li>If you donʻt want to install IQTREE, try the webserver: <a href="http://iqtree.cibiv.univie.ac.at" class="uri">http://iqtree.cibiv.univie.ac.at</a></li>
 </ul>
-<section id="windows-users" class="level3">
-<h3 class="anchored" data-anchor-id="windows-users">Windows users</h3>
+<section id="windows-users---manual-installation" class="level3">
+<h3 class="anchored" data-anchor-id="windows-users---manual-installation">Windows users - Manual Installation</h3>
 <p>Move the IQTREE2 directory to <code>C:\Program Files</code>, this is where your software applicaiton files are stored. You can move it using your GUI, or using Git-Bash. Then update your computerʻs search paths so that you can run iqtree2 from the command line from any directory.</p>
-<p><strong>Using the GUI</strong>, Move this directory to <code>C:\Program Files</code>, so the path to the iqtree binary should be <code>C:\Program Files\iqtree-2.1.2-Windows\bin\iqtree2.exe</code>. We are writing to Program Files, which is a protected folder so it will ask you to grant Adminstrator priviledges.</p>
+<p><strong>Using the GUI</strong>, Move this directory to <code>C:\Program Files</code>, so the path to the iqtree binary should be <code>C:\Program Files\iqtree-2.3.6-Windows\bin\iqtree2.exe</code>. We are writing to Program Files, which is a protected folder so it will ask you to grant Adminstrator priviledges.</p>
 <p>OR - <strong>Using Git-Bash</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1961,14 +1961,14 @@ font-style: inherit;">cd</span> Downloads</span>
 background-color: null;
 font-style: inherit;">ls</span></span></code></pre></div>
 </div>
-<p>Check if the directory is there an unzipped. If it is zipped, run:</p>
+<p>Check if the directory is there an unzipped. If it is zipped, run (or whatever version number you downloaded):</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Git-bash</strong></pre>
 </div>
 <div class="sourceCode" id="cb2" data-filename="Git-bash" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">unzip</span> iqtree-2.1.2-Windows.zip</span></code></pre></div>
+font-style: inherit;">unzip</span> iqtree-2.3.6-Windows.zip</span></code></pre></div>
 </div>
 <p>Move to files to the application folder. Be sure to use <strong>double quotes</strong> around the path because of the space.</p>
 <div class="code-with-filename">
@@ -1977,11 +1977,11 @@ font-style: inherit;">unzip</span> iqtree-2.1.2-Windows.zip</span></code></pre><
 </div>
 <div class="sourceCode" id="cb3" data-filename="Git-bash" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mv</span> iqtree-2.1.2-Windows <span class="st" style="color: #20794D;
+font-style: inherit;">mv</span> iqtree-2.3.6-Windows <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"/C/Program Files/"</span></span></code></pre></div>
 </div>
-<p>Finally, add the path to the binary to the bash search path:</p>
+<p>Finally, add the path to the binary to the bash search path (make it match the version number exactly):</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Git-bash</strong></pre>
@@ -1996,7 +1996,7 @@ font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$PATH</span>:<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"/C/Program Files/iqtree-2.1.2-Windows/bin"</span></span></code></pre></div>
+font-style: inherit;">"/C/Program Files/iqtree-2.3.6-Windows/bin"</span></span></code></pre></div>
 </div>
 <p>Now you can just type <code>iqtree2</code> from Git-bash and it should run iqtree from any folder. If you type <code>$PATH</code> at the command line, you should see the path you just added along with paths to many other software applications that are installed.</p>
 </section>
@@ -2012,7 +2012,7 @@ font-style: inherit;">"/C/Program Files/iqtree-2.1.2-Windows/bin"</span></span><
 background-color: null;
 font-style: inherit;">$PATH</span></span></code></pre></div>
 </div>
-<p>You will see the following paths, separated by <code>:</code>, along with many others. These are the directories that your computer searches through when you type commands on the command line searching for a match to the software you are executing.</p>
+<p>You will see one or more of the following paths, separated by <code>:</code>, along with many others. These are the directories that your computer searches through when you type commands on the command line searching for a match to the software you are executing.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -2022,7 +2022,7 @@ background-color: null;
 font-style: inherit;">/opt/local/bin:/opt/local/sbin:/usr/local/bin:</span></span></code></pre></div>
 </div>
 <p>If we save (a link to) the binary for IQTREE2 <code>/opt/local/bin</code>, then we can execute the command <code>iqtree2</code> from any directory without worrying about specifying the path to the applicaiton.</p>
-<p>Check out the directory <code>/opt/local/</code>. List the details of the <code>bin</code> subdirectory and notice that some of the applicaitons saved there are actually symbolic links</p>
+<p>On my previous laptop, softare I installed myself was in <code>/opt/local/</code>. On my new computer running Sonoma, user installed software is in <code>usr/local/bin</code> (bin for binaries). You can figure it out by checking the directories of each - <code>/opt/local/</code> and <code>/usr/local/</code>. List the details of the <code>bin</code> subdirectory and notice that some of the applicaitons saved there are actually symbolic links</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -2036,50 +2036,64 @@ font-style: inherit;">ls</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-la</span></span></code></pre></div>
 </div>
+<p>or</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode" id="cb8" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> /usr/local/bin</span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-la</span></span></code></pre></div>
+</div>
 <p>You will see something like this, along with many other binaries:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb8" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+<div class="sourceCode" id="cb9" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">lrwxr-xr-x</span>    1 root      wheel        40 Feb  7 09:30 c_rehash <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> /opt/local/libexec/openssl3/bin/c_rehash</span>
-<span id="cb8-2"><span class="ex" style="color: null;
+<span id="cb9-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">-rwxr-xr-x</span>    1 macports  wheel  10425872 Dec 10 22:28 cmake</span></code></pre></div>
 </div>
 <p>In the example above, <code>c_rehash</code> is a sybmolic link that is pointing to the location of the actual location of the binary which is in the a program directory within the <code>libexec/</code> subdirectory of <code>/opt/local</code>. On the other hand, <code>cmake</code> is the binary itself.</p>
-<p>Letʻs move the <strong>iqtree2</strong> directory to <code>/opt/local/libexec/</code>. Then you will have to make a symbolic link to iqtree2 in <code>/opt/local/bin</code>. Start by downloading the zipped directory. It should automatically unzip. Assuming it downloaded to your Downloads folder, open a terminal and issue the following commands:</p>
+<p>Letʻs move the <strong>iqtree2</strong> directory to <code>/usr/local/</code>. Then you will have to make a symbolic link to iqtree2 in <code>/opt/local/bin</code>. Start by downloading the zipped directory. It should automatically unzip. Assuming it downloaded to your Downloads folder, open a terminal and issue the following commands:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb9" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="bu" style="color: null;
+<div class="sourceCode" id="cb10" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> ~</span>
-<span id="cb9-2"><span class="fu" style="color: #4758AB;
+<span id="cb10-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> Downloads</span></code></pre></div>
 </div>
-<p>You should see the <code>iqtree-2.1.2-MacOSX</code> folder inside of your Downloads folder. We will now move the iqtree folder to the place where user installed software is saved. You will probably be denied permission to just use <code>mv folder_from folder_to</code> because it is in a protected place on your harddrive, so you will have to use <code>sudo</code> for <strong>superuser do</strong>, and it will ask for your computer password to confirm.</p>
+<p>You should see the <code>iqtree-2.3.6-MacOSX</code> folder inside of your Downloads folder. We will now move the iqtree folder to the place where user installed software is saved. You will probably be denied permission to just use <code>mv folder_from folder_to</code> because it is in a protected place on your harddrive, so you will have to use <code>sudo</code> for <strong>superuser do</strong>, and it will ask for your computer password to confirm.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb10" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb11" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">sudo</span> mv Downloads/iqtree-2.1.2-MacOSX /opt/local/libexec</span></code></pre></div>
+font-style: inherit;">sudo</span> mv Downloads/iqtree-2.3.6-MacOSX /opt/local/libexec</span></code></pre></div>
 </div>
 <p>The directory should now be there:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb11" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb12" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ls</span> /opt/local/libexec</span></code></pre></div>
 </div>
@@ -2088,28 +2102,28 @@ font-style: inherit;">ls</span> /opt/local/libexec</span></code></pre></div>
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb12" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb13" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ln</span> <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">-s</span> /opt/local/libexec/iqtree-2.1.2-MacOSX/bin/iqtree2 /opt/local/bin/iqtree2</span></code></pre></div>
+font-style: inherit;">-s</span> /usr/local/iqtree-2.3.6-MacOSX/bin/iqtree2 /usr/local/bin/iqtree2</span></code></pre></div>
 </div>
 <p>If you get a permission denied, add “sudo” in front of the line to create a symbolic link. After you do that, you can just run iqtree2 on the command line from directory and it will find the app along your computerʻs searchpath. Now type <code>iqtree2</code> on the command line. You should see a message like this with nine examples:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb13" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
+<div class="sourceCode" id="cb14" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">IQ-TREE</span> multicore version 2.1.2 COVID-edition for Mac OS X 64-bit built Oct 22 2020</span>
-<span id="cb13-2"><span class="ex" style="color: null;
+font-style: inherit;">IQ-TREE</span> multicore version 2.3.6 for MacOS ARM 64-bit built Jul 30 2024</span>
+<span id="cb14-2"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">Developed</span> by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,</span>
-<span id="cb13-3"><span class="ex" style="color: null;
+font-style: inherit;">Developed</span> by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,</span>
+<span id="cb14-3"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">Olga</span> Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams.</span>
-<span id="cb13-4"></span>
-<span id="cb13-5"><span class="ex" style="color: null;
+font-style: inherit;">Dominik</span> Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong</span>
+<span id="cb14-4"></span>
+<span id="cb14-5"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Command-line</span> examples <span class="er" style="color: #AD0000;
 background-color: null;
@@ -2123,8 +2137,8 @@ font-weight: bold;
 font-style: inherit;">)</span><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">:</span></span>
-<span id="cb13-6"></span>
-<span id="cb13-7"><span class="ex" style="color: null;
+<span id="cb14-6"></span>
+<span id="cb14-7"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">1.</span> Infer maximum-likelihood tree from a sequence alignment <span class="er" style="color: #AD0000;
 background-color: null;
@@ -2134,26 +2148,26 @@ font-style: inherit;">example.phy</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">)</span></span>
-<span id="cb13-8">   <span class="ex" style="color: null;
+<span id="cb14-8">   <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">with</span> the best-fit model automatically selected by ModelFinder:</span>
-<span id="cb13-9">     <span class="ex" style="color: null;
+<span id="cb14-9">     <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">iqtree2</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-s</span> example.phy</span>
-<span id="cb13-10"></span>
-<span id="cb13-11"><span class="ex" style="color: null;
+<span id="cb14-10"></span>
+<span id="cb14-11"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">2.</span> Perform ModelFinder without subsequent tree inference:</span>
-<span id="cb13-12">     <span class="ex" style="color: null;
+<span id="cb14-12">     <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">iqtree2</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-s</span> example.phy <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-m</span> MF</span>
-<span id="cb13-13">   <span class="kw" style="color: #003B4F;
+<span id="cb14-13">   <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">(</span><span class="ex" style="color: null;
@@ -2164,15 +2178,15 @@ font-style: inherit;">'-m TEST'</span> to resemble jModelTest/ProtTest<span clas
 background-color: null;
 font-weight: bold;
 font-style: inherit;">)</span></span>
-<span id="cb13-14"></span>
-<span id="cb13-15"><span class="ex" style="color: null;
+<span id="cb14-14"></span>
+<span id="cb14-15"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">...</span></span></code></pre></div>
 </div>
 </section>
 <section id="multiple-installations-of-iqtree2" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-installations-of-iqtree2">Multiple installations of iqtree2</h2>
-<p>If you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.2.2.3, (latest pre-release version) you could name that binary <code>iqtree2.2.2.3</code> or <code>iqtree2beta</code> etc. so as to have one unique name per software application.</p>
+<p>If you want, you can install multiple versions of iqtree. Just be sure to give the binary different names. For example if you install iqtree v2.4.0, (latest pre-release version) you could name that binary <code>iqtree2.4.0</code> or <code>iqtree2beta</code> etc. so as to have one unique name per software application.</p>
 </section>
 </section>
 <section id="setup-your-tutorial-folder" class="level1">
@@ -2195,10 +2209,10 @@ font-style: inherit;">...</span></span></code></pre></div>
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb14" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
+<div class="sourceCode" id="cb15" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">iqtree2</span></span>
-<span id="cb14-2"><span class="ex" style="color: null;
+<span id="cb15-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">iqtree2</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -22679,7 +22693,7 @@ Learning objectives
 <p>At some point your data will most likely be arranged into spreadsheets, with observations as rows and variables as columns. <strong>In this course, we will focus on the data source that you are most likely to encounter in your analyses, the “(messy) spreadsheet” type, containing bits of information collected on individuals.</strong> Please do feel free to play around with other data types on your own, e.g.&nbsp;for your course project.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
+<div id="fig-havedata" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-havedata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://mbutler808.github.io/images/i-have-data_3.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="A cartoon showing two people arguing at a table, and a third person, the data analyst is at his laptop. He is smiling and says *When you two have finished arguing your opinions, I actually have data*.">
 </div>
