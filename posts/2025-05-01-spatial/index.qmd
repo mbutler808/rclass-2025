@@ -15,9 +15,11 @@ bibliography: ../refs.bib
 
 References for this Material:
 
--  
+-  `maps`: https://eriqande.github.io/rep-res-web/lectures/making-maps-with-R.html
 
--  
+
+-  `sf`: https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
+
 # Learning objectives
 
 ::: callout-note
@@ -25,29 +27,359 @@ References for this Material:
 
 **At the end of this lesson you will:**
 
--   Understand where user-installed software goes on your computer 
--   Be able to install software and update the search paths to run from the command line
--   Run iqtree2 from the command line on your own computer
+-   Be familiar with spatial data in r, including using polygons and shapefiles 
+-   Understand how to subset and manipulate spatial data
+-   Be able to create maps and data overlays in r
 
 :::
 
 :::{.callout-note}
-# Setup iqtree software
-
-Instructions for installing IQTREE2 and setup for this lession were provided in the [previous lesson](../2025-04-24-iqtree-setup/index.qmd). 
-
-
-#### R packages you will need
+#  R packages you will need
 - `maps`
+- `ggmap`
 - `sf`
 - `rnaturalearth`
+- `ggspatial`
+- `grid`
+- `scales`
 - `ggplot2`
 - `dplyr`
-- ``
+- `magrittr`
 :::
 
 
 # Overview
+
+There are many great resources to plot maps in R. The first step is to download or access the map information, commonly stored as shape data (type `.shp`) The older `maps` package creates polygons from coordinate data, whereas the `sf` package is used to read and work with shape data.  
+
+## `maps` 
+
+Download states data and explore. It is a pretty simple to get the map data. It is a dataframe with a series of latitude and longitude data for each state. Essentially itʻs the points that define the outline of the state if you connect the dots. 
+```{r}
+library(maps)
+library(ggplot2)
+library(ggmap)
+
+states <- map_data("state") # get map data from maps package
+dim(states)
+head(states)
+tail(states)
+```
+
+Plot the map data using `geom_polygon` and ggplot, plotting the latitude and longitude (Global Positioning System or GPS coordinates): 
+```{r}
+ggplot(data = states) + 
+  geom_polygon(     # draw a polygon
+    aes(x = long,   # use GPS coordinates
+        y = lat, 
+        fill = region,  # color by states 
+        group = group), # group polygons by state
+    color = "white") +  # borders are white
+  coord_fixed(1.3) +    # aspect ratio
+  guides(fill="none")  # do this to leave off the color legend
+```
+
+Since `states` it is just a dataframe, it is easy to subset. We can do it many ways, but here is an example using the subset function. This also demonstrates the point nature of the data and why specifying the group is important:
+```{r}
+west_coast <- subset(states, region %in% c("california", "oregon", "washington", "hawaii"))
+
+ggplot(data = west_coast) + 
+  geom_polygon(
+    aes(x = long,
+        y = lat), 
+    fill = "palegreen", 
+    color = "black") 
+```
+Thatʻs better! In this dataset, `group` indicates the states by number. Now the points belong the states, and arenʻt plotted out of order.
+```{r}
+ggplot(data = west_coast) + 
+  geom_polygon(
+    aes(x = long, 
+        y = lat, 
+        group = group), # group by state
+    fill = "palegreen", 
+    color = "black") + 
+  coord_fixed(1.3)
+```
+
+### An example zooming in on California 
+
+Get the geospatial data by subsetting. Get the county data too
+```{r}
+ca_df <- subset(states, region == "california")
+head(ca_df)
+counties <- map_data("county")
+ca_county <- subset(counties, region == "california")
+head(ca_county)
+```
+
+Letʻs have a look at the county data. County info is in the `subregion`.
+```{r}
+ca_base <- ggplot(
+              data = ca_df, 
+              mapping = aes(
+                              x = long, 
+                              y = lat, 
+                              group = group)) + 
+  coord_fixed(1.3) + 
+  geom_polygon(color = "black", fill = "gray")
+
+ca_base + theme_nothing()
+
+ca_base + theme_nothing() + 
+  geom_polygon(
+      data = ca_county, # county outlines
+      fill = NA, 
+      color = "white") +
+  geom_polygon(
+      color = "black", 
+      fill = NA)  # plot last so border on top layer
+```
+Try choosing a county and filling it with a different color.
+
+## `sf` package
+
+The newer packages work with __shapefiles__, which are data types produced by ArgGIS and other spatial software. There is a lot of shapefile data available on the internet. For example, for Hawaii, see <https://geoportal.hawaii.gov>.
+
+Load packages:
+```{r}
+library(sf)
+library(rnaturalearth)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(ggspatial)
+library(grid)
+```
+
+`rnaturalerth` has a lot of map data already available, all you need to do is subset it to the region you wish to use. 
+
+`sf` is a package that reads, writes, and helps you work with shapefiles. 
+
+`ggspacial` has some nice add on functions
+
+`grid` adds a rectangular grid to an existing plot
+
+```{r}
+world <- ne_countries(scale = "medium", returnclass = "sf")
+class(world)
+
+
+class(world)
+print(world)
+names(world)
+```
+
+```{r}
+world_map <- world %>% ggplot() + 
+      geom_sf()
+
+world_map + 
+  xlab("Longitude") + ylab("Latitude") +
+    ggtitle("World map", subtitle = paste0("(", length(unique(world$name)), " countries)"))
+    
+
+world_map + 
+  xlab("Longitude") + ylab("Latitude") +
+    ggtitle("World map", subtitle = paste0("(", length(unique(world$name)), " countries)")) + 
+    geom_sf(aes(fill = pop_est), show.legend="point") +
+    scale_fill_viridis_c(option = "plasma", trans = "sqrt")
+    
+world %>% ggplot() + 
+      geom_sf(color = "black", fill = "lightgreen")
+```      
+          
+```{r}
+usa <- ne_states(country="United States of America", returnclass = "sf")
+head(usa)
+
+hi <- usa %>% 
+    filter(name %in% "Hawaii")
+
+ggplot(hi) + geom_sf()
+
+ggplot(data=usa) + 
+  geom_sf()
+  
+plants_sf <- read_sf("Threatened-Endangered_Plants/Threatened-Endangered_Plants.shp")
+
+print(plants_sf)
+st_geometry(plants_sf)
+old_sf <- read_sf("USGS_Quads_(Old_Hawaiian_Datum)/USGS_Quads_(Old_Hawaiian_Datum).shp")
+
+print(old_sf)
+plot(old_sf)
+```
+
+## NG map
+```{r}
+ng_sf <- ne_countries(country = 
+            c(
+              "Papua New Guinea", 
+              "Indonesia", 
+              "Philippines"
+            ), 
+            scale=50, 
+            returnclass="sf")
+print(ng_sf)
+nrow(ng_sf)
+plot(ng_sf$geometry)
+```
+
+```{r}
+ngp <- ggplot(ng_sf) +
+  geom_sf(color = "grey80", fill = "#f2f2f2", linewidth = 0.25) +
+  coord_sf(xlim = c(120, 154), ylim = c(-12, 10)) +
+  theme( axis.title = element_blank(),
+         panel.background = element_rect(fill = "lightblue", colour = NA)
+       )
+```
+
+
+## Add points to map - first get data
+
+My metadata file contains many genera that I am not interested in so first I filter by genus of interest. 
+```{r}
+d <- read.csv("https://raw.githubusercontent.com/mbutler808/rclass-2025/refs/heads/main/posts/2025-05-01-spatial/metadata.csv")
+
+odat <- d %>% filter(genus=="Oreophryne")
+adat <- d %>% filter(genus=="Auparoparo"|genus=="Aphantophryne")
+```
+I make two separate datasets just by choice and for convenience to plot them in different colors later. I could also do it by keeping it together and filtering, personal choice. 
+```{r}
+# convert to sf
+osf <- st_as_sf(odat, coords=c("longitude", "latitude"))
+asf <- st_as_sf(adat, coords=c("longitude", "latitude"))
+```
+Map with points in different shapes and colors. 
+```{r}
+ngpdat <- ngp +
+  geom_point(data=adat, 
+    aes(x=longitude, y=latitude), 
+    colour="red", 
+    pch="+", 
+    size=8, 
+    alpha=.75) +
+  geom_point(data=odat, 
+    aes(x=longitude, y=latitude), 
+    colour="grey50", 
+    fill="blue", 
+    pch=24, 
+    size=2, 
+    alpha=.75) 
+```
+
+### Want to make a zoomed-in inset - identify coordinates
+```{r}
+ngpdat +
+  geom_hline(yintercept = -8.75, lty = 2, colour = "red") +
+  geom_hline(yintercept = -12, lty = 2, colour = "red") +
+  geom_vline(xintercept = 147, lty = 2, colour = "red") +
+  geom_vline(xintercept = 155, lty = 2, colour = "red") 
+```
+
+### Annotate plot with a rectangle using the coordinates    
+```{r}
+ngpdat <- ngpdat +
+  annotate("rect", xmin = 149, xmax = 154.5, ymin = -12, ymax = -8.75, color = "grey50", fill = NA) +
+  theme_void() +
+  theme(axis.title = element_blank(),
+        panel.background = element_rect(fill = "lightblue", colour = NA)
+        )
+```
+### Make inset - basically another plot zoomed in
+```{r}
+inset <-  
+  ggplot(ng_sf) + 
+  geom_sf(color = "grey70", fill = "#f2f2f2", linewidth = 0.25) +
+  coord_sf(xlim = c(149, 154.5), ylim = c(-12, -8.75), expand=FALSE) + #expand=F prevents ggplot from expanding slightly beyond the limits
+  filter(d, genus=="Auparoparo" & (latitude > -12 &
+    latitude < -8.75 &
+    longitude > 149 & 
+    longitude < 154.5) 
+    ) %>% geom_point( 
+      mapping = aes(x=longitude, y=latitude), 
+      color="red", 
+      pch="+", 
+      size=8, 
+      alpha=.75) +
+  filter(d, genus=="Oreophryne" & (latitude > -12 &
+    latitude < -8.75 &
+    longitude > 149 & 
+    longitude < 154.5) 
+    ) %>%geom_point(
+        mapping = aes(x=longitude, y=latitude), 
+        colour="grey50", 
+      fill="blue", 
+      pch=24, 
+      size=3, 
+      alpha=.75) +
+  annotate("rect", xmin = 149, xmax = 154.5, ymin = -12, ymax = -8.75, color = "grey50", fill=NA, linewidth=1.5) +
+  labs(x = NULL, y = NULL) + 
+  xlim(149, 154.5) +
+  ylim(-12, -8.75) +
+  theme_void() +
+  theme(axis.title = element_blank(),
+        panel.background = element_rect(fill = "lightblue", colour = NA)) +
+  guides(size = "none") 
+```
+### Plot the baseplot
+```{r}
+baseplot <- ngpdat + 
+  geom_sf_text(aes(label=name_en),
+    size = 3,
+    fontface = "bold",
+    family = "serif",
+    color = "grey30",
+    nudge_x = c(0,0,25),
+    nudge_y = c(0,0,-4)) +
+  #Add scale bar to bottom left from ggspatial
+    annotation_scale(location = "bl", 
+      height = unit(.25, "cm"), 
+      pad_x = unit(0.3, "in"), 
+      pad_y = unit(0.3, "in")) +
+    #Add north arrow to bottom left from ggspatial
+    annotation_north_arrow(height = unit(1, "cm"), 
+      width = unit(1, "cm"),
+      which_north = "true", 
+      location = "bl", 
+      pad_x = unit(2, "in"), 
+      pad_y = unit(0.5, "in")) 
+```
+I will use the grid package to make an inset with the viewport function. 
+```{r}
+vp <- viewport( x=0.75,   # from grid package
+        y=0.75,
+                width=unit(3, "inches"),
+                height=unit(2,"inches"))
+grid.show.viewport(vp)
+
+print(baseplot)
+print(inset, vp = viewport(0.75, 0.78, width = 0.4, height = 0.4))  
+```
+### Write to an external file 
+
+There are two print statements here after starting the png device (you can also turn on a pdf if you wish)
+```{r}
+height=6
+width=9
+
+png(file="map.png", # for png format you have to specify 
+                    # size and resolution
+    height=height, 
+    width=width, 
+    units="in", 
+    res=300)
+      print(baseplot) 
+      print(inset, vp = viewport(0.75, 0.78, width = 0.4, height = 0.4))  
+dev.off()
+```
+
+# Cool tip! 
+
+```{r}
+scales::show_col(c("#9DBF9E", "#A84268", "#FCB97D", "#C0BCB5", "#4A6C6F", "#FF5E5B"))
+```
 
 
 
