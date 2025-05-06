@@ -1,0 +1,220 @@
+\SweaveOpts{eps=FALSE}
+\SweaveOpts{keep.source=TRUE}
+
+\chapter{Introduction to OU Models}
+
+Goals:
+\begin{itemize}
+\item Approaches for adaptive evolution (ouch, slouch, others)
+\item Model-based vs statistical approaches
+\end{itemize}
+
+Concepts:
+\begin{itemize}
+\item Model comparison tools in R
+\item Process-based models
+\end{itemize}
+
+	\section{The OU Model for Comparative Analysis}
+Recall that we described a Brownian motion process using the following equation:
+
+\begin{equation}
+  dX(t) = \sigma\,dB(t).
+\end{equation}
+
+If we imagine the phenotype $X$ as changing through time $t$, this equation says that in a small increment of time, the change will be proportional to the parameter $\sigma$. Here, $dB(t)$ is a sample from a Brownian (white noise) process. 
+
+A small step towards reality is the OU Process:
+
+\begin{equation}\label{eq:basic_ou}
+  dX(t) = \alpha\,(\theta - X(t))\,dt + \sigma\,dB(t).
+\end{equation}
+
+Eq.~\ref{eq:basic_ou} expresses the amount of change in character $X$
+over the course of a small increment of time: specifically, $dX(t)$ is
+the infinitesimal change in the character $X$ over the infinitesimal
+interval from time $t$ to time $t+dt$. The term $dB(t)$ is ``white
+noise''; that is, the random variables $dB(t)$ are independent and
+identically-distributed normal random variables, each with mean zero
+and variance $dt$.  The parameter $\alpha$ measures the strength of
+selection.  When $\alpha = 0$, the deterministic part of the OU model
+drops out and \eqref{eq:basic_ou} collapses to the familiar BM model
+of pure drift,
+
+	\section{Introduction to Likelihood}
+	\section{\code{ouch}}
+
+See \code{ouch} lecture.
+
+Good starting points:
+\begin{description}
+\item[?bimac] help page for \emph{Bimaculatus} character displacement dataset   
+\item[example(bimac)]  example of bimac analysis
+\item[?anolis.ssd] help page for \emph{Anolis} sexual size dimorphism dataset
+\end{description}
+
+
+\code{ouch} is a package designed to test adaptive hypotheses using variations of the OU process, including BM. OUCH implements a model that fits an alpha and sigma parameters to the entire  phylogeny, but allows the user to specify which branches belong to different selective regimes. The location of the optima are also fit. 
+
+\subsection{The Data}
+The data in OUCH are most easily assembled as a data frame. Load the built in example from ouch and then print it to the screen (I only printed the head of the dataset here):
+
+<<eval=F>>=
+require(ouch)
+data(bimac)
+bimac
+@
+<<echo=F>>=
+require(ouch)
+data(bimac)
+head(bimac)
+@
+
+NOTE: a very important detail about \code{ouch} is that it matches trees with data and regimes using the node labels stored in the rownames of the objects you pass to the \code{ouch} functions. So it is important to make sure that your dataframes and vectors are appropriately named. The dataframe bimac already has the correct row names, but we do so here just to illustrate. 
+
+<<>>=
+rownames(bimac) <- bimac$node
+@
+
+\code{ouch} was designed around a rectangular data model, so although the tree object is not a dataframe internally, it still helps us to build the data as a dataframe before making the \code{ouchtree} objects. The central organizing element is the 
+\code{node}: it has a node number (usually an integer but it is actually a unique character string), an \code{ancestor} to which it is joined by a branch, a \code{time} since the root of the tree, and optional \code{label} such as a species name. The hypotheses which we use are assigned by "painting" particular regimes on branches. It is convenient to represent each model or hypothesis as a column on the dataframe, with the regime assigned to the node (that is, it is assigned to the branch connecting the node to its ancestor).    
+
+Make an \code{ouchtree} object using the \code{ouchtree} constructor. \code{with} is a very nice function to create a small local environment so that you can use a dataframe's elements directly without using the \code{bimac\$} prefix. It is similar to an \code{attach} but it is temporary -- only lasting as long as the call itself. I like it much better than \code{attach} because I sometimes forget what I've attached and run into problems later. Also, with \code{attach}, you are actually working with a copy of the original dataframe object, so updating values is trickly. With \code{with}, it is more clear what's going on, and I don't tend to make those mistakes.
+<<fig=T>>=
+tree <- with(bimac, ouchtree(node,ancestor,time/max(time),species))
+plot(tree)
+@
+
+\code{ouch} fits the OU model Eq.~\ref{eq:basic_ou} along each branch of the phylogeny. While $\alpha$ and $\sigma$ are held constant across the entire tree, the optima along each branch $\theta$ are allowed to vary. Users can then "paint" various combinations of optima on the tree to reflect various biological scenarios. 
+
+For example, the dataset \code{bimac} was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry \cite{Butler2004}. The analysis tested several different models, which are included with \code{bimac}. They are: "OU.1" or global optimum, "OU.3" or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted "medium", "OU.4" or the same as "OU.3" but with internal branches given their own unique regime called "ancestral", and "OU.LP" based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size). 
+
+\subsection{Plotting \code{ouchtree}s}
+
+You can plot the regime paintings on the tree, and set options such as line widths for prettier plots. \code{ouch} has a very nice feature which allows plotting of the alternative models on one plot.
+<<fig=T>>=
+plot(tree, regimes=bimac[c("OU.1", "OU.3", "OU.4", "OU.LP")], lwd=6)
+@
+
+Remember that you can pass a single vector or a data frame to the regimes parameter, but it must have the appropriate row names or names in the case of a vector.  The regimes are not part of the ouchtree object, because they represent our hypothesis of evolution along the tree, rather than the tree itself. It is part of the original dataframe from which we derived the tree, so remember to refer to \code{bimac} when passing the regimes to the \code{plot} function.  
+
+\subsection{Fitting models}
+
+There are two main model fitting functions in \code{ouch}, \code{brown}, which fits Brownian motion models, and \code{hansen}, which fits OU models to comparative data. The call to \code{brown} is particularly simple, as it takes only the data and the tree:
+
+<<>>=
+brown(log(bimac['size']),tree)
+@
+
+What is returned is an object of class \code{browntree}. It contains all input including the function call,  the tree and data), as well as the parameter estimate for $\sigma$ and the model fit statistics including: the log-likelihood, the deviance ($-2*log(L)$), the information criteria $AIC$, $AIC_c$ (corrected for small sample size), and $SIC$, and the model degrees of freedom. 
+
+It is a good practice to save this, as it encapsulates the analysis. From this, we can rerun the model fit. 
+<<>>=
+h1 <- brown(log(bimac['size']),tree)
+@
+
+\code{hansen} models are slightly more complex. In addition to $\sigma$, we are now fitting $\alpha$, the strength of selection, and all of the optima $\theta$ specified by our model. This maximum-likelihood search now requires an initial guesses. If you have no idea, a good starting guess is 1. If you want to be sure, you can intiate searches with different starting guesses. You can also specify alternative optimization algorithms and increase or decrease the relative tolerance, which is the stringency by which convergence is assessed. Typically, the default is roughly \code{reltol=1e-8}, and the limit of machine precision is in the neighborhood of \code{reltol=1e-15}. 
+
+<<>>=
+h2 <- hansen(log(bimac['size']),tree,bimac['OU.1'],sqrt.alpha=1,sigma=1)
+h3 <- hansen(log(bimac['size']),tree,bimac['OU.3'], sqrt.alpha =1,sigma=1)
+h4 <- hansen(log(bimac['size']),tree,bimac['OU.4'], sqrt.alpha =1,sigma=1)
+h5 <- hansen(log(bimac['size']),tree,bimac['OU.LP'], sqrt.alpha =1,sigma=1,reltol=1e-5)
+@
+
+\subsection{\code{hansentree} and \code{ouchtree} methods}
+
+We can see the model results by typing \code{h5}, which will execute the \code{print} method for this class. You could also use the \code{attributes} function, but this will dump too much information. \code{ouchtree} objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users. 
+
+Additional accessor functions include: 
+<<>>=
+coef(h5)    # the coefficients of the fitted model
+logLik(h5)   # the log-likelihood value
+@
+<<eval=F>>=
+summary(h5)   # everything in the print method except the tree+data
+@
+
+We can now generate a table of our model fits: 
+<<>>=
+unlist(summary(h5)[c('aic', 'aic.c', 'sic', 'dof')])  # just the model fit statistics
+                                   # on a single line
+h <- list(h1, h2, h3, h4, h5)   # store all our fitted models in a list
+names(h) <- c("BM", "OU.1", "OU.3", "OU.4", "OU.LP")
+sapply( h, function(x) unlist(summary(x)[c('aic', 'aic.c', 'sic', 'dof')]) )  
+                                   # table with all models
+@
+
+By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. \code{sapply} returns a matrix if possible. 
+
+<<>>=
+h.ic <- sapply( h, function(x) unlist(summary(x)[c('aic', 'aic.c', 'sic', 'dof')]) )  
+print( h.ic, digits = 3)
+@
+
+Simulation and bootstrap methods:
+\code{simulate} generates random deviates or sets of simulated tip data based on the fitted model. The input is a fitted model \code{hansentree} or \code{browntree}, and the output is a list of dataframes, each comparable to the original data. These can then be used to refit the model. 
+<<>>=
+h5.sim <- simulate(object = h5, nsim=10)   # saves 10 sets of simulated data
+                                  #  based on OU.LP
+@
+
+\code{update} refits the model, with one or more parameters changed.
+<<>>=
+summary( update( object = h5, data = h5.sim[[1]] ) )   # fit the first dataset
+h5.sim.fit <- lapply( h5.sim, function(x) update(h5, x))  # fit all 10 simulations
+@
+
+\code{bootstrap} is a convenience function for generating parametric bootstraps of the parameter estimates. It takes the fitted model, performs the simulations, refits, and outputs a dataframe of parameter estimates.  
+<<>>=
+bootstrap( object = h5, nboot=10)
+@
+
+\subsection{\code{paint}ing regimes on trees}
+
+A new function in \code{ouch} is \code{paint}. Previously, it was up to users to set up regimes manually by editing spreadsheets. \code{paint} helps with this task by specifying the regimes on particular species, subtrees, or particular branches.
+
+There are two parameters to \code{paint}, \code{subtrees}, which paints the entire subtree which descends from the node, and \code{branch}, which paints the branch connecting the node to it's ancestor. For either, you specify the node label (remember it's a character and needs to be quoted), and set it equal to the name of the regime you want to specify. 
+
+Let's try it on the \code{bimac} tree and try to recreate the OU.LP regime:
+<<fig=T>>=
+plot(tree, node.names=T)
+@
+
+Paint the subtrees first, take a look:
+<<fig=T>>=
+ou.lp <- paint( tree, subtree=c("1"="medium","9"="large","2"="small") )
+plot(tree, regimes=ou.lp, node.names=T)
+@
+
+But there was an independent switch from medium to large at species "gm", or node "38", and the node connecting "9" to its ancestor:
+<<>>=
+ou.lp <- paint( tree, subtree=c("1"="medium","9"="large","2"="small"),
+branch=c("38"="large","2"="medium"))
+@
+
+Compare it to the original "OU.LP" from above. 
+<<fig=T>>=
+plot(tree, regimes=ou.lp, node.names=T)
+@
+
+We can create alternative paintings of the regimes to test against the data. Suppose we wanted to add a "clade specific" hypothesis that diverged in a similar time period (this is a completely made-up hypothesis, just for example):
+<<fig=T>>=
+ou.clades <- paint( tree, subtree=c("1"="A","7"="B", "8"="C"), 
+branch=c("8"="C", "7"="C", "1"="A"))
+plot(tree, regimes=ou.clades, node.names=T)
+@
+
+Run the model:
+<<>>=
+h6 <- hansen(log(bimac['size']),tree, regimes=ou.clades, sqrt.alpha =1,sigma=1)
+@
+
+Rebuild our table and compare models:
+<<>>=
+h <- append(h, h6)         # append (add on) new model results to our list h
+names(h)[length(h)] <- "OU.clades"    # add the name of the new model
+names(h)
+h.ic <- sapply( h, function(x) unlist(summary(x)[c('aic', 'aic.c', 'sic', 'dof')]) )  
+print( h.ic, digits = 3)
+@

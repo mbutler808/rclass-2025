@@ -86,9 +86,9 @@ Current Website: <https://mbutler808.github.io/rclass-2025/>
 ||||||
 |              | May 1  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')`  | |
 ||||||
-|  Week 16     | May 6  | `r emojifont::emoji('trophy')` Final Presentations | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
+|  Week 16     | May 6  | `r emojifont::emoji('trophy')` Final Presentations, Intro to OU models \[[html](posts/2025-05-06-intro-OU-models/index.qmd)\] \[[Qmd](https://github.com/mbutler808/rclass-2025/tree/main/posts/2025-05-06-intro-OU-models/index.qmd)\] | `r emojifont::emoji('bouquet')` Project 3 presentation (in class) | |
 ||||||
-|              | May 7  |  | `r emojifont::emoji('confetti_ball')` Project 3 due | |
+|              | May 13  |  | `r emojifont::emoji('confetti_ball')` Project 3 due | |
 ||||||
 :::
 

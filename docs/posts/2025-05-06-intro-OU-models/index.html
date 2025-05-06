@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Marguerite Butler">
+<meta name="dcterms.date" content="2025-05-06">
+<meta name="description" content="Comparative analyses with Ornstein-Uhlenbeck models">
+<title>Introduction to OU Models – ZOOL710 Data Science in R for Biologists 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2c128a76c5dbb243be50ea3089ffe19d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ZOOL710 Data Science in R for Biologists 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-general-information" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">General Information</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-general-information">
+<li>
+    <a class="dropdown-item" href="../../syllabus.html">
+ <span class="dropdown-text">Syllabus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../schedule.html">
+ <span class="dropdown-text">Schedule</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course Materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">
+<li>
+    <a class="dropdown-item" href="../../lectures.html">
+ <span class="dropdown-text">Lectures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../projects.html">
+ <span class="dropdown-text">Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mbutler808"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mbutler808"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Introduction to OU Models</h1>
+                  <div>
+        <div class="description">
+          Comparative analyses with Ornstein-Uhlenbeck models
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">module 8</div>
+                <div class="quarto-category">week 15</div>
+                <div class="quarto-category">comparative analysis</div>
+                <div class="quarto-category">phylogenetic trees</div>
+                <div class="quarto-category">Ornstein Uhlenbeck</div>
+                <div class="quarto-category">Brownian motion</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://butlerlab.org">Marguerite Butler</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              School of Life Sciences, University of Hawaii
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 6, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li>
+<a href="#introduction-to-ou-models" id="toc-introduction-to-ou-models" class="nav-link" data-scroll-target="#introduction-to-ou-models">Introduction to OU Models</a>
+  <ul class="collapse">
+<li><a href="#the-ou-model-for-comparative-analysis" id="toc-the-ou-model-for-comparative-analysis" class="nav-link" data-scroll-target="#the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</a></li>
+  <li>
+<a href="#ouch-package" id="toc-ouch-package" class="nav-link" data-scroll-target="#ouch-package"><code>ouch</code> package</a>
+  <ul class="collapse">
+<li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The Data</a></li>
+  <li><a href="#the-hypotheses" id="toc-the-hypotheses" class="nav-link" data-scroll-target="#the-hypotheses">The hypotheses</a></li>
+  <li><a href="#plotting-ouchtrees" id="toc-plotting-ouchtrees" class="nav-link" data-scroll-target="#plotting-ouchtrees">Plotting <code>ouchtree</code>s</a></li>
+  <li><a href="#fitting-models" id="toc-fitting-models" class="nav-link" data-scroll-target="#fitting-models">Fitting models</a></li>
+  <li><a href="#hansentree-and-ouchtree-methods" id="toc-hansentree-and-ouchtree-methods" class="nav-link" data-scroll-target="#hansentree-and-ouchtree-methods"><code>hansentree</code> and <code>ouchtree</code> methods</a></li>
+  <li><a href="#simulation-and-bootstrap-methods" id="toc-simulation-and-bootstrap-methods" class="nav-link" data-scroll-target="#simulation-and-bootstrap-methods">Simulation and bootstrap methods:</a></li>
+  <li><a href="#painting-regimes-on-trees" id="toc-painting-regimes-on-trees" class="nav-link" data-scroll-target="#painting-regimes-on-trees"><code>paint</code>ing regimes on trees</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Goals:</strong> - Approaches for adaptive evolution (<code>ouch</code>, <code>slouch</code>, others) - Model-based vs statistical approaches</p>
+<p><strong>Concepts:</strong> - Model comparison tools in R - Process-based models</p>
+<p><strong><a href="OUCHintro-simplified.pdf">Slides</a></strong></p>
+</div>
+</div>
+</section><section id="introduction-to-ou-models" class="level1"><h1>Introduction to OU Models</h1>
+<section id="the-ou-model-for-comparative-analysis" class="level2"><h2 class="anchored" data-anchor-id="the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</h2>
+<p>A Brownian motion process can be described using the following differential equation:</p>
+<p><span id="eq-bm"><span class="math display">\[
+  dX(t) = \sigma\,dB(t).
+\tag{1}\]</span></span></p>
+<p>If we imagine the phenotype <span class="math inline">\(X\)</span> as changing through time <span class="math inline">\(t\)</span>, this equation says that in a small increment of time, the change will be proportional to the parameter <span class="math inline">\(\sigma\)</span>. Here, <span class="math inline">\(dB(t)\)</span> is a sample from a Brownian (white noise) process.</p>
+<p>A small step towards reality is the OU Process:</p>
+<p><span id="eq-basic_ou"><span class="math display">\[
+  dX(t) = \alpha\,(\theta - X(t))\,dt + \sigma\,dB(t).
+\tag{2}\]</span></span></p>
+<p>Eq. <a href="#eq-basic_ou" class="quarto-xref">Equation&nbsp;2</a> expresses the amount of change in character <span class="math inline">\(X\)</span> over the course of a small increment of time: specifically, <span class="math inline">\(dX(t)\)</span> is the infinitesimal change in the character <span class="math inline">\(X\)</span> over the infinitesimal interval from time <span class="math inline">\(t\)</span> to time <span class="math inline">\(t+dt\)</span>. The term <span class="math inline">\(dB(t)\)</span> is <em>white noise</em>; that is, the random variables <span class="math inline">\(dB(t)\)</span> are independent and identically-distributed normal random variables, each with mean zero and variance <span class="math inline">\(dt\)</span>. The parameter <span class="math inline">\(\alpha\)</span> measures the strength of selection. When <span class="math inline">\(\alpha = 0\)</span>, the deterministic part of the OU model is diminished and <a href="#eq-basic_ou" class="quarto-xref">Equation&nbsp;2</a> approaches the familiar BM model of pure drift,</p>
+</section><section id="ouch-package" class="level2"><h2 class="anchored" data-anchor-id="ouch-package">
+<code>ouch</code> package</h2>
+<p>See <code>ouch</code> lecture.</p>
+<p>Good starting points available in package <code>ouch</code>:<br>
+- <code><a href="https://rdrr.io/pkg/ouch/man/bimac.html">?bimac</a></code> help page for <em>Bimaculatus</em> character displacement dataset<br>
+- <code>example(bimac)</code> example of bimac analysis - <code><a href="https://rdrr.io/pkg/ouch/man/anolis_ssd.html">?anolis.ssd</a></code> help page for <em>Anolis</em> sexual size dimorphism dataset</p>
+<p><code>ouch</code> is a package designed to test adaptive hypotheses using variations of the OU process, including BM <span class="citation" data-cites="Butler:2004 King:2022">(<a href="#ref-Butler:2004" role="doc-biblioref">Butler and King 2004</a>; <a href="#ref-King:2022" role="doc-biblioref">King and Butler 2022</a>)</span>. OUCH implements a model that fits <em>alpha</em> and <em>sigma</em> parameters to the entire phylogeny, but allows the user to specify which branches belong to different selective regimes. The location of the optima are also fit.</p>
+<section id="the-data" class="level3"><h3 class="anchored" data-anchor-id="the-data">The Data</h3>
+<p>The data in OUCH are most easily assembled as a data frame. Load the built in example from ouch and then print it to the screen (I only printed the head of the dataset here):</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://kingaa.github.io/ouch/">ouch</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">)</span></span>
+<span><span class="va">bimac</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ouch</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  node spcode species island size ancestor time OU.1   OU.3 OU.4  OU.LP
+1    1   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA       NA    0   ns medium  anc medium
+2    2   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        1   12   ns medium  anc medium
+3    3   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        2   32   ns medium  anc  small
+4    4   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   34   ns medium  anc  small
+5    5   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        4   36   ns medium  anc  small
+6    6   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   36   ns medium  anc  small</code></pre>
+</div>
+</div>
+<p>NOTE: a very important detail about <code>ouch</code> is that it matches trees with data and regimes using the node labels stored in the rownames of the objects you pass to the <code>ouch</code> functions. So it is important to make sure that your dataframes and vectors are appropriately named. <em>The dataframe bimac already has the correct row names</em>, but we do so here just to illustrate.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">bimac</span><span class="op">$</span><span class="va">node</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>ouch</code> was designed around a rectangular data model, so although the tree object is not a dataframe internally, it still helps us to build the data as a dataframe before making the <code>ouchtree</code> objects. The central organizing element is the <code>node</code>: it has a node number (usually an integer but it is actually a unique character string), an <code>ancestor</code> to which it is joined by a branch, a <code>time</code> since the root of the tree, and optional <code>label</code> such as a species name.</p>
+</section><section id="the-hypotheses" class="level3"><h3 class="anchored" data-anchor-id="the-hypotheses">The hypotheses</h3>
+<p><em>The hypotheses which we use are assigned by painting particular regimes on branches</em>. It is convenient to represent each model or hypothesis as a column on the dataframe, with the regime assigned to the node (that is, it is assigned to the branch connecting the node to its ancestor).</p>
+<p>Make an <code>ouchtree</code> object using the <code>ouchtree</code> constructor. <code>with</code> is a very nice function to create a small local environment so that you can use a dataframe’s elements directly without using the <code>bimac$</code> prefix.</p>
+<p>It is similar to an <code>attach</code> but it is temporary – only lasting as long as the call itself. I like it much better than <code>attach</code> because I sometimes forget what I’ve attached and run into problems later. Also, with <code>attach</code>, you are actually working with a copy of the original dataframe object, so updating values is tricky. With <code>with</code>, it is more clear what’s going on, and I don’t tend to make those mistakes.</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">bimac</span>, <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/ouchtree.html">ouchtree</a></span><span class="op">(</span><span class="va">node</span>,<span class="va">ancestor</span>,<span class="va">time</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>,<span class="va">species</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>ouch</code> fits the OU model Eq. <a href="#eq-basic_ou" class="quarto-xref">Equation&nbsp;2</a> along each branch of the phylogeny. While <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\sigma\)</span> are held constant across the entire tree, the optima along each branch <span class="math inline">\(\theta\)</span> are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios.</p>
+<p>For example, the dataset <code>bimac</code> was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry <span class="citation" data-cites="Butler:2004">Butler and King (<a href="#ref-Butler:2004" role="doc-biblioref">2004</a>)</span>. The analysis tested several different models, which are included with <code>bimac</code>. They are: OU.1 or global optimum, OU.3 or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted medium, OU.4 or the same as OU.3 but with internal branches given their own unique regime called ancestral, and OU.LP based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size).</p>
+</section><section id="plotting-ouchtrees" class="level3"><h3 class="anchored" data-anchor-id="plotting-ouchtrees">Plotting <code>ouchtree</code>s</h3>
+<p>You can plot the regime paintings on the tree, and set options such as line widths for prettier plots. <code>ouch</code> has a very nice feature which allows plotting of the alternative models on one plot.</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">bimac</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"OU.1"</span>, <span class="st">"OU.3"</span>, <span class="st">"OU.4"</span>, <span class="st">"OU.LP"</span><span class="op">)</span><span class="op">]</span>, lwd<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Remember that you can pass a single vector or a data frame to the regimes parameter, but it must have the appropriate row names or names in the case of a vector. The regimes are not part of the ouchtree object, because they represent our hypothesis of evolution along the tree, rather than the tree itself. It is part of the original dataframe from which we derived the tree, so remember to refer to <code>bimac</code> when passing the regimes to the <code>plot</code> function.</p>
+</section><section id="fitting-models" class="level3"><h3 class="anchored" data-anchor-id="fitting-models">Fitting models</h3>
+<p>There are two main model fitting functions in <code>ouch</code>, <code>brown</code>, which fits Brownian motion models, and <code>hansen</code>, which fits OU models to comparative data. The call to <code>brown</code> is particularly simple, as it takes only the data and the tree:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/brown.html">brown</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,<span class="va">tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+call:
+brown(data = log(bimac["size"]), tree = tree)
+   nodes ancestors     times             labels     size
+1      1      &lt;NA&gt; 0.0000000               &lt;NA&gt;       NA
+2      2         1 0.3157895               &lt;NA&gt;       NA
+3      3         2 0.8421053               &lt;NA&gt;       NA
+4      4         3 0.8947368               &lt;NA&gt;       NA
+5      5         4 0.9473684               &lt;NA&gt;       NA
+6      6         3 0.9473684               &lt;NA&gt;       NA
+7      7         1 0.2105263               &lt;NA&gt;       NA
+8      8         7 0.3421053               &lt;NA&gt;       NA
+9      9         8 0.4736842               &lt;NA&gt;       NA
+10    10         9 0.6052632               &lt;NA&gt;       NA
+11    11        10 0.7368421               &lt;NA&gt;       NA
+12    12         9 0.7368421               &lt;NA&gt;       NA
+13    13         8 0.5789474               &lt;NA&gt;       NA
+14    14        13 0.6842105               &lt;NA&gt;       NA
+15    15        14 0.8947368               &lt;NA&gt;       NA
+16    16        15 0.9473684               &lt;NA&gt;       NA
+17    17         7 0.7368421               &lt;NA&gt;       NA
+18    18        17 0.7894737               &lt;NA&gt;       NA
+19    19        18 0.8947368               &lt;NA&gt;       NA
+20    20        19 0.9473684               &lt;NA&gt;       NA
+21    21        20 0.9736842               &lt;NA&gt;       NA
+22    22        19 0.9473684               &lt;NA&gt;       NA
+23    23         2 1.0000000       Anolis pogus 2.602690
+24    24         4 1.0000000   Anolis schwartzi 2.660260
+25    25         5 1.0000000   Anolis schwartzi 2.660260
+26    26         5 1.0000000   Anolis schwartzi 2.653242
+27    27         6 1.0000000     Anolis wattsii 2.674149
+28    28         6 1.0000000     Anolis wattsii 2.701361
+29    29        10 1.0000000 Anolis bimaculatus 3.161247
+30    30        11 1.0000000 Anolis bimaculatus 3.299534
+31    31        11 1.0000000 Anolis bimaculatus 3.328627
+32    32        12 1.0000000      Anolis leachi 3.353407
+33    33        12 1.0000000      Anolis leachi 3.360375
+34    34        13 1.0000000     Anolis nubilus 3.049273
+35    35        14 1.0000000     Anolis sabanus 2.906901
+36    36        15 1.0000000  Anolis gingivinus 2.980619
+37    37        16 1.0000000  Anolis gingivinus 2.933857
+38    38        16 1.0000000  Anolis gingivinus 2.975530
+39    39        17 1.0000000    Anolis oculatus 3.104587
+40    40        18 1.0000000     Anolis ferreus 3.346389
+41    41        20 1.0000000     Anolis lividus 2.928524
+42    42        21 1.0000000  Anolis marmoratus 2.939162
+43    43        21 1.0000000  Anolis marmoratus 2.990720
+44    44        22 1.0000000 Anolis terraealtae 3.058707
+45    45        22 1.0000000 Anolis terraealtae 3.068053
+
+sigma squared:
+           [,1]
+[1,] 0.04311003
+
+theta:
+NULL
+   loglik  deviance       aic     aic.c       sic       dof 
+ 17.33129 -34.66257 -30.66257 -30.06257 -28.39158   2.00000 </code></pre>
+</div>
+</div>
+<p>What is returned is an object of class <code>browntree</code>. It contains all input including the function call, the tree and data), as well as the parameter estimate for <span class="math inline">\(\sigma\)</span> and the model fit statistics including: the log-likelihood, the deviance (<span class="math inline">\(-2*log(L)\)</span>), the information criteria <span class="math inline">\(AIC\)</span>, <span class="math inline">\(AIC_c\)</span> (corrected for small sample size), and <span class="math inline">\(SIC\)</span>, and the model degrees of freedom.</p>
+<p>It is a good practice to save this, as it encapsulates the analysis. From this, we can rerun the model fit.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/brown.html">brown</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,<span class="va">tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>hansen</code> models are slightly more complex. In addition to <span class="math inline">\(\sigma\)</span>, we are now fitting <span class="math inline">\(\alpha\)</span>, the strength of selection, and all of the optima <span class="math inline">\(\theta\)</span> specified by our model. This maximum-likelihood search now requires an initial guess. If you have no idea, a good starting guess is 1. If you want to be sure, you can intiate searches with different starting guesses. You can also specify alternative optimization algorithms and increase or decrease the relative tolerance, which is the stringency by which convergence is assessed. Typically, the default is roughly <code>reltol=1e-8</code>, and the limit of machine precision is in the neighborhood of <code>reltol=1e-15</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,</span>
+<span>             <span class="va">bimac</span><span class="op">[</span><span class="st">'OU.1'</span><span class="op">]</span>,</span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">h3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,<span class="va">bimac</span><span class="op">[</span><span class="st">'OU.3'</span><span class="op">]</span>, </span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">h4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,</span>
+<span>             <span class="va">bimac</span><span class="op">[</span><span class="st">'OU.4'</span><span class="op">]</span>, </span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">h5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>             <span class="va">tree</span>,</span>
+<span>             <span class="va">bimac</span><span class="op">[</span><span class="st">'OU.LP'</span><span class="op">]</span>, </span>
+<span>             sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             sigma<span class="op">=</span><span class="fl">1</span>,</span>
+<span>             reltol<span class="op">=</span><span class="fl">1e-5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="hansentree-and-ouchtree-methods" class="level3"><h3 class="anchored" data-anchor-id="hansentree-and-ouchtree-methods">
+<code>hansentree</code> and <code>ouchtree</code> methods</h3>
+<p>We can see the model results by typing <code>h5</code>, which will execute the <code>print</code> method for this class. You could also use the <code>attributes</code> function, but this will dump too much information. <code>ouchtree</code> objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users.</p>
+<p>Additional accessor functions include:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span>    <span class="co"># the coefficients of the fitted model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sqrt.alpha
+[1] 1.61658
+
+$sigma
+[1] 0.2249274
+
+$theta
+$theta$size
+   large   medium    small 
+3.355087 3.040729 2.565249 
+
+
+$alpha.matrix
+        [,1]
+[1,] 2.61333
+
+$sigma.sq.matrix
+           [,1]
+[1,] 0.05059232</code></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span>   <span class="co"># the log-likelihood value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24.81823</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span> <span class="co"># (not printed) everything except the tree+data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now generate a table of our model fits:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>    <span class="co"># just the model fit statistics on a single line</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">h5</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      aic     aic.c       sic       dof 
+-39.63645 -36.10704 -33.95898   5.00000 </code></pre>
+</div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">h1</span>, <span class="va">h2</span>, <span class="va">h3</span>, <span class="va">h4</span>, <span class="va">h5</span><span class="op">)</span>   <span class="co"># store fitted models in a list</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'BM'</span>, <span class="st">'OU.1'</span>, <span class="st">'OU.3'</span>, <span class="st">'OU.4'</span>, <span class="st">'OU.LP'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">h</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>             <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span></span>
+<span>             <span class="op">)</span> </span>
+<span>      <span class="op">)</span>                         <span class="co"># table with all models</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             BM      OU.1      OU.3      OU.4     OU.LP
+aic   -30.66257 -25.39364 -29.15573 -35.22319 -39.63645
+aic.c -30.06257 -24.13048 -25.62631 -29.97319 -36.10704
+sic   -28.39158 -21.98715 -23.47826 -28.41022 -33.95898
+dof     2.00000   3.00000   5.00000   6.00000   5.00000</code></pre>
+</div>
+</div>
+<p>By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. <code>sapply</code> returns a matrix if possible.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h.ic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">h</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
+<span>                     <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span></span>
+<span>                      <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span></span>
+<span>                     <span class="op">)</span> </span>
+<span>               <span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/print.html">print</a></span><span class="op">(</span> <span class="va">h.ic</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP
+aic   -30.7 -25.4 -29.2 -35.2 -39.6
+aic.c -30.1 -24.1 -25.6 -30.0 -36.1
+sic   -28.4 -22.0 -23.5 -28.4 -34.0
+dof     2.0   3.0   5.0   6.0   5.0</code></pre>
+</div>
+</div>
+</section><section id="simulation-and-bootstrap-methods" class="level3"><h3 class="anchored" data-anchor-id="simulation-and-bootstrap-methods">Simulation and bootstrap methods:</h3>
+<p><code>simulate</code> generates random deviates or sets of simulated tip data based on the fitted model. The input is a fitted model <code>hansentree</code> or <code>browntree</code>, and the output is a list of dataframes, each comparable to the original data. These can then be used to refit the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h5.sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">h5</span>, nsim<span class="op">=</span><span class="fl">10</span><span class="op">)</span>   <span class="co"># saves 10 sets of simulated data</span></span>
+<span>                                  <span class="co">#  based on OU.LP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>update</code> refits the model, with one or more parameters changed.</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span> object <span class="op">=</span> <span class="va">h5</span>, </span>
+<span>                 data <span class="op">=</span> <span class="va">h5.sim</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> </span>
+<span>                <span class="op">)</span>  <span class="co"># fit the first dataset</span></span>
+<span>        <span class="op">)</span>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$call
+hansen(data = data, tree = object, regimes = regimes, sqrt.alpha = sqrt.alpha, 
+    sigma = sigma)
+
+$conv.code
+[1] 0
+
+$optimizer.message
+NULL
+
+$alpha
+         [,1]
+[1,] 3.406824
+
+$sigma.squared
+           [,1]
+[1,] 0.04658889
+
+$optima
+$optima$size
+   large   medium    small 
+3.311852 3.017353 2.561983 
+
+
+$loglik
+[1] 27.77894
+
+$deviance
+[1] -55.55788
+
+$aic
+[1] -45.55788
+
+$aic.c
+[1] -42.02847
+
+$sic
+[1] -39.88041
+
+$dof
+[1] 5</code></pre>
+</div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h5.sim.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span> <span class="va">h5.sim</span>, </span>
+<span>                      <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">h5</span>, <span class="va">x</span><span class="op">)</span></span>
+<span>                    <span class="op">)</span> <span class="co"># fit all 10 simulations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>bootstrap</code> is a convenience function for generating parametric bootstraps of the parameter estimates. It takes the fitted model, performs the simulations, refits, and outputs a dataframe of parameter estimates.</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/bootstrap.html">bootstrap</a></span><span class="op">(</span> object <span class="op">=</span> <span class="va">h5</span>, nboot<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       alpha sigma.squared optima.size.large optima.size.medium
+1   2.931962    0.06300679          3.406845           3.033368
+2   1.166652    0.02087730          3.442742           3.045020
+3   6.842407    0.13962883          3.327190           2.954449
+4   3.548455    0.05227364          3.312705           3.055402
+5   4.334962    0.04980428          3.274724           3.122849
+6   6.220885    0.07881881          3.282142           3.005847
+7   6.537493    0.06491762          3.235161           3.104050
+8   4.631713    0.06636800          3.349804           2.991356
+9  14.052840    0.10776110          3.330246           3.031296
+10  9.390043    0.11391753          3.252886           3.052051
+   optima.size.small   loglik       aic     aic.c       sic dof
+1           2.472794 23.14495 -36.28990 -32.76049 -30.61243   5
+2           2.211821 30.17167 -50.34334 -46.81392 -44.66587   5
+3           2.724776 21.28855 -32.57711 -29.04770 -26.89964   5
+4           2.525664 26.78157 -43.56315 -40.03373 -37.88567   5
+5           2.556321 29.00157 -48.00314 -44.47373 -42.32567   5
+6           2.711134 26.96231 -43.92463 -40.39521 -38.24716   5
+7           2.617113 29.66251 -49.32502 -45.79561 -43.64755   5
+8           2.546844 26.27175 -42.54351 -39.01410 -36.86604   5
+9           2.656652 31.62991 -53.25981 -49.73040 -47.58234   5
+10          2.710166 26.75359 -43.50717 -39.97776 -37.82970   5</code></pre>
+</div>
+</div>
+</section><section id="painting-regimes-on-trees" class="level3"><h3 class="anchored" data-anchor-id="painting-regimes-on-trees">
+<code>paint</code>ing regimes on trees</h3>
+<p>A new function in <code>ouch</code> is <code>paint</code>. Previously, it was up to users to set up regimes manually by editing spreadsheets. <code>paint</code> helps with this task by specifying the regimes on particular species, subtrees, or particular branches.</p>
+<p>There are two parameters to <code>paint</code>, <code>subtrees</code>, which paints the entire subtree which descends from the node, and <code>branch</code>, which paints the branch connecting the node to it’s ancestor. For either, you specify the node label (remember it’s a character and needs to be quoted), and set it equal to the name of the regime you want to specify.</p>
+<p>Let’s try it on the <code>bimac</code> tree and try to recreate the OU.LP regime:</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Paint the subtrees first, take a look:</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ou.lp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op">(</span> <span class="va">tree</span>, </span>
+<span>                subtree<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">"medium"</span>,<span class="st">"9"</span><span class="op">=</span><span class="st">"large"</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">"small"</span><span class="op">)</span> </span>
+<span>               <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">ou.lp</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>But there was an independent switch from medium to large at species gm, or node 38, and the node connecting 9 to its ancestor:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ou.lp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op">(</span> <span class="va">tree</span>, </span>
+<span>                subtree<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">'medium'</span>,<span class="st">"9"</span><span class="op">=</span><span class="st">'large'</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">'small'</span><span class="op">)</span>,</span>
+<span>                branch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"38"</span><span class="op">=</span><span class="st">'large'</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">'medium'</span><span class="op">)</span></span>
+<span>              <span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Compare it to the original OU.LP from above.</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">ou.lp</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can create alternative paintings of the regimes to test against the data. Suppose we wanted to add a clade specific hypothesis that diverged in a similar time period (this is a completely made-up hypothesis, just for example):</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ou.clades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op">(</span> <span class="va">tree</span>, </span>
+<span>                    subtree<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">"A"</span>,<span class="st">"7"</span><span class="op">=</span><span class="st">"B"</span>, <span class="st">"8"</span><span class="op">=</span><span class="st">"C"</span><span class="op">)</span>, </span>
+<span>                    branch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"8"</span><span class="op">=</span><span class="st">"C"</span>, <span class="st">"7"</span><span class="op">=</span><span class="st">"C"</span>, <span class="st">"1"</span><span class="op">=</span><span class="st">"A"</span><span class="op">)</span></span>
+<span>                   <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">tree</span>, regimes<span class="op">=</span><span class="va">ou.clades</span>, node.names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Run the model:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op">(</span> </span>
+<span>              <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">bimac</span><span class="op">[</span><span class="st">'size'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>              <span class="va">tree</span>, </span>
+<span>              regimes<span class="op">=</span><span class="va">ou.clades</span>, </span>
+<span>              sqrt.alpha<span class="op">=</span><span class="fl">1</span>,</span>
+<span>              sigma<span class="op">=</span><span class="fl">1</span></span>
+<span>            <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Rebuild our table and compare models:</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">h6</span><span class="op">)</span>         <span class="co"># append (add on) new model results to our list h</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">ou.clades</span>    <span class="co"># add the name of the new model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in names(h)[length(h)] &lt;- ou.clades: number of items to replace is not
+a multiple of replacement length</code></pre>
+</div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "BM"    "OU.1"  "OU.3"  "OU.4"  "OU.LP" "1"    </code></pre>
+</div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h.ic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">h</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
+<span>                     <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'aic'</span>, <span class="st">'aic.c'</span>, <span class="st">'sic'</span>, <span class="st">'dof'</span><span class="op">)</span><span class="op">]</span></span>
+<span>                     <span class="op">)</span> </span>
+<span>               <span class="op">)</span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ouch/man/print.html">print</a></span><span class="op">(</span> <span class="va">h.ic</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP     1
+aic   -30.7 -25.4 -29.2 -35.2 -39.6 -30.7
+aic.c -30.1 -24.1 -25.6 -30.0 -36.1 -27.1
+sic   -28.4 -22.0 -23.5 -28.4 -34.0 -25.0
+dof     2.0   3.0   5.0   6.0   5.0   5.0</code></pre>
+</div>
+</div>
+
+
+
+</section></section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Butler:2004" class="csl-entry" role="listitem">
+Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
+</div>
+<div id="ref-King:2022" class="csl-entry" role="listitem">
+King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Models for Phylogenetic Comparative Hypotheses</em>. <a href="https://kingaa.github.io/ouch/">https://kingaa.github.io/ouch/</a>.
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/mbutler808\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

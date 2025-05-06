@@ -10,7 +10,1497 @@
 <atom:link href="https://mbutler808.github.io/lectures.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for Data Science in R for Biologists (ZOOL 710) in Spring 2025</description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Thu, 01 May 2025 10:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 06 May 2025 10:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introduction to OU Models</title>
+  <dc:creator>Marguerite Butler</dc:creator>
+  <link>https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/</link>
+  <description><![CDATA[ <section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Goals:</strong> - Approaches for adaptive evolution (<code>ouch</code>, <code>slouch</code>, others) - Model-based vs statistical approaches</p>
+<p><strong>Concepts:</strong> - Model comparison tools in R - Process-based models</p>
+<p><strong><a href="OUCHintro-simplified.pdf">Slides</a></strong></p>
+</div>
+</div>
+</section><section id="introduction-to-ou-models" class="level1"><h1>Introduction to OU Models</h1>
+<section id="the-ou-model-for-comparative-analysis" class="level2"><h2 class="anchored" data-anchor-id="the-ou-model-for-comparative-analysis">The OU Model for Comparative Analysis</h2>
+<p>A Brownian motion process can be described using the following differential equation:</p>
+<p><span id="eq-bm"><img src="https://latex.codecogs.com/png.latex?%0A%20%20dX(t)%20=%20%5Csigma%5C,dB(t).%0A%5Ctag%7B1%7D"></span></p>
+<p>If we imagine the phenotype <img src="https://latex.codecogs.com/png.latex?X"> as changing through time <img src="https://latex.codecogs.com/png.latex?t">, this equation says that in a small increment of time, the change will be proportional to the parameter <img src="https://latex.codecogs.com/png.latex?%5Csigma">. Here, <img src="https://latex.codecogs.com/png.latex?dB(t)"> is a sample from a Brownian (white noise) process.</p>
+<p>A small step towards reality is the OU Process:</p>
+<p><span id="eq-basic_ou"><img src="https://latex.codecogs.com/png.latex?%0A%20%20dX(t)%20=%20%5Calpha%5C,(%5Ctheta%20-%20X(t))%5C,dt%20+%20%5Csigma%5C,dB(t).%0A%5Ctag%7B2%7D"></span></p>
+<p>Eq. Equation&nbsp;2 expresses the amount of change in character <img src="https://latex.codecogs.com/png.latex?X"> over the course of a small increment of time: specifically, <img src="https://latex.codecogs.com/png.latex?dX(t)"> is the infinitesimal change in the character <img src="https://latex.codecogs.com/png.latex?X"> over the infinitesimal interval from time <img src="https://latex.codecogs.com/png.latex?t"> to time <img src="https://latex.codecogs.com/png.latex?t+dt">. The term <img src="https://latex.codecogs.com/png.latex?dB(t)"> is <em>white noise</em>; that is, the random variables <img src="https://latex.codecogs.com/png.latex?dB(t)"> are independent and identically-distributed normal random variables, each with mean zero and variance <img src="https://latex.codecogs.com/png.latex?dt">. The parameter <img src="https://latex.codecogs.com/png.latex?%5Calpha"> measures the strength of selection. When <img src="https://latex.codecogs.com/png.latex?%5Calpha%20=%200">, the deterministic part of the OU model is diminished and Equation&nbsp;2 approaches the familiar BM model of pure drift,</p>
+</section><section id="ouch-package" class="level2"><h2 class="anchored" data-anchor-id="ouch-package">
+<code>ouch</code> package</h2>
+<p>See <code>ouch</code> lecture.</p>
+<p>Good starting points available in package <code>ouch</code>:<br>
+- <code><a href="https://rdrr.io/pkg/ouch/man/bimac.html">?bimac</a></code> help page for <em>Bimaculatus</em> character displacement dataset<br>
+- <code>example(bimac)</code> example of bimac analysis - <code><a href="https://rdrr.io/pkg/ouch/man/anolis_ssd.html">?anolis.ssd</a></code> help page for <em>Anolis</em> sexual size dimorphism dataset</p>
+<p><code>ouch</code> is a package designed to test adaptive hypotheses using variations of the OU process, including BM <span class="citation" data-cites="Butler:2004 King:2022">(Butler and King 2004; King and Butler 2022)</span>. OUCH implements a model that fits <em>alpha</em> and <em>sigma</em> parameters to the entire phylogeny, but allows the user to specify which branches belong to different selective regimes. The location of the optima are also fit.</p>
+<section id="the-data" class="level3"><h3 class="anchored" data-anchor-id="the-data">The Data</h3>
+<p>The data in OUCH are most easily assembled as a data frame. Load the built in example from ouch and then print it to the screen (I only printed the head of the dataset here):</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://kingaa.github.io/ouch/">ouch</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ouch</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  node spcode species island size ancestor time OU.1   OU.3 OU.4  OU.LP
+1    1   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA       NA    0   ns medium  anc medium
+2    2   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        1   12   ns medium  anc medium
+3    3   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        2   32   ns medium  anc  small
+4    4   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   34   ns medium  anc  small
+5    5   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        4   36   ns medium  anc  small
+6    6   &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;   NA        3   36   ns medium  anc  small</code></pre>
+</div>
+</div>
+<p>NOTE: a very important detail about <code>ouch</code> is that it matches trees with data and regimes using the node labels stored in the rownames of the objects you pass to the <code>ouch</code> functions. So it is important to make sure that your dataframes and vectors are appropriately named. <em>The dataframe bimac already has the correct row names</em>, but we do so here just to illustrate.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">node</span></span></code></pre></div>
+</div>
+<p><code>ouch</code> was designed around a rectangular data model, so although the tree object is not a dataframe internally, it still helps us to build the data as a dataframe before making the <code>ouchtree</code> objects. The central organizing element is the <code>node</code>: it has a node number (usually an integer but it is actually a unique character string), an <code>ancestor</code> to which it is joined by a branch, a <code>time</code> since the root of the tree, and optional <code>label</code> such as a species name.</p>
+</section><section id="the-hypotheses" class="level3"><h3 class="anchored" data-anchor-id="the-hypotheses">The hypotheses</h3>
+<p><em>The hypotheses which we use are assigned by painting particular regimes on branches</em>. It is convenient to represent each model or hypothesis as a column on the dataframe, with the regime assigned to the node (that is, it is assigned to the branch connecting the node to its ancestor).</p>
+<p>Make an <code>ouchtree</code> object using the <code>ouchtree</code> constructor. <code>with</code> is a very nice function to create a small local environment so that you can use a dataframe’s elements directly without using the <code>bimac$</code> prefix.</p>
+<p>It is similar to an <code>attach</code> but it is temporary – only lasting as long as the call itself. I like it much better than <code>attach</code> because I sometimes forget what I’ve attached and run into problems later. Also, with <code>attach</code>, you are actually working with a copy of the original dataframe object, so updating values is tricky. With <code>with</code>, it is more clear what’s going on, and I don’t tend to make those mistakes.</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/ouchtree.html">ouchtree</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">node</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ancestor</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">time</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">time</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">species</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>ouch</code> fits the OU model Eq. Equation&nbsp;2 along each branch of the phylogeny. While <img src="https://latex.codecogs.com/png.latex?%5Calpha"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma"> are held constant across the entire tree, the optima along each branch <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> are allowed to vary. Users can then paint various combinations of optima on the tree to reflect various biological scenarios.</p>
+<p>For example, the dataset <code>bimac</code> was used to test the hypothesis of character displacement using an interspecific daaset of body sizes and sympatry/allopatry <span class="citation" data-cites="Butler:2004">Butler and King (2004)</span>. The analysis tested several different models, which are included with <code>bimac</code>. They are: OU.1 or global optimum, OU.3 or small, medium, and large regimes depending on the body size of the observed species (terminal branches only, internal branches painted medium, OU.4 or the same as OU.3 but with internal branches given their own unique regime called ancestral, and OU.LP based on a linear parsimony reconstruction of the colonization events (i.e., that as species came into sympatry, they diverged in body size).</p>
+</section><section id="plotting-ouchtrees" class="level3"><h3 class="anchored" data-anchor-id="plotting-ouchtrees">Plotting <code>ouchtree</code>s</h3>
+<p>You can plot the regime paintings on the tree, and set options such as line widths for prettier plots. <code>ouch</code> has a very nice feature which allows plotting of the alternative models on one plot.</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, regimes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OU.1"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OU.3"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OU.4"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OU.LP"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, lwd<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Remember that you can pass a single vector or a data frame to the regimes parameter, but it must have the appropriate row names or names in the case of a vector. The regimes are not part of the ouchtree object, because they represent our hypothesis of evolution along the tree, rather than the tree itself. It is part of the original dataframe from which we derived the tree, so remember to refer to <code>bimac</code> when passing the regimes to the <code>plot</code> function.</p>
+</section><section id="fitting-models" class="level3"><h3 class="anchored" data-anchor-id="fitting-models">Fitting models</h3>
+<p>There are two main model fitting functions in <code>ouch</code>, <code>brown</code>, which fits Brownian motion models, and <code>hansen</code>, which fits OU models to comparative data. The call to <code>brown</code> is particularly simple, as it takes only the data and the tree:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/brown.html">brown</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+call:
+brown(data = log(bimac["size"]), tree = tree)
+   nodes ancestors     times             labels     size
+1      1      &lt;NA&gt; 0.0000000               &lt;NA&gt;       NA
+2      2         1 0.3157895               &lt;NA&gt;       NA
+3      3         2 0.8421053               &lt;NA&gt;       NA
+4      4         3 0.8947368               &lt;NA&gt;       NA
+5      5         4 0.9473684               &lt;NA&gt;       NA
+6      6         3 0.9473684               &lt;NA&gt;       NA
+7      7         1 0.2105263               &lt;NA&gt;       NA
+8      8         7 0.3421053               &lt;NA&gt;       NA
+9      9         8 0.4736842               &lt;NA&gt;       NA
+10    10         9 0.6052632               &lt;NA&gt;       NA
+11    11        10 0.7368421               &lt;NA&gt;       NA
+12    12         9 0.7368421               &lt;NA&gt;       NA
+13    13         8 0.5789474               &lt;NA&gt;       NA
+14    14        13 0.6842105               &lt;NA&gt;       NA
+15    15        14 0.8947368               &lt;NA&gt;       NA
+16    16        15 0.9473684               &lt;NA&gt;       NA
+17    17         7 0.7368421               &lt;NA&gt;       NA
+18    18        17 0.7894737               &lt;NA&gt;       NA
+19    19        18 0.8947368               &lt;NA&gt;       NA
+20    20        19 0.9473684               &lt;NA&gt;       NA
+21    21        20 0.9736842               &lt;NA&gt;       NA
+22    22        19 0.9473684               &lt;NA&gt;       NA
+23    23         2 1.0000000       Anolis pogus 2.602690
+24    24         4 1.0000000   Anolis schwartzi 2.660260
+25    25         5 1.0000000   Anolis schwartzi 2.660260
+26    26         5 1.0000000   Anolis schwartzi 2.653242
+27    27         6 1.0000000     Anolis wattsii 2.674149
+28    28         6 1.0000000     Anolis wattsii 2.701361
+29    29        10 1.0000000 Anolis bimaculatus 3.161247
+30    30        11 1.0000000 Anolis bimaculatus 3.299534
+31    31        11 1.0000000 Anolis bimaculatus 3.328627
+32    32        12 1.0000000      Anolis leachi 3.353407
+33    33        12 1.0000000      Anolis leachi 3.360375
+34    34        13 1.0000000     Anolis nubilus 3.049273
+35    35        14 1.0000000     Anolis sabanus 2.906901
+36    36        15 1.0000000  Anolis gingivinus 2.980619
+37    37        16 1.0000000  Anolis gingivinus 2.933857
+38    38        16 1.0000000  Anolis gingivinus 2.975530
+39    39        17 1.0000000    Anolis oculatus 3.104587
+40    40        18 1.0000000     Anolis ferreus 3.346389
+41    41        20 1.0000000     Anolis lividus 2.928524
+42    42        21 1.0000000  Anolis marmoratus 2.939162
+43    43        21 1.0000000  Anolis marmoratus 2.990720
+44    44        22 1.0000000 Anolis terraealtae 3.058707
+45    45        22 1.0000000 Anolis terraealtae 3.068053
+
+sigma squared:
+           [,1]
+[1,] 0.04311003
+
+theta:
+NULL
+   loglik  deviance       aic     aic.c       sic       dof 
+ 17.33129 -34.66257 -30.66257 -30.06257 -28.39158   2.00000 </code></pre>
+</div>
+</div>
+<p>What is returned is an object of class <code>browntree</code>. It contains all input including the function call, the tree and data), as well as the parameter estimate for <img src="https://latex.codecogs.com/png.latex?%5Csigma"> and the model fit statistics including: the log-likelihood, the deviance (<img src="https://latex.codecogs.com/png.latex?-2*log(L)">), the information criteria <img src="https://latex.codecogs.com/png.latex?AIC">, <img src="https://latex.codecogs.com/png.latex?AIC_c"> (corrected for small sample size), and <img src="https://latex.codecogs.com/png.latex?SIC">, and the model degrees of freedom.</p>
+<p>It is a good practice to save this, as it encapsulates the analysis. From this, we can rerun the model fit.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/brown.html">brown</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p><code>hansen</code> models are slightly more complex. In addition to <img src="https://latex.codecogs.com/png.latex?%5Csigma">, we are now fitting <img src="https://latex.codecogs.com/png.latex?%5Calpha">, the strength of selection, and all of the optima <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> specified by our model. This maximum-likelihood search now requires an initial guess. If you have no idea, a good starting guess is 1. If you want to be sure, you can intiate searches with different starting guesses. You can also specify alternative optimization algorithms and increase or decrease the relative tolerance, which is the stringency by which convergence is assessed. Typically, the default is roughly <code>reltol=1e-8</code>, and the limit of machine precision is in the neighborhood of <code>reltol=1e-15</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.1'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>,</span>
+<span>             sqrt.alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span>             sigma<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.3'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, </span>
+<span>             sqrt.alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span>             sigma<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.4'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, </span>
+<span>             sqrt.alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span>             sigma<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>,</span>
+<span>             <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.LP'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, </span>
+<span>             sqrt.alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span>             sigma<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span>             reltol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</section><section id="hansentree-and-ouchtree-methods" class="level3"><h3 class="anchored" data-anchor-id="hansentree-and-ouchtree-methods">
+<code>hansentree</code> and <code>ouchtree</code> methods</h3>
+<p>We can see the model results by typing <code>h5</code>, which will execute the <code>print</code> method for this class. You could also use the <code>attributes</code> function, but this will dump too much information. <code>ouchtree</code> objects and the classes derived from them contain information that is used in internal calculations of the algorithms, not of general interest to users.</p>
+<p>Additional accessor functions include:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the coefficients of the fitted model</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sqrt.alpha
+[1] 1.61658
+
+$sigma
+[1] 0.2249274
+
+$theta
+$theta$size
+   large   medium    small 
+3.355087 3.040729 2.565249 
+
+
+$alpha.matrix
+        [,1]
+[1,] 2.61333
+
+$sigma.sq.matrix
+           [,1]
+[1,] 0.05059232</code></pre>
+</div>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the log-likelihood value</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24.81823</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># (not printed) everything except the tree+data</span></span></code></pre></div>
+</div>
+<p>We can now generate a table of our model fits:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># just the model fit statistics on a single line</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic.c'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dof'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      aic     aic.c       sic       dof 
+-39.63645 -36.10704 -33.95898   5.00000 </code></pre>
+</div>
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h1</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h2</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h3</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h4</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># store fitted models in a list</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BM'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.1'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.3'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.4'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'OU.LP'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>                <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic.c'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dof'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span>             <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>                         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># table with all models</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             BM      OU.1      OU.3      OU.4     OU.LP
+aic   -30.66257 -25.39364 -29.15573 -35.22319 -39.63645
+aic.c -30.06257 -24.13048 -25.62631 -29.97319 -36.10704
+sic   -28.39158 -21.98715 -23.47826 -28.41022 -33.95898
+dof     2.00000   3.00000   5.00000   6.00000   5.00000</code></pre>
+</div>
+</div>
+<p>By storing the model fits in a list, we can use apply methods to get the statistics from all the models at once. <code>sapply</code> returns a matrix if possible.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h.ic</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>                     <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>                      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic.c'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dof'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span>                     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>               <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  </span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h.ic</span>, digits <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP
+aic   -30.7 -25.4 -29.2 -35.2 -39.6
+aic.c -30.1 -24.1 -25.6 -30.0 -36.1
+sic   -28.4 -22.0 -23.5 -28.4 -34.0
+dof     2.0   3.0   5.0   6.0   5.0</code></pre>
+</div>
+</div>
+</section><section id="simulation-and-bootstrap-methods" class="level3"><h3 class="anchored" data-anchor-id="simulation-and-bootstrap-methods">Simulation and bootstrap methods:</h3>
+<p><code>simulate</code> generates random deviates or sets of simulated tip data based on the fitted model. The input is a fitted model <code>hansentree</code> or <code>browntree</code>, and the output is a list of dataframes, each comparable to the original data. These can then be used to refit the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5.sim</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>object <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span>, nsim<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># saves 10 sets of simulated data</span></span>
+<span>                                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#  based on OU.LP</span></span></code></pre></div>
+</div>
+<p><code>update</code> refits the model, with one or more parameters changed.</p>
+<div class="cell">
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> object <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span>, </span>
+<span>                 data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5.sim</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> </span>
+<span>                <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># fit the first dataset</span></span>
+<span>        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>   </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$call
+hansen(data = data, tree = object, regimes = regimes, sqrt.alpha = sqrt.alpha, 
+    sigma = sigma)
+
+$conv.code
+[1] 0
+
+$optimizer.message
+NULL
+
+$alpha
+         [,1]
+[1,] 3.406824
+
+$sigma.squared
+           [,1]
+[1,] 0.04658889
+
+$optima
+$optima$size
+   large   medium    small 
+3.311852 3.017353 2.561983 
+
+
+$loglik
+[1] 27.77894
+
+$deviance
+[1] -55.55788
+
+$aic
+[1] -45.55788
+
+$aic.c
+[1] -42.02847
+
+$sic
+[1] -39.88041
+
+$dof
+[1] 5</code></pre>
+</div>
+<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5.sim.fit</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5.sim</span>, </span>
+<span>                      <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>                    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># fit all 10 simulations</span></span></code></pre></div>
+</div>
+<p><code>bootstrap</code> is a convenience function for generating parametric bootstraps of the parameter estimates. It takes the fitted model, performs the simulations, refits, and outputs a dataframe of parameter estimates.</p>
+<div class="cell">
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/bootstrap.html">bootstrap</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> object <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h5</span>, nboot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       alpha sigma.squared optima.size.large optima.size.medium
+1   2.931962    0.06300679          3.406845           3.033368
+2   1.166652    0.02087730          3.442742           3.045020
+3   6.842407    0.13962883          3.327190           2.954449
+4   3.548455    0.05227364          3.312705           3.055402
+5   4.334962    0.04980428          3.274724           3.122849
+6   6.220885    0.07881881          3.282142           3.005847
+7   6.537493    0.06491762          3.235161           3.104050
+8   4.631713    0.06636800          3.349804           2.991356
+9  14.052840    0.10776110          3.330246           3.031296
+10  9.390043    0.11391753          3.252886           3.052051
+   optima.size.small   loglik       aic     aic.c       sic dof
+1           2.472794 23.14495 -36.28990 -32.76049 -30.61243   5
+2           2.211821 30.17167 -50.34334 -46.81392 -44.66587   5
+3           2.724776 21.28855 -32.57711 -29.04770 -26.89964   5
+4           2.525664 26.78157 -43.56315 -40.03373 -37.88567   5
+5           2.556321 29.00157 -48.00314 -44.47373 -42.32567   5
+6           2.711134 26.96231 -43.92463 -40.39521 -38.24716   5
+7           2.617113 29.66251 -49.32502 -45.79561 -43.64755   5
+8           2.546844 26.27175 -42.54351 -39.01410 -36.86604   5
+9           2.656652 31.62991 -53.25981 -49.73040 -47.58234   5
+10          2.710166 26.75359 -43.50717 -39.97776 -37.82970   5</code></pre>
+</div>
+</div>
+</section><section id="painting-regimes-on-trees" class="level3"><h3 class="anchored" data-anchor-id="painting-regimes-on-trees">
+<code>paint</code>ing regimes on trees</h3>
+<p>A new function in <code>ouch</code> is <code>paint</code>. Previously, it was up to users to set up regimes manually by editing spreadsheets. <code>paint</code> helps with this task by specifying the regimes on particular species, subtrees, or particular branches.</p>
+<p>There are two parameters to <code>paint</code>, <code>subtrees</code>, which paints the entire subtree which descends from the node, and <code>branch</code>, which paints the branch connecting the node to it’s ancestor. For either, you specify the node label (remember it’s a character and needs to be quoted), and set it equal to the name of the regime you want to specify.</p>
+<p>Let’s try it on the <code>bimac</code> tree and try to recreate the OU.LP regime:</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, node.names<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Paint the subtrees first, take a look:</p>
+<div class="cell" data-fig="true">
+<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.lp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, </span>
+<span>                subtree<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"medium"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"9"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"large"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"small"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>               <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, regimes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.lp</span>, node.names<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>But there was an independent switch from medium to large at species gm, or node 38, and the node connecting 9 to its ancestor:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.lp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, </span>
+<span>                subtree<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'medium'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"9"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'large'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'small'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>                branch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"38"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'large'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'medium'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>              <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  </span></code></pre></div>
+</div>
+<p>Compare it to the original OU.LP from above.</p>
+<div class="cell">
+<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, regimes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.lp</span>, node.names<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can create alternative paintings of the regimes to test against the data. Suppose we wanted to add a clade specific hypothesis that diverged in a similar time period (this is a completely made-up hypothesis, just for example):</p>
+<div class="cell">
+<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.clades</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/paint.html">paint</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, </span>
+<span>                    subtree<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"7"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"8"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, </span>
+<span>                    branch<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"8"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"7"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>                   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, regimes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.clades</span>, node.names<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Run the model:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h6</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/hansen.html">hansen</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> </span>
+<span>              <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bimac</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'size'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>              <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tree</span>, </span>
+<span>              regimes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.clades</span>, </span>
+<span>              sqrt.alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span>              sigma<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span>            <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Rebuild our table and compare models:</p>
+<div class="cell">
+<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h6</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># append (add on) new model results to our list h</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ou.clades</span>    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add the name of the new model</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in names(h)[length(h)] &lt;- ou.clades: number of items to replace is not
+a multiple of replacement length</code></pre>
+</div>
+<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "BM"    "OU.1"  "OU.3"  "OU.4"  "OU.LP" "1"    </code></pre>
+</div>
+<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h.ic</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>                     <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>                        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aic.c'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dof'</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span>                     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>               <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>  </span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/ouch/man/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">h.ic</span>, digits <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BM  OU.1  OU.3  OU.4 OU.LP     1
+aic   -30.7 -25.4 -29.2 -35.2 -39.6 -30.7
+aic.c -30.1 -24.1 -25.6 -30.0 -36.1 -27.1
+sic   -28.4 -22.0 -23.5 -28.4 -34.0 -25.0
+dof     2.0   3.0   5.0   6.0   5.0   5.0</code></pre>
+</div>
+</div>
+
+
+
+</section></section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-Butler:2004" class="csl-entry">
+Butler, Marguerite A., and Aaron A. King. 2004. <span>“Phylogenetic Comparative Analysis: A Modeling Approach for Adaptive Evolution.”</span> <em>American Naturalist</em> 164: 683–95. <a href="https://doi.org/10.1086/426002">https://doi.org/10.1086/426002</a>.
+</div>
+<div id="ref-King:2022" class="csl-entry">
+King, Aaron A., and Marguerite A. Butler. 2022. <em>Ouch: Ornstein-Uhlenbeck Models for Phylogenetic Comparative Hypotheses</em>. <a href="https://kingaa.github.io/ouch/">https://kingaa.github.io/ouch/</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>module 8</category>
+  <category>week 15</category>
+  <category>comparative analysis</category>
+  <category>phylogenetic trees</category>
+  <category>Ornstein Uhlenbeck</category>
+  <category>Brownian motion</category>
+  <guid>https://mbutler808.github.io/posts/2025-05-06-intro-OU-models/</guid>
+  <pubDate>Tue, 06 May 2025 10:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Spatial Data</title>
   <dc:creator>Marguerite Butler</dc:creator>
@@ -28554,1044 +30044,6 @@ font-style: inherit;"># or the name of your linear model object          </span>
   <category>reproducibility</category>
   <guid>https://mbutler808.github.io/posts/2025-02-11-scripts/</guid>
   <pubDate>Tue, 11 Feb 2025 10:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Data IO</title>
-  <dc:creator>Marguerite Butler</dc:creator>
-  <link>https://mbutler808.github.io/posts/2025-02-04-reading-data/</link>
-  <description><![CDATA[ <!-- Add interesting quote --><section id="acknowledgements" class="level3"><h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>Material for this lecture was borrowed and adopted from</p>
-<ul>
-<li><a href="http://rafalab.dfci.harvard.edu/dsbook/importing-data.html" class="uri">http://rafalab.dfci.harvard.edu/dsbook/importing-data.html</a></li>
-<li><a href="https://www.stephaniehicks.com/jhustatcomputing2022" class="uri">https://www.stephaniehicks.com/jhustatcomputing2022</a></li>
-</ul></section><section id="learning-objectives" class="level1"><h1>Learning objectives</h1>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Learning objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>At the end of this lesson you will:</strong></p>
-<ul>
-<li>Be able to read and write text / csv files in R</li>
-<li>Diagnose some common problems importing data and troubleshoot</li>
-<li>Be able to identify different file types and encodings</li>
-<li>Plan using best practices for data management and spreasheet design</li>
-<li>Be able to calculate memory requirements for R objects</li>
-<li>Be aware of various packages to read in other types of data</li>
-</ul>
-</div>
-</div>
-</section><section id="introduction" class="level1"><h1>Introduction</h1>
-<!-- Sweave2knitr() -->
-<p>So far we have either typed data in directly into R or used R functions to generate data. In order to analyze your own data, you have to load data from an external file into R. Similarly, to save your work, you’ll want to write files to your hard drive. Both of these require interacting with your computer’s operating system. In this chapter, we’ll practice doing it, so you learn the mechanics. Please be patient and we’ll talk more about what’s going on in the next lesson on scripts and the R Environment.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-There are many different ways to access data in R
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Built-in datasets - useful for practice</li>
-<li>Text files, importing from .csv is especially easy</li>
-<li>Files in other formats, e.g., .xls</li>
-<li>readLines from a connection including files</li>
-<li>Data not on your local computer, e.g., piped via a url</li>
-<li>Special connections, e.g., google sheets</li>
-</ol>
-</div>
-</div>
-</section><section id="built-in-datasets" class="level1"><h1>Built-in datasets</h1>
-<p>R has many built-in datasets that come distributed with R. They are very useful for demonstrating Rʻs many functions for statistics, plotting, and other uses.</p>
-<p>To see a list of them, you can type <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> at the command line. To see the contents, type the name of the dataset. To see the help page type a ? in front of the name:</p>
-<div class="cell">
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">cars</span></span>
-<span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">?</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">cars</span></span></code></pre></div>
-</div>
-<p>You can use built-in data in R by referring to the names of the objects.</p>
-<div class="cell">
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">cars</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  speed dist
-1     4    2
-2     4   10
-3     7    4
-4     7   22
-5     8   16
-6     9   10</code></pre>
-</div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">cars</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-04-reading-data/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section id="the-biggest-issue-for-fairly-new-users" class="level1"><h1>The biggest issue for fairly new users</h1>
-<p>In order for R to read in data, it needs to know (1) where it the data stream, and (2) what in the datastream it is looking for. In the case of built-in datasets, both problems are solved as it is already imported into R.</p>
-<p>The biggest issue most new-ish users experience when the path or filename is incorrect. For example, I donʻt have a file called “dat.csv” here, so this is a common error:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb5" data-filename="R" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> read.csv<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"dat.csv"</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">)</span></span>
-<span id="cb5-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">Error</span> in file<span class="er" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">file</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rt"</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">)</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">:</span> cannot open the connection</span>
-<span id="cb5-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">In</span> addition: Warning message:</span>
-<span id="cb5-4"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">In</span> file<span class="er" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">file</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rt"</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">)</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">:</span> cannot open file <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'dat.csv'</span>: No such file or directory</span></code></pre></div>
-</div>
-<p>The <code>cannot open the conection</code> is a pipe or path error. It cannot open a pipe or a connection to the file. <code>No such file or directory</code> is just that. R doesnʻt know where the file is. Is there a typo? Is it the correct path?</p>
-<p>Once we are in the correct working directory and fixed all typos, most of the time we are good, but we may have some surprises in the file format which weʻll go into below.</p>
-<p>The issue is basically that R is parsing the information stream as it reads the file and filtering what counts as data, and what is not data (also called “delimeters” or the things that separate your data). Once you understand how to specify delimeters, you are in great shape!</p>
-</section><section id="reading-in-text-files" class="level1"><h1>Reading in Text Files</h1>
-<p>The most convenient way to read data into R is using the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function. This requires that your data is saved in <code>.csv</code> format, which is possible from Microsoft Excel (save as… csv) or any spreadsheet format. It is a text format with data separated by commas. (Open it in a plain text editor and take a look).</p>
-<p>It is very nice because it is unambiguous, not easily corruptible, and non-proprietary. Thus it is readable by nearly every program that reads in data.</p>
-<section id="get-the-files-onto-your-computer" class="level2"><h2 class="anchored" data-anchor-id="get-the-files-onto-your-computer">Get the files onto your computer</h2>
-<p>First, get the data files from the <a href="https://github.com/mbutler808/rclassdata"><code>rclassdata</code></a> GitHub repo by cloning the repo to your <code>Documents/git/rclass</code> folder.</p>
-<p>Open R by double clicking on an R script within your <code>rclassdata</code> folder. Which working directory are you in? If necessary, use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> to get move into the <code>rclassdata</code> folder.</p>
-<div class="cell">
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/Documents/git/rclass/rclassdata"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>  </span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># will tell us which files are in this folder</span></span></code></pre></div>
-</div>
-</section><section id="read.csv" class="level2"><h2 class="anchored" data-anchor-id="read.csv">read.csv</h2>
-<p>Getting the file into R is easy. If it is in csv format, you just use:</p>
-<div class="cell">
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"anolisSSD.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># look for the file in the working directory</span></span></code></pre></div>
-</div>
-<p>This is an <em>Anolis</em> lizard sexual size dimorphism dataset. It has values of dimorphism by species for different ecomorphs, or microhabitat specialists.</p>
-<p>To save the data as an R object, give it a name and save it:</p>
-<div class="cell">
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"anolisSSD.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-</div>
-<p>It is a good practice to <em>always</em> check that the data were read in properly. If it is a large file, you’ll want to at least check the beginning and end were read in properly:</p>
-<div class="cell">
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  species   logSSD    ecomorph
-1      oc -0.00512        twig
-2      eq  0.08454 crown-giant
-3      co  0.24703 trunk-crown
-4     aln  0.24837 trunk-crown
-5      ol  0.09844  grass-bush
-6      in  0.06137        twig</code></pre>
-</div>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   species  logSSD     ecomorph
-18      cr 0.39796 trunk-ground
-19      st 0.15737  trunk-crown
-20      cy 0.26024 trunk-ground
-21     alu 0.08216   grass-bush
-22      lo 0.13108        trunk
-23      an 0.13547         twig</code></pre>
-</div>
-</div>
-<p>Which prints out the first six and last six lines of the file.</p>
-<p>Voila! Now you can plot, take the mean, etc. For example:</p>
-<div class="cell">
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">ecomorph</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>, <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">logSSD</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="https://mbutler808.github.io/posts/2025-02-04-reading-data/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>(Aside) You probably didn’t understand the line of code above, but we will get into this very soon in the next lectures. But you can break it down bit by bit.</p>
-<p>Now try reading in <code>anolisSSDsemicolon.csv</code> what did you get? Try reading it in with <code><a href="https://rdrr.io/r/utils/read.table.html">read.table()</a></code> - check out the help page.</p>
-<p>R can read in many other formats as well, including database formats, excel native format (although it is easier in practice to save as .csv), fixed width formats, and scanning lines. For more information see the R manual “R Data Import/Export” which you can get from <code><a href="https://rdrr.io/r/utils/help.start.html">help.start()</a></code> or at <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a>.</p>
-</section><section id="input-files-generated-by-data-loggers" class="level2"><h2 class="anchored" data-anchor-id="input-files-generated-by-data-loggers">Input files generated by data loggers</h2>
-<p>Files that are generated by computer, even if they are not separated by commas (.csv) are not too bad to deal with. Take, for example, the file format generated from our hand-held Ocean Optics specroradiometer. It is very regular in structure, and we have tons of data files, so it is well worth the programming effort to code a script for automatic file input.</p>
-<p>First, you can open the file below in a text editor. If you’d rather open it in R, you can use:</p>
-<div class="cell">
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"20070725_01forirr.txt"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-</div>
-<p>Notice that there is a very large header, in fact the first 17 lines. Notice also that the last line will cause a problem. Also, the delimiter in this file is tab (backslash t).</p>
-<div class="cell">
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">temp</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"20070725_01forirr.txt"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">temp</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">temp</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-</div>
-<p>We can solve these issues using the <code>skip</code> and the <code>comment.char</code> arguments of <code>read.table</code> to ignore both types of lines, reading in only the “good stuff”. Also, the default delimiter in this function is the tab:</p>
-<div class="cell">
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>file<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"20070725_01forirr.txt"</span>, skip<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">17</span>, comment.char<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"lambda"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"intensity"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  lambda intensity
-1 177.33         0
-2 177.55         0
-3 177.77         0
-4 177.99         0
-5 178.21         0
-6 178.43         0</code></pre>
-</div>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     lambda intensity
-3643 888.21   0.29491
-3644 888.38   0.31306
-3645 888.54   0.28153
-3646 888.71   0.28245
-3647 888.87   0.18988
-3648 889.04   0.18988</code></pre>
-</div>
-</div>
-<p>The file produces (useless) rows of data outside of the range of accuracy of the spectraradiometer. We can get rid of these by subsetting the data, selecting only the range 300-750nm:</p>
-<div class="cell">
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">300</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># cut off rows below 300nm</span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">750</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#cut off rows above 750nm</span></span></code></pre></div>
-</div>
-<p>Or do both at once:</p>
-<div class="cell">
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">300</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">750</span>,<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span></span></code></pre></div>
-</div>
-<p>If we are going to be doing this subsetting over and over, we might want to save this as an index vector which tells us the position of the rows of data we want to keep in the dataframe (don’t worry, we’ll cover this again in the workhorse functions chapter).</p>
-<div class="cell">
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">oo</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">300</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">750</span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">oo</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># same as longer version above</span></span></code></pre></div>
-</div>
-<p>We can now save the cleaned up version of the irradiance data:</p>
-<div class="cell">
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"20070725_01forirr.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-</div>
-</section></section><section id="read-from-url" class="level1"><h1>Read from URL</h1>
-<p>A URL is just another datastream or pipe. If it is a .csv file on the internet, R supports reading it in directly:</p>
-<div class="cell">
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://raw.githubusercontent.com/mbutler808/rclassdata/main/2023-01-31-DataIO/anolisSSD.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  species   logSSD    ecomorph
-1      oc -0.00512        twig
-2      eq  0.08454 crown-giant
-3      co  0.24703 trunk-crown
-4     aln  0.24837 trunk-crown
-5      ol  0.09844  grass-bush
-6      in  0.06137        twig</code></pre>
-</div>
-<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis</span>, <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">anolis2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   species   logSSD     ecomorph species   logSSD     ecomorph
-1       oc -0.00512         twig      oc -0.00512         twig
-2       eq  0.08454  crown-giant      eq  0.08454  crown-giant
-3       co  0.24703  trunk-crown      co  0.24703  trunk-crown
-4      aln  0.24837  trunk-crown     aln  0.24837  trunk-crown
-5       ol  0.09844   grass-bush      ol  0.09844   grass-bush
-6       in  0.06137         twig      in  0.06137         twig
-7       cu  0.09501  crown-giant      cu  0.09501  crown-giant
-8       ri  0.08947  crown-giant      ri  0.08947  crown-giant
-9       sa  0.28893 trunk-ground      sa  0.28893 trunk-ground
-10      op  0.15963   grass-bush      op  0.15963   grass-bush
-11      va  0.14766         twig      va  0.14766         twig
-12      li  0.38873 trunk-ground      li  0.38873 trunk-ground
-13      ga  0.28768  crown-giant      ga  0.28768  crown-giant
-14      gr  0.39786  trunk-crown      gr  0.39786  trunk-crown
-15      br  0.17106        trunk      br  0.17106        trunk
-16      di  0.13801        trunk      di  0.13801        trunk
-17      kr  0.23478   grass-bush      kr  0.23478   grass-bush
-18      cr  0.39796 trunk-ground      cr  0.39796 trunk-ground
-19      st  0.15737  trunk-crown      st  0.15737  trunk-crown
-20      cy  0.26024 trunk-ground      cy  0.26024 trunk-ground
-21     alu  0.08216   grass-bush     alu  0.08216   grass-bush
-22      lo  0.13108        trunk      lo  0.13108        trunk
-23      an  0.13547         twig      an  0.13547         twig</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Use the correct file format
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Make sure that your URL leads to a raw <code>.csv</code> file, and not the <code>.html</code> rendering of your csv file!</p>
-</div>
-</div>
-</section><section id="what-to-do-when-your-spreadsheet-is-malformed" class="level1"><h1>What to do when your spreadsheet is malformed</h1>
-<p>You will inevitably run into malformed spreadsheets. If there are unexpected characters used as delimiters, irregular delimiters, or uneven numbers of elements, these will all cause problems reading in data smoothly into any software.</p>
-<p>Most of the time, these issues are inadvertent. For example, if you cut and paste off the web, extra characters can easily be introduced. Try reading in <code>species_list_IUCN.csv</code>. It is a large spreadsheet of every species of subfamily Asteriorphinae frog in the world (over 330). Does it look OK?</p>
-<div class="cell">
-<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">temp</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"species_list_IUCN.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">temp</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                                                   SPECIES.OF.ASTEROPHRYINAE.REPRESENTED.IN.IUCN.SHAPEFILE.LIST.
-1   Aphantophryne minuta                                                                                                        
-2   Aphantophryne nana                                                                                                          
-3   Aphantophryne pansa                                                                                                         
-4   Aphantophryne parkeri                                                                                                       
-5   Aphantophryne sabini                                                                                                        
-6   Asterophrys eurydactyla                                                                                                     
-   X X.1 X.2 X.3
-1 NA  NA  NA  NA
-2 NA  NA  NA  NA
-3 NA  NA  NA  NA
-4 NA  NA  NA  NA
-5 NA  NA  NA  NA
-6 NA  NA  NA  NA</code></pre>
-</div>
-</div>
-<p>Itʻs hard to tell from this output what the problem is. Try <code>readLines</code>, which will show you the entire line of data:</p>
-<div class="cell">
-<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">tempL</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"species_list_IUCN.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in readLines("species_list_IUCN.csv"): incomplete final line found on
-'species_list_IUCN.csv'</code></pre>
-</div>
-<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">tempL</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "SPECIES OF ASTEROPHRYINAE REPRESENTED IN IUCN SHAPEFILE LIST:,,,,"                                                                 
-[2] "Aphantophryne minuta                                                                                                        ,,,,"  
-[3] "Aphantophryne nana                                                                                                          ,,,,"  
-[4] "  Aphantophryne pansa                                                                                                         ,,,,"
-[5] "  Aphantophryne parkeri                                                                                                       ,,,,"
-[6] "  Aphantophryne sabini                                                                                                        ,,,,"</code></pre>
-</div>
-</div>
-<p>Now you can clearly see that it is extra whitespace. Extra blank columns, and a huge long line of white space after each species name. Starting from <em>Aphantophryne pansa</em>, there are two extra spaces in front of each species name.</p>
-<p>The easiest thing to do here is to open up the spreadsheet in your spreadsheet program (or plain text editor) and read it back in. Delete the extra columns, and do search and replace on the two leading spaces and trailing multiple spaces. Also change that very long name to something more reasonable like “gensp”. (This is an example of using variable names as annotations or comments - donʻt do it.)</p>
-<p>Alternatively, you can solve these problems within R. We will learn these object and string manipulation skills later, but here is one way to solve the problems once you have diagnosed them.</p>
-<section id="read-in-and-select-only-the-first-columns" class="level4"><h4 class="anchored" data-anchor-id="read-in-and-select-only-the-first-columns">Read in and select only the first columns</h4>
-<p>The rest of the columns are blank, so we really only need the first one. Also lets give it a shorter name.</p>
-<div class="cell">
-<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"species_list_IUCN.csv"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span>   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># select only the first column and resave dat</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gensp"</span>  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># give the column a shorter name</span></span></code></pre></div>
-</div>
-</section><section id="use-function-trimws" class="level4"><h4 class="anchored" data-anchor-id="use-function-trimws">Use function <code>trimws</code>
-</h4>
-<p>R has a handy function <code>trimws</code> that trims white space</p>
-<div class="cell">
-<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">gensp</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">gensp</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">gensp</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Aphantophryne minuta"    "Aphantophryne nana"     
-[3] "Aphantophryne pansa"     "Aphantophryne parkeri"  
-[5] "Aphantophryne sabini"    "Asterophrys eurydactyla"</code></pre>
-</div>
-</div>
-<p>How you deal with cleaning the data will depend on what the issue is. But the first step is always diagnosing the problem. Weʻll learn many more strategies as we go.</p>
-</section></section><section id="entering-data-with-spreadsheets" class="level1"><h1>Entering data with spreadsheets</h1>
-<p>Data management is a major issue for any scientist, so it is worthwhile to develop some best practices. Entering data into spreadsheets is a fundamental step in any study using field data or any type of information that is gathered by humans. Some of the issues to consider are:</p>
-<ol type="1">
-<li>How can we best minimize human error?</li>
-<li>What dataset structures are best for analyzing the data using software?</li>
-<li>Compatability with other datasets in the lab, or commonly used in the field.</li>
-</ol>
-<p>In the best case, we want to make our data available to the world, which means that it will have a permanence. We may also want to build on this data year after year, so it is worth thinking about a good design.</p>
-<section id="human-error" class="level2"><h2 class="anchored" data-anchor-id="human-error">Human Error</h2>
-<p>It is very easy to make a typo, and humans are really bad at catching our own typos in real time. Right? They creep in despite our best efforts. This is why even though it is possible to measure specimens and enter the numbers directly into the computer, itʻs not something I would do.</p>
-<p>I always write my measurements down into a notebook or a datasheet using pencil and paper. This has saved me many errors in three ways (1) sometimes my brain is still processing what I just wrote and I will catch a typo. (2) I write my data in rows for specimens and columns for the different measurements. As the dataset builds, it is easy to notice errors if some number is really off. (3) If you have any doubts, you can quickly look over your page and re-measure anything suspicous. If you have the person-power, you can also have one person taking the measurements and calling them out, and another writing them down and repeating them back. It is a very effective way to check on the spot.</p>
-<p>I had my first post-college job at an insurance rating board. This is a business that deals with reams and reams of data. We did work a lot with Fortran code and spreadsheets, but surprisingly, some of it does actually have to get manually checked. The protocol was simple, a paper printout of the old version was put next to the new version and a person went along with a ruler, literally putting a check mark after verifying the number. A second check was done as well, and then I finally understood the meaning of “double checking” 😝. When I got to grad school, it was eye-opening to find that checking any personʻs data entry was a rare practice 😲. Please, whenever possible check your data entry.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Here are some tips:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>
-<strong>Record data in a notebook</strong> (paper and pencil). It serves as a <strong>permanent record</strong>.</li>
-<li>Write it down in a <strong>data table format</strong> in an <strong>order that minimizes error</strong>. For example, if it is convenient to take five measurements in a particular order, then organize your table that way and always take the measurements in the same order.</li>
-<li>
-<strong>Organize your spreadsheet</strong> to <em>mirror</em> the hand-written data. This will minimize data entry errors.</li>
-<li>
-<strong>Have another person check</strong> your data entry against the <em>notebook</em> (data source).</li>
-</ol>
-</div>
-</div>
-</section><section id="organizing-your-spreadhseet" class="level2"><h2 class="anchored" data-anchor-id="organizing-your-spreadhseet">Organizing your spreadhseet</h2>
-<p>When it comes time to enter your data in a spreadsheet, there are many things you can do to improve organization. Below is a summary of the recommendations made in paper by Karl Broman and Kara Woo <span class="citation" data-cites="Broman:2018">(Broman and Woo 2018)</span>.</p>
-<ul>
-<li>
-<strong>Be Consistent</strong> - Have a plan before you start entering data. Be consistent and stick to it.</li>
-<li>
-<strong>Choose Good Names for Things</strong> - You want the names you pick for objects, files, and directories to be memorable, easy to spell, descriptive, but concise. This is actually a hard balance to achieve and it does require time and thought.
-<ul>
-<li>One important rule to follow is do not use spaces, use underscores _ or dashes instead -.</li>
-<li>Also, avoid symbols; stick to letters and numbers.</li>
-</ul>
-</li>
-<li>
-<strong>Write Dates as YYYY-MM-DD</strong> - To avoid confusion, we strongly recommend using this global ISO 8601 standard.</li>
-<li>
-<strong>No Empty Cells</strong> - Fill in all cells and use some common code for missing data.</li>
-<li>
-<strong>Put Just One Thing in a Cell</strong> - It is better to add columns to store the extra information rather than having more than one piece of information in one cell.</li>
-<li>
-<strong>Make It a Rectangle</strong> - The spreadsheet should be a rectangle.</li>
-<li>
-<strong>Create a Data Dictionary</strong> - If you need to explain things, such as what the columns are or what the labels used for categorical variables are, do this in a separate file. This is an excellent use for a README.md file</li>
-<li>
-<strong>No Calculations in the Raw Data Files</strong> - Excel permits you to perform calculations. Do not make this part of your spreadsheet. Code for calculations should be in a script.</li>
-<li>
-<strong>Do Not Use Font Color or Highlighting as Data</strong> - Most import functions are not able to import this information. Encode this information as a variable (a “comment” column) instead.</li>
-<li>
-<strong>Make Backups</strong> - Make regular backups of your data.</li>
-<li>
-<strong>Use Data Validation to Avoid Errors</strong> - Leverage the tools in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free as possible. Think of checks you can do for “reality checks”.</li>
-<li>
-<strong>Save the Data as Text Files</strong> - Save files for sharing in comma or tab delimited format. An unambiguous text format is the best for archiving your data.</li>
-</ul></section></section><section id="a-few-words-about-encodings" class="level1"><h1>A few words about Encodings</h1>
-<section id="text-versus-binary-files" class="level2"><h2 class="anchored" data-anchor-id="text-versus-binary-files">Text versus binary files</h2>
-<p>For data science purposes, files can generally be classified into two categories: text files (also known as <strong>ASCII</strong> files) and <strong>binary</strong> files. You have already worked with text files. All your R scripts are text files and so are the Quarto files used to create this website. The .csv tables you have read are also text files. One big advantage of these files is that we can easily “look” at them using a plain text editor, without having to purchase any kind of special software.</p>
-<p>Any text editor can be used to examine a text file, including freely available editors such as <strong>R</strong>, <strong>RStudio</strong>, <strong>Atom</strong>, <strong>Notepad</strong>, <strong>TextEdit</strong>, <strong>vi</strong>, <strong>emacs</strong>, <strong>nano</strong>, and <strong>pico</strong>. However, if you try to open, say, an Excel xls file, jpg or png file, you will not be able to see anything immediately useful. These are binary files. Excel files are actually compressed folders with several text files inside. But the main distinction here is that text files can be easily examined.</p>
-<p>Although R includes tools for reading widely used binary files, such as xls files, <em>in general you will want to find data sets stored in text files</em>. If necessary, use the proprietary software to export the data into text files and go from there.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The problem with using propietary formats for data management is that htey are poor formats for achival purposes. These formats may change or they donʻt copy well, so that eventually you can no longer open them.</p>
-</div>
-</div>
-<p>Similarly, when sharing data you want to make it available as text files as long as storage is not an issue (binary files are much more efficient at saving space on your disk). In general, plain-text formats make it easier to share data since commercial software is not required for working with the data, and they are more reliable.</p>
-<p>Technically, html and xml files are text files too, but they have complicated tags around the information. In the Data Wrangling part of the book we learn to extract data from more complex text files such as html files.</p>
-</section><section id="unicode-versus-ascii" class="level2"><h2 class="anchored" data-anchor-id="unicode-versus-ascii">Unicode versus ASCII</h2>
-<p>A pitfall in data science is assuming a file is an ASCII text file when, in fact, it is something else that can look a lot like an ASCII text file, for example, a Unicode text file.</p>
-<p>To understand the difference between these, remember that everything on a computer needs to eventually be converted to 0s and 1s (binary format). ASCII is an encoding that maps bits to characters that are easier for humans to read.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Binary data can take on only two values - 0 or 1
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>a <strong>bit</strong> is the smallest unit, a single binary character (0 or 1).</li>
-<li>a <strong>byte</strong> is eight bits.</li>
-<li>a <strong>megabyte</strong> or MB is one million bytes.</li>
-<li>a <strong>gigabyte</strong> or GB is one billion bytes.</li>
-<li>You can roughly calculate the size of your data by the numbers of bytes per each observation.</li>
-</ul>
-</div>
-</div>
-<p>ASCII uses 7 bits – seven variables that can be either 0 or 1 – which results in 2<sup>7</sup> = 128 unique items, enough to encode all the characters on an English language keyboard (all characters, numbers, and symbols, Figure&nbsp;1, Figure&nbsp;2). However, we need to expand the possibilities if we want to include support for other languages or additional characters.</p>
-<div id="fig-ascii" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ascii-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://mbutler808.github.io/posts/2025-02-04-reading-data/ascii1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ascii-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Binary encodings in ACII, with some of the most used escape sequences like <code>\t</code> for tab and <code>\n</code> for new line.
-</figcaption></figure>
-</div>
-<div id="fig-ascii2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ascii2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://mbutler808.github.io/posts/2025-02-04-reading-data/ascii2.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ascii2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Some examples of ASCII encodings for A-E and a-e.
-</figcaption></figure>
-</div>
-<p>For this reason, a new encoding, using more than 7 bits, was defined: Unicode. When using Unicode, one can chose between 8, 16, and 32 bits abbreviated UTF-8, UTF-16, and UTF-32 respectively. RStudio actually defaults to UTF-8 encoding.</p>
-<p>Although we do not go into the details of how to deal with the different encodings here, it is important that you know these different encodings exist so that you can better diagnose a problem if you encounter it. One way problems manifest themselves is when you see “weird looking” characters you were not expecting.</p>
-<p>Many plain text editors (Atom, Sublime, TextWrangler, Notepad++) will detect encodings and tell you what they are and may also convert between them. Also from the command line the <code>file</code> command will reveal the encoding (should also work on Windows if you have <code>git</code> installed:</p>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode" id="cb37" data-filename="Terminal" style="background: #f1f3f5;"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb37-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">file</span> filename</span></code></pre></div>
-</div>
-<p>This StackOverflow discussion is an example: <a href="https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell" class="uri">https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell</a>.</p>
-</section><section id="line-endings" class="level2"><h2 class="anchored" data-anchor-id="line-endings">Line endings</h2>
-<p>One last potential headache is the character used for line endings. The line ending is the invisible (to us) character that is added to your file when you press the <code>return</code> key.</p>
-<p>It is all one stream of informatin to the computer, but the computer will interpret the information as a new line when it detects one of these characters. When software is provided a file with an unexpected line ending, it is not able to properly detect the lines of information (maybe it sees only one huge line). See?</p>
-<p>There are two types of line endings in use today:</p>
-<ul>
-<li><p><strong>On UNIX and MacOS</strong>, text file line-endings are terminated with a newline character (ASCII 0x0a, represented by the <code>\n</code> escape sequence in most languages), also referred to as a linefeed (LF).</p></li>
-<li><p><strong>On Windows</strong>, line-endings are terminated with a combination of a carriage return (ASCII 0x0d or <code>\r</code>) and a newline(<code>\n</code>), also referred to as CR/LF.</p></li>
-</ul>
-<p>If your computer complains about line endings, the easiest thing to do is to open it in one of the good plain text editors and save it with the line endings it is expecting (usually as LF instead of CR/LF).</p>
-</section></section><section id="calculating-memory-requirements-for-r-objects" class="level1"><h1>Calculating Memory Requirements for R Objects</h1>
-<p>Because <strong>R stores all of its objects in physical memory</strong>, it is important to be aware of how much memory is being used up by all of the data objects residing in your workspace.</p>
-<p>It is easy to make a back of the envelope calculation of how much memory will be required by a new dataset. For example, suppose I have a data frame with 1,500,000 rows and 120 columns, all of which are numeric data. Roughly, how much memory is required to store this data frame?</p>
-<p>Well, on most modern computers <a href="http://en.wikipedia.org/wiki/Double-precision_floating-point_format">double precision floating point numbers</a> are stored using 64 bits of memory, or 8 bytes. Given that information, you can do the following calculation</p>
-<p>1,500,000 × 120 × 8 bytes/numeric = 1,440,000,000 bytes</p>
-<p>= 1,440,000,000 bytes / 2<sup>20</sup> bytes/MB</p>
-<p>= 1,373 MB</p>
-<p>= 1.37 GB</p>
-<p>So the dataset would require about 1.37 GB of RAM. Most computers these days have at least that much RAM. However, you need to be aware of</p>
-<ul>
-<li>what other programs might be running on your computer, using up RAM</li>
-<li>what other R objects might already be taking up RAM in your workspace</li>
-</ul>
-<p>Reading in a large dataset for which you do not have enough RAM is one easy way to freeze up your computer (or at least your R session). When that happens you to kill the R process, in the best case scenario, or reboot your computer, in the worst case. So before opening up potentially huge datasets, make sure to do a rough calculation of memory requirements needed. You’ll thank me later.</p>
-<p><em>Also, itʻs aways good to build a script as you go and save frequently.</em></p>
-</section><section id="other-data-types" class="level1"><h1>Other data types</h1>
-<p>Now, there are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.</p>
-<p>For example, check out</p>
-<ul>
-<li>
-<a href="https://github.com/r-dbi/DBI"><code>DBI</code></a> for relational databases</li>
-<li>
-<a href="https://haven.tidyverse.org"><code>haven</code></a> for SPSS, Stata, and SAS data</li>
-<li>
-<a href="https://github.com/r-lib/httr"><code>httr</code></a> for web APIs</li>
-<li>
-<a href="https://readxl.tidyverse.org"><code>readxl</code></a> for <code>.xls</code> and <code>.xlsx</code> sheets</li>
-<li>
-<a href="https://googlesheets4.tidyverse.org"><code>googlesheets4</code></a> for Google Sheets</li>
-<li>
-<a href="https://googledrive.tidyverse.org"><code>googledrive</code></a> for Google Drive files</li>
-<li>
-<a href="https://github.com/tidyverse/rvest"><code>rvest</code></a> for web scraping</li>
-<li>
-<a href="https://github.com/jeroen/jsonlite#jsonlite"><code>jsonlite</code></a> for JSON</li>
-<li>
-<a href="https://github.com/r-lib/xml2"><code>xml2</code></a> for XML.</li>
-</ul></section><section id="ascii-art" class="level1"><h1>ASCII art</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="https://nl.wikipedia.org/wiki/Gebruiker:Wilinckx"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/BB-ASCII-art-screenshot-zebra.png" class="img-fluid figure-img" alt="Zebra in ASCII by Wilinckx, Wikimedia commons"></a></p>
-<figcaption>Zebra in ASCII by Wilinckx, Wikimedia commons</figcaption></figure>
-</div>
-
-
-
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-Broman:2018" class="csl-entry">
-Broman, Karl W., and Kara H. Woo. 2018. <span>“Data Organization in Spreadsheets.”</span> <em>The American Statistician</em> 72 (1): 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>module 2</category>
-  <category>week 3</category>
-  <category>data</category>
-  <category>input</category>
-  <category>output</category>
-  <category>formats</category>
-  <guid>https://mbutler808.github.io/posts/2025-02-04-reading-data/</guid>
-  <pubDate>Tue, 04 Feb 2025 10:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
